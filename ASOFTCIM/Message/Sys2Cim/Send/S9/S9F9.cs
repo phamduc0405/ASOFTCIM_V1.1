@@ -21,9 +21,7 @@ namespace ASOFTCIM
                 packet.Command = Command.UserData;
                 packet.DeviceId = mes.DeviceId;
                 packet.SystemByte = mes.SystemByte;
-                packet.addItem(DataType.List, 2);
-                packet.addItem(DataType.Ascii, "abc");
-                packet.addItem(DataType.Ascii, "def");
+                packet.addItem(DataType.Bin, mes.Header);
                 packet.Send2Sys();
             }
             catch (Exception ex)
