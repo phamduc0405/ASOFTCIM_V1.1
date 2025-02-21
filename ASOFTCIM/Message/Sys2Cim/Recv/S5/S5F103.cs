@@ -15,6 +15,7 @@ namespace ASOFTCIM
         {
             try
             {
+                var c = 1;
                 string lst = _cim.SysPacket.GetItemString(1);
                 string eqpId = _cim.SysPacket.GetItemString();
                 SendS5F104(_cim.Conn, EqpData);
