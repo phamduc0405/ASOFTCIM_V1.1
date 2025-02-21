@@ -85,9 +85,9 @@ namespace ASOFTCIM
                 }
                 if (_eqpConfig.PLCHelper.PlcMemms?.Count > 0)
                 {
-                    if (_eqpConfig.PLCHelper.Bits.Any(x => x.Item.Contains("ALIVE")))
+                    if (_eqpConfig.PLCHelper.Bits.Any(x => x.Item.ToUpper().Contains("ALIVE")))
                     {
-                        BitModel bAlive = _eqpConfig.PLCHelper.Bits.FirstOrDefault(x => x.Item.Contains("ALIVE"));
+                        BitModel bAlive = _eqpConfig.PLCHelper.Bits.FirstOrDefault(x => x.Item.ToUpper().Contains("ALIVE"));
                         if (_eqpConfig.PLCHelper.PlcMemms.Any(x => x.BPLCStart == bAlive.PLCHexAdd))
                         {
                             PlcMemmory plcmem = _eqpConfig.PLCHelper.PlcMemms.FirstOrDefault(x => x.BPLCStart == bAlive.PLCHexAdd);
@@ -189,7 +189,7 @@ namespace ASOFTCIM
                         bit.SetPCValue = true;
                         return;
                     }
-
+                    bit.SetPCValue = true;
                 }
                 else { bit.SetPCValue = false; }
 
