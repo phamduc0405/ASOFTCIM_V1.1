@@ -1,0 +1,23 @@
+﻿<Application x:Class="ASOFTCIM.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:ASOFTCIM"
+             StartupUri="MVVM/View/MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <!-- Đường dẫn tới ResourceDictionary -->
+                <ResourceDictionary Source="/A_SOFT.CMM;component/STYLE/UIColors.xaml" />
+                <ResourceDictionary Source="/A_SOFT.CMM;component/STYLE/ButtonStyle.xaml" />
+                <ResourceDictionary Source="/A_SOFT.CMM;component/STYLE/TextBoxStyle.xaml" />
+                <ResourceDictionary Source="/A_SOFT.CMM;component/STYLE/TabControlStyle.xaml" />
+                <ResourceDictionary Source="/A_SOFT.CMM;component/STYLE/TextBoxTheme.xaml" />
+                <ResourceDictionary Source="/A_SOFT.CMM;component/STYLE/ComboBoxStyle.xaml" />
+                <ResourceDictionary Source="/A_SOFT.CMM;component/STYLE/ProgressBarStyle.xaml" />
+                <ResourceDictionary Source="/A_SOFT.CMM;component/STYLE/LabelStyle.xaml" />
+                <ResourceDictionary Source="/A_SOFT.CMM;component/STYLE/ToggleButtonStyle.xaml" />
+                <ResourceDictionary Source="/A_SOFT.CMM;component/STYLE/ListViewStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
