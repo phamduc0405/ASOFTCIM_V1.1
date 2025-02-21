@@ -16,6 +16,7 @@ namespace ASOFTCIM
             {
                 SendS9F7(_cim.SysPacket);
                 return;
+                var d = 1;
             }
             SendS1F2(_cim.Conn);
         }
