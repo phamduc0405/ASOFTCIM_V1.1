@@ -1,0 +1,64 @@
+﻿<UserControl x:Class="ASOFTCIM.MVVM.View.Config.ConfigMainView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ASOFTCIM.MVVM.View.Config"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+            <Border
+            Background="White"
+            BorderBrush="LightSlateGray"
+            BorderThickness="2">
+                <Border.Effect>
+                    <DropShadowEffect
+                    BlurRadius="5"
+                    ShadowDepth="2"
+                    Color="Black" />
+                </Border.Effect>
+            </Border>
+
+            <StackPanel Orientation="Vertical">
+                <!--  EQUIP SETTING  -->
+                <Button
+                x:Name="btnEquipSetting"
+                Width="auto"
+                Height="50"
+                Margin="20,35,20,5"
+                Content="EQUIP SETTING"
+                Style="{StaticResource ButtonControl}"
+                Tag="Gear" />
+                <Button
+                x:Name="btnManualSendDataConfig"
+                Width="auto"
+                Height="50"
+                Margin="20,20,20,5"
+                Content="SQL TEST"
+                Style="{StaticResource ButtonControl}"
+                Tag="CloudArrowUp" />
+                <Button
+                x:Name="btnMCRConfig"
+                Width="auto"
+                Height="50"
+                Margin="20,20,20,5"
+                Content="MCR SETTING"
+                Style="{StaticResource ButtonControl}"
+                Tag="CameraAlt" />
+                <Button
+                x:Name="btnTest"
+                Width="auto"
+                Height="50"
+                Margin="20,20,20,5"
+                Content="TEST"
+                Style="{StaticResource ButtonControl}"
+                Tag="TEST" />
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>
