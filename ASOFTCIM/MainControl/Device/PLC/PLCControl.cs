@@ -44,7 +44,7 @@ namespace ASOFTCIM
                     //DefineAlarm();
                     _plcH.BitChangedEvent += (bit) =>
                     {
-                        PLCBitChange(bit.Item, bit);
+                        PLCBitChange(bit.Comment, bit);
                     };
                     _plcH.WordChangedEvent += _plcH_WordChangedEvent;
                     foreach (var item in _plc.InputWordStatuses)
@@ -180,10 +180,11 @@ namespace ASOFTCIM
 
                     if (typelist.Contains(t))
                     {
-                        MethodInfo method = t.GetType().GetMethod($"Excute");
+                        object s = Activator.CreateInstance(t);
+                        MethodInfo method = t.GetMethod($"Excute");
                         if (method != null)
                         {
-                            object result = method.Invoke(this, new object[] { this, bit });
+                            object result = method.Invoke(s, new object[] { this, bit });
 
                         }
                         bit.SetPCValue = true;
