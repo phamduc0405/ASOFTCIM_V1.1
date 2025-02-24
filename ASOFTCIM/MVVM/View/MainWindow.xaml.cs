@@ -7,6 +7,7 @@ using ASOFTCIM.MVVM.View.Config;
 using ASOFTCIM.MVVM.View.Home;
 using ASOFTCIM.MVVM.View.Material;
 using ASOFTCIM.MVVM.View.Monitor;
+using ASOFTCIM.MVVM.View.Popup;
 using ASOFTCIM.MVVM.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -34,6 +35,7 @@ namespace ASOFTCIM
     public partial class MainWindow : Window
     {
         public static Controller Controller;
+        private ExitDisplay _displayPopupCode;
         public MainWindow()
         {
             InitializeComponent();
@@ -54,17 +56,14 @@ namespace ASOFTCIM
                 LogTxt.Stop();
 
             };
-            btntest.Click += (s, e) =>
+            btnClose.Click += async (sender, e) =>
             {
-                
-            };
-            btnClose.Click += (sender, e) =>
-            {
-
-                Thread.Sleep(1000);
-                this.Close();
-                LogTxt.Stop();
-
+                if(await PopupMessage("DO YOU WANT EXIT ?"))
+                {
+                    Thread.Sleep(1000);
+                    this.Close();
+                    LogTxt.Stop();
+                }    
             };
             btnResize.Click += (sender, e) =>
             {
@@ -134,6 +133,35 @@ namespace ASOFTCIM
             };
 
         }
-        
+        private async Task<bool> PopupMessage(string message)
+        {
+            bool result = false;
+            try
+            {
+
+                if (_displayPopupCode == null)
+                {
+                    Dispatcher.Invoke(() => {
+                        _displayPopupCode = new ExitDisplay(message);
+                        result = (bool)_displayPopupCode.ShowDialog();
+                        // Check the DialogResult
+                        _displayPopupCode.Closing += (sender, a) =>
+                        {
+                            _displayPopupCode = null;
+                        };
+                        _displayPopupCode.Topmost = true;
+                        _displayPopupCode.Close();
+                        _displayPopupCode = null;
+                    });
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message);
+                LogTxt.Add(LogTxt.Type.Exception, debug);
+                return false;
+            }
+        }
     }
 }

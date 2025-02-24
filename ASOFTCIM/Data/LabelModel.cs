@@ -8,6 +8,7 @@ namespace ASOFTCIM.Data
 {
     public class LABELINFODOWNLOAD
     {
+        public string OPTIONCODE { get; set; }
         public string CELLID { get; set; }
         public string PRODUCTID { get; set; }
         public string LABELID { get; set; }

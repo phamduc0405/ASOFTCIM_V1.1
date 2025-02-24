@@ -10,6 +10,14 @@ namespace ASOFTCIM.MainControl
     public class Controller
     {
         private ACIM _cim;
+
+        public ACIM CIM
+        {
+            get { return _cim; }
+            set { _cim = value;}
+        }
+
+
         public Controller()
         {
             _cim = new ACIM();

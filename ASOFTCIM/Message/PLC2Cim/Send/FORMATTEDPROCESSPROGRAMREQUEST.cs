@@ -1,29 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Reflection;
-using A_SOFT.CMM.INIT;
+﻿using A_SOFT.CMM.INIT;
 using A_SOFT.PLC;
-using A_SOFT.Ctl.Mitsu.Model;
 using ASOFTCIM.Data;
 using ASOFTCIM.Helper;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Tab;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace ASOFTCIM.Message.PLC2Cim.Send
 {
-    public class TERMINALTEXT
+    public class FORMATTEDPROCESSPROGRAMREQUEST
     {
-        public TERMINALTEXT(PLCHelper plcdata, TERMINAL terminal)
+        public FORMATTEDPROCESSPROGRAMREQUEST(PLCHelper plcdata, PPIDINFOR ppid)
         {
 
             try
             {
                 List<WordModel> word = plcdata.Words.Where(x => x.Area == this.GetType().Name).ToList();
-                
-                word.FirstOrDefault(x => x.Item == "TID").SetValue = terminal.TID;
-                word.FirstOrDefault(x => x.Item == "TEXT").SetValue = terminal.TEXT[0];
+                word.FirstOrDefault(x => x.Item == "ReqPPID").SetValue = ppid.PPID;
+                word.FirstOrDefault(x => x.Item == "ReqPPIDTYPE").SetValue = ppid.PPID_TYPE;
+                word.FirstOrDefault(x => x.Item == "ReqPPIDINDEX").SetValue = ppid.PPID_NUMBER;
+
 
                 BitModel bit = plcdata.Bits.First(x => x.Comment == this.GetType().Name);
                 bit.SetPCValue = true;
@@ -33,7 +32,7 @@ namespace ASOFTCIM.Message.PLC2Cim.Send
                 var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message);
                 LogTxt.Add(LogTxt.Type.Exception, debug);
             }
-            
+
         }
     }
 }

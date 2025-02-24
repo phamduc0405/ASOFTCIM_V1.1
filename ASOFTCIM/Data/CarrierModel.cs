@@ -58,7 +58,7 @@ namespace ASOFTCIM.Data
         public string CARRIER_C_COUNT { get; set; }
         public string PORTNO { get; set; }
         public List<SUBCARRIER> SUBCARRIERS { get; set; }
-        public REPLY REPLY { get; set; }
+        public REPLY REPLY { get; set; } = new REPLY();
     }
     public class SUBCARRIER
     {

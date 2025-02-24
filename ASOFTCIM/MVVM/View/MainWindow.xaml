@@ -441,14 +441,8 @@
                         Margin="10,20,393,-7"
                         Style="{StaticResource HeaderTextBlockStyle}"
                         Text="Memory Usage: Calculating..." />
-                    <TextBox
-                        x:Name="txtname"
-                        Grid.Column="1"
-                        Margin="166,0,270,0" />
-                    <TextBox
-                        x:Name="txtClass"
-                        Grid.Column="1"
-                        Margin="331,0,105,0" />
+
+
 
                     <Border
                         x:Name="bdrPlcConnect"
@@ -492,7 +486,7 @@
                             Style="{StaticResource BodyTextBlockStyle}"
                             Text="HOST Disconnected" />
                     </Border>
-                    <Button x:Name="btntest" />
+
 
                 </Grid>
 
