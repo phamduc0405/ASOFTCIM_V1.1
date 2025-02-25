@@ -98,7 +98,7 @@ namespace ASOFTCIM.Data
         [System.Xml.Serialization.XmlElement("EQST")]
         public EQPSTATE EQST { get; set; }
         [System.Xml.Serialization.XmlElement("CELL")]
-        public CELLINFOR CELL { get; set; }
+        public CELLINFOR CELL { get; set; } = new CELLINFOR();
         [System.Xml.Serialization.XmlElement("WORKORDER")]
         public WORKORDER WORKORDER { get; set; }
         [System.Xml.Serialization.XmlElement("READER")]

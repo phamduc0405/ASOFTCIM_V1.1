@@ -17,6 +17,7 @@ using Type = System.Type;
 using FontAwesome.Sharp;
 using ASOFTCIM.Message.PLC2Cim.Recv;
 using ASOFTCIM.MainControl.Device.PC;
+using ASOFTCIM.MainControl;
 
 namespace ASOFTCIM
 {
@@ -111,8 +112,28 @@ namespace ASOFTCIM
         {
             _cim.AddTrans(trans);
         }
+        public void SendMessage2PLC(string classname,object obj)
+        {
+            string namespaces = "ASOFTCIM.Message.PLC2Cim.Send";
+            Type[] typelist = GetTypesInNamespace(Assembly.GetExecutingAssembly(), namespaces);
+            Type t = Assembly.GetExecutingAssembly().GetType($"{namespaces}.{classname}");
+
+            if (t != null && typelist.Contains(t))
+            {
+                try
+                {
+                    object instance = Activator.CreateInstance(t, new object[] { _plcH, obj });
+
+                    if (instance != null)
+                    {
+                        Console.WriteLine($"Tạo instance của {classname} thành công!");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Lỗi khi tạo instance: {ex.Message}");
+                }
+            }
+        }
     }
-
-
-   
 }

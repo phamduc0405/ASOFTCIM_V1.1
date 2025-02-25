@@ -6,8 +6,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace ASOFTCIM.Message.PLC2Cim.Send
 {
@@ -22,6 +24,7 @@ namespace ASOFTCIM.Message.PLC2Cim.Send
                 word.FirstOrDefault(x => x.Item == "DATETIMESET").SetValue = datetime;
                 BitModel bit = plcdata.Bits.First(x => x.Comment == this.GetType().Name);
                 bit.SetPCValue = true;
+                SetTimePC(datetime);
             }
             catch (Exception ex)
             {
@@ -29,6 +32,32 @@ namespace ASOFTCIM.Message.PLC2Cim.Send
                 LogTxt.Add(LogTxt.Type.Exception, debug);
             }
 
+        }
+        public void SetTimePC(string datetime)
+        {
+            DateTime dateTime = DateTime.ParseExact(datetime, "yyyyMMddHHmmss", null);
+            SYSTEMTIME st = new SYSTEMTIME();
+            st.Year = ushort.Parse(dateTime.Year.ToString());    // Năm
+            st.Month = ushort.Parse(dateTime.Month.ToString());      // Tháng
+            st.Day = ushort.Parse(dateTime.Day.ToString());        // Ngày
+            st.Hour = ushort.Parse(dateTime.Hour.ToString());      // Giờ
+            st.Minute = ushort.Parse(dateTime.Minute.ToString());    // Phút
+            st.Second = ushort.Parse(dateTime.Second.ToString());     // Giây
+            st.Milliseconds = ushort.Parse(dateTime.Millisecond.ToString()); // Millisecond
+            bool result = SetSystemTime(ref st);
+        }
+        [DllImport("kernel32.dll", SetLastError = true)]
+        public static extern bool SetSystemTime(ref SYSTEMTIME st);
+        public struct SYSTEMTIME
+        {
+            public ushort Year;
+            public ushort Month;
+            public ushort DayOfWeek;
+            public ushort Day;
+            public ushort Hour;
+            public ushort Minute;
+            public ushort Second;
+            public ushort Milliseconds;
         }
     }
 }

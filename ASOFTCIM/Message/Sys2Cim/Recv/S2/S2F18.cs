@@ -16,6 +16,8 @@ namespace ASOFTCIM
             try
             {
               //  new S2F102().SendMessage(mes);
+                string DateTime = _cim.SysPacket.GetItemString();
+                SendMessage2PLC("DATETIMESET",DateTime);
             }
             catch (Exception ex)
             {

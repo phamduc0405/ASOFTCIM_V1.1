@@ -15,108 +15,108 @@
     mc:Ignorable="d">
     <Grid>
         <Border
-        Background="AliceBlue"
-        BorderBrush="LightSlateGray"
-        BorderThickness="2"
-        CornerRadius="10"
-        Margin="10">
-        <Border.Effect>
-            <DropShadowEffect
-                BlurRadius="5"
-                ShadowDepth="2"
-                Color="Black" />
-        </Border.Effect>
-        <Grid Background="Transparent">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="1*" />
-                <RowDefinition Height="10*" />
-            </Grid.RowDefinitions>
-            <Grid Grid.Row="0">
-                <Border
-                    x:Name="bdHeader"
-                    Background="Cyan"
-                    CornerRadius="5" />
-                <TextBlock
-                    Grid.Column="0"
-                    Margin="20,0,0,0"
-                    HorizontalAlignment="Left"
-                    Foreground="Black"
-                    Style="{StaticResource HeaderTextBlockStyle}"
-                    Text="Warning" />
-            </Grid>
-            <Grid Grid.Row="1">
+            Margin="10"
+            Background="AliceBlue"
+            BorderBrush="LightSlateGray"
+            BorderThickness="2"
+            CornerRadius="10">
+            <Border.Effect>
+                <DropShadowEffect
+                    BlurRadius="5"
+                    ShadowDepth="2"
+                    Color="Black" />
+            </Border.Effect>
+            <Grid Background="Transparent">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="1" />
-                    <RowDefinition Height="2*" />
-                    <RowDefinition Height="0" />
-                    <RowDefinition Height="1.5*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="10*" />
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="53*" />
-                        <ColumnDefinition Width="345*" />
-                    </Grid.ColumnDefinitions>
+                    <Border
+                        x:Name="bdHeader"
+                        Background="Cyan"
+                        CornerRadius="5" />
                     <TextBlock
-                        x:Name="txtCommand"
-                        Grid.Column="1"
-                        Margin="207,0,0,0"
+                        Grid.Column="0"
+                        Margin="20,0,0,0"
                         HorizontalAlignment="Left"
-                        VerticalAlignment="Bottom"
-                        FontSize="50"
-                        Foreground="Red"
-                        Style="{StaticResource BodyTextBlockStyle}"
-                        Text="" />
+                        Foreground="Black"
+                        Style="{StaticResource HeaderTextBlockStyle}"
+                        Text="Warning" />
                 </Grid>
-                <!--<Grid Grid.Row="1">
+                <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="1" />
+                        <RowDefinition Height="2*" />
+                        <RowDefinition Height="0" />
+                        <RowDefinition Height="1.5*" />
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="53*" />
+                            <ColumnDefinition Width="345*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock
+                            x:Name="txtCommand"
+                            Grid.Column="1"
+                            Margin="207,0,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Bottom"
+                            FontSize="50"
+                            Foreground="Red"
+                            Style="{StaticResource BodyTextBlockStyle}"
+                            Text="" />
+                    </Grid>
+                    <!--<Grid Grid.Row="1">
                     <Border Margin="50,0,50,0" Background="Black" />
                 </Grid>-->
-                <Grid Grid.Row="2">
-                    <TextBlock
-                        x:Name="txtCommandRequest"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        FontSize="50"
-                        Style="{StaticResource CaptionTextBlockStyle}"
-                        Text="123" />
-                </Grid>
-                <Grid Grid.Row="3">
-                    <TextBlock
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        FontSize="25"
-                        Style="{StaticResource CaptionTextBlockStyle}"
-                        Text="" />
-                </Grid>
-                <Grid Grid.Row="4">
-                    <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-
-                        <Button
-                            x:Name="btnYes"
-                            Grid.Row="0"
-                            Width="120"
-                            Height="40"
-                            Margin="0,0,80,0"
-                            HorizontalAlignment="Right"
+                    <Grid Grid.Row="2">
+                        <TextBlock
+                            x:Name="txtCommandRequest"
+                            HorizontalAlignment="Center"
                             VerticalAlignment="Center"
-                            Content="Yes"
-                            Style="{StaticResource ButtonControl}" />
-                        <Button
-                            x:Name="btnNo"
-                            Grid.Row="0"
-                            Width="120"
-                            Height="40"
-                            Margin="80,0,0,0"
-                            HorizontalAlignment="Right"
+                            FontSize="50"
+                            Style="{StaticResource CaptionTextBlockStyle}"
+                            Text="123" />
+                    </Grid>
+                    <Grid Grid.Row="3">
+                        <TextBlock
+                            HorizontalAlignment="Center"
                             VerticalAlignment="Center"
-                            Content="No"
-                            Style="{StaticResource ButtonControl}" />
-                    </StackPanel>
+                            FontSize="25"
+                            Style="{StaticResource CaptionTextBlockStyle}"
+                            Text="" />
+                    </Grid>
+                    <Grid Grid.Row="4">
+                        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
 
+                            <Button
+                                x:Name="btnYes"
+                                Grid.Row="0"
+                                Width="120"
+                                Height="40"
+                                Margin="0,0,80,0"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center"
+                                Content="Yes"
+                                Style="{StaticResource ButtonControl}" />
+                            <Button
+                                x:Name="btnNo"
+                                Grid.Row="0"
+                                Width="120"
+                                Height="40"
+                                Margin="80,0,0,0"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center"
+                                Content="No"
+                                Style="{StaticResource ButtonControl}" />
+                        </StackPanel>
+
+                    </Grid>
                 </Grid>
             </Grid>
-        </Grid>
-    </Border>
+        </Border>
     </Grid>
-    
+
 </Window>
