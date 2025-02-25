@@ -120,6 +120,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="MVVM\View\Config\Test.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MVVM\View\ECM\ECMView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -182,6 +186,14 @@
     <Compile Include="Message\PLC2Cim\Recv\PACKINGINFORMATIONREQUEST.cs" />
     <Compile Include="Message\PLC2Cim\Recv\PACKINGJOBSTARTREQUEST.cs" />
     <Compile Include="Message\PLC2Cim\Recv\PPIDCHANGEREQUEST.cs" />
+    <Compile Include="Message\PLC2Cim\Send\CARRIERINFORMATIONSENDCASSETTEBATCH.cs" />
+    <Compile Include="Message\PLC2Cim\Send\DATETIMESET.cs" />
+    <Compile Include="Message\PLC2Cim\Send\FORMATTEDPROCESSPROGRAMREQUEST.cs" />
+    <Compile Include="Message\PLC2Cim\Send\INSPECTIONCARRIERASSIGNINFOSEND.cs" />
+    <Compile Include="Message\PLC2Cim\Send\INSPECTIONCARRIERRELEASEINFOSEND.cs" />
+    <Compile Include="Message\PLC2Cim\Send\LABELINFORMATIONSEND.cs" />
+    <Compile Include="Message\PLC2Cim\Send\LABELPRECHECKSEND.cs" />
+    <Compile Include="Message\PLC2Cim\Send\LABELVALIDATIONSEND.cs" />
     <Compile Include="Message\Sys2Cim\Send\S3\S3F217.cs" />
     <Compile Include="MVVM\Model\AlarmView.cs" />
     <Compile Include="MVVM\Model\ECMView.cs" />
@@ -195,6 +207,9 @@
     </Compile>
     <Compile Include="MVVM\View\Config\ConfigView.xaml.cs">
       <DependentUpon>ConfigView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\Config\Test.xaml.cs">
+      <DependentUpon>Test.xaml</DependentUpon>
     </Compile>
     <Compile Include="MVVM\View\ECM\ECMView.xaml.cs">
       <DependentUpon>ECMView.xaml</DependentUpon>
@@ -219,6 +234,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MVVM\View\Monitor\MonitorWords.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\Popup\ExitDisplay.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\Popup\LogInDisplay.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -466,6 +489,12 @@
     </Compile>
     <Compile Include="MVVM\View\Monitor\MonitorWords.xaml.cs">
       <DependentUpon>MonitorWords.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\Popup\ExitDisplay.xaml.cs">
+      <DependentUpon>ExitDisplay.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\Popup\LogInDisplay.xaml.cs">
+      <DependentUpon>LogInDisplay.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

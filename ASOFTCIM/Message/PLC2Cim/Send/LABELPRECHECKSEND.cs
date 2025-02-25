@@ -1,5 +1,4 @@
-﻿
-using A_SOFT.CMM.INIT;
+﻿using A_SOFT.CMM.INIT;
 using A_SOFT.PLC;
 using ASOFTCIM.Data;
 using ASOFTCIM.Helper;
@@ -12,18 +11,19 @@ using System.Threading.Tasks;
 
 namespace ASOFTCIM.Message.PLC2Cim.Send
 {
-    public class EQUIPMENTCONTROLINFORMATION
+    public class LABELPRECHECKSEND
     {
-        public EQUIPMENTCONTROLINFORMATION(PLCHelper plcdata, FUNCTION func)
+        public LABELPRECHECKSEND(PLCHelper plcdata, LABELINFODOWNLOAD labelinfodownload)
         {
 
             try
             {
                 List<WordModel> word = plcdata.Words.Where(x => x.Area == this.GetType().Name).ToList();
-                word.FirstOrDefault(x => x.Item == "EFID").SetValue = func.EFID;
-                word.FirstOrDefault(x => x.Item == "EFST").SetValue = func.EFST;
-                word.FirstOrDefault(x => x.Item == "MESSAGE").SetValue = func.MESSAGE;
-
+                word.FirstOrDefault(x => x.Item == "OPTIONCODE").SetValue = labelinfodownload.OPTIONCODE;
+                word.FirstOrDefault(x => x.Item == "CELLID").SetValue = labelinfodownload.CELLID;
+                word.FirstOrDefault(x => x.Item == "REPLYSTATUS").SetValue = labelinfodownload.REPLYSTATUS;
+                word.FirstOrDefault(x => x.Item == "REPLYCODE").SetValue = labelinfodownload.REPLYCODE;
+                word.FirstOrDefault(x => x.Item == "REPLYTEXT").SetValue = labelinfodownload.REPLYTEXT;
                 BitModel bit = plcdata.Bits.First(x => x.Comment == this.GetType().Name);
                 bit.SetPCValue = true;
             }
