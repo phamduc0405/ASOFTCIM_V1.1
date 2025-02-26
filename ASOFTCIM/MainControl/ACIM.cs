@@ -62,16 +62,16 @@ namespace ASOFTCIM
         }
         #endregion
 
-        public ACIM()
+        public ACIM(EquipmentConfig equipmentConfig)
         {
             Initial();
             _cim = new CimHelper(EQPID);
             _cim.Init(ATCPIP.ConnectMode.Passive, "127.0.0.1", 8000);
             _cim.SysPacketEvent += _cim_SysPacketEvent;
             _plc = new PlcComm();
-
-            LoadExcelConfig(@"D:\Project_New\ACIM\SDCCIM_ASOFT_Portal_Online_Map_SDC_Basic_V1.21_v0.1.xlsx");
-            InitialPlc();
+            _eqpConfig = equipmentConfig;
+            //LoadExcelConfig(@"D:\Project_New\ACIM\SDCCIM_ASOFT_Portal_Online_Map_SDC_Basic_V1.21_v0.1.xlsx");
+            //InitialPlc();
         }
         public void Stop()
         {
