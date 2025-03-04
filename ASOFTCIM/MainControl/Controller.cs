@@ -1,6 +1,8 @@
 ﻿using A_SOFT.CMM.HELPER;
 using A_SOFT.CMM.INIT;
+using A_SOFT.PLC;
 using ASOFTCIM.Config;
+using ASOFTCIM.Data;
 using ASOFTCIM.Helper;
 using System;
 using System.Collections.Generic;
@@ -47,11 +49,15 @@ namespace ASOFTCIM.MainControl
                 if (File.Exists(DefaultData.AppPath + @"\Setting\SystemConfig.setting"))
                 {
                     string readText = File.ReadAllText(DefaultData.AppPath + @"\Setting\SystemConfig.setting");
-                    //_equipmentConfig = XmlHelper<EquipmentConfig>.DeserializeFromString(readText);
-                    //if (_equipmentConfig == null)
-                    //{
-                    //    _equipmentConfig = new EquipmentConfig();
-                    //}
+                    _equipmentConfig = XmlHelper<EquipmentConfig>.DeserializeFromString(readText);
+                    foreach (var b in _equipmentConfig.PLCHelper.Bits)
+                    {
+                        List<WordModel> wm = _equipmentConfig.PLCHelper.Words.Where(x => x.BitEvent.Contains($"{b.PLCDevice}{b.PLCHexAdd}")).ToList();
+                        b.LstWord.AddRange(wm);
+                        List<MaterialModel> material = _equipmentConfig.PLCHelper.Materrials.Where(x => x.BitEvent.Contains($"{b.PLCDevice}{b.PLCHexAdd}")).ToList();
+                        b.LstWord.AddRange(material);
+
+                    }
                 }
                 else
                 {
@@ -67,7 +73,8 @@ namespace ASOFTCIM.MainControl
         }
         public void SaveControllerConfig()
         {
-            string str = A_SOFT.CMM.HELPER.XmlHelper<EquipmentConfig>.SerializeToString(EquipmentConfig);
+            
+            string str = XmlHelper<EquipmentConfig>.SerializeToString(_equipmentConfig);
             try
             {
                 Task.Run(() =>

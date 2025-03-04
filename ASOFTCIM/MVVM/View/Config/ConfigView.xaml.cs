@@ -32,8 +32,6 @@ namespace ASOFTCIM.MVVM.View.Config
 
         private Controller _controller;
         private EquipmentConfig _equipmentConfig;
-
-
         #endregion
 
 
@@ -57,12 +55,6 @@ namespace ASOFTCIM.MVVM.View.Config
         #region Private Void
         private void Initial()
         {
-            //for (int i = 0; i < 4; i++)
-            //{
-            //    PartialSQLString sql = new PartialSQLString();
-            //    _partialSQLString.Add(sql);
-            //    stkSqlConfig.Children.Add(sql);
-            //}
         }
         private void CreaterEven()
         {
@@ -122,68 +114,36 @@ namespace ASOFTCIM.MVVM.View.Config
                 {
                     // LoadingPlcImage.Visibility = Visibility.Visible;
 
-                    //_equipmentConfig.PLCConfig = new PLCConfig()
-                    //{
-                    //    Channel = short.Parse(txtPLCChannel.Text),
-                    //    NetworkNo = short.Parse(txtPLCNetWork.Text),
-                    //    Path = int.Parse(txtPLCPath.Text),
-                    //    StationNo = int.Parse(txtPLCStation.Text),
-                    //    IsCCLinkIe = tglPlcUseCCLinkIe.IsChecked == true,
+                    _equipmentConfig.PLCConfig = new PLCConfig()
+                    {
+                        Channel = short.Parse(txtPLCChannel.Text),
+                        NetworkNo = short.Parse(txtPLCNetWork.Text),
+                        Path = int.Parse(txtPLCPath.Text),
+                        StationNo = int.Parse(txtPLCStation.Text),
+                        IsCCLinkIe = tglPlcUseCCLinkIe.IsChecked == true,
 
-                    //    ReadStartBitAddress = txtPLCStartInBAdd.Text,
-                    //    SizeReadBit = int.Parse(txtPLCLengthInB.Text),
-                    //    ReadStartWordAddress = txtPLCStartInWAdd.Text,
-                    //    SizeReadWord = int.Parse(txtPLCLengthInW.Text),
+                        ReadStartBitAddress = txtPLCStartInBAdd.Text,
+                        SizeReadBit = int.Parse(txtPLCLengthInB.Text),
+                        ReadStartWordAddress = txtPLCStartInWAdd.Text,
+                        SizeReadWord = int.Parse(txtPLCLengthInW.Text),
 
-                    //    WriteStartBitAddress = txtPLCStartOutB.Text,
-                    //    SizeWriteBit = int.Parse(txtPLCLengthOutB.Text),
-                    //    WriteStartWordAddress = txtPLCStartOutW.Text,
-                    //    SizeWriteWord = int.Parse(txtPLCLengthOutW.Text),
+                        WriteStartBitAddress = txtPLCStartOutB.Text,
+                        SizeWriteBit = int.Parse(txtPLCLengthOutB.Text),
+                        WriteStartWordAddress = txtPLCStartOutW.Text,
+                        SizeWriteWord = int.Parse(txtPLCLengthOutW.Text),
 
-                    //    PlcConnectType = (PlcConnectType)cbbplcConnectType.SelectedItem,
+                        PlcConnectType = (PlcConnectType)cbbplcConnectType.SelectedItem,
 
-                    //    PortPlc = int.Parse(txtPLCPort.Text),
-                    //    //IpPlc = ipPLCTextBox.FullIpAddress,
-                    //    //IpPc = ipPCTextBox.FullIpAddress,
-                    //};
+                        PortPlc = int.Parse(txtPLCPort.Text),
+                        
+                    };
                     if (File.Exists(txtPathPlcExcel.Text))
                     {
-                        //_equipmentConfig.PLCHelper.LoadExcel(txtPathPlcExcel.Text);
-                        //_controller.CIM.LoadExcelConfig(txtPathPlcExcel.Text);
-                        //_controller.CIM.InitialPlc();
+                        _controller.CIM.LoadExcelConfig(@"D:\Project_New\ACIM\SDCCIM_ASOFT_Portal_Online_Map_SDC_Basic_V1.21_v0.1.xlsx");
                     }
-                    //if (_equipmentConfig.PLCHelper.PlcMemms?.Count > 0)
-                    //{
-                    //    if (_equipmentConfig.PLCHelper.Bits.Any(x => x.Item == "ALIVE"))
-                    //    {
-                    //        BitModel bAlive = _equipmentConfig.PLCHelper.Bits.FirstOrDefault(x => x.Item == "ALIVE");
-                    //        if (_equipmentConfig.PLCHelper.PlcMemms.Any(x => x.BPLCStart == bAlive.PLCHexAdd))
-                    //        {
-                    //            PlcMemmory plcmem = _equipmentConfig.PLCHelper.PlcMemms.FirstOrDefault(x => x.BPLCStart == bAlive.PLCHexAdd);
-
-                    //            _equipmentConfig.PLCConfig.ReadStartBitAddress = plcmem.BPLCStart;
-                    //            _equipmentConfig.PLCConfig.SizeReadBit = int.Parse(plcmem.BPLCPoints);
-                    //            _equipmentConfig.PLCConfig.ReadStartWordAddress = plcmem.WPLCStart;
-                    //            _equipmentConfig.PLCConfig.SizeReadWord = int.Parse(plcmem.WPLCPoints);
-
-                    //            _equipmentConfig.PLCConfig.WriteStartBitAddress = plcmem.BPCStart;
-                    //            _equipmentConfig.PLCConfig.SizeWriteBit = int.Parse(plcmem.BPCPoints);
-                    //            _equipmentConfig.PLCConfig.WriteStartWordAddress = plcmem.WPCStart;
-                    //            _equipmentConfig.PLCConfig.SizeWriteWord = int.Parse(plcmem.WPCPoints);
-
-                    //            _equipmentConfig.PLCConfig.BitDevice = plcmem.BitDevice;
-                    //            _equipmentConfig.PLCConfig.WordDevice = plcmem.WordDevice;
-
-
-                    //        }
-                    //    }
-
-                    //}
-
                     var debug = string.Format("Class:{0} Method:{1} Event:{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ((System.Windows.Controls.Control)s).Name);
                     LogTxt.Add(LogTxt.Type.UI, debug);
                     await SaveConfig();
-
                     await LoadConfig();
                 }
                 catch (Exception ex)

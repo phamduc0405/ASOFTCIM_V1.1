@@ -17,7 +17,8 @@ namespace ASOFTCIM
             {
                 string eqpid = _cim.SysPacket.GetItemString(1);
                 string ppid_type = _cim.SysPacket.GetItemString();
-               // new S7F102().SendMessage(mes);
+                // new S7F102().SendMessage(mes);
+                SendS7F102(this.EqpData.PPIDList);
             }
             catch (Exception ex)
             {

@@ -62,6 +62,11 @@ namespace ASOFTCIM.Helper
             get { return _ppidParams; }
             set { _ppidParams = value; }
         }
+        public List<MaterialModel> Materrials
+        {
+            get { return _materials; }
+            set { _materials = value; }
+        }
         public string EqpId { get; set; } = null;
         #endregion
         #region Event
