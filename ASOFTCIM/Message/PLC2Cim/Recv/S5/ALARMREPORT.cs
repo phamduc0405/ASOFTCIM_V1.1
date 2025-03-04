@@ -42,6 +42,7 @@ namespace ASOFTCIM.Message.PLC2Cim.Recv
                 }
                 if (alarm == null)
                     return;
+                AddAlarm(eq, alarm);
                 eq.SendS5F1( alarm);
                 //new S5F1().SendMessage( alarm);
             }
@@ -52,5 +53,31 @@ namespace ASOFTCIM.Message.PLC2Cim.Recv
             }
 
         }
+        public void AddAlarm(ACIM acim, Alarm alarm)
+        {
+            if(acim.EqpData.ALS.Any(x =>x.ALID == alarm.ALID))
+            {
+                acim.EqpData.ALS.RemoveAll(x => x.ALID == alarm.ALID);
+            }    
+            acim.EqpData.ALS.Add(alarm);
+            if(acim.EqpData.CurrAlarm.Any(x => x.ALID == alarm.ALID))
+            {
+                acim.EqpData.CurrAlarm.Remove(alarm);
+                if(alarm.ALST=="1")
+                {
+                    acim.EqpData.CurrAlarm.Add(alarm);
+                }
+            }
+            else
+            {
+                if(alarm.ALST == "1")
+                {
+                    acim.EqpData.CurrAlarm.Add(alarm);
+                }
+            }    
+        }
+
+
+
     }
 }

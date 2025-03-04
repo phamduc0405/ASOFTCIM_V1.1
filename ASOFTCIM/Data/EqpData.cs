@@ -24,6 +24,7 @@ namespace ASOFTCIM.Data
         public List<FUNCTION> FUNCTION { get; set; } = new List<FUNCTION>();
         public List<Alarm> ALS { get; set; } = new List<Alarm>();
         public List<Alarm> CurrAlarm { get; set; } = new List<Alarm>();
+        public List<Alarm> AlarmHistory { get; set; } = new List<Alarm>();
         public List<EC> ECS { get; set; } = new List<EC>();
         public PPIDINFOR CurrPPID { get; set; } = new PPIDINFOR();
         public PPIDList PPIDList { get; set; } = new PPIDList();
