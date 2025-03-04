@@ -42,6 +42,7 @@ namespace ASOFTCIM
                     //};
                     //_aliveBit.Start();
                     //DefineAlarm();
+                     this.EqpData.ALS = _eqpConfig.PLCHelper.Alarms;
                     _plcH.BitChangedEvent += (bit) =>
                     {
                         PLCBitChange(bit.Comment, bit);

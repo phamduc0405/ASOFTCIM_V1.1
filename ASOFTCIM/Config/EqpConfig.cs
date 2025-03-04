@@ -18,7 +18,7 @@ namespace ASOFTCIM.Config
         public string EqpName { get; set; } = string.Empty;
         public PLCHelper PLCHelper { get; set; } = new PLCHelper();
         public PLCConfig PLCConfig { get; set; } = new PLCConfig();
-        public string LineName { get; set; }
+        public string LineName { get; set; } = "";
     }
     public class DefineConst
     {

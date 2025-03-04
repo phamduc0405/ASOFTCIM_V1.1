@@ -113,15 +113,7 @@ namespace ASOFTCIM.MVVM.View.Config
             };
             btnSaveEqpConfig.Click += async (s, e) =>
             {
-                //LoadingEqpImage.Visibility = Visibility.Visible;
-                //_equipmentConfig.EQPID = txtEqpId.Text.Trim();
-                //_controllerConfig.PathLog = txtPathLog.Text;
-                //_controllerConfig.DelLog = int.Parse(txtTimeDelLog.Text);
-                //_controllerConfig.NumberCellIn1Tray = int.Parse(txtNumberCellin1Tray.Text);
-                //_controllerConfig.NumberTrayIn1LOT = int.Parse(txtNumberTrayin1LOT.Text);
-                //_controllerConfig.IsSkipRqDataBase = tglIsRqSQL.IsChecked == true;
-                //await SaveConfig();
-                //LoadingEqpImage.Visibility = Visibility.Hidden;
+               
             };
 
             btnSavePlcConfig.Click += async (s, e) =>
@@ -156,41 +148,37 @@ namespace ASOFTCIM.MVVM.View.Config
                     //};
                     if (File.Exists(txtPathPlcExcel.Text))
                     {
-                        _equipmentConfig.PLCHelper.LoadExcel(txtPathPlcExcel.Text);
-
-
-                        //     await _controller.Eqps.FirstOrDefault(x => x.EqpID == _eqpConfig.EQPID).SavePlcData();
-
-                        //  DisplaySavePlcConfig display = new DisplaySavePlcConfig(txtPathPlcExcel.Text);
-                        //  display.ShowDialog();
+                        //_equipmentConfig.PLCHelper.LoadExcel(txtPathPlcExcel.Text);
+                        //_controller.CIM.LoadExcelConfig(txtPathPlcExcel.Text);
+                        //_controller.CIM.InitialPlc();
                     }
-                    if (_equipmentConfig.PLCHelper.PlcMemms?.Count > 0)
-                    {
-                        if (_equipmentConfig.PLCHelper.Bits.Any(x => x.Item == "ALIVE"))
-                        {
-                            BitModel bAlive = _equipmentConfig.PLCHelper.Bits.FirstOrDefault(x => x.Item == "ALIVE");
-                            if (_equipmentConfig.PLCHelper.PlcMemms.Any(x => x.BPLCStart == bAlive.PLCHexAdd))
-                            {
-                                PlcMemmory plcmem = _equipmentConfig.PLCHelper.PlcMemms.FirstOrDefault(x => x.BPLCStart == bAlive.PLCHexAdd);
+                    //if (_equipmentConfig.PLCHelper.PlcMemms?.Count > 0)
+                    //{
+                    //    if (_equipmentConfig.PLCHelper.Bits.Any(x => x.Item == "ALIVE"))
+                    //    {
+                    //        BitModel bAlive = _equipmentConfig.PLCHelper.Bits.FirstOrDefault(x => x.Item == "ALIVE");
+                    //        if (_equipmentConfig.PLCHelper.PlcMemms.Any(x => x.BPLCStart == bAlive.PLCHexAdd))
+                    //        {
+                    //            PlcMemmory plcmem = _equipmentConfig.PLCHelper.PlcMemms.FirstOrDefault(x => x.BPLCStart == bAlive.PLCHexAdd);
 
-                                _equipmentConfig.PLCConfig.ReadStartBitAddress = plcmem.BPLCStart;
-                                _equipmentConfig.PLCConfig.SizeReadBit = int.Parse(plcmem.BPLCPoints);
-                                _equipmentConfig.PLCConfig.ReadStartWordAddress = plcmem.WPLCStart;
-                                _equipmentConfig.PLCConfig.SizeReadWord = int.Parse(plcmem.WPLCPoints);
+                    //            _equipmentConfig.PLCConfig.ReadStartBitAddress = plcmem.BPLCStart;
+                    //            _equipmentConfig.PLCConfig.SizeReadBit = int.Parse(plcmem.BPLCPoints);
+                    //            _equipmentConfig.PLCConfig.ReadStartWordAddress = plcmem.WPLCStart;
+                    //            _equipmentConfig.PLCConfig.SizeReadWord = int.Parse(plcmem.WPLCPoints);
 
-                                _equipmentConfig.PLCConfig.WriteStartBitAddress = plcmem.BPCStart;
-                                _equipmentConfig.PLCConfig.SizeWriteBit = int.Parse(plcmem.BPCPoints);
-                                _equipmentConfig.PLCConfig.WriteStartWordAddress = plcmem.WPCStart;
-                                _equipmentConfig.PLCConfig.SizeWriteWord = int.Parse(plcmem.WPCPoints);
+                    //            _equipmentConfig.PLCConfig.WriteStartBitAddress = plcmem.BPCStart;
+                    //            _equipmentConfig.PLCConfig.SizeWriteBit = int.Parse(plcmem.BPCPoints);
+                    //            _equipmentConfig.PLCConfig.WriteStartWordAddress = plcmem.WPCStart;
+                    //            _equipmentConfig.PLCConfig.SizeWriteWord = int.Parse(plcmem.WPCPoints);
 
-                                _equipmentConfig.PLCConfig.BitDevice = plcmem.BitDevice;
-                                _equipmentConfig.PLCConfig.WordDevice = plcmem.WordDevice;
+                    //            _equipmentConfig.PLCConfig.BitDevice = plcmem.BitDevice;
+                    //            _equipmentConfig.PLCConfig.WordDevice = plcmem.WordDevice;
 
 
-                            }
-                        }
+                    //        }
+                    //    }
 
-                    }
+                    //}
 
                     var debug = string.Format("Class:{0} Method:{1} Event:{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ((System.Windows.Controls.Control)s).Name);
                     LogTxt.Add(LogTxt.Type.UI, debug);
@@ -213,9 +201,6 @@ namespace ASOFTCIM.MVVM.View.Config
         {
             await Task.Run(async () =>
             {
-                //_controllerConfig.EqpConfigs = _eqpConfig;
-                //_controller.ControllerConfig = _controllerConfig;
-
                 _controller.SaveControllerConfig();
             });
 
@@ -232,11 +217,6 @@ namespace ASOFTCIM.MVVM.View.Config
                         //EqpConfig
                         {
                             txtEqpId.Text = _equipmentConfig.EQPID;
-                            //txtPathLog.Text = _equipmentConfig.PathLog;
-                            //txtTimeDelLog.Text = _controllerConfig.DelLog.ToString();
-                            //tglIsRqSQL.IsChecked = _controllerConfig.IsSkipRqDataBase;
-                            //txtNumberCellin1Tray.Text = _controllerConfig.NumberCellIn1Tray.ToString();
-                            //txtNumberTrayin1LOT.Text = _controllerConfig.NumberTrayIn1LOT.ToString();
                         }
 
                         //PlcConfig
@@ -246,7 +226,6 @@ namespace ASOFTCIM.MVVM.View.Config
                             txtPLCPath.Text = _equipmentConfig.PLCConfig.Path.ToString();
                             txtPLCStation.Text = _equipmentConfig.PLCConfig.StationNo.ToString();
                             tglPlcUseCCLinkIe.IsChecked = _equipmentConfig.PLCConfig.IsCCLinkIe;
-                            //stkCCLinkIe.Visibility = _equipmentConfig.PLCConfig.IsCCLinkIe ? Visibility.Visible : Visibility.Collapsed;
 
 
                             txtPLCStartInBAdd.Text = _equipmentConfig.PLCConfig.ReadStartBitAddress.ToString();
@@ -261,34 +240,8 @@ namespace ASOFTCIM.MVVM.View.Config
 
                             cbbplcConnectType.SelectedItem = _equipmentConfig.PLCConfig.PlcConnectType;
                             var ipPlcSegments = _equipmentConfig.PLCConfig.IpPlc.Split('.');
-                            //if (ipPlcSegments.Length == 4)
-                            //{
-                            //    ipPLCTextBox.FirstSegment = ipPlcSegments[0];
-                            //    ipPLCTextBox.SecondSegment = ipPlcSegments[1];
-                            //    ipPLCTextBox.ThirdSegment = ipPlcSegments[2];
-                            //    ipPLCTextBox.LastSegment = ipPlcSegments[3];
-                            //}
-
-                            //var ipPcSegments = _eqpConfig.PLCConfig.IpPc.Split('.');
-                            //if (ipPcSegments.Length == 4)
-                            //{
-                            //    ipPCTextBox.FirstSegment = ipPcSegments[0];
-                            //    ipPCTextBox.SecondSegment = ipPcSegments[1];
-                            //    ipPCTextBox.ThirdSegment = ipPcSegments[2];
-                            //    ipPCTextBox.LastSegment = ipPcSegments[3];
-                            //}
-                            //txtPLCPort.Text = _eqpConfig.PLCConfig.PortPlc.ToString();
+                           
                         }
-                        //{
-                        //    txtNameSubTable.Text = _controllerConfig.SQLConfig.SubTableName.ToString();
-                        //    txtNameMainTable.Text = _controllerConfig.SQLConfig.MainTableName.ToString();
-                        //    txtPathDatabase.Text = _controllerConfig.SQLConfig.DatabasePath.ToString();
-                        //    txtPathServer.Text = _controllerConfig.SQLConfig.ServerPath.ToString();
-                        //    txtPathSubTable.Text = _controllerConfig.SQLConfig.PathSubTable.ToString();
-                        //    txtPathMainTable.Text = _controllerConfig.SQLConfig.PathMainTable.ToString();
-                        //    txtConnectionString.Text = _controllerConfig.SQLConfig.ConnectionString.ToString();
-
-                        //}
                     });
                 }
                 catch (Exception ex)

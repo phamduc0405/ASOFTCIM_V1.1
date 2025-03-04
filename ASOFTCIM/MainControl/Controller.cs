@@ -15,7 +15,7 @@ namespace ASOFTCIM.MainControl
     public class Controller
     {
         private ACIM _cim;
-        private EquipmentConfig _equipmentConfig;
+        private EquipmentConfig _equipmentConfig = new EquipmentConfig();
         
         public EquipmentConfig EquipmentConfig
         {
@@ -31,6 +31,7 @@ namespace ASOFTCIM.MainControl
 
         public Controller()
         {
+            
             ReadControllerConfig();
             _cim = new ACIM(_equipmentConfig);
             
@@ -46,11 +47,11 @@ namespace ASOFTCIM.MainControl
                 if (File.Exists(DefaultData.AppPath + @"\Setting\SystemConfig.setting"))
                 {
                     string readText = File.ReadAllText(DefaultData.AppPath + @"\Setting\SystemConfig.setting");
-                    _equipmentConfig = XmlHelper<EquipmentConfig>.DeserializeFromString(readText);
-                    if (_equipmentConfig == null)
-                    {
-                        _equipmentConfig = new EquipmentConfig();
-                    }
+                    //_equipmentConfig = XmlHelper<EquipmentConfig>.DeserializeFromString(readText);
+                    //if (_equipmentConfig == null)
+                    //{
+                    //    _equipmentConfig = new EquipmentConfig();
+                    //}
                 }
                 else
                 {
@@ -66,7 +67,7 @@ namespace ASOFTCIM.MainControl
         }
         public void SaveControllerConfig()
         {
-            string str = XmlHelper<EquipmentConfig>.SerializeToString(_equipmentConfig);
+            string str = A_SOFT.CMM.HELPER.XmlHelper<EquipmentConfig>.SerializeToString(EquipmentConfig);
             try
             {
                 Task.Run(() =>
