@@ -50,7 +50,7 @@ namespace ASOFTCIM.Data
         public string EVENT { get; set; }
 
         [System.Xml.Serialization.XmlElement("CELL")]
-        public CELL CELL { get; set; }
+        public CELL CELL { get; set; } = new CELL();
 
 
         [XmlArray("MATERIALS")]

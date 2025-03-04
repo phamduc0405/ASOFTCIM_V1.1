@@ -170,6 +170,7 @@
     <Compile Include="Data\ValidationModel.cs" />
     <Compile Include="Helper\CimHelper.cs" />
     <Compile Include="Helper\PLCHelper.cs" />
+    <Compile Include="Init\LibMethod.cs" />
     <Compile Include="Init\ObservableObject.cs" />
     <Compile Include="Init\RelayCommand.cs" />
     <Compile Include="MainControl\ACIM.cs" />
@@ -181,10 +182,12 @@
     <Compile Include="Message\PLC2Cim\Recv\INSPECTIONCARRIERRELEASEREQUEST.cs" />
     <Compile Include="Message\PLC2Cim\Recv\MATERIALIDREADINGRESULTREQUEST.cs" />
     <Compile Include="Message\PLC2Cim\Recv\MATERIALKITTINGREQUEST.cs" />
+    <Compile Include="Message\PLC2Cim\Recv\MATERIALLOCATIONUPDATEREQUEST.cs" />
     <Compile Include="Message\PLC2Cim\Recv\MATERIALSHORTAGEREQUEST.cs" />
     <Compile Include="Message\PLC2Cim\Recv\MATERIALWARNINGREQUEST.cs" />
     <Compile Include="Message\PLC2Cim\Recv\PACKINGINFORMATIONREQUEST.cs" />
     <Compile Include="Message\PLC2Cim\Recv\PACKINGJOBSTARTREQUEST.cs" />
+    <Compile Include="Message\PLC2Cim\Recv\PARAMETERCHANGE.cs" />
     <Compile Include="Message\PLC2Cim\Recv\PPIDCHANGEREQUEST.cs" />
     <Compile Include="Message\PLC2Cim\Send\CARRIERINFORMATIONSENDCASSETTEBATCH.cs" />
     <Compile Include="Message\PLC2Cim\Send\DATETIMESET.cs" />
@@ -194,6 +197,7 @@
     <Compile Include="Message\PLC2Cim\Send\LABELINFORMATIONSEND.cs" />
     <Compile Include="Message\PLC2Cim\Send\LABELPRECHECKSEND.cs" />
     <Compile Include="Message\PLC2Cim\Send\LABELVALIDATIONSEND.cs" />
+    <Compile Include="Message\Sys2Cim\Send\S1\S1F1.cs" />
     <Compile Include="Message\Sys2Cim\Send\S3\S3F217.cs" />
     <Compile Include="MVVM\Model\AlarmView.cs" />
     <Compile Include="MVVM\Model\ECMView.cs" />

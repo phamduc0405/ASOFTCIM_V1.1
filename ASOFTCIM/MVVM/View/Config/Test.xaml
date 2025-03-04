@@ -30,5 +30,18 @@
         <Button x:Name="btnTest" Content="TestPLC2CIM_SEND" />
         <TextBox x:Name="txtNameClass" Grid.Column="1" />
         <TextBox x:Name="txtNameObj" Grid.Column="2" />
+        <!--  =  -->
+        <Button
+            x:Name="btnS2F17"
+            Grid.Row="1"
+            Grid.Column="0"
+            Content="SendS2F17" />
+        <!--  =  -->
+        <Button
+            x:Name="btnS1F1"
+            Grid.Row="2"
+            Grid.Column="0"
+            Content="SendS1F1" />
+
     </Grid>
 </UserControl>

@@ -17,6 +17,7 @@ using Type = System.Type;
 using FontAwesome.Sharp;
 using ASOFTCIM.Message.PLC2Cim.Recv;
 using ASOFTCIM.MainControl.Device.PC;
+using ASOFTCIM.MainControl;
 
 namespace ASOFTCIM
 {
@@ -61,16 +62,16 @@ namespace ASOFTCIM
         }
         #endregion
 
-        public ACIM()
+        public ACIM(EquipmentConfig equipmentConfig)
         {
             Initial();
             _cim = new CimHelper(EQPID);
             _cim.Init(ATCPIP.ConnectMode.Passive, "127.0.0.1", 8000);
             _cim.SysPacketEvent += _cim_SysPacketEvent;
             _plc = new PlcComm();
-
-            LoadExcelConfig(@"D:\Project_New\ACIM\SDCCIM_ASOFT_Portal_Online_Map_SDC_Basic_V1.21_v0.1.xlsx");
-            InitialPlc();
+            _eqpConfig = equipmentConfig;
+            //LoadExcelConfig(@"D:\Project_New\ACIM\SDCCIM_ASOFT_Portal_Online_Map_SDC_Basic_V1.21_v0.1.xlsx");
+            //InitialPlc();
         }
         public void Stop()
         {
@@ -111,8 +112,28 @@ namespace ASOFTCIM
         {
             _cim.AddTrans(trans);
         }
+        public void SendMessage2PLC(string classname,object obj)
+        {
+            string namespaces = "ASOFTCIM.Message.PLC2Cim.Send";
+            Type[] typelist = GetTypesInNamespace(Assembly.GetExecutingAssembly(), namespaces);
+            Type t = Assembly.GetExecutingAssembly().GetType($"{namespaces}.{classname}");
+
+            if (t != null && typelist.Contains(t))
+            {
+                try
+                {
+                    object instance = Activator.CreateInstance(t, new object[] { _plcH, obj });
+
+                    if (instance != null)
+                    {
+                        Console.WriteLine($"Tạo instance của {classname} thành công!");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Lỗi khi tạo instance: {ex.Message}");
+                }
+            }
+        }
     }
-
-
-   
 }

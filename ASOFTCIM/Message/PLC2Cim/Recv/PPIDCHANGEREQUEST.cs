@@ -19,11 +19,15 @@ namespace ASOFTCIM.Message.PLC2Cim.Recv
             {
                 BitModel bit = (BitModel)body;
                 List<WordModel> word = eq.PLCH.Words.Where(x => x.Area == bit.Comment).ToList();
-                PPIDINFOR pPIDModel = new PPIDINFOR();
-                pPIDModel.MODE = word.FirstOrDefault(x => x.Item == "PPID").GetValue(eq.PLC);
+                List<PPIDModel> ppidModels = new List<PPIDModel>(); 
+                ppidModels = eq.PLCH.PPIDParams.ToList();
+                PPIDChange ppidchange = new PPIDChange();
+                ppidchange.OLD_PPID = word.FirstOrDefault(x => x.Item == "PPID").GetValue(eq.PLC);// PPID trước khi đẩy ppid mới vào
+                ppidchange.PPID = ppidModels.FirstOrDefault(x => x.Item == "PPID").GetValue(eq.PLC);
+                ppidchange.PPID_TYPE = ppidModels.FirstOrDefault(x => x.Item == "PPID_TYPE").GetValue(eq.PLC);
 
 
-                eq.SendS7F107(pPIDModel);
+                eq.SendS6F11_107(ppidchange);
                 bit.SetPCValue = true;
             }
             catch (Exception ex)

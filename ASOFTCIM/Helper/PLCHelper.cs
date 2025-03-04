@@ -52,6 +52,16 @@ namespace ASOFTCIM.Helper
             get { return _alarms; }
             set { _alarms = value; }
         }
+        public List<PPIDModel> ListPPID
+        {
+            get { return _lstPPID; }
+            set { _lstPPID = value; }
+        }
+        public List<PPIDModel> PPIDParams
+        {
+            get { return _ppidParams; }
+            set { _ppidParams = value; }
+        }
         public string EqpId { get; set; } = null;
         #endregion
         #region Event

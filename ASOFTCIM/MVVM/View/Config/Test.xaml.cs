@@ -69,6 +69,15 @@ namespace ASOFTCIM.MVVM.View.Config
                     }
                 }
             };
+            btnS2F17.Click += (s, e) => 
+            {
+                _controller.CIM.SendS2F17(_controller.CIM.Cim.SysPacket);
+            };
+            btnS1F1.Click += (s, e) =>
+            {
+                _controller.CIM.SendS1F1(_controller.CIM.Cim.Conn);
+
+            };
         }
         public Type[] GetTypesInNamespace(Assembly assembly, string nameSpace)
         {

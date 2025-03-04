@@ -208,7 +208,7 @@ namespace ASOFTCIM.Data
     public class COMMANDCODE
     {
         public string CCODE { get; set; }
-        public List<PARAM> PARAMs { get; set; }
+        public List<PARAM> PARAMs { get; set; } = new List<PARAM>();
     }
     public class REPLY
     {
