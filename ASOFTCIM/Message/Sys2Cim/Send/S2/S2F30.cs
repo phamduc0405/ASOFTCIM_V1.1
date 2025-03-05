@@ -23,27 +23,63 @@ namespace ASOFTCIM
                 packet.Command = Command.UserData;
                 packet.DeviceId = EqpData.DeviceId;
                 packet.SystemByte = EqpData.TransactionSys;
+                foreach (var item in lstEc)
+                {
+                    if (!EqpData.ECS.Any(x => x.ECID == item))
+                    {
+                        packet.addItem(DataType.List, 0);
+                        packet.Send2Sys();
+                        return;
+                    }
+
+                }
                 packet.addItem(DataType.List, 2);
                 packet.addItem(DataType.Ascii, EqpData.EQINFORMATION.EQPID);
                 packet.addItem(DataType.List, lstEc.Count);
-                foreach (var item in lstEc)
+                if(lstEc.Count>0)
                 {
-                    packet.addItem(DataType.List, 7);
+                    if (lstEc[0] == "EQPID")
                     {
-                        EC ec = EqpData.ECS.First(x => x.ECID == item);
-                        //foreach (var ecItem in ec.GetType().GetProperties())
-                        //{
-                        //    packet.addItem(DataType.Ascii, ecItem.GetValue(ec));
-                        //}
-                        packet.addItem(DataType.Ascii, ec.ECID);
-                        packet.addItem(DataType.Ascii, ec.ECNAME);
-                        packet.addItem(DataType.Ascii, ec.ECDEF);
-                        packet.addItem(DataType.Ascii, ec.ECSLL);
-                        packet.addItem(DataType.Ascii, ec.ECSUL);
-                        packet.addItem(DataType.Ascii, ec.ECWLL);
-                        packet.addItem(DataType.Ascii, ec.ECWUL);
+                        packet.addItem(DataType.List, 0);
+                        packet.Send2Sys();
+                        return;
                     }
-                }
+                    foreach (var item in lstEc)
+                    {
+                        packet.addItem(DataType.List, 7);
+                        {
+                            EC ec = EqpData.ECS.First(x => x.ECID == item);
+                            //foreach (var ecItem in ec.GetType().GetProperties())
+                            //{
+                            //    packet.addItem(DataType.Ascii, ecItem.GetValue(ec));
+                            //}
+                            packet.addItem(DataType.Ascii, ec.ECID);
+                            packet.addItem(DataType.Ascii, ec.ECNAME);
+                            packet.addItem(DataType.Ascii, ec.ECDEF);
+                            packet.addItem(DataType.Ascii, ec.ECSLL);
+                            packet.addItem(DataType.Ascii, ec.ECSUL);
+                            packet.addItem(DataType.Ascii, ec.ECWLL);
+                            packet.addItem(DataType.Ascii, ec.ECWUL);
+                        }
+                    }
+                }  
+                else
+                {
+                    foreach (var item in EqpData.ECS)
+                    {
+                        packet.addItem(DataType.List, 7);
+                        {
+                            packet.addItem(DataType.Ascii, item.ECID);
+                            packet.addItem(DataType.Ascii, item.ECNAME);
+                            packet.addItem(DataType.Ascii, item.ECDEF);
+                            packet.addItem(DataType.Ascii, item.ECSLL);
+                            packet.addItem(DataType.Ascii, item.ECSUL);
+                            packet.addItem(DataType.Ascii, item.ECWLL);
+                            packet.addItem(DataType.Ascii, item.ECWUL);
+                        }
+                    }
+                }    
+                
                 packet.Send2Sys();
             }
             catch (Exception ex)

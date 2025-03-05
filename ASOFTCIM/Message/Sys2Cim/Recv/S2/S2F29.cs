@@ -8,6 +8,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Documents;
 
 namespace ASOFTCIM
 {
@@ -22,7 +23,8 @@ namespace ASOFTCIM
                 string eqpID = _cim.SysPacket.GetItemString(1);
                 if (eqpID != _cim.EQPID)
                 {
-                    SendS9F1(_cim.SysPacket);
+                    ecs.Add("EQPID");
+                    SendS2F14(ecs);
                     return;
                 }
                 count = int.Parse( _cim.SysPacket.GetItemString());
