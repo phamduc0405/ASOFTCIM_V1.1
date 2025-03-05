@@ -70,7 +70,7 @@ namespace ASOFTCIM
             _cim.SysPacketEvent += _cim_SysPacketEvent;
             _plc = new PlcComm();
             _eqpConfig = equipmentConfig;
-            LoadExcelConfig(@"D:\Project_New\ACIM\SDCCIM_ASOFT_Portal_Online_Map_SDC_Basic_V1.21_v0.1.xlsx");
+            //LoadExcelConfig(@"D:\Project_New\ACIM\SDCCIM_ASOFT_Portal_Online_Map_SDC_Basic_V1.21_v0.1.xlsx");
             InitialPlc();
         }
         public void Stop()

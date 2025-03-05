@@ -21,7 +21,7 @@ namespace ASOFTCIM
                 ppidInfor.EQPID = _cim.SysPacket.GetItemString(1);
                 ppidInfor.PPID = _cim.SysPacket.GetItemString();
                 ppidInfor.PPID_TYPE = _cim.SysPacket.GetItemString();
-
+                SendS7F26(EqpData.CurrPPID);
                // new PPPARAMREQUEST(EqpData, cim.EQHelper.Conn, ppidInfor);
             }
             catch (Exception ex)

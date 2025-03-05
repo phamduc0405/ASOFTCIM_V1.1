@@ -43,6 +43,9 @@ namespace ASOFTCIM
                     //_aliveBit.Start();
                     //DefineAlarm();
                      this.EqpData.ALS = _eqpConfig.PLCHelper.Alarms;
+                    
+                    
+                    ReadRMS();
                     _plcH.BitChangedEvent += (bit) =>
                     {
                         PLCBitChange(bit.Comment, bit);
@@ -80,9 +83,6 @@ namespace ASOFTCIM
                 if (File.Exists(path))
                 {
                     _eqpConfig.PLCHelper.LoadExcel(path);
-                    //     await _controller.Eqps.FirstOrDefault(x => x.EqpID == _eqpConfig.EQPID).SavePlcData();
-                    //  DisplaySavePlcConfig display = new DisplaySavePlcConfig(txtPathPlcExcel.Text);
-                    //  display.ShowDialog();
                 }
                 if (_eqpConfig.PLCHelper.PlcMemms?.Count > 0)
                 {
@@ -111,7 +111,6 @@ namespace ASOFTCIM
             }
             catch (Exception ex)
             {
-                //  _controller.DisplayMessage(false, "Check Input Type!");
                 var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.", MethodBase.GetCurrentMethod().DeclaringType.Name.ToString(), MethodBase.GetCurrentMethod().Name, ex.Message);
                 LogTxt.Add(LogTxt.Type.Exception, debug);
             }
@@ -256,6 +255,25 @@ namespace ASOFTCIM
             }
             _isEqStatusUpdate = false;
         }
-
+        private void ReadRMS()
+        {
+            foreach (var ppid in _eqpConfig.PLCHelper.ListPPID)
+            {
+                this.EqpData.PPIDList.PPID.Add(ppid.Item);
+            }
+            List<PPIDModel> word = this.PLCH.PPIDParams.ToList();
+            this.EqpData.CurrPPID.PPID = word.FirstOrDefault(x => x.Item == "PPID").GetValue(this.PLC);
+            COMMANDCODE commandcode = new COMMANDCODE();
+            PPPARAMS ppparam = new PPPARAMS();
+            PARAM param =new PARAM();
+            foreach (var ppidparam in _eqpConfig.PLCHelper.PPIDParams)
+            {
+                param.PARAMVALUE = ppidparam.GetValue(this.PLC);
+                param.PARAMNAME = ppidparam.Item;
+            }
+            ppparam.PARAMS.Add(param);
+            commandcode.PARAMs.Add(param);
+            this.EqpData.CurrPPID.COMMANDCODEs.Add(commandcode);
+        }
     }
 }

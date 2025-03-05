@@ -13,7 +13,7 @@ namespace ASOFTCIM
 {
     public partial class ACIM
     {
-        public void SendS7F26( PPPARAMS ppid)
+        public void SendS7F26(PPIDINFOR ppid)
         {
             try
             {
@@ -35,9 +35,9 @@ namespace ASOFTCIM
 
                     packet.addItem(DataType.List, 2);
                     {
-                        packet.addItem(DataType.Ascii, ppid.CCODE);
-                        packet.addItem(DataType.List, ppid.PARAMS.Count);
-                        foreach (var param in ppid.PARAMS)
+                        packet.addItem(DataType.Ascii, ppid.COMMANDCODEs[0].CCODE);
+                        packet.addItem(DataType.List, ppid.COMMANDCODEs.Count);
+                        foreach (var param in ppid.COMMANDCODEs[0].PARAMs)
                         {
                             packet.addItem(DataType.List, 2);
                             {
