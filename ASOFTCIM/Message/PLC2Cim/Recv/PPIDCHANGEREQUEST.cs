@@ -22,11 +22,13 @@ namespace ASOFTCIM.Message.PLC2Cim.Recv
                 List<PPIDModel> ppidModels = new List<PPIDModel>(); 
                 ppidModels = eq.PLCH.PPIDParams.ToList();
                 PPIDChange ppidchange = new PPIDChange();
-                ppidchange.OLD_PPID = word.FirstOrDefault(x => x.Item == "PPID").GetValue(eq.PLC);// PPID trước khi đẩy ppid mới vào
+
+                ppidchange.OLD_PPID = eq.EqpData.CurrPPID.PPID;
                 ppidchange.PPID = ppidModels.FirstOrDefault(x => x.Item == "PPID").GetValue(eq.PLC);
-                ppidchange.PPID_TYPE = ppidModels.FirstOrDefault(x => x.Item == "PPID_TYPE").GetValue(eq.PLC);
-
-
+                //ppidchange.PPID_TYPE = ppidModels.FirstOrDefault(x => x.Item == "PPID_TYPE").GetValue(eq.PLC);
+                ppidchange.PPID_TYPE = "1";
+                //sau khi đổi ppid cần đọc lại RMS
+                eq.ReadRMS();
                 eq.SendS6F11_107(ppidchange);
                 bit.SetPCValue = true;
             }

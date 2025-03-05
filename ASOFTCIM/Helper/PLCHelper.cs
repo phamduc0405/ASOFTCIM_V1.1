@@ -67,6 +67,12 @@ namespace ASOFTCIM.Helper
             get { return _materials; }
             set { _materials = value; }
         }
+        public List<ECMModel> ECMS
+        {
+            get { return _ecms; }
+            set { _ecms = value; }
+        }
+
         public string EqpId { get; set; } = null;
         #endregion
         #region Event

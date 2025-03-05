@@ -42,6 +42,8 @@ namespace ASOFTCIM
             DataContext = new MainViewModel();
             Initial();
             maincontent.Content = new HomeView();
+            Controller.CIM.PlcConnectChangeEvent -= Controller_PlcConnectChangeEvent;
+            Controller.CIM.PlcConnectChangeEvent += Controller_PlcConnectChangeEvent;
             CreateEvent();
         }
         private void Initial()
@@ -162,6 +164,14 @@ namespace ASOFTCIM
                 LogTxt.Add(LogTxt.Type.Exception, debug);
                 return false;
             }
+        }
+        private void Controller_PlcConnectChangeEvent(bool isConnected)
+        {
+            Dispatcher.Invoke(new Action(() =>
+            {
+                bdrPlcConnect.Background = isConnected ? Brushes.Green : Brushes.Red;
+                txtPlcConnect.Text = isConnected ? "Plc Connected" : "Plc Disconnected";
+            }));
         }
     }
 }

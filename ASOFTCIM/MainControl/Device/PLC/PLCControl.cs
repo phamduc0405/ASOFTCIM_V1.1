@@ -20,6 +20,12 @@ namespace ASOFTCIM
 {
     public partial class ACIM
     {
+        private Thread _aliveBit;
+        private bool _isPlcConnected;
+
+        public delegate void PlcConnectChangeEventDelegate(bool isConnected);
+        public event PlcConnectChangeEventDelegate PlcConnectChangeEvent;
+
 
         public void InitialPlc()
         {
@@ -36,16 +42,17 @@ namespace ASOFTCIM
                     _plcH = new PLCHelper();
                     _plcH = _eqpConfig.PLCHelper;
                     _plcH.Start(_plc, _eqpConfig.EQPID);
-                    //_aliveBit = new Thread(Alive)
-                    //{
-                    //    IsBackground = true
-                    //};
-                    //_aliveBit.Start();
+                    _aliveBit = new Thread(Alive)
+                    {
+                        IsBackground = true
+                    };
+                    _aliveBit.Start();
                     //DefineAlarm();
-                     this.EqpData.ALS = _eqpConfig.PLCHelper.Alarms;
+                    this.EqpData.ALS = _eqpConfig.PLCHelper.Alarms;
                     
                     
                     ReadRMS();
+                    ReadECM();
                     _plcH.BitChangedEvent += (bit) =>
                     {
                         PLCBitChange(bit.Comment, bit);
@@ -255,25 +262,111 @@ namespace ASOFTCIM
             }
             _isEqStatusUpdate = false;
         }
-        private void ReadRMS()
+        public void ReadRMS()
         {
             foreach (var ppid in _eqpConfig.PLCHelper.ListPPID)
             {
-                this.EqpData.PPIDList.PPID.Add(ppid.Item);
+                if(!string.IsNullOrEmpty(ppid.GetValue(this.PLC)))
+                {
+                    this.EqpData.PPIDList.PPID.Add(ppid.Item);
+                }    
             }
             List<PPIDModel> word = this.PLCH.PPIDParams.ToList();
             this.EqpData.CurrPPID.PPID = word.FirstOrDefault(x => x.Item == "PPID").GetValue(this.PLC);
             COMMANDCODE commandcode = new COMMANDCODE();
             PPPARAMS ppparam = new PPPARAMS();
-            PARAM param =new PARAM();
+            
             foreach (var ppidparam in _eqpConfig.PLCHelper.PPIDParams)
             {
-                param.PARAMVALUE = ppidparam.GetValue(this.PLC);
-                param.PARAMNAME = ppidparam.Item;
+                if (ppidparam.Item != "RESERVED")
+                {
+                    PARAM param = new PARAM();
+                    param.PARAMVALUE = ppidparam.GetValue(this.PLC);
+                    param.PARAMNAME = ppidparam.Item;
+                    ppparam.PARAMS.Add(param);
+                    commandcode.PARAMs.Add(param);
+                }    
             }
-            ppparam.PARAMS.Add(param);
-            commandcode.PARAMs.Add(param);
+            for (int i = 0; i < this.EqpData.PPIDList.PPID.Count; i++)
+            {
+                if (this.EqpData.PPIDList.PPID[i] == this.EqpData.CurrPPID.PPID)
+                {
+                    this.EqpData.CurrPPID.PPID_NUMBER = i.ToString();
+                    break;
+                }
+            }
             this.EqpData.CurrPPID.COMMANDCODEs.Add(commandcode);
+        }
+        public void ReadECM()
+        {
+            foreach(var ecm in _eqpConfig.PLCHelper.ECMS)
+            {
+                if (ecm.ECNAME != "RESERVED")
+                {
+                    EC ec = new EC();
+                    ec.ECNAME = ecm.ECNAME;
+                    ec.ECID = ecm.ECID;
+                    ec.ECDEF = ecm.GetValue(this.PLC);
+                    this.EqpData.ECS.Add(ec);
+                }
+            }
+        }
+        private void PlcConnectChangeEventHandle(bool isConnected)
+        {
+            var handle = PlcConnectChangeEvent;
+            if (handle != null)
+            {
+                handle(isConnected);
+            }
+        }
+        public void Alive()
+        {
+            bool plcAlive = false;
+            int plcCount = 0;
+            bool mcrConnect = false;
+            bool isOn = false;
+
+            while (true)
+            {
+                if (_plc != null)
+                {
+                    if (_plc.IsOpen)
+                    {
+                        try
+                        {
+                            isOn = !isOn;
+                            if (_plcH.Bits.Any(x => x.Item.ToUpper() == "ALIVE"))
+                            {
+                                BitModel bitAlive = _plcH.Bits.FirstOrDefault(x => x.Item.ToUpper() == "ALIVE");
+                                bitAlive.SetPCValue = isOn;
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.", MethodBase.GetCurrentMethod().DeclaringType.Name, MethodBase.GetCurrentMethod().Name, ex.Message);
+                            LogTxt.Add(LogTxt.Type.Exception, debug);
+                        }
+                        if (plcAlive == _plcH.Bits.FirstOrDefault(x => x.Item == "ALIVE").GetPLCValue)
+                        {
+                            plcCount++;
+                            if (plcCount > 100)
+                            {
+                                PlcConnectChangeEventHandle(false);
+                                _isPlcConnected = false;
+                            }
+                        }
+                        else
+                        {
+                            _isPlcConnected = true;
+                            plcCount = 0;
+                            plcAlive = _plcH.Bits.FirstOrDefault(x => x.Item == "ALIVE").GetPLCValue;
+                            PlcConnectChangeEventHandle(true);
+                        }
+                    }
+                    else PlcConnectChangeEventHandle(false);
+                }
+                Thread.Sleep(500);
+            }
         }
     }
 }
