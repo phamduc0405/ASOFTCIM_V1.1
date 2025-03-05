@@ -19,7 +19,8 @@ namespace ASOFTCIM.MainControl
         public delegate void TraceSvEventDelegate(List<string> lstSv, bool isEnd);
         public event TraceSvEventDelegate TraceSvEvent;
 
-        Thread _thread;
+        public Thread _thread;
+        private bool isRunning = false;
         public TRACESV()
         {
             _thread = new Thread(Trace);
@@ -40,14 +41,29 @@ namespace ASOFTCIM.MainControl
         }
         public void Start()
         {
+            if (isRunning) return; // Tránh Start nhiều lần
+            isRunning = true;
             _thread.Start();
+        }
+        public void Stop()
+        {
+            isRunning = false;  
+            if (_thread != null && _thread.IsAlive)
+            {
+                _thread.Join(); 
+            }
         }
         public void Trace()
         {
-            while (SMPLN < TOTSMP)
+            while (isRunning && SMPLN < TOTSMP)
             {
                 SMPLN++;
                 TranceEventHandle(SVs, SMPLN == TOTSMP);
+                if(SMPLN == TOTSMP)
+                {
+                    return;
+                }    
+                if (!isRunning) return;
                 Thread.Sleep(DSPER);
             }
         }

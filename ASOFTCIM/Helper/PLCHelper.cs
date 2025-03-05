@@ -72,7 +72,11 @@ namespace ASOFTCIM.Helper
             get { return _ecms; }
             set { _ecms = value; }
         }
-
+        public List<FDCModel> SVIDS
+        {
+            get { return _svids; }
+            set { _svids = value; }
+        }
         public string EqpId { get; set; } = null;
         #endregion
         #region Event

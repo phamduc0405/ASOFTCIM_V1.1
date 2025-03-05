@@ -27,35 +27,56 @@ namespace ASOFTCIM
                 packet.DeviceId = EqpData.DeviceId;
                 packet.SystemByte = EqpData.TransactionSys;
                 packet.WaitBit = true;
-				AddTrans(EqpData.TransactionSys);
+				            AddTrans(EqpData.TransactionSys);
                 List<SV> svid = EqpData.SVID;
-                packet.addItem(DataType.List, 2);
+                
+                
+                if (lstSv.Count == 0)
                 {
+                    packet.addItem(DataType.List, 2);
                     packet.addItem(DataType.Ascii, EqpData.EQINFORMATION.EQPID);
-                    if (lstSv.Count == 0)
+                    packet.addItem(DataType.List, svid.Count);
+                    foreach (var item in svid)
                     {
-                        packet.addItem(DataType.List, svid.Count);
-                        foreach (var item in svid)
+                        packet.addItem(DataType.List, 2);
                         {
-                            packet.addItem(DataType.List, 2);
-                            {
-                                packet.addItem(DataType.Ascii, item.SVID);
-                                packet.addItem(DataType.Ascii, item.SVNAME);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        packet.addItem(DataType.List, lstSv.Count);
-                        foreach (var item in lstSv)
-                        {
-                            packet.addItem(DataType.List, 2);
-                            SV sv = svid.First(x => x.SVID == item);
-                            packet.addItem(DataType.Ascii, sv.SVID);
-                            packet.addItem(DataType.Ascii, sv.SVNAME);
+                            packet.addItem(DataType.Ascii, item.SVID);
+                            packet.addItem(DataType.Ascii, item.SVNAME);
                         }
                     }
                 }
+                else
+                {
+
+                    if (lstSv[0] == "EQPID")
+                    {
+
+                        packet.addItem(DataType.List, 0);
+                        packet.Send2Sys();
+                        return;
+                    }
+                    foreach (var item in lstSv)
+                    {
+                        if (!EqpData.SVID.Any(x => x.SVID == item))
+                        {
+                            packet.addItem(DataType.List, 0);
+                            packet.Send2Sys();
+                            return;
+                        }
+
+                    }
+                    packet.addItem(DataType.List, 2);
+                    packet.addItem(DataType.Ascii, EqpData.EQINFORMATION.EQPID);
+                    packet.addItem(DataType.List, lstSv.Count);
+                    foreach (var item in lstSv)
+                    {
+                        packet.addItem(DataType.List, 2);
+                        SV sv = svid.First(x => x.SVID == item);
+                        packet.addItem(DataType.Ascii, sv.SVID);
+                        packet.addItem(DataType.Ascii, sv.SVNAME);
+                    }
+                }
+
                 packet.Send2Sys();
             }
             catch (Exception ex)
