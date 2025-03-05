@@ -158,11 +158,11 @@ namespace ASOFTCIM.Helper
                                 case string a when a.Contains("ALARM"):
                                     WordChangedEventHandle("ALARMREPORT", status);
                                     break;
-                                case string a when a.Contains("EQSTATUS"):
-                                    WordChangedEventHandle(w.Area, _words.Where(x => x.Area == w.Area).ToList());
+                                case string a when a.Contains("EQPSTATUS"):
+                                    WordChangedEventHandle(w.Area.ToUpper(), _words.Where(x => x.Area == w.Area).ToList());
                                     break;
                                 case string a when a.Contains("FDC"):
-                                    WordChangedEventHandle(w.Area, _svids);
+                                    WordChangedEventHandle(w.Area.ToUpper(), _svids);
                                     break;
                                 case string a when a.Contains("UNITSTATUS"):
                                     WordChangedEventHandle("UNITSTATUS", _words.Where(x => x.Area == w.Area).ToList());

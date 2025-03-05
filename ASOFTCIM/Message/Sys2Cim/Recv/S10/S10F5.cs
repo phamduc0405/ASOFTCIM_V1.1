@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using ASOFTCIM.Data;
+using ASOFTCIM.Message.PLC2Cim.Send;
 
 namespace ASOFTCIM
 {
@@ -25,9 +26,7 @@ namespace ASOFTCIM
                 {
                     terminal.TEXT.Add(_cim.SysPacket.GetItemString());
                 }
-                //new TERMINALDISPLAYREQUEST(EqpData, cim.EQHelper.Conn, terminal);
-                //if(_cim.EQHelper.IsPlc)
-                //new EQ.PLC.PLCMessage.Send.TERMINALTEXT(_cim.EQHelper.PLCData, terminal);
+                SendMessage2PLC("TERMINALTEXT", terminal);
                 SendS10F6( ACK);
             }
             catch (Exception ex)

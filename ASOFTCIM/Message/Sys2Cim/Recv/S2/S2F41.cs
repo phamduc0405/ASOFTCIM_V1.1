@@ -9,6 +9,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using ASOFTCIM.Message.PLC2Cim.Send;
 
 namespace ASOFTCIM
 {
@@ -50,9 +51,7 @@ namespace ASOFTCIM
                         opcall.OPCALLID = _cim.SysPacket.GetItemString();
                         opcall.MESSAGE = _cim.SysPacket.GetItemString();
                         EqpData.OPCALLS.Add(opcall);
-                        //new OPCALLREQUEST(EqpData, cim.EQHelper.Conn,opcall);
-                        //if (_cim.EQHelper.IsPlc)
-                        //    new EQ.PLC.PLCMessage.Send.OPERATORCALL(_cim.EQHelper.PLCData, opcall);
+                        SendMessage2PLC("OPERATORCALL", opcall);
                         break;
                     case "2":   //Equipment Command (Eqp Interlock Send)
                         INTERLOCKMESS interlock = new INTERLOCKMESS();

@@ -124,7 +124,7 @@ namespace ASOFTCIM
         }
         private void _plcH_WordChangedEvent(string Method, object data)
         {
-            if (Method.Contains("EQSTATUS"))
+            if (Method.Contains("EQPSTATUS"))
             {
                 if (_isEqStatusUpdate) return;
                 _isEqStatusUpdate = true;
