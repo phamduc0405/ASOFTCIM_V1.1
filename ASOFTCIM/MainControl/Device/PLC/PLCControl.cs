@@ -43,11 +43,9 @@ namespace ASOFTCIM
                     //_aliveBit.Start();
                     //DefineAlarm();
                      this.EqpData.ALS = _eqpConfig.PLCHelper.Alarms;
-                    foreach(var p in _eqpConfig.PLCHelper.ListPPID)
-                    {
-                        
-                        //this.EqpData.PPIDList
-                    }    
+                    
+                    
+                    ReadRMS();
                     _plcH.BitChangedEvent += (bit) =>
                     {
                         PLCBitChange(bit.Comment, bit);
@@ -257,6 +255,25 @@ namespace ASOFTCIM
             }
             _isEqStatusUpdate = false;
         }
-
+        private void ReadRMS()
+        {
+            foreach (var ppid in _eqpConfig.PLCHelper.ListPPID)
+            {
+                this.EqpData.PPIDList.PPID.Add(ppid.Item);
+            }
+            List<PPIDModel> word = this.PLCH.PPIDParams.ToList();
+            this.EqpData.CurrPPID.PPID = word.FirstOrDefault(x => x.Item == "PPID").GetValue(this.PLC);
+            COMMANDCODE commandcode = new COMMANDCODE();
+            PPPARAMS ppparam = new PPPARAMS();
+            PARAM param =new PARAM();
+            foreach (var ppidparam in _eqpConfig.PLCHelper.PPIDParams)
+            {
+                param.PARAMVALUE = ppidparam.GetValue(this.PLC);
+                param.PARAMNAME = ppidparam.Item;
+            }
+            ppparam.PARAMS.Add(param);
+            commandcode.PARAMs.Add(param);
+            this.EqpData.CurrPPID.COMMANDCODEs.Add(commandcode);
+        }
     }
 }

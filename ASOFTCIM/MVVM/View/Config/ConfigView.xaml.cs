@@ -134,7 +134,7 @@ namespace ASOFTCIM.MVVM.View.Config
 
                         PlcConnectType = (PlcConnectType)cbbplcConnectType.SelectedItem,
 
-                        PortPlc = int.Parse(txtPLCPort.Text),
+                        //PortPlc = int.Parse(txtPLCPort.Text),
                         
                     };
                     if (File.Exists(txtPathPlcExcel.Text))

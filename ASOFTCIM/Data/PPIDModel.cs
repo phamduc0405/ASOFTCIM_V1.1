@@ -31,7 +31,7 @@ namespace ASOFTCIM.Data
         public string PPID_TYPE { get; set; }
         [XmlArray("PPIDS")]
         [XmlArrayItem("PPID")]
-        public List<string> PPID { get; set; }
+        public List<string> PPID { get; set; } = new List<string>();
     }
     public class PPPARAMS
     {
@@ -39,7 +39,7 @@ namespace ASOFTCIM.Data
         public string PPID_TYPE { get; set; }
         public string SOFTREV { get; set; }
         public string CCODE { get; set; }
-        public List<PARAM> PARAMS { get; set; }
+        public List<PARAM> PARAMS { get; set; } =new List<PARAM>();
     }
     public class PPST
     {
@@ -72,6 +72,6 @@ namespace ASOFTCIM.Data
         public string PPID { get; set; }
         public string PPID_TYPE { get; set; }
         public string PPID_NUMBER { get; set; }
-        public List<COMMANDCODE> COMMANDCODEs { get; set; }
+        public List<COMMANDCODE> COMMANDCODEs { get; set; } = new List<COMMANDCODE>();
     }
 }
