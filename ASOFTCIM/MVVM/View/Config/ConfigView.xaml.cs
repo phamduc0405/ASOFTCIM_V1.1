@@ -132,7 +132,7 @@ namespace ASOFTCIM.MVVM.View.Config
                         WriteStartWordAddress = txtPLCStartOutW.Text,
                         SizeWriteWord = int.Parse(txtPLCLengthOutW.Text),
 
-                        PlcConnectType = (PlcConnectType)cbbplcConnectType.SelectedItem,
+                        //PlcConnectType = (PlcConnectType)cbbplcConnectType.SelectedItem,
 
                         //PortPlc = int.Parse(txtPLCPort.Text),
                         

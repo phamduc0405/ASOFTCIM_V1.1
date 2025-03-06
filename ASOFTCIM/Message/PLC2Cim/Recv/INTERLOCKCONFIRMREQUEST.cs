@@ -25,7 +25,7 @@ namespace ASOFTCIM.Message.PLC2Cim.Recv
 List<IWordModel> word = bit.LstWord;
                 List<INTERLOCKMESS> interlock = new List<INTERLOCKMESS>();
                 INTERLOCKMESS mess = new INTERLOCKMESS();
-                mess.INTERLOCKID = word.FirstOrDefault(x => x.Item == "OPCALLID").GetValue(eq.PLC);
+                mess.INTERLOCKID = word.FirstOrDefault(x => x.Item == "INTERLOCKID").GetValue(eq.PLC);
                 mess.MESSAGE = word.FirstOrDefault(x => x.Item == "MESSAGE").GetValue(eq.PLC);
                 interlock.Add(mess);
                 eq.SendS6F11_502( interlock, "502");

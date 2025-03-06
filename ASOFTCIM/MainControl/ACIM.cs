@@ -27,6 +27,9 @@ namespace ASOFTCIM
         private CimHelper _cim;
         private PlcComm _plc;
         private PLCHelper _plcH;
+        private List<TRACESV> _tracesvs = new List<TRACESV>();
+
+
         public EQPDATA EqpData { get; set; }
         public string EQPID { get; set; } = "EQPTEST";
         public EquipmentConfig _eqpConfig;
@@ -60,6 +63,11 @@ namespace ASOFTCIM
             get { return _plcH; }
             set { _plcH = value; }
         }
+        public List<TRACESV> Tracesvs
+        {
+            get { return _tracesvs; }
+            set { _tracesvs = value; }
+        }
         #endregion
 
         public ACIM(EquipmentConfig equipmentConfig)
@@ -72,6 +80,7 @@ namespace ASOFTCIM
             _eqpConfig = equipmentConfig;
             //LoadExcelConfig(@"D:\Project_New\ACIM\SDCCIM_ASOFT_Portal_Online_Map_SDC_Basic_V1.21_v0.1.xlsx");
             InitialPlc();
+            
         }
         public void Stop()
         {

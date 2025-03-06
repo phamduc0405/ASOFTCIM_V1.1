@@ -67,6 +67,16 @@ namespace ASOFTCIM.Helper
             get { return _materials; }
             set { _materials = value; }
         }
+        public List<ECMModel> ECMS
+        {
+            get { return _ecms; }
+            set { _ecms = value; }
+        }
+        public List<FDCModel> SVIDS
+        {
+            get { return _svids; }
+            set { _svids = value; }
+        }
         public string EqpId { get; set; } = null;
         #endregion
         #region Event
@@ -148,11 +158,11 @@ namespace ASOFTCIM.Helper
                                 case string a when a.Contains("ALARM"):
                                     WordChangedEventHandle("ALARMREPORT", status);
                                     break;
-                                case string a when a.Contains("EQSTATUS"):
-                                    WordChangedEventHandle(w.Area, _words.Where(x => x.Area == w.Area).ToList());
+                                case string a when a.Contains("EQPSTATUS"):
+                                    WordChangedEventHandle(w.Area.ToUpper(), _words.Where(x => x.Area == w.Area).ToList());
                                     break;
                                 case string a when a.Contains("FDC"):
-                                    WordChangedEventHandle(w.Area, _svids);
+                                    WordChangedEventHandle(w.Area.ToUpper(), _svids);
                                     break;
                                 case string a when a.Contains("UNITSTATUS"):
                                     WordChangedEventHandle("UNITSTATUS", _words.Where(x => x.Area == w.Area).ToList());

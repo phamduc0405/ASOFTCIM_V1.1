@@ -188,6 +188,7 @@
     <Compile Include="Message\PLC2Cim\Recv\PACKINGINFORMATIONREQUEST.cs" />
     <Compile Include="Message\PLC2Cim\Recv\PACKINGJOBSTARTREQUEST.cs" />
     <Compile Include="Message\PLC2Cim\Recv\PARAMETERCHANGE.cs" />
+    <Compile Include="Message\PLC2Cim\Recv\PARAMETERCHANGE2.cs" />
     <Compile Include="Message\PLC2Cim\Recv\PPIDCHANGEREQUEST.cs" />
     <Compile Include="Message\PLC2Cim\Send\CARRIERINFORMATIONSENDCASSETTEBATCH.cs" />
     <Compile Include="Message\PLC2Cim\Send\DATETIMESET.cs" />

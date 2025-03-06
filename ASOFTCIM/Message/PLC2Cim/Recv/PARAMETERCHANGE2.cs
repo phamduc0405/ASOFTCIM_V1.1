@@ -1,5 +1,4 @@
 ﻿using A_SOFT.CMM.INIT;
-using A_SOFT.Ctl.Mitsu.Model;
 using A_SOFT.PLC;
 using ASOFTCIM.Data;
 using System;
@@ -11,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ASOFTCIM.Message.PLC2Cim.Recv
 {
-    public class PARAMETERCHANGE
+    public class PARAMETERCHANGE2
     {
         public void Excute(ACIM eq, object body)
         {
@@ -26,7 +25,7 @@ namespace ASOFTCIM.Message.PLC2Cim.Recv
                 ppidinfor.PPID = eq.PLCH.PPIDParams[1].GetValue(eq.PLC);
                 foreach (var ppidparam in eq.PLCH.PPIDParams.Skip(2))
                 {
-                    if(ppidparam.Item != "RESERVED")
+                    if (ppidparam.Item != "RESERVED")
                     {
                         PARAM param = new PARAM();
                         param.PARAMVALUE = ppidparam.GetValue(eq.PLC);
@@ -34,12 +33,21 @@ namespace ASOFTCIM.Message.PLC2Cim.Recv
                         ppparam.PARAMS.Add(param);
                         commandcode.PARAMs.Add(param);
                         commandcode.CCODE = ppidinfor.MODE;
-                    }    
+                    }
                 }
                 ppidinfor.COMMANDCODEs.Add(commandcode);
                 //sau khi thay đổi cần đọc lại RMS
                 eq.ReadRMS();
-                eq.SendS7F107(ppidinfor);
+                for (int i = 0; i < eq.EqpData.PPIDList.PPID.Count; i++)
+                {
+                    if (eq.EqpData.PPIDList.PPID[i] == eq.EqpData.CurrPPID.PPID)
+                    {
+                        eq.EqpData.CurrPPID.PPID_NUMBER = i.ToString();
+                        break; 
+                    }
+                }
+                ppidinfor.PPID_NUMBER = eq.EqpData.CurrPPID.PPID_NUMBER;
+                eq.SendS7F217(ppidinfor, ppidinfor.MODE);
                 bit.SetPCValue = true;
             }
             catch (Exception ex)

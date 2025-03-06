@@ -16,10 +16,13 @@ namespace ASOFTCIM
         {
             try
             {
+                List<string> lst = new List<string>();
                 string eqp = _cim.SysPacket.GetItemString(1);
                 if (eqp!= _cim.EQPID)
                 {
-                    SendS9F1(_cim.SysPacket);
+                    //SendS9F1(_cim.SysPacket);
+                    lst.Add("EQPID");
+                    SendS2F14(lst);
                     return;
                 }
                 if (_cim.SysPacket.Items.Count <= 0)
@@ -28,7 +31,7 @@ namespace ASOFTCIM
                     return;
                 }
                 
-                List<string> lst = new List<string>();
+                
                 int count = int.Parse(_cim.SysPacket.Items[2].ToString());
                 for (int i = 0; i < count; i++)
                 {

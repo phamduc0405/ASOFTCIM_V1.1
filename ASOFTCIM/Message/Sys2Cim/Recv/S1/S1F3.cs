@@ -21,12 +21,15 @@ namespace ASOFTCIM
                 {
                     string eqpId = _cim.SysPacket.GetItemString(1);
                     int count = int.Parse(_cim.SysPacket.GetItemString());
+                    List<string> lstSvid = new List<string>();
                     if (eqpId != _cim.EQPID)
                     {
-                        SendS9F1(_cim.SysPacket);
+                        //SendS9F1(_cim.SysPacket);
+                        lstSvid.Add("EQPID");
+                        SendS1F4(lstSvid);
                         return;
                     }
-                    List<string> lstSvid = new List<string>();
+                    
                     for (int i = 0; i < count; i++)
                     {
                         lstSvid.Add(_cim.SysPacket.GetItemString());

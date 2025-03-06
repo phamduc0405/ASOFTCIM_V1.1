@@ -38,7 +38,7 @@ namespace ASOFTCIM
                 packet.addItem(DataType.Ascii, ppid.UNITID);
                 packet.addItem(DataType.Ascii, ppid.PPID);
                 packet.addItem(DataType.Ascii, ppid.PPID_TYPE);
-                packet.addItem(DataType.Ascii, ""); //ppid number
+                packet.addItem(DataType.Ascii, ppid.PPID_NUMBER); //ppid number
                 packet.addItem(DataType.List, ppid.COMMANDCODEs.Count);
                 foreach (var item in ppid.COMMANDCODEs)
                 {
