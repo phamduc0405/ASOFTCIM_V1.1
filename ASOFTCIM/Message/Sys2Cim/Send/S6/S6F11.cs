@@ -101,8 +101,8 @@ namespace ASOFTCIM
                     packet.addItem(DataType.List, 2);
                     {
                         packet.addItem(DataType.Ascii, "104");      //* RPTID
-                        packet.addItem(DataType.List, EqpData.ALS.Count);   //* Alarm List
-                        foreach (var item in EqpData.ALS)
+                        packet.addItem(DataType.List, EqpData.CurrAlarm.Count);   //* Alarm List
+                        foreach (var item in EqpData.CurrAlarm)
                         {
                             packet.addItem(DataType.List, 4);
                             {
