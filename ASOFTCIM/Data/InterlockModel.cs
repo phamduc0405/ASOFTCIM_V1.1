@@ -51,5 +51,10 @@ namespace ASOFTCIM.Data
         public string INTERLOCKID { get; set; }
         [XmlElement("MESSAGE")]
         public string MESSAGE { get; set; }
+        public string CELLID { get; set; }
+        public string PPID { get; set; }
+        public string PRODUCTID { get; set; }
+        public string STEPID { get; set; }
+
     }
 }

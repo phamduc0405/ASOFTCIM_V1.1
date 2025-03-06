@@ -1787,7 +1787,7 @@ namespace ASOFTCIM
                 packet.addItem(DataType.List, 2);
                 {
                     packet.addItem(DataType.Ascii, "501");
-                    packet.addItem(DataType.List, 4);
+                    packet.addItem(DataType.List, 4);// để là 4 thì test được với secom để là 6 thì lỗi Illegal Format
                     {
                         packet.addItem(DataType.Ascii, cellEvent.JUDGEMENT.OPERATORID1);
                         packet.addItem(DataType.Ascii, cellEvent.JUDGEMENT.OPERATORID2);
@@ -2180,13 +2180,17 @@ namespace ASOFTCIM
                 packet.addItem(DataType.List, 2);
                 {
                     packet.addItem(DataType.Ascii, "300");
-                    packet.addItem(DataType.List, 4);
+                    foreach(var item in interlock)
                     {
-                        packet.addItem(DataType.Ascii, "");
-                        packet.addItem(DataType.Ascii, "");
-                        packet.addItem(DataType.Ascii, "");
-                        packet.addItem(DataType.Ascii, "");
-                    }
+                        packet.addItem(DataType.List, 4);
+                        {
+                            packet.addItem(DataType.Ascii, item.CELLID);
+                            packet.addItem(DataType.Ascii, item.PPID);
+                            packet.addItem(DataType.Ascii, item.PRODUCTID);
+                            packet.addItem(DataType.Ascii, item.STEPID);
+                        }
+                    }    
+                    
                 }
                 packet.addItem(DataType.List, 2);
                 {
@@ -2805,7 +2809,7 @@ namespace ASOFTCIM
                 packet.addItem(DataType.List, 2);
                 {
                     packet.addItem(DataType.Ascii, "808");
-                    packet.addItem(DataType.List, 7);
+                    packet.addItem(DataType.List, 8);
                     {
                         packet.addItem(DataType.Ascii, insp.PROCESSNAME);
                         packet.addItem(DataType.Ascii, insp.CELLID);
@@ -2813,8 +2817,9 @@ namespace ASOFTCIM
                         packet.addItem(DataType.Ascii, insp.JUDGE);
                         packet.addItem(DataType.Ascii, insp.REASONCODE);
                         packet.addItem(DataType.Ascii, insp.OPERID);
-                        packet.addItem(DataType.Ascii, insp.DESCRIPTION);
-                    }
+                        packet.addItem(DataType.Ascii, insp.SENDUNIQUEINFO);
+                        packet.addItem(DataType.Ascii, insp.REVUNIQUEINFO);
+                        }
                 }
             }
             packet.Send2Sys();

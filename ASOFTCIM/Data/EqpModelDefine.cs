@@ -100,19 +100,19 @@ namespace ASOFTCIM.Data
         [System.Xml.Serialization.XmlElement("CELL")]
         public CELLINFOR CELL { get; set; } = new CELLINFOR();
         [System.Xml.Serialization.XmlElement("WORKORDER")]
-        public WORKORDER WORKORDER { get; set; }
+        public WORKORDER WORKORDER { get; set; } = new WORKORDER();
         [System.Xml.Serialization.XmlElement("READER")]
-        public READER READER { get; set; }
+        public READER READER { get; set; } = new READER();
         [XmlArray("DVs")]
         [XmlArrayItem("DV", typeof(DV))]
-        public List<DV> DVs { get; set; }
+        public List<DV> DVs { get; set; } = new List<DV> ();
 
         [XmlArray("MATERIALS")]
         [XmlArrayItem("MATERIAL", typeof(TRACKING_MATERIAL))]
-        public List<TRACKING_MATERIAL> MATERIALs { get; set; }
+        public List<TRACKING_MATERIAL> MATERIALs { get; set; } = new List<TRACKING_MATERIAL>();
 
         [System.Xml.Serialization.XmlElement("JUDGEMENT")]
-        public JUDGEMENT JUDGEMENT { get; set; }
+        public JUDGEMENT JUDGEMENT { get; set; } = new JUDGEMENT();
         public string EQPID { get; set; }
     }
    

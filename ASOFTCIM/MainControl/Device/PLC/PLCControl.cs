@@ -49,8 +49,7 @@ namespace ASOFTCIM
                     _aliveBit.Start();
                     //DefineAlarm();
                     this.EqpData.ALS = _eqpConfig.PLCHelper.Alarms;
-                    
-                    
+                    EqpData.EQINFORMATION.EQPID = _eqpConfig.EQPID;
                     ReadRMS();
                     ReadECM();
                     _plcH.BitChangedEvent += (bit) =>

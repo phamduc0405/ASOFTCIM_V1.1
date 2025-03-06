@@ -36,6 +36,7 @@ namespace ASOFTCIM.Data
         public SPBINFOR SPBINFOR = new SPBINFOR();
         public CARTONINFOR CARTONINFOR = new CARTONINFOR();
         public ETCINFOR ETCINFOR = new ETCINFOR();
+        public CELLEVENTDATA CELLEVENTDATA = new CELLEVENTDATA();
         public EQPDATA()
         {
             for (int i = 0; i < 8; i++)
