@@ -37,20 +37,19 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="A_SOFT.CMM, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\A_SOFT\Bin\Debug\A_SOFT.CMM.dll</HintPath>
+    <Reference Include="A_SOFT.CMM">
+      <HintPath>E:\MrDuc\ASOFTLIB\AsoftCommon\Bin\Debug\A_SOFT.CMM.dll</HintPath>
     </Reference>
     <Reference Include="A_SOFT.Ctl.Mitsu, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\A_SOFT\Bin\Debug\A_SOFT.Ctl.Mitsu.dll</HintPath>
+      <HintPath>E:\MrDuc\ASOFTLIB\AsoftCommon\Bin\Debug\A_SOFT.Ctl.Mitsu.dll</HintPath>
     </Reference>
     <Reference Include="A_SOFT.Ctl.SecGem, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\A_SOFT\Bin\Debug\A_SOFT.Ctl.SecGem.dll</HintPath>
+      <HintPath>E:\MrDuc\ASOFTLIB\AsoftCommon\Bin\Debug\A_SOFT.Ctl.SecGem.dll</HintPath>
     </Reference>
     <Reference Include="A_SOFT.Ctl.Tcp">
-      <HintPath>..\..\A_SOFT\Bin\Debug\A_SOFT.Ctl.Tcp.dll</HintPath>
+      <HintPath>E:\MrDuc\ASOFTLIB\AsoftCommon\Bin\Debug\A_SOFT.Ctl.Tcp.dll</HintPath>
     </Reference>
     <Reference Include="EPPlus, Version=7.0.0.3, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
       <HintPath>..\packages\EPPlus.7.0.0\lib\net462\EPPlus.dll</HintPath>
@@ -68,7 +67,7 @@
       <HintPath>..\packages\HPSocket.Net.5.9.3.1\lib\net40\HPSocket.Net.dll</HintPath>
     </Reference>
     <Reference Include="Interop.ActUtlTypeLib">
-      <HintPath>..\..\ACommV2\APlcComm\APlcComm\APlcComm\bin\AComV2\Interop.ActUtlTypeLib.dll</HintPath>
+      <HintPath>E:\MrDuc\ASOFTLIB\AsoftCommon\Bin\Debug\Interop.ActUtlTypeLib.dll</HintPath>
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
     <Reference Include="Microsoft.IO.RecyclableMemoryStream, Version=1.4.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -78,7 +77,7 @@
       <HintPath>..\packages\Microsoft.Xaml.Behaviors.Wpf.1.1.135\lib\net462\Microsoft.Xaml.Behaviors.dll</HintPath>
     </Reference>
     <Reference Include="Mitsu3E">
-      <HintPath>..\..\MS3E\Test_Library_PLC_Qseries\PHDUC_Qseries\bin\Debug\Mitsu3E.dll</HintPath>
+      <HintPath>E:\MrDuc\ASOFTLIB\AsoftCommon\Bin\Debug\Mitsu3E.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -108,6 +107,30 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="MVVM\View\Alarm\AlarmView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\Config\ConfigMainView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\Config\ConfigView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\Config\Test.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\ECM\ECMView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\Home\HomeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MVVM\View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -146,6 +169,9 @@
     <Compile Include="Data\ValidationModel.cs" />
     <Compile Include="Helper\CimHelper.cs" />
     <Compile Include="Helper\PLCHelper.cs" />
+    <Compile Include="Init\LibMethod.cs" />
+    <Compile Include="Init\ObservableObject.cs" />
+    <Compile Include="Init\RelayCommand.cs" />
     <Compile Include="MainControl\ACIM.cs" />
     <Compile Include="MainControl\Controller.cs" />
     <Compile Include="MainControl\Device\PC\PCControl.cs" />
@@ -155,16 +181,74 @@
     <Compile Include="Message\PLC2Cim\Recv\INSPECTIONCARRIERRELEASEREQUEST.cs" />
     <Compile Include="Message\PLC2Cim\Recv\MATERIALIDREADINGRESULTREQUEST.cs" />
     <Compile Include="Message\PLC2Cim\Recv\MATERIALKITTINGREQUEST.cs" />
+    <Compile Include="Message\PLC2Cim\Recv\MATERIALLOCATIONUPDATEREQUEST.cs" />
     <Compile Include="Message\PLC2Cim\Recv\MATERIALSHORTAGEREQUEST.cs" />
     <Compile Include="Message\PLC2Cim\Recv\MATERIALWARNINGREQUEST.cs" />
     <Compile Include="Message\PLC2Cim\Recv\PACKINGINFORMATIONREQUEST.cs" />
     <Compile Include="Message\PLC2Cim\Recv\PACKINGJOBSTARTREQUEST.cs" />
+    <Compile Include="Message\PLC2Cim\Recv\PARAMETERCHANGE.cs" />
+    <Compile Include="Message\PLC2Cim\Recv\PARAMETERCHANGE2.cs" />
     <Compile Include="Message\PLC2Cim\Recv\PPIDCHANGEREQUEST.cs" />
+    <Compile Include="Message\PLC2Cim\Send\CARRIERINFORMATIONSENDCASSETTEBATCH.cs" />
+    <Compile Include="Message\PLC2Cim\Send\DATETIMESET.cs" />
+    <Compile Include="Message\PLC2Cim\Send\FORMATTEDPROCESSPROGRAMREQUEST.cs" />
+    <Compile Include="Message\PLC2Cim\Send\INSPECTIONCARRIERASSIGNINFOSEND.cs" />
+    <Compile Include="Message\PLC2Cim\Send\INSPECTIONCARRIERRELEASEINFOSEND.cs" />
+    <Compile Include="Message\PLC2Cim\Send\LABELINFORMATIONSEND.cs" />
+    <Compile Include="Message\PLC2Cim\Send\LABELPRECHECKSEND.cs" />
+    <Compile Include="Message\PLC2Cim\Send\LABELVALIDATIONSEND.cs" />
+    <Compile Include="Message\Sys2Cim\Send\S1\S1F1.cs" />
     <Compile Include="Message\Sys2Cim\Send\S3\S3F217.cs" />
+    <Compile Include="MVVM\Model\AlarmView.cs" />
+    <Compile Include="MVVM\Model\ECMView.cs" />
+    <Compile Include="MVVM\Model\FDCView.cs" />
+    <Compile Include="MVVM\ViewModel\MainViewModel.cs" />
+    <Compile Include="MVVM\View\Alarm\AlarmView.xaml.cs">
+      <DependentUpon>AlarmView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\Config\ConfigMainView.xaml.cs">
+      <DependentUpon>ConfigMainView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\Config\ConfigView.xaml.cs">
+      <DependentUpon>ConfigView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\Config\Test.xaml.cs">
+      <DependentUpon>Test.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\ECM\ECMView.xaml.cs">
+      <DependentUpon>ECMView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\Home\HomeView.xaml.cs">
+      <DependentUpon>HomeView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MVVM\View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="MVVM\View\Material\MaterialView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\Monitor\MonitorBits.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\Monitor\MonitorIOView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\Monitor\MonitorWords.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\Popup\ExitDisplay.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\Popup\LogInDisplay.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Message\PLC2Cim\Recv\BATCHLOTINFORMATIONREQUEST.cs" />
@@ -398,6 +482,24 @@
     <Compile Include="Message\Sys2Cim\Send\S9\S9F5.cs" />
     <Compile Include="Message\Sys2Cim\Send\S9\S9F7.cs" />
     <Compile Include="Message\Sys2Cim\Send\S9\S9F9.cs" />
+    <Compile Include="MVVM\View\Material\MaterialView.xaml.cs">
+      <DependentUpon>MaterialView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\Monitor\MonitorBits.xaml.cs">
+      <DependentUpon>MonitorBits.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\Monitor\MonitorIOView.xaml.cs">
+      <DependentUpon>MonitorIOView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\Monitor\MonitorWords.xaml.cs">
+      <DependentUpon>MonitorWords.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\Popup\ExitDisplay.xaml.cs">
+      <DependentUpon>ExitDisplay.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\Popup\LogInDisplay.xaml.cs">
+      <DependentUpon>LogInDisplay.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -431,6 +533,7 @@
     <Resource Include="HPSocket\hpsocket_cn.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Images\" />
     <Folder Include="Message\PLC2Cim\Recv\S10\" />
     <Folder Include="Message\PLC2Cim\Recv\S14\" />
     <Folder Include="Message\PLC2Cim\Recv\S16\" />
@@ -441,8 +544,7 @@
     <Folder Include="Message\PLC2Cim\Recv\S7\" />
     <Folder Include="Message\PLC2Cim\Recv\S8\" />
     <Folder Include="Message\PLC2Cim\Recv\S9\" />
-    <Folder Include="MVVM\Model\" />
-    <Folder Include="MVVM\ViewModel\" />
+    <Folder Include="MVVM\View\FDC\" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />

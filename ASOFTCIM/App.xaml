@@ -1,12 +1,13 @@
-﻿<Application x:Class="ASOFTCIM.App"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:ASOFTCIM"
-             StartupUri="MVVM/View/MainWindow.xaml">
+﻿<Application
+    x:Class="ASOFTCIM.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:ASOFTCIM"
+    StartupUri="MVVM/View/MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <!-- Đường dẫn tới ResourceDictionary -->
+                <!--  Đường dẫn tới ResourceDictionary  -->
                 <ResourceDictionary Source="/A_SOFT.CMM;component/STYLE/UIColors.xaml" />
                 <ResourceDictionary Source="/A_SOFT.CMM;component/STYLE/ButtonStyle.xaml" />
                 <ResourceDictionary Source="/A_SOFT.CMM;component/STYLE/TextBoxStyle.xaml" />

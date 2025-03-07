@@ -19,15 +19,13 @@ namespace ASOFTCIM.Message.PLC2Cim.Recv
             try
             {
                 BitModel bit = (BitModel)body;
+                
                 List<IWordModel> word = bit.LstWord;
-                PACKING packing = new PACKING();
-                packing.SBPID = word.FirstOrDefault(x => x.Item == "SBPID").GetValue(eq.PLC);
-                packing.SBPREALWEIGHT = word.FirstOrDefault(x => x.Item == "SBPREALWEIGHT").GetValue(eq.PLC);
-                packing.CARTONID = word.FirstOrDefault(x => x.Item == "CARTONID").GetValue(eq.PLC);
-                packing.CARTONREALWEIGHT = word.FirstOrDefault(x => x.Item == "CARTONREALWEIGHT").GetValue(eq.PLC);
-                packing.CHECKERNAME = word.FirstOrDefault(x => x.Item == "CHECKERNAME").GetValue(eq.PLC);
-                packing.ERRORMESSAGE = word.FirstOrDefault(x => x.Item == "ERRORMESSAGE").GetValue(eq.PLC);
-                eq.SendS6F11_801("802", packing);
+                MATERIALSTATE materialstate = new MATERIALSTATE();
+                materialstate.MATERIALID = word.FirstOrDefault(x => x.Item == "MATERIALID").GetValue(eq.PLC);
+                materialstate.MATERIALPORTID = word.FirstOrDefault(x => x.Item == "MATERIALPORTID").GetValue(eq.PLC);
+                string  unitId = word.FirstOrDefault(x => x.Item == "MODULEID").GetValue(eq.PLC);
+                eq.SendS6F11_615(materialstate, unitId);
                 bit.SetPCValue = true;
             }
             catch (Exception ex)

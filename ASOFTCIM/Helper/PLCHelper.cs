@@ -29,6 +29,8 @@ namespace ASOFTCIM.Helper
         private List<PPIDModel> _lstPPID;
         private List<ECMModel> _ecms;
         private List<MaterialModel> _materials;
+        private List<APCModel> _apc;
+        private List<CarialModel> _carrial;
         private Thread _update;
         #endregion
         #region Property
@@ -51,6 +53,41 @@ namespace ASOFTCIM.Helper
         {
             get { return _alarms; }
             set { _alarms = value; }
+        }
+        public List<PPIDModel> ListPPID
+        {
+            get { return _lstPPID; }
+            set { _lstPPID = value; }
+        }
+        public List<PPIDModel> PPIDParams
+        {
+            get { return _ppidParams; }
+            set { _ppidParams = value; }
+        }
+        public List<MaterialModel> Materrials
+        {
+            get { return _materials; }
+            set { _materials = value; }
+        }
+        public List<ECMModel> ECMS
+        {
+            get { return _ecms; }
+            set { _ecms = value; }
+        }
+        public List<FDCModel> SVIDS
+        {
+            get { return _svids; }
+            set { _svids = value; }
+        }
+        public List<APCModel> APCS
+        {
+            get { return _apc; }
+            set { _apc = value; }
+        }
+        public List<CarialModel> Carrial
+        {
+            get { return _carrial; }
+            set { _carrial = value; }
         }
         public string EqpId { get; set; } = null;
         #endregion
@@ -84,7 +121,8 @@ namespace ASOFTCIM.Helper
                 _words.AddRange(wplc);
                 _plcMemms =await ExcelHelper.ReadExcel<PlcMemmory>(ExcelPath, "MemoryConfig");
                 _materials = await ExcelHelper.ReadExcel<MaterialModel>(ExcelPath, "Material");
-
+                _apc = await ExcelHelper.ReadExcel<APCModel>(ExcelPath, "APC");
+                _carrial = await ExcelHelper.ReadExcel<CarialModel>(ExcelPath, "Cassette Batch");
                 foreach (var b in _bit)
                 {
                     List<WordModel> wm= _words.Where(x=>x.BitEvent.Contains($"{b.PLCDevice}{b.PLCHexAdd}")).ToList();
@@ -133,11 +171,11 @@ namespace ASOFTCIM.Helper
                                 case string a when a.Contains("ALARM"):
                                     WordChangedEventHandle("ALARMREPORT", status);
                                     break;
-                                case string a when a.Contains("EQSTATUS"):
-                                    WordChangedEventHandle(w.Area, _words.Where(x => x.Area == w.Area).ToList());
+                                case string a when a.Contains("EQPSTATUS"):
+                                    WordChangedEventHandle(w.Area.ToUpper(), _words.Where(x => x.Area == w.Area).ToList());
                                     break;
                                 case string a when a.Contains("FDC"):
-                                    WordChangedEventHandle(w.Area, _svids);
+                                    WordChangedEventHandle(w.Area.ToUpper(), _svids);
                                     break;
                                 case string a when a.Contains("UNITSTATUS"):
                                     WordChangedEventHandle("UNITSTATUS", _words.Where(x => x.Area == w.Area).ToList());
@@ -186,6 +224,7 @@ namespace ASOFTCIM.Helper
             BitModel bit = new BitModel(_plc);
 
             if (_bit.Any(x => x.PLCAddress == status.Address))
+
             {
                 bit = _bit.FirstOrDefault(x => x.PLCAddress == status.Address);
                 bit.BitChangeByPlc();

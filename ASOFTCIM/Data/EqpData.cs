@@ -24,6 +24,7 @@ namespace ASOFTCIM.Data
         public List<FUNCTION> FUNCTION { get; set; } = new List<FUNCTION>();
         public List<Alarm> ALS { get; set; } = new List<Alarm>();
         public List<Alarm> CurrAlarm { get; set; } = new List<Alarm>();
+        public List<Alarm> AlarmHistory { get; set; } = new List<Alarm>();
         public List<EC> ECS { get; set; } = new List<EC>();
         public PPIDINFOR CurrPPID { get; set; } = new PPIDINFOR();
         public PPIDList PPIDList { get; set; } = new PPIDList();
@@ -35,6 +36,8 @@ namespace ASOFTCIM.Data
         public SPBINFOR SPBINFOR = new SPBINFOR();
         public CARTONINFOR CARTONINFOR = new CARTONINFOR();
         public ETCINFOR ETCINFOR = new ETCINFOR();
+        public CELLEVENTDATA CELLEVENTDATA = new CELLEVENTDATA();
+        public PROCESSDATACONTROL PROCESSDATACONTROL = new PROCESSDATACONTROL();
         public EQPDATA()
         {
             for (int i = 0; i < 8; i++)
@@ -117,8 +120,8 @@ namespace ASOFTCIM.Data
         public string MATERIALST { get; set; }
         public string MATERIALPORTID { get; set; }
         public string MATERIALUSAGE { get; set; }
+        public string MATERIALPORTLOADNO { get; set; }
 
-        
     }
 
 
@@ -208,7 +211,7 @@ namespace ASOFTCIM.Data
     public class COMMANDCODE
     {
         public string CCODE { get; set; }
-        public List<PARAM> PARAMs { get; set; }
+        public List<PARAM> PARAMs { get; set; } = new List<PARAM>();
     }
     public class REPLY
     {

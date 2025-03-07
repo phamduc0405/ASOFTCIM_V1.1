@@ -15,10 +15,11 @@ namespace ASOFTCIM.Config
     {
         public int EqpIndex { get; set; } = 0;
         public string EQPID { get; set; } = string.Empty;
+        public string CRST { get; set; } = string.Empty;
         public string EqpName { get; set; } = string.Empty;
         public PLCHelper PLCHelper { get; set; } = new PLCHelper();
         public PLCConfig PLCConfig { get; set; } = new PLCConfig();
-        public string LineName { get; set; }
+        public string LineName { get; set; } = "";
     }
     public class DefineConst
     {

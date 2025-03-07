@@ -27,7 +27,7 @@ namespace ASOFTCIM.Message.PLC2Cim.Send
                 word.FirstOrDefault(x => x.Item == "SEQ_NO").SetValue = process.CELLs[0].SEQ_NO;
                 word.FirstOrDefault(x => x.Item == "MODULEID").SetValue = process.CELLs[0].MODULEs[0].MODULEID;
                 word.FirstOrDefault(x => x.Item == "PPID").SetValue = process.CELLs[0].MODULEs[0].PPID;
-                word.FirstOrDefault(x => x.Item == "PPID").SetValue = process.CELLs[0].MODULEs[0].PPID_TYPE;
+                word.FirstOrDefault(x => x.Item == "PPID_TYPE").SetValue = process.CELLs[0].MODULEs[0].PPID_TYPE;
 
                 BitModel bit = plcdata.Bits.First(x => x.Comment == this.GetType().Name);
                 bit.SetPCValue = true;
@@ -39,7 +39,7 @@ namespace ASOFTCIM.Message.PLC2Cim.Send
                 word.FirstOrDefault(x => x.Item == "SEQ_NO").SetValue = process.CELLs[1].SEQ_NO;
                 word.FirstOrDefault(x => x.Item == "MODULEID").SetValue = process.CELLs[1].MODULEs[0].MODULEID;
                 word.FirstOrDefault(x => x.Item == "PPID").SetValue = process.CELLs[1].MODULEs[0].PPID;
-                word.FirstOrDefault(x => x.Item == "PPID").SetValue = process.CELLs[1].MODULEs[0].PPID_TYPE;
+                word.FirstOrDefault(x => x.Item == "PPID_TYPE").SetValue = process.CELLs[1].MODULEs[0].PPID_TYPE;
                 bit = plcdata.Bits.First(x => x.Comment == (this.GetType().Name + "2"));
                 bit.SetPCValue = true;
 
@@ -50,7 +50,7 @@ namespace ASOFTCIM.Message.PLC2Cim.Send
                 word.FirstOrDefault(x => x.Item == "SEQ_NO").SetValue = process.CELLs[2].SEQ_NO;
                 word.FirstOrDefault(x => x.Item == "MODULEID").SetValue = process.CELLs[2].MODULEs[0].MODULEID;
                 word.FirstOrDefault(x => x.Item == "PPID").SetValue = process.CELLs[2].MODULEs[0].PPID;
-                word.FirstOrDefault(x => x.Item == "PPID").SetValue = process.CELLs[2].MODULEs[0].PPID_TYPE;
+                word.FirstOrDefault(x => x.Item == "PPID_TYPE").SetValue = process.CELLs[2].MODULEs[0].PPID_TYPE;
                 bit = plcdata.Bits.First(x => x.Comment == (this.GetType().Name + "3"));
                 bit.SetPCValue = true;
 
@@ -61,7 +61,7 @@ namespace ASOFTCIM.Message.PLC2Cim.Send
                 word.FirstOrDefault(x => x.Item == "SEQ_NO").SetValue = process.CELLs[3].SEQ_NO;
                 word.FirstOrDefault(x => x.Item == "MODULEID").SetValue = process.CELLs[3].MODULEs[0].MODULEID;
                 word.FirstOrDefault(x => x.Item == "PPID").SetValue = process.CELLs[3].MODULEs[0].PPID;
-                word.FirstOrDefault(x => x.Item == "PPID").SetValue = process.CELLs[3].MODULEs[0].PPID_TYPE;
+                word.FirstOrDefault(x => x.Item == "PPID_TYPE").SetValue = process.CELLs[3].MODULEs[0].PPID_TYPE;
                 bit = plcdata.Bits.First(x => x.Comment == (this.GetType().Name + "4"));
                 bit.SetPCValue = true;
             }

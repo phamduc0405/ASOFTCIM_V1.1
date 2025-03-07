@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace ASOFTCIM.Message.PLC2Cim.Recv
 {
-    public class MATERIALKITTINGREQUEST
+    public class c
     {
         public void Excute(ACIM eq, object body)
         {
@@ -39,8 +39,10 @@ namespace ASOFTCIM.Message.PLC2Cim.Recv
                 tracking.EQPMATERIALPROCASSEMQTY = word.FirstOrDefault(x => x.Item == "MATERIALPROCESSASSEMQTY").GetValue(eq.PLC);
                 tracking.EQPMATERIALPROCNGQTY = word.FirstOrDefault(x => x.Item == "MATERIALPROCESSNGQTY").GetValue(eq.PLC);
                 tracking.EQPMATERIALSUPPLYREQUESTQTY = word.FirstOrDefault(x => x.Item == "MATERIALSUPPLYREQUESTQTY").GetValue(eq.PLC);
+                
                 material.MATERIALs.Add(tracking);
-                eq.SendS6F11_211_227(material, "221");
+                var ceid = word.FirstOrDefault(x => x.Item == "CEID").GetValue(eq.PLC);
+                eq.SendS6F11_211_227(material, ceid);
                 bit.SetPCValue = true;
             }
             catch (Exception ex)

@@ -63,6 +63,8 @@ namespace ASOFTCIM.Message.PLC2Cim.Send
 
             try
             {
+                
+                
                 List<WordModel> word = plcdata.Words.Where(x => x.Area == this.GetType().Name).ToList();
                 word.FirstOrDefault(x => x.Item == "MATERIALEQPID").SetValue = material.MATERIALSTANDARD.MATERIALEQPID;
                 word.FirstOrDefault(x => x.Item == "MATERIALBATCHID").SetValue = material.MATERIALSTANDARD.MATERIALBATCHID;

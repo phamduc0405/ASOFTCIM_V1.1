@@ -23,8 +23,15 @@ namespace ASOFTCIM
                 packet.Command = Command.UserData;
                 packet.DeviceId = EqpData.DeviceId;
                 packet.SystemByte = EqpData.TransactionSys;
+                  
                 if (lstEC.Count > 0)
                 {
+                    if (lstEC[0] == "EQPID")
+                    {
+                        packet.addItem(DataType.List, 0);
+                        packet.Send2Sys();
+                        return;
+                    }
                     foreach (var item in lstEC)
                     {
                         if (!EqpData.ECS.Any(x => x.ECID == item))

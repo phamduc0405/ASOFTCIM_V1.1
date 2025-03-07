@@ -8,7 +8,7 @@ namespace ASOFTCIM.Data
 {
     public class LOSSCODEREPORT
     {
-        public LOSS LOSSCODE { get; set; }
+        public LOSS LOSSCODE { get; set; } = new LOSS();
     }
     /// <summary> 
     /// T:RPTID 806/Loss Code

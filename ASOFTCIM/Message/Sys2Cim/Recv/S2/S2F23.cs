@@ -12,6 +12,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using ASOFTCIM.Helper;
 using ASOFTCIM.MainControl;
+using HPSocket.Sdk;
 
 namespace ASOFTCIM
 {
@@ -21,22 +22,27 @@ namespace ASOFTCIM
         {
             try
             {
+                TRACESV tracesv = new TRACESV();
                 string TIAACK = "";
                 string trid, repgsz = "";
                 int dsper, totsmp = 0;
                 string eqpID = _cim.SysPacket.GetItemString(1);
-                trid = _cim.SysPacket.GetItemString();
-                dsper = int.Parse(_cim.SysPacket.GetItemString());
-                totsmp = int.Parse(_cim.SysPacket.GetItemString());
-                repgsz = _cim.SysPacket.GetItemString();
-
-                int countSvid = int.Parse(_cim.SysPacket.GetItemString());
+                trid = _cim.SysPacket.GetItemString(2);
+                dsper = int.Parse(_cim.SysPacket.GetItemString(3));
+                totsmp = int.Parse(_cim.SysPacket.GetItemString(4));
+                repgsz = _cim.SysPacket.GetItemString(5);
+                int countSvid = int.Parse(_cim.SysPacket.GetItemString(6));
                 List<string> lstSvid = new List<string>();
                 for (int i = 0; i < countSvid; i++)
                 {
                     lstSvid.Add(_cim.SysPacket.GetItemString());
                 }
-
+                tracesv.SVs = lstSvid;
+                tracesv.Init(lstSvid, trid, dsper, totsmp, repgsz);
+                if(tracesv.DSPER<=900)
+                {
+                    TIAACK = "3";
+                }    
                 if (_cim.EQPID != eqpID) TIAACK = "4";
                 if (EqpData.SVID.Count < countSvid) TIAACK = "1";
                 if (EqpData.EQINFORMATION.CRST == "0") TIAACK = "5";
@@ -50,34 +56,49 @@ namespace ASOFTCIM
                 }
                 SendS2F24( TIAACK);
                 if (TIAACK != "") return;
-                //if (_cim.EQHelper.LstTraceSv.Any(x => x.TRID == trid))
-                //{
-                //    cim.EQHelper.LstTraceSv.First(x => x.TRID == trid).Init(lstSvid, trid, dsper, totsmp, repgsz);
-                //}
-                //else
-                //{
-                //    ProcessThreadCollection currentThreads = Process.GetCurrentProcess().Threads;
-                //    TRACESV trace = new TRACESV();
-                //    trace.Init(lstSvid, trid, dsper, totsmp, repgsz);
-                    
-                //    trace.Start();
-                //    trace.TraceSvEvent += (lstSv, isEnd) =>
-                //    {
-                //        if (isEnd)
-                //        {
-                //            cim.EQHelper.LstTraceSv.RemoveAll(x => x.TRID == trace.TRID);
-
-                //        }
-                //        List<SV> svs = new List<SV>();
-                //        foreach (var item in lstSv)
-                //        {
-                //            svs.Add(EqpData.SVID.First(x => x.SVID == item));
-                //        }
-                        
-                //          SendS6F1(svs,trace);
-                //    };
-                //    cim.EQHelper.LstTraceSv.Add(trace);
-                //}
+                if(tracesv.TRID == "0")
+                {
+                    for (int i = Tracesvs.Count - 1; i >= 0; i--)
+                    {
+                        Tracesvs[i].Stop();
+                        Tracesvs.RemoveAt(i);
+                    }
+                }    
+                if (Tracesvs.Any(x =>x.TRID == tracesv.TRID))
+                {
+                    if(lstSvid.Count==0)
+                    {
+                        var Tracesvd = Tracesvs.First(x => x.TRID == tracesv.TRID);
+                        Tracesvd.Stop();
+                        Tracesvs.Remove(Tracesvs.First(x => x.TRID == tracesv.TRID));
+                        return;
+                    }
+                }
+                else
+                {
+                    tracesv.TraceSvEvent -= (lstSv, isEnd) =>
+                    {
+                        //S6F1(lstSv, tracesv);
+                    };
+                    tracesv.TraceSvEvent += (lstSv, isEnd) =>
+                    {
+                        List<SV> svs = new List<SV>();
+                        foreach(var svid in lstSv)
+                        {
+                            SV sv = new SV();
+                            sv = EqpData.SVID.Find(x => x.SVID == svid);
+                            svs.Add(sv);
+                        }
+                        SendS6F1(svs, tracesv);
+                        if (tracesv.SMPLN == tracesv.TOTSMP)
+                        {
+                            Tracesvs.Remove(Tracesvs.First(x => x.TRID == tracesv.TRID));
+                            tracesv.Stop();
+                        }    
+                    };
+                    Tracesvs.Add(tracesv);
+                    tracesv.Start();
+                }    
             }
             catch (Exception ex)
             {
@@ -86,8 +107,5 @@ namespace ASOFTCIM
                 LogTxt.Add(LogTxt.Type.Exception, debug);
             }
         }
-        
-        
-
     }
 }

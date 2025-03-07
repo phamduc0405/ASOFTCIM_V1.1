@@ -9,6 +9,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using ASOFTCIM.Message.PLC2Cim.Send;
 
 namespace ASOFTCIM
 {
@@ -50,17 +51,17 @@ namespace ASOFTCIM
                         opcall.OPCALLID = _cim.SysPacket.GetItemString();
                         opcall.MESSAGE = _cim.SysPacket.GetItemString();
                         EqpData.OPCALLS.Add(opcall);
-                        //new OPCALLREQUEST(EqpData, cim.EQHelper.Conn,opcall);
-                        //if (_cim.EQHelper.IsPlc)
-                        //    new EQ.PLC.PLCMessage.Send.OPERATORCALL(_cim.EQHelper.PLCData, opcall);
+                        SendMessage2PLC("OPERATORCALL", opcall);
                         break;
                     case "2":   //Equipment Command (Eqp Interlock Send)
                         INTERLOCKMESS interlock = new INTERLOCKMESS();
+                        interlock.RCMD = _cim.SysPacket.GetItemString(1);
                         interlock.INTERLOCK = _cim.SysPacket.GetItemString(4);
                         interlock.EQPID = _cim.SysPacket.GetItemString();
                         interlock.INTERLOCKID = _cim.SysPacket.GetItemString();
                         interlock.MESSAGE = _cim.SysPacket.GetItemString();
-                       // new INTERLOCKREQUEST(EqpData, cim.EQHelper.Conn, interlock);
+                        
+                        SendMessage2PLC("INTERLOCK", interlock);
                         break;
                     case "3":   //Equipment Job Command (Job(=PPID) Select))
                         JobProcess jobSelect = new JobProcess();
@@ -95,7 +96,15 @@ namespace ASOFTCIM
                         break;
                     case "11":  //(Transfer Stop)
                         break;
-                    case "12":  //(Loading Stop)
+                    case "12":
+                        INTERLOCKMESS interlock12 = new INTERLOCKMESS();
+                        interlock12.RCMD = _cim.SysPacket.GetItemString(1);
+                        interlock12.INTERLOCK = _cim.SysPacket.GetItemString(4);
+                        interlock12.EQPID = _cim.SysPacket.GetItemString();
+                        interlock12.INTERLOCKID = _cim.SysPacket.GetItemString();
+                        interlock12.MESSAGE = _cim.SysPacket.GetItemString();
+
+                        SendMessage2PLC("INTERLOCK", interlock12);
                         break;
                     case "13":  // (Step Stop)
                         break;

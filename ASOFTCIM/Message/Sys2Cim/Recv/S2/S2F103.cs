@@ -8,6 +8,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using ASOFTCIM.Message.PLC2Cim.Send;
 
 namespace ASOFTCIM
 {
@@ -23,7 +24,7 @@ namespace ASOFTCIM
                 cellInfor.PRODUCTID = _cim.SysPacket.GetItemString();
                 cellInfor.CELLINFORESULT = _cim.SysPacket.GetItemString();
 
-               // new CELLINFORMATIONDOWNLOAD(EqpData, cim.EQHelper.Conn, cellInfor);
+                SendMessage2PLC("CELLINFORMATIONDOWNLOAD1",cellInfor);
                 SendS2F104( HACK);
             }
             catch (Exception ex)

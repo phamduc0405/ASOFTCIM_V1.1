@@ -1,4 +1,5 @@
 ﻿using A_SOFT.CMM.INIT;
+using ASOFTCIM.Data;
 using ASOFTCIM.Helper;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,19 @@ namespace ASOFTCIM
             {
                 string eqpid = _cim.SysPacket.GetItemString(1);
                 string ppid_type = _cim.SysPacket.GetItemString();
-               // new S7F102().SendMessage(mes);
+                PPIDList ppidlist = new PPIDList();
+                if(eqpid != EqpData.EQINFORMATION.EQPID)
+                {
+                    SendS7F102(null);
+                    return;
+                }
+                if(ppid_type != "1")
+                {
+                    SendS7F102(null);
+                    return;
+                }    
+                //this.EqpData.PPIDList.PPID_TYPE = _cim.SysPacket.GetItemString(2);
+                SendS7F102(this.EqpData.PPIDList);
             }
             catch (Exception ex)
             {

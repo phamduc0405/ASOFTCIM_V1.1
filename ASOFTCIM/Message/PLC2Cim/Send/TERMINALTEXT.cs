@@ -9,6 +9,7 @@ using A_SOFT.PLC;
 using A_SOFT.Ctl.Mitsu.Model;
 using ASOFTCIM.Data;
 using ASOFTCIM.Helper;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Tab;
 
 namespace ASOFTCIM.Message.PLC2Cim.Send
 {
@@ -20,6 +21,7 @@ namespace ASOFTCIM.Message.PLC2Cim.Send
             try
             {
                 List<WordModel> word = plcdata.Words.Where(x => x.Area == this.GetType().Name).ToList();
+                
                 word.FirstOrDefault(x => x.Item == "TID").SetValue = terminal.TID;
                 word.FirstOrDefault(x => x.Item == "TEXT").SetValue = terminal.TEXT[0];
 

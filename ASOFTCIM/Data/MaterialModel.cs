@@ -50,12 +50,12 @@ namespace ASOFTCIM.Data
         public string EVENT { get; set; }
 
         [System.Xml.Serialization.XmlElement("CELL")]
-        public CELL CELL { get; set; }
+        public CELL CELL { get; set; } = new CELL();
 
 
         [XmlArray("MATERIALS")]
         [XmlArrayItem("MATERIAL")]
-        public List<TRACKING_MATERIAL> MATERIALs { get; set; }
+        public List<TRACKING_MATERIAL> MATERIALs { get; set; } = new List<TRACKING_MATERIAL>();
     }
     [Serializable()]
     public class TRACKING_MATERIAL
@@ -121,12 +121,12 @@ namespace ASOFTCIM.Data
         public string EQPID { get; set; }
 
         [System.Xml.Serialization.XmlElement("MATERIALSTANDARD")]
-        public MaterialEqp MATERIALSTANDARD { get; set; }
+        public MaterialEqp MATERIALSTANDARD { get; set; } = new MaterialEqp();
 
         [System.Xml.Serialization.XmlElement("MATERIALUSEINFO")]
-        public MaterialInfor MATERIALUSEINFO { get; set; }
+        public MaterialInfor MATERIALUSEINFO { get; set; } = new MaterialInfor();
 
         [System.Xml.Serialization.XmlElement("REPLY")]
-        public REPLY REPLY { get; set; }
+        public REPLY REPLY { get; set; } = new REPLY();
     }
 }

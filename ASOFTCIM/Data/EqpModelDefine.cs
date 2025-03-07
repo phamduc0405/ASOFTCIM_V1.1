@@ -65,7 +65,7 @@ namespace ASOFTCIM.Data
         public string TMACK { get; set; }
 
         [XmlArrayItem("CELL")]
-        public List<PROCESS_CELL> CELLs { get; set; }
+        public List<PROCESS_CELL> CELLs { get; set; } = new List<PROCESS_CELL>();
 
         public string EQPID { get; set; }
         public string MODE { get; set; }
@@ -77,15 +77,15 @@ namespace ASOFTCIM.Data
         public string CELLID { get; set; }
         public string SEQ_NO { get; set; }
         [XmlArrayItem("MODULE")]
-        public List<PROCESS_MODULE> MODULEs { get; set; }
+        public List<PROCESS_MODULE> MODULEs { get; set; } = new List<PROCESS_MODULE>();
     }
     public class PROCESS_MODULE
     {
         public string MODULEID { get; set; }
         public string PPID { get; set; }
         public string PPID_TYPE { get; set; }
-        public List<PARAM> PARAMs { get; set; }
-        public List<ITEM> ITEMs { get; set; }
+        public List<PARAM> PARAMs { get; set; } = new List<PARAM>();
+        public List<ITEM> ITEMs { get; set; } = new List<ITEM>();
     }
     public class CELLEVENTDATA
     {
@@ -98,21 +98,21 @@ namespace ASOFTCIM.Data
         [System.Xml.Serialization.XmlElement("EQST")]
         public EQPSTATE EQST { get; set; }
         [System.Xml.Serialization.XmlElement("CELL")]
-        public CELLINFOR CELL { get; set; }
+        public CELLINFOR CELL { get; set; } = new CELLINFOR();
         [System.Xml.Serialization.XmlElement("WORKORDER")]
-        public WORKORDER WORKORDER { get; set; }
+        public WORKORDER WORKORDER { get; set; } = new WORKORDER();
         [System.Xml.Serialization.XmlElement("READER")]
-        public READER READER { get; set; }
+        public READER READER { get; set; } = new READER();
         [XmlArray("DVs")]
         [XmlArrayItem("DV", typeof(DV))]
-        public List<DV> DVs { get; set; }
+        public List<DV> DVs { get; set; } = new List<DV> ();
 
         [XmlArray("MATERIALS")]
         [XmlArrayItem("MATERIAL", typeof(TRACKING_MATERIAL))]
-        public List<TRACKING_MATERIAL> MATERIALs { get; set; }
+        public List<TRACKING_MATERIAL> MATERIALs { get; set; } = new List<TRACKING_MATERIAL>();
 
         [System.Xml.Serialization.XmlElement("JUDGEMENT")]
-        public JUDGEMENT JUDGEMENT { get; set; }
+        public JUDGEMENT JUDGEMENT { get; set; } = new JUDGEMENT();
         public string EQPID { get; set; }
     }
    

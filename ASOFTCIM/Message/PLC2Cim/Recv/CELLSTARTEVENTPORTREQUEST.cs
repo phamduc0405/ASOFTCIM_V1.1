@@ -22,7 +22,7 @@ namespace ASOFTCIM.Message.PLC2Cim.Recv
 
                 
 
-List<IWordModel> word = bit.LstWord;
+                List<IWordModel> word = bit.LstWord;
                 CELLEVENTDATA cell = new CELLEVENTDATA();
                 cell.CELL.CELLID = word.FirstOrDefault(x => x.Item == "CELLID").GetValue(eq.PLC);
                 cell.CELL.PRODUCTID = word.FirstOrDefault(x => x.Item == "PRODUCTID").GetValue(eq.PLC);

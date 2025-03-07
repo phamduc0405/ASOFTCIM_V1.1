@@ -7,6 +7,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using ASOFTCIM.Message.PLC2Cim.Send;
 
 namespace ASOFTCIM
 {
@@ -28,6 +29,7 @@ namespace ASOFTCIM
                     jobProcess.STEPID = _cim.SysPacket.GetItemString(14);
                     jobProcess.ACTIONTYPE = _cim.SysPacket.GetItemString(17);
                     jobProcess.EQPID = _cim.EQPID;
+                    SendMessage2PLC("CELLJOBPROCESS1", jobProcess);
                 }
                 else if (RCMD == "31" || RCMD == "32" )
                 {
@@ -38,11 +40,14 @@ namespace ASOFTCIM
                     jobProcess.APPROVEID = _cim.SysPacket.GetItemString(12);
                     jobProcess.BYWHO = _cim.SysPacket.GetItemString(15);
                     jobProcess.APPROVETEXT = _cim.SysPacket.GetItemString(18);
+                    SendMessage2PLC("EQUIPMENTAPPROVEPROCESS", jobProcess);
                 }
                 else
                 {
                     HACK = "1";
                 }
+                
+
                 SendS2F44( RCMD, HACK);
             }
             catch (Exception ex)

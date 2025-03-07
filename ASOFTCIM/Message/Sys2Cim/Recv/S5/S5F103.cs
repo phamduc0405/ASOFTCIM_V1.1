@@ -15,9 +15,13 @@ namespace ASOFTCIM
         {
             try
             {
-                var c = 1;
                 string lst = _cim.SysPacket.GetItemString(1);
-                string eqpId = _cim.SysPacket.GetItemString();
+                string eqpId = _cim.SysPacket.GetItemString(1);
+                if(eqpId != EqpData.EQINFORMATION.EQPID)
+                {
+                    SendS5F104(_cim.Conn, null);
+                    return;
+                }    
                 SendS5F104(_cim.Conn, EqpData);
             }
             catch (Exception ex)
