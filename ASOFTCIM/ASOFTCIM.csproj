@@ -37,20 +37,19 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="A_SOFT.CMM, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\A_SOFT\Bin\Debug\A_SOFT.CMM.dll</HintPath>
+    <Reference Include="A_SOFT.CMM">
+      <HintPath>E:\MrDuc\ASOFTLIB\AsoftCommon\Bin\Debug\A_SOFT.CMM.dll</HintPath>
     </Reference>
     <Reference Include="A_SOFT.Ctl.Mitsu, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\A_SOFT\Bin\Debug\A_SOFT.Ctl.Mitsu.dll</HintPath>
+      <HintPath>E:\MrDuc\ASOFTLIB\AsoftCommon\Bin\Debug\A_SOFT.Ctl.Mitsu.dll</HintPath>
     </Reference>
     <Reference Include="A_SOFT.Ctl.SecGem, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\A_SOFT\Bin\Debug\A_SOFT.Ctl.SecGem.dll</HintPath>
+      <HintPath>E:\MrDuc\ASOFTLIB\AsoftCommon\Bin\Debug\A_SOFT.Ctl.SecGem.dll</HintPath>
     </Reference>
     <Reference Include="A_SOFT.Ctl.Tcp">
-      <HintPath>..\..\A_SOFT\Bin\Debug\A_SOFT.Ctl.Tcp.dll</HintPath>
+      <HintPath>E:\MrDuc\ASOFTLIB\AsoftCommon\Bin\Debug\A_SOFT.Ctl.Tcp.dll</HintPath>
     </Reference>
     <Reference Include="EPPlus, Version=7.0.0.3, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
       <HintPath>..\packages\EPPlus.7.0.0\lib\net462\EPPlus.dll</HintPath>
@@ -68,7 +67,7 @@
       <HintPath>..\packages\HPSocket.Net.5.9.3.1\lib\net40\HPSocket.Net.dll</HintPath>
     </Reference>
     <Reference Include="Interop.ActUtlTypeLib">
-      <HintPath>..\..\ACommV2\APlcComm\APlcComm\APlcComm\bin\AComV2\Interop.ActUtlTypeLib.dll</HintPath>
+      <HintPath>E:\MrDuc\ASOFTLIB\AsoftCommon\Bin\Debug\Interop.ActUtlTypeLib.dll</HintPath>
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
     <Reference Include="Microsoft.IO.RecyclableMemoryStream, Version=1.4.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -78,7 +77,7 @@
       <HintPath>..\packages\Microsoft.Xaml.Behaviors.Wpf.1.1.135\lib\net462\Microsoft.Xaml.Behaviors.dll</HintPath>
     </Reference>
     <Reference Include="Mitsu3E">
-      <HintPath>..\..\MS3E\Test_Library_PLC_Qseries\PHDUC_Qseries\bin\Debug\Mitsu3E.dll</HintPath>
+      <HintPath>E:\MrDuc\ASOFTLIB\AsoftCommon\Bin\Debug\Mitsu3E.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
