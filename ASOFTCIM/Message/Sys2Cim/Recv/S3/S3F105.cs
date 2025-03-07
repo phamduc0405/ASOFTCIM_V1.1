@@ -52,12 +52,12 @@ namespace ASOFTCIM
                 reply.REPLYCODE = _cim.SysPacket.GetItemString();
                 reply.REPLYTEXT = _cim.SysPacket.GetItemString();
 
-                //MaterialInfomationSend materialInfomationSend = new MaterialInfomationSend();
-                //materialInfomationSend.MATERIALUSEINFO = materialInfor;
-                //materialInfomationSend.MATERIALSTANDARD = materialEq;
-                //materialInfomationSend.REPLY=reply;
+                MATERIALINFOMATIONSEND materialInfomationSend = new MATERIALINFOMATIONSEND();
+                materialInfomationSend.MATERIALUSEINFO = materialInfor;
+                materialInfomationSend.MATERIALSTANDARD = materialEq;
+                materialInfomationSend.REPLY=reply;
 
-                //new MATERIALINFORMATIONSEND(EqpData, cim.EQHelper.Conn, materialInfomationSend);
+                SendMessage2PLC("MATERIALINFORMATIONSEND1",materialInfomationSend);
                 SendS3F106( ACK);
             }
             catch (Exception ex)

@@ -48,8 +48,7 @@ namespace ASOFTCIM
                     };
                     _aliveBit.Start();
                     //DefineAlarm();
-                    this.EqpData.ALS = _eqpConfig.PLCHelper.Alarms;
-                    EqpData.EQINFORMATION.EQPID = _eqpConfig.EQPID;
+                    ReadEqpState();
                     ReadRMS();
                     ReadECM();
                     _plcH.BitChangedEvent += (bit) =>
@@ -309,6 +308,15 @@ namespace ASOFTCIM
                     this.EqpData.ECS.Add(ec);
                 }
             }
+        }
+        
+        public void ReadEqpState()
+        {
+            this.EqpData.ALS = _eqpConfig.PLCHelper.Alarms;
+            EqpData.EQINFORMATION.EQPID = _eqpConfig.EQPID;
+            WordModel crst = _eqpConfig.PLCHelper.Words.FirstOrDefault(x => x.Item == "CRST");
+
+            EqpData.EQINFORMATION.CRST = _eqpConfig.CRST;
         }
         private void PlcConnectChangeEventHandle(bool isConnected)
         {

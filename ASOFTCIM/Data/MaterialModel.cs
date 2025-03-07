@@ -55,7 +55,7 @@ namespace ASOFTCIM.Data
 
         [XmlArray("MATERIALS")]
         [XmlArrayItem("MATERIAL")]
-        public List<TRACKING_MATERIAL> MATERIALs { get; set; }
+        public List<TRACKING_MATERIAL> MATERIALs { get; set; } = new List<TRACKING_MATERIAL>();
     }
     [Serializable()]
     public class TRACKING_MATERIAL
