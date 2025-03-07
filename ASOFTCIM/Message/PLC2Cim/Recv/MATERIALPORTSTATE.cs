@@ -9,6 +9,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Media3D;
 
 namespace ASOFTCIM.Message.PLC2Cim.Recv
 {
@@ -22,21 +23,35 @@ namespace ASOFTCIM.Message.PLC2Cim.Recv
                 bool isSend = false;
                 eq.EqpData.TransactionSys += 1;
                 List<WordModel> word = (List<WordModel>)body;
-                int materialId = int.Parse(word[0].Area[word[0].Area.Length - 1].ToString()) - 1;
-                MATERIALSTATE oldstate = eq.EqpData.MATERIALSTATES[materialId].Copy<MATERIALSTATE>();
-                foreach (var item in eq.EqpData.MATERIALSTATES[materialId].GetType().GetProperties())
+                //int materialId = int.Parse(word[0].Area[word[0].Area.Length - 1].ToString()) - 1;
+                int materialId = 1;
+                List<string> port = new List<string>();
+
+                var numberMaterial = word.Count(x => x.Item.Contains("MaterialPortStsType"));
+                for (var i = 1; i <= numberMaterial; i++)
                 {
-                    if (word.Any(x => x.Item == item.Name))
-                    {
-                        WordModel w = word.FirstOrDefault(x => x.Item == item.Name);
-                        var a = item.GetValue(eq.EqpData.UNITSTATES[materialId], null) == null ? "" : item.GetValue(eq.EqpData.UNITSTATES[materialId], null).ToString();
-                        if (w.GetValue() != a)
-                        {
-                            isSend = true;
-                            item.SetValue(eq.EqpData.UNITSTATES[materialId], w.GetValue());
-                        }
-                    }
+                    MATERIALSTATE material = new MATERIALSTATE();
+                    material.MATERIALTYPE = word.FirstOrDefault(x => x.Item == $"MaterialPortStsType{i}").GetValue(eq.PLC);
+                    material.MATERIALST = word.FirstOrDefault(x => x.Item == $"MaterialPortStsLST{i}").GetValue(eq.PLC);
+                    material.MATERIALPORTID = word.FirstOrDefault(x => x.Item == $"MaterialPortStsID{i}").GetValue(eq.PLC);
+                    material.MATERIALPORTLOADNO = word.FirstOrDefault(x => x.Item == $"MaterialPortStsLoaderNo{i}").GetValue(eq.PLC);
+                    material.MATERIALUSAGE = word.FirstOrDefault(x => x.Item == $"MaterialPortStsUsage{i}").GetValue(eq.PLC);
+                    eq.EqpData.MATERIALSTATES[i - 1] = material;
                 }
+                MATERIALSTATE oldstate = eq.EqpData.MATERIALSTATES[materialId].Copy<MATERIALSTATE>();
+                //foreach (var item in eq.EqpData.MATERIALSTATES[materialId].GetType().GetProperties())
+                //{
+                //    if (word.Any(x => x.Item == item.Name))
+                //    {
+                //        WordModel w = word.FirstOrDefault(x => x.Item == item.Name);
+                //        var a = item.GetValue(eq.EqpData.UNITSTATES[materialId], null) == null ? "" : item.GetValue(eq.EqpData.UNITSTATES[materialId], null).ToString();
+                //        if (w.GetValue() != a)
+                //        {
+                //            isSend = true;
+                //            item.SetValue(eq.EqpData.UNITSTATES[materialId], w.GetValue());
+                //        }
+                //    }
+                //}
             }
             catch (Exception ex)
             {

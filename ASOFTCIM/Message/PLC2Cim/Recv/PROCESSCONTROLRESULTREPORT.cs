@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace ASOFTCIM.Message.PLC2Cim.Recv
 {
-    public class PROCESSCONTROLRESULTREPORT1
+    public class PROCESSCONTROLRESULTREPORT
     {
         public void Excute(ACIM eq, object body)
         {

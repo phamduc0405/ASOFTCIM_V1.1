@@ -28,67 +28,70 @@ namespace ASOFTCIM
 
 
         public void InitialPlc()
+{
+    if (_eqpConfig.PLCConfig != null)
+    {
+        Task.Run(async () =>
         {
-            if (_eqpConfig.PLCConfig != null)
+            try
             {
-                Task.Run(async () =>
+                // Khởi tạo đối tượng PLC
+                _plc = new PlcComm();
+                _eqpConfig.PLCConfig.PlcConnectType = PlcConnectType.Component;
+                _eqpConfig.PLCConfig.StationNo = 255;
+                _plc.ConfigComm(_eqpConfig.PLCConfig);
+                _plc.Start();
+                
+                _plcH = new PLCHelper();
+                _plcH = _eqpConfig.PLCHelper;
+                _plcH.Start(_plc, _eqpConfig.EQPID);
+                
+                _aliveBit = new Thread(Alive)
                 {
-                    try
+                    IsBackground = true
+                };
+                _aliveBit.Start();
+                
+                // Đọc dữ liệu từ PLC
+                ReadEqpState();
+                ReadRMS();
+                ReadECM();
+                ReadAPC();
+                
+                // Gán sự kiện thay đổi trạng thái bit
+                _plcH.BitChangedEvent += (bit) =>
+                {
+                    PLCBitChange(bit.Comment, bit);
+                };
+                
+                _plcH.WordChangedEvent += _plcH_WordChangedEvent;
+                
+                // Kiểm tra trạng thái các từ đầu vào của PLC
+                foreach (var item in _plc.InputWordStatuses)
+                {
+                    WordStatus w = item;
+                    WordModel word = _plcH.Words.FirstOrDefault(x => x.Item.ToUpper() == "ALARM" && x.IsPlc);
+                    
+                    if (word != null && w.Address >= word.Address && w.Address < word.Address + word.Length)
                     {
-                        //await Task.Delay(1000);
-                        _plc = new PlcComm();
-                        _eqpConfig.PLCConfig.PlcConnectType = PlcConnectType.Component;
-                        _eqpConfig.PLCConfig.StationNo = 255;
-                        _plc.ConfigComm(_eqpConfig.PLCConfig);
-                        _plc.Start();
-                        _plcH = new PLCHelper();
-                        _plcH = _eqpConfig.PLCHelper;
-                        _plcH.Start(_plc, _eqpConfig.EQPID);
-                        _aliveBit = new Thread(Alive)
+                        if (!w.IsOn)
                         {
-                            IsBackground = true
-                        };
-                        _aliveBit.Start();
-                        //DefineAlarm();
-                        this.EqpData.ALS = _eqpConfig.PLCHelper.Alarms;
-
-
-                        ReadRMS();
-                        ReadECM();
-                        _plcH.BitChangedEvent += (bit) =>
-                        {
-                            PLCBitChange(bit.Comment, bit);
-                        };
-                        _plcH.WordChangedEvent += _plcH_WordChangedEvent;
-                        foreach (var item in _plc.InputWordStatuses)
-                        {
-                            WordStatus w = item;
-                            WordModel word = _plcH.Words.FirstOrDefault(x => x.Item.ToUpper() == "ALARM" && x.IsPlc);
-                            if (w.Address >= word.Address && w.Address < word.Address + word.Length)
-                            {
-                                if (!w.IsOn)
-                                {
-                                    var alid = w.Index - word.Address * 16 + 2;
-
-
-                                }
-                            }
-                            // w.BitChangedEvent += W_BitChangedEvent;
+                            var alid = w.Index - word.Address * 16 + 2;
                         }
                     }
-                    catch (Exception ex)
-                    {
-
-                        var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message);
-                        LogTxt.Add(LogTxt.Type.Exception, debug);
-                    }
-                    
-                });
-
-                //_alarm.HistoryReset(_eqpConfig.EQPID);
+                }
+                
+                // Gán danh sách báo động
+                this.EqpData.ALS = _eqpConfig.PLCHelper.Alarms;
             }
-
-        }
+            catch (Exception ex)
+            {
+                var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message);
+                LogTxt.Add(LogTxt.Type.Exception, debug);
+            }
+        });
+    }
+}
         public void LoadExcelConfig(string path)
         {
             try
@@ -173,10 +176,11 @@ namespace ASOFTCIM
 
                 if (typelist.Contains(t))
                 {
-                    MethodInfo method = this.GetType().GetMethod($"Excute");
+                    object s = Activator.CreateInstance(t);
+                    MethodInfo method = t.GetMethod($"Excute");
                     if (method != null)
                     {
-                        object result = method.Invoke(this, new object[] { this, w });
+                        object result = method.Invoke(s, new object[] { this, w });
                     }
                     return;
                 }
@@ -320,6 +324,30 @@ namespace ASOFTCIM
                     this.EqpData.ECS.Add(ec);
                 }
             }
+        }
+        public void ReadAPC()
+        {
+            foreach (var apc in _eqpConfig.PLCHelper.APCS)
+            {
+                EqpData.PROCESSDATACONTROL.EQPID = EqpData.EQINFORMATION.EQPID;
+                PROCESS_CELL processcell = new PROCESS_CELL();
+                PROCESS_MODULE processmodule = new PROCESS_MODULE();
+                PARAM param = new PARAM();
+                param.PARAMNAME = apc.Item;
+                param.PARAMVALUE = apc.GetValue(this.PLC);
+                processmodule.PARAMs.Add(param);
+                processcell.MODULEs.Add(processmodule);
+                EqpData.PROCESSDATACONTROL.CELLs.Add(processcell);
+            }
+            
+        }
+        public void ReadEqpState()
+        {
+            this.EqpData.ALS = _eqpConfig.PLCHelper.Alarms;
+            EqpData.EQINFORMATION.EQPID = _eqpConfig.EQPID;
+            WordModel crst = _eqpConfig.PLCHelper.Words.FirstOrDefault(x => x.Item == "CRST");
+
+            EqpData.EQINFORMATION.CRST = _eqpConfig.CRST;
         }
         private void PlcConnectChangeEventHandle(bool isConnected)
         {

@@ -26,6 +26,12 @@ namespace ASOFTCIM
                 packet.addItem(DataType.List, 1);
                 packet.addItem(DataType.List, 2);
                 packet.addItem(DataType.Ascii, EqpData.EQINFORMATION.EQPID);
+                if(eqp == null)
+                {
+                    packet.addItem(DataType.List, 0);
+                    packet.Send2Sys();
+                    return;
+                }    
                 packet.addItem(DataType.List, eqp.CurrAlarm.Count());
                 foreach (var item in eqp.CurrAlarm)
                 {

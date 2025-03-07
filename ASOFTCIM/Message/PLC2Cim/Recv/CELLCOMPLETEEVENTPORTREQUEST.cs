@@ -38,8 +38,11 @@ List<IWordModel> word = bit.LstWord;
                 cell.JUDGEMENT.JUDGE = word.FirstOrDefault(x => x.Item == "JUDGE").GetValue(eq.PLC);
                 cell.JUDGEMENT.REASONCODE = word.FirstOrDefault(x => x.Item == "REASONCODE").GetValue(eq.PLC);
                 cell.JUDGEMENT.DESCRIPTION = word.FirstOrDefault(x => x.Item == "DESCRIPTION").GetValue(eq.PLC);
-
-                eq.SendS6F11_406( cell, "401");
+                if(eq.EqpData.CELLEVENTDATA.DVs.Count > 0)
+                {
+                    cell.DVs = eq.EqpData.CELLEVENTDATA.DVs;
+                }
+                eq.SendS6F11_406( cell, "406");
                 bit.SetPCValue = true;
             }
             catch (Exception ex)

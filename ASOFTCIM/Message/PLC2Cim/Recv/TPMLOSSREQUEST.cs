@@ -21,7 +21,7 @@ namespace ASOFTCIM.Message.PLC2Cim.Recv
 
                 
 
-List<IWordModel> word = bit.LstWord;
+                List<IWordModel> word = bit.LstWord;
                 LOSSCODEREPORT loss = new LOSSCODEREPORT();
                 loss.LOSSCODE.LOSSCODE = word.FirstOrDefault(x => x.Item == "LOSSCODE").GetValue(eq.PLC);
                 loss.LOSSCODE.LOSSDESCRIPTION = word.FirstOrDefault(x => x.Item == "LOSSDESCRIPTION").GetValue(eq.PLC);
