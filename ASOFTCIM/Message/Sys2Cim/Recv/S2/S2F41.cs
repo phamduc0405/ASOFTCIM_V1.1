@@ -33,6 +33,7 @@ namespace ASOFTCIM
                     jobProcess.PPID = _cim.SysPacket.GetItemString();
                     jobProcess.CELLCNT = _cim.SysPacket.GetItemString();
                     jobProcess.MESSAGE = _cim.SysPacket.GetItemString();
+                    SendMessage2PLC("JOBEVENT1", jobProcess);
                 }
                 if (RCMD == "11" || RCMD == "12" || RCMD == "13" || RCMD == "14" || RCMD == "41" || RCMD == "42" || RCMD == "43" || RCMD == "44" || RCMD == "45")
                 {
