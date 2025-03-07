@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using ASOFTCIM.Message.PLC2Cim.Send;
 
 namespace ASOFTCIM
 {
@@ -17,10 +18,15 @@ namespace ASOFTCIM
         {
             try
             {
+                string ACK = "0";
                 PROCESSDATACONTROL process = new PROCESSDATACONTROL();
 
                 process.EQPID = _cim.SysPacket.GetItemString(1);
                 process.MODE = _cim.SysPacket.GetItemString();
+                if (process.MODE =="OFF")
+                {
+                    ACK = "26";
+                }
                 int countCell = int.Parse(_cim.SysPacket.GetItemString());
                 for (int i = 0; i < countCell; i++)
                 {
@@ -32,13 +38,26 @@ namespace ASOFTCIM
                     for (int j = 0; j < countModule; j++)
                     {
                         string lstModule = _cim.SysPacket.GetItemString();
+                        if (process.MODE == "1" && lstModule =="0")
+                        {
+                            ACK = "22";
+                        }
                         PROCESS_MODULE module = new PROCESS_MODULE();
                         module.MODULEID = _cim.SysPacket.GetItemString();
+                        if (module.MODULEID != EqpData.PROCESSDATACONTROL.CELLs[0].MODULEs[0].MODULEID)
+                        {
+                            ACK = "23";
+                        }
                         module.PPID = _cim.SysPacket.GetItemString();
                         module.PPID_TYPE = _cim.SysPacket.GetItemString();
+                        //if (module.PPID_TYPE != EqpData.PROCESSDATACONTROL.CELLs[0].MODULEs[0].PPID_TYPE)
+                        //{
+                        //    ACK = "27";
+                        //}
                         int countParam = int.Parse(_cim.SysPacket.GetItemString());
                         for (int x = 0; x < countParam; x++)
                         {
+                            int list = int.Parse(_cim.SysPacket.GetItemString());
                             PARAM param = new PARAM();
                             param.PARAMNAME = _cim.SysPacket.GetItemString();
                             param.PARAMVALUE = _cim.SysPacket.GetItemString();
@@ -47,6 +66,7 @@ namespace ASOFTCIM
                         int countItem = int.Parse(_cim.SysPacket.GetItemString());
                         for (int y = 0; y < countItem; y++)
                         {
+                            int list = int.Parse(_cim.SysPacket.GetItemString());
                             ITEM item = new ITEM();
                             item.ITEMNAME = _cim.SysPacket.GetItemString();
                             item.ITEMVALUE = _cim.SysPacket.GetItemString();
@@ -59,6 +79,17 @@ namespace ASOFTCIM
                 //if (_cim.EQHelper.IsPlc)
                 //    new ASOFTCIM.EQ.PLC.PLCMessage.Send.PROCESSCONTROLINFORMATIONSEND(_cim.EQHelper.PLCData, process);
                 //new PROCESSCONTROLINFORMATIONSEND(EqpData, cim.EQHelper.Conn, process);
+                
+                
+                if(process.EQPID != EqpData.EQINFORMATION.EQPID)
+                {
+                    ACK = "22";
+                }
+                
+
+
+                SendMessage2PLC("PROCESSCONTROLINFORMATIONSEND", process);
+                SendS16F104(ACK);
             }
             catch (Exception ex)
             {

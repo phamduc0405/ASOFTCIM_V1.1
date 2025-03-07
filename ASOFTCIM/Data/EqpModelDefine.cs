@@ -65,7 +65,7 @@ namespace ASOFTCIM.Data
         public string TMACK { get; set; }
 
         [XmlArrayItem("CELL")]
-        public List<PROCESS_CELL> CELLs { get; set; }
+        public List<PROCESS_CELL> CELLs { get; set; } = new List<PROCESS_CELL>();
 
         public string EQPID { get; set; }
         public string MODE { get; set; }
@@ -77,15 +77,15 @@ namespace ASOFTCIM.Data
         public string CELLID { get; set; }
         public string SEQ_NO { get; set; }
         [XmlArrayItem("MODULE")]
-        public List<PROCESS_MODULE> MODULEs { get; set; }
+        public List<PROCESS_MODULE> MODULEs { get; set; } = new List<PROCESS_MODULE>();
     }
     public class PROCESS_MODULE
     {
         public string MODULEID { get; set; }
         public string PPID { get; set; }
         public string PPID_TYPE { get; set; }
-        public List<PARAM> PARAMs { get; set; }
-        public List<ITEM> ITEMs { get; set; }
+        public List<PARAM> PARAMs { get; set; } = new List<PARAM>();
+        public List<ITEM> ITEMs { get; set; } = new List<ITEM>();
     }
     public class CELLEVENTDATA
     {

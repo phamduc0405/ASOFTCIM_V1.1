@@ -51,6 +51,7 @@ namespace ASOFTCIM
                     ReadEqpState();
                     ReadRMS();
                     ReadECM();
+                    ReadAPC();
                     _plcH.BitChangedEvent += (bit) =>
                     {
                         PLCBitChange(bit.Comment, bit);
@@ -161,10 +162,11 @@ namespace ASOFTCIM
 
                 if (typelist.Contains(t))
                 {
-                    MethodInfo method = this.GetType().GetMethod($"Excute");
+                    object s = Activator.CreateInstance(t);
+                    MethodInfo method = t.GetMethod($"Excute");
                     if (method != null)
                     {
-                        object result = method.Invoke(this, new object[] { this, w });
+                        object result = method.Invoke(s, new object[] { this, w });
                     }
                     return;
                 }
@@ -309,7 +311,22 @@ namespace ASOFTCIM
                 }
             }
         }
-        
+        public void ReadAPC()
+        {
+            foreach (var apc in _eqpConfig.PLCHelper.APCS)
+            {
+                EqpData.PROCESSDATACONTROL.EQPID = EqpData.EQINFORMATION.EQPID;
+                PROCESS_CELL processcell = new PROCESS_CELL();
+                PROCESS_MODULE processmodule = new PROCESS_MODULE();
+                PARAM param = new PARAM();
+                param.PARAMNAME = apc.Item;
+                param.PARAMVALUE = apc.GetValue(this.PLC);
+                processmodule.PARAMs.Add(param);
+                processcell.MODULEs.Add(processmodule);
+                EqpData.PROCESSDATACONTROL.CELLs.Add(processcell);
+            }
+            
+        }
         public void ReadEqpState()
         {
             this.EqpData.ALS = _eqpConfig.PLCHelper.Alarms;

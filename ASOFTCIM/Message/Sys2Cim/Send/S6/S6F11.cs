@@ -1147,7 +1147,7 @@ namespace ASOFTCIM
                 packet.addItem(DataType.List, 3);
                 packet.addItem(DataType.Ascii, "0");
                 packet.addItem(DataType.Ascii, ceid);
-                packet.addItem(DataType.List, 5);
+                packet.addItem(DataType.List, 3);
                 {
 
                     packet.addItem(DataType.List, 2);
@@ -1161,7 +1161,7 @@ namespace ASOFTCIM
                     }
                     packet.addItem(DataType.List, 2);
                     {
-                        packet.addItem(DataType.Ascii, "307");
+                        packet.addItem(DataType.Ascii, "350");
                         packet.addItem(DataType.List, 5);
                         {
                             packet.addItem(DataType.Ascii, cassetteChange.PORTID);

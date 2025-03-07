@@ -17,9 +17,17 @@ namespace ASOFTCIM
             {
                 string eqpid = _cim.SysPacket.GetItemString(1);
                 string ppid_type = _cim.SysPacket.GetItemString();
-                EqpData.CurrPPID.PPID_TYPE = _cim.SysPacket.GetItemString(2);
-                SendS7F110(EqpData.CurrPPID,"0");
-                // new S7F110().SendMessage(mes);
+                //EqpData.CurrPPID.PPID_TYPE = _cim.SysPacket.GetItemString(2);
+                string ACK = "0";
+                if(eqpid != EqpData.EQINFORMATION.EQPID)
+                {
+                     ACK = "7";
+                }    
+                if(ppid_type!= "1")
+                {
+                     ACK = "9";
+                }    
+                SendS7F110(EqpData.CurrPPID,ACK);
             }
             catch (Exception ex)
             {

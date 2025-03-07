@@ -37,6 +37,7 @@ namespace ASOFTCIM.Data
         public CARTONINFOR CARTONINFOR = new CARTONINFOR();
         public ETCINFOR ETCINFOR = new ETCINFOR();
         public CELLEVENTDATA CELLEVENTDATA = new CELLEVENTDATA();
+        public PROCESSDATACONTROL PROCESSDATACONTROL = new PROCESSDATACONTROL();
         public EQPDATA()
         {
             for (int i = 0; i < 8; i++)
@@ -119,8 +120,8 @@ namespace ASOFTCIM.Data
         public string MATERIALST { get; set; }
         public string MATERIALPORTID { get; set; }
         public string MATERIALUSAGE { get; set; }
+        public string MATERIALPORTLOADNO { get; set; }
 
-        
     }
 
 

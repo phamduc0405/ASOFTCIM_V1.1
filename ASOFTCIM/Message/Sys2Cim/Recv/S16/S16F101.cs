@@ -16,7 +16,12 @@ namespace ASOFTCIM
             try
             {
                 string eqpid = _cim.SysPacket.GetItemString();
-                //  new S10F6().SendMessage( ACK);
+                EqpData.PROCESSDATACONTROL.TMACK = "0";
+                if (eqpid != EqpData.EQINFORMATION.EQPID)
+                {
+                    EqpData.PROCESSDATACONTROL.TMACK = "13";
+                }    
+                SendS16F102(EqpData.PROCESSDATACONTROL);
             }
             catch (Exception ex)
             {

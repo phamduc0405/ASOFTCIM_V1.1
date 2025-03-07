@@ -23,6 +23,12 @@ namespace ASOFTCIM
                 packet.Command = Command.UserData;
                 packet.DeviceId = EqpData.DeviceId;
                 packet.SystemByte = EqpData.TransactionSys;
+                if (ppid == null)
+                {
+                    packet.addItem(DataType.List, 0);
+                    packet.Send2Sys();
+                    return;
+                }
                 packet.addItem(DataType.List, 7);
                 {
                     packet.addItem(DataType.Ascii, EqpData.EQINFORMATION.EQPID);

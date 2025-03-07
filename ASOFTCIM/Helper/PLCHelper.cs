@@ -29,6 +29,8 @@ namespace ASOFTCIM.Helper
         private List<PPIDModel> _lstPPID;
         private List<ECMModel> _ecms;
         private List<MaterialModel> _materials;
+        private List<APCModel> _apc;
+        private List<CarialModel> _carrial;
         private Thread _update;
         #endregion
         #region Property
@@ -77,6 +79,16 @@ namespace ASOFTCIM.Helper
             get { return _svids; }
             set { _svids = value; }
         }
+        public List<APCModel> APCS
+        {
+            get { return _apc; }
+            set { _apc = value; }
+        }
+        public List<CarialModel> Carrial
+        {
+            get { return _carrial; }
+            set { _carrial = value; }
+        }
         public string EqpId { get; set; } = null;
         #endregion
         #region Event
@@ -109,7 +121,8 @@ namespace ASOFTCIM.Helper
                 _words.AddRange(wplc);
                 _plcMemms =await ExcelHelper.ReadExcel<PlcMemmory>(ExcelPath, "MemoryConfig");
                 _materials = await ExcelHelper.ReadExcel<MaterialModel>(ExcelPath, "Material");
-
+                _apc = await ExcelHelper.ReadExcel<APCModel>(ExcelPath, "APC");
+                _carrial = await ExcelHelper.ReadExcel<CarialModel>(ExcelPath, "Cassette Batch");
                 foreach (var b in _bit)
                 {
                     List<WordModel> wm= _words.Where(x=>x.BitEvent.Contains($"{b.PLCDevice}{b.PLCHexAdd}")).ToList();
@@ -211,6 +224,7 @@ namespace ASOFTCIM.Helper
             BitModel bit = new BitModel(_plc);
 
             if (_bit.Any(x => x.PLCAddress == status.Address))
+
             {
                 bit = _bit.FirstOrDefault(x => x.PLCAddress == status.Address);
                 bit.BitChangeByPlc();
