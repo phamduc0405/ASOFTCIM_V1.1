@@ -17,7 +17,7 @@ namespace ASOFTCIM.Helper
         #region Event
         public delegate void SysPacketEventDelegate(SysPacket sysPacket);
         public event SysPacketEventDelegate SysPacketEvent;
-        
+
         #endregion
         public CimHelper(string eqpid) : base(eqpid)
         {
@@ -44,6 +44,7 @@ namespace ASOFTCIM.Helper
                     SysDatas.TransactionSys = sysPacket.SystemByte;
                     SysConfig.DeviceId = sysPacket.DeviceId;
                     ReciveEventHandle(SysPacket);
+
                     if (EQPID != "System")
                     {
                         Type[] typelist = GetTypesInNamespace(Assembly.GetExecutingAssembly(), "ASOFTCIM");
@@ -62,6 +63,7 @@ namespace ASOFTCIM.Helper
                 }
                 catch (Exception ex)
                 {
+                    
                     var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message);
                     LogTxt.Add(LogTxt.Type.Exception, debug);
                     ex.Data.Clear();
@@ -86,6 +88,8 @@ namespace ASOFTCIM.Helper
                 handle(sysPacket);
             }
         }
+
+        
         #endregion
     }
 }

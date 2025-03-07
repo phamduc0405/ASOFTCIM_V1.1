@@ -33,46 +33,56 @@ namespace ASOFTCIM
             {
                 Task.Run(async () =>
                 {
-                    await Task.Delay(1000);
-                    _plc = new PlcComm();
-                    _eqpConfig.PLCConfig.PlcConnectType = PlcConnectType.Component;
-                    _eqpConfig.PLCConfig.StationNo = 255;
-                    _plc.ConfigComm(_eqpConfig.PLCConfig);
-                    _plc.Start();
-                    _plcH = new PLCHelper();
-                    _plcH = _eqpConfig.PLCHelper;
-                    _plcH.Start(_plc, _eqpConfig.EQPID);
-                    _aliveBit = new Thread(Alive)
+                    try
                     {
-                        IsBackground = true
-                    };
-                    _aliveBit.Start();
-                    //DefineAlarm();
-                    this.EqpData.ALS = _eqpConfig.PLCHelper.Alarms;
-                    
-                    
-                    ReadRMS();
-                    ReadECM();
-                    _plcH.BitChangedEvent += (bit) =>
-                    {
-                        PLCBitChange(bit.Comment, bit);
-                    };
-                    _plcH.WordChangedEvent += _plcH_WordChangedEvent;
-                    foreach (var item in _plc.InputWordStatuses)
-                    {
-                        WordStatus w = item;
-                        WordModel word = _plcH.Words.FirstOrDefault(x => x.Item.ToUpper() == "ALARM" && x.IsPlc);
-                        if (w.Address >= word.Address && w.Address < word.Address + word.Length)
+                        //await Task.Delay(1000);
+                        _plc = new PlcComm();
+                        _eqpConfig.PLCConfig.PlcConnectType = PlcConnectType.Component;
+                        _eqpConfig.PLCConfig.StationNo = 255;
+                        _plc.ConfigComm(_eqpConfig.PLCConfig);
+                        _plc.Start();
+                        _plcH = new PLCHelper();
+                        _plcH = _eqpConfig.PLCHelper;
+                        _plcH.Start(_plc, _eqpConfig.EQPID);
+                        _aliveBit = new Thread(Alive)
                         {
-                            if (!w.IsOn)
+                            IsBackground = true
+                        };
+                        _aliveBit.Start();
+                        //DefineAlarm();
+                        this.EqpData.ALS = _eqpConfig.PLCHelper.Alarms;
+
+
+                        ReadRMS();
+                        ReadECM();
+                        _plcH.BitChangedEvent += (bit) =>
+                        {
+                            PLCBitChange(bit.Comment, bit);
+                        };
+                        _plcH.WordChangedEvent += _plcH_WordChangedEvent;
+                        foreach (var item in _plc.InputWordStatuses)
+                        {
+                            WordStatus w = item;
+                            WordModel word = _plcH.Words.FirstOrDefault(x => x.Item.ToUpper() == "ALARM" && x.IsPlc);
+                            if (w.Address >= word.Address && w.Address < word.Address + word.Length)
                             {
-                                var alid = w.Index - word.Address * 16 + 2;
+                                if (!w.IsOn)
+                                {
+                                    var alid = w.Index - word.Address * 16 + 2;
 
 
+                                }
                             }
+                            // w.BitChangedEvent += W_BitChangedEvent;
                         }
-                        // w.BitChangedEvent += W_BitChangedEvent;
                     }
+                    catch (Exception ex)
+                    {
+
+                        var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message);
+                        LogTxt.Add(LogTxt.Type.Exception, debug);
+                    }
+                    
                 });
 
                 //_alarm.HistoryReset(_eqpConfig.EQPID);
