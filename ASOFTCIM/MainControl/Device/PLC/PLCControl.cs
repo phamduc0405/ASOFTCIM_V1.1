@@ -28,56 +28,70 @@ namespace ASOFTCIM
 
 
         public void InitialPlc()
+{
+    if (_eqpConfig.PLCConfig != null)
+    {
+        Task.Run(async () =>
         {
-            if (_eqpConfig.PLCConfig != null)
+            try
             {
-                Task.Run(async () =>
+                // Khởi tạo đối tượng PLC
+                _plc = new PlcComm();
+                _eqpConfig.PLCConfig.PlcConnectType = PlcConnectType.Component;
+                _eqpConfig.PLCConfig.StationNo = 255;
+                _plc.ConfigComm(_eqpConfig.PLCConfig);
+                _plc.Start();
+                
+                _plcH = new PLCHelper();
+                _plcH = _eqpConfig.PLCHelper;
+                _plcH.Start(_plc, _eqpConfig.EQPID);
+                
+                _aliveBit = new Thread(Alive)
                 {
-                    await Task.Delay(1000);
-                    _plc = new PlcComm();
-                    _eqpConfig.PLCConfig.PlcConnectType = PlcConnectType.Component;
-                    _eqpConfig.PLCConfig.StationNo = 255;
-                    _plc.ConfigComm(_eqpConfig.PLCConfig);
-                    _plc.Start();
-                    _plcH = new PLCHelper();
-                    _plcH = _eqpConfig.PLCHelper;
-                    _plcH.Start(_plc, _eqpConfig.EQPID);
-                    _aliveBit = new Thread(Alive)
+                    IsBackground = true
+                };
+                _aliveBit.Start();
+                
+                // Đọc dữ liệu từ PLC
+                ReadEqpState();
+                ReadRMS();
+                ReadECM();
+                ReadAPC();
+                
+                // Gán sự kiện thay đổi trạng thái bit
+                _plcH.BitChangedEvent += (bit) =>
+                {
+                    PLCBitChange(bit.Comment, bit);
+                };
+                
+                _plcH.WordChangedEvent += _plcH_WordChangedEvent;
+                
+                // Kiểm tra trạng thái các từ đầu vào của PLC
+                foreach (var item in _plc.InputWordStatuses)
+                {
+                    WordStatus w = item;
+                    WordModel word = _plcH.Words.FirstOrDefault(x => x.Item.ToUpper() == "ALARM" && x.IsPlc);
+                    
+                    if (word != null && w.Address >= word.Address && w.Address < word.Address + word.Length)
                     {
-                        IsBackground = true
-                    };
-                    _aliveBit.Start();
-                    //DefineAlarm();
-                    ReadEqpState();
-                    ReadRMS();
-                    ReadECM();
-                    ReadAPC();
-                    _plcH.BitChangedEvent += (bit) =>
-                    {
-                        PLCBitChange(bit.Comment, bit);
-                    };
-                    _plcH.WordChangedEvent += _plcH_WordChangedEvent;
-                    foreach (var item in _plc.InputWordStatuses)
-                    {
-                        WordStatus w = item;
-                        WordModel word = _plcH.Words.FirstOrDefault(x => x.Item.ToUpper() == "ALARM" && x.IsPlc);
-                        if (w.Address >= word.Address && w.Address < word.Address + word.Length)
+                        if (!w.IsOn)
                         {
-                            if (!w.IsOn)
-                            {
-                                var alid = w.Index - word.Address * 16 + 2;
-
-
-                            }
+                            var alid = w.Index - word.Address * 16 + 2;
                         }
-                        // w.BitChangedEvent += W_BitChangedEvent;
                     }
-                });
-
-                //_alarm.HistoryReset(_eqpConfig.EQPID);
+                }
+                
+                // Gán danh sách báo động
+                this.EqpData.ALS = _eqpConfig.PLCHelper.Alarms;
             }
-
-        }
+            catch (Exception ex)
+            {
+                var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message);
+                LogTxt.Add(LogTxt.Type.Exception, debug);
+            }
+        });
+    }
+}
         public void LoadExcelConfig(string path)
         {
             try
@@ -92,9 +106,9 @@ namespace ASOFTCIM
                 }
                 if (_eqpConfig.PLCHelper.PlcMemms?.Count > 0)
                 {
-                    if (_eqpConfig.PLCHelper.Bits.Any(x => x.Item.Contains("ALIVE")))
+                    if (_eqpConfig.PLCHelper.Bits.Any(x => x.Item.ToUpper().Contains("ALIVE")))
                     {
-                        BitModel bAlive = _eqpConfig.PLCHelper.Bits.FirstOrDefault(x => x.Item.Contains("ALIVE"));
+                        BitModel bAlive = _eqpConfig.PLCHelper.Bits.FirstOrDefault(x => x.Item.ToUpper().Contains("ALIVE"));
                         if (_eqpConfig.PLCHelper.PlcMemms.Any(x => x.BPLCStart == bAlive.PLCHexAdd))
                         {
                             PlcMemmory plcmem = _eqpConfig.PLCHelper.PlcMemms.FirstOrDefault(x => x.BPLCStart == bAlive.PLCHexAdd);
@@ -197,7 +211,7 @@ namespace ASOFTCIM
                         bit.SetPCValue = true;
                         return;
                     }
-
+                    bit.SetPCValue = true;
                 }
                 else { bit.SetPCValue = false; }
 

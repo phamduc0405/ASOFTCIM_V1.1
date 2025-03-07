@@ -18,6 +18,7 @@ using FontAwesome.Sharp;
 using ASOFTCIM.Message.PLC2Cim.Recv;
 using ASOFTCIM.MainControl.Device.PC;
 using ASOFTCIM.MainControl;
+using A_SOFT.CMM.INIT;
 
 namespace ASOFTCIM
 {
@@ -76,39 +77,78 @@ namespace ASOFTCIM
             _cim = new CimHelper(EQPID);
             _cim.Init(ATCPIP.ConnectMode.Passive, "127.0.0.1", 8000);
             _cim.SysPacketEvent += _cim_SysPacketEvent;
+            _cim.TransTimeOutEvent += _cim_TransTimeOutEvent;
             _plc = new PlcComm();
             _eqpConfig = equipmentConfig;
             //LoadExcelConfig(@"D:\Project_New\ACIM\SDCCIM_ASOFT_Portal_Online_Map_SDC_Basic_V1.21_v0.1.xlsx");
             InitialPlc();
             
         }
+
+       
+
         public void Stop()
         {
+            SysPacket sysPacket = new SysPacket(_cim.Conn);
+            sysPacket.DeviceId = 1;
+            sysPacket.SystemByte = EqpData.TransactionSys+1 ;
+            sysPacket.Command = Command.SeparateReq;
+            sysPacket.Send2Sys();
+            Thread.Sleep(1000);
             _cim.Close();
         }
         private void Initial()
         {
             EqpData = new EQPDATA();
         }
-        
+        private void _cim_TransTimeOutEvent(TransactionWait trans)
+        {
+            SysPacket sysPacket = new SysPacket(_cim.Conn);
+            sysPacket.DeviceId = 1;
+            sysPacket.SystemByte = trans.TransactionSys;
+            SendS9F9(sysPacket);
+           
+        }
         private void _cim_SysPacketEvent(SysPacket sysPacket)
         {
-            EqpData.TransactionSys = sysPacket.SystemByte;
-            EqpData.DeviceId = sysPacket.DeviceId;
-            MethodInfo method = this.GetType().GetMethod($"RecvS{sysPacket.Stream}F{sysPacket.Function}");
-            if (method != null)
+            try
             {
-                object result = method.Invoke(this,null);
+                EqpData.TransactionSys = sysPacket.SystemByte;
+                EqpData.DeviceId = sysPacket.DeviceId;
                 sysPacket.MakeCimLog();
-                return;
+                if (sysPacket.DeviceId != 1)
+                {
+                    SendS9F1(sysPacket);
+                    return;
+                }
+
+                MethodInfo method = this.GetType().GetMethod($"RecvS{sysPacket.Stream}F{sysPacket.Function}");
+                if (method != null)
+                {
+                    object result = method.Invoke(this, null);
+
+                    return;
+                }
+                else
+                {
+                    bool hasStream = this.GetType().GetMethods().Any(m => m.Name.StartsWith($"RecvS{sysPacket.Stream}"));
+                    if (!hasStream) SendS9F3(sysPacket);
+                    else SendS9F5(sysPacket);
+
+                    return;
+                }
             }
-            else
+            catch (Exception ex)
             {
-                SendS9F3(sysPacket);
-                return;
+                SendS9F7(sysPacket);
+                var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message);
+                LogTxt.Add(LogTxt.Type.Exception, debug);
+                ex.Data.Clear();
             }
+            
 
         }
+
         public Type[] GetTypesInNamespace(Assembly assembly, string nameSpace)
         {
             return
