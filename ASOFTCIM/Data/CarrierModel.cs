@@ -57,14 +57,14 @@ namespace ASOFTCIM.Data
         public string CARRIER_S_COUNT { get; set; }
         public string CARRIER_C_COUNT { get; set; }
         public string PORTNO { get; set; }
-        public List<SUBCARRIER> SUBCARRIERS { get; set; }
+        public List<SUBCARRIER> SUBCARRIERS { get; set; } = new List<SUBCARRIER>();
         public REPLY REPLY { get; set; } = new REPLY();
     }
     public class SUBCARRIER
     {
         public string SUBCARRIERID { get; set; }
         public string CELLQTY { get; set; }
-        public List<CELLINFO> CELLSINFOR { get; set; }
+        public List<CELLINFO> CELLSINFOR { get; set; } = new List<CELLINFO>();
     }
     public class CELLINFO
     {
