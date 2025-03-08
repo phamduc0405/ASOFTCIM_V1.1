@@ -51,7 +51,7 @@ namespace ASOFTCIM.Data
         public string COMMENT { get; set; }
         public string REPLYCODE { get; set; }
         public string REPLYTEXT { get; set; }
-        public List<ATTR> ATTRs { get; set; }
+        public List<ATTR> ATTRs { get; set; } = new List<ATTR>();
     }
     public class ATTR
     {
