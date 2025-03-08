@@ -192,7 +192,7 @@ namespace ASOFTCIM
         {
             await Task.Run(async () =>
             {
-                if (bit.GetPLCValue)
+                if (bit.GetPLCValue) 
                 {
                     string namespaces = "ASOFTCIM.Message.PLC2Cim.Recv";
                     Type[] typelist = GetTypesInNamespace(Assembly.GetExecutingAssembly(), namespaces);

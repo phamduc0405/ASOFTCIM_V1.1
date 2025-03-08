@@ -14,15 +14,16 @@ namespace ASOFTCIM.Message.PLC2Cim.Send
 {
     public class EQUIPMENTCONTROLINFORMATION
     {
-        public EQUIPMENTCONTROLINFORMATION(PLCHelper plcdata, FUNCTION func)
+        public EQUIPMENTCONTROLINFORMATION(PLCHelper plcdata, ControlInfoMation controlInfoMation)
         {
 
             try
             {
                 List<WordModel> word = plcdata.Words.Where(x => x.Area == this.GetType().Name).ToList();
-                word.FirstOrDefault(x => x.Item == "EFID").SetValue = func.EFID;
-                word.FirstOrDefault(x => x.Item == "EFST").SetValue = func.EFST;
-                word.FirstOrDefault(x => x.Item == "MESSAGE").SetValue = func.MESSAGE;
+                word.FirstOrDefault(x => x.Item == "ACTIONTYPE").SetValue = controlInfoMation.ACTIONTYPE;
+                word.FirstOrDefault(x => x.Item == "ACTIONDETAIL").SetValue = controlInfoMation.ACTIONDETAIL;
+                word.FirstOrDefault(x => x.Item == "DESCRIPTION").SetValue = controlInfoMation.DESCRIPTION;
+                word.FirstOrDefault(x => x.Item == "ACTION").SetValue = controlInfoMation.ACTION;
 
                 BitModel bit = plcdata.Bits.First(x => x.Comment == this.GetType().Name);
                 bit.SetPCValue = true;
