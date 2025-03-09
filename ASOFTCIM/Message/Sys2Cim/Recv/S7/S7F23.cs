@@ -39,9 +39,9 @@ namespace ASOFTCIM
                     ppid.COMMANDCODEs.Add(cmd);
                 }
                 EQPDATA data = EqpData;
-               
 
 
+                SendMessage2PLC("FORMATTEDPROCESSPROGRAMSEND", ppid);
                 SendS7F24(ACK);
               //  new RECIPECONTROLREQUEST(EqpData, cim.EQHelper.Conn, ppid);
             }

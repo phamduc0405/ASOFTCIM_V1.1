@@ -42,6 +42,7 @@ namespace ASOFTCIM
                     interlock.UNITID = _cim.SysPacket.GetItemString();
                     interlock.INTERLOCKID = _cim.SysPacket.GetItemString();
                     interlock.MESSAGE = _cim.SysPacket.GetItemString();
+                    SendMessage2PLC("INTERLOCK", interlock);
                 }
                 switch (RCMD)
                 {
@@ -105,7 +106,7 @@ namespace ASOFTCIM
                         interlock12.INTERLOCKID = _cim.SysPacket.GetItemString();
                         interlock12.MESSAGE = _cim.SysPacket.GetItemString();
 
-                        SendMessage2PLC("INTERLOCK", interlock12);
+                        //SendMessage2PLC("INTERLOCK", interlock12);
                         break;
                     case "13":  // (Step Stop)
                         break;
