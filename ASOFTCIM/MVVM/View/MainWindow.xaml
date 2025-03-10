@@ -466,7 +466,7 @@
                             Text="PLC Disconnected" />
                     </Border>
                     <Border
-                        x:Name="bdrMCRConnect"
+                        x:Name="bdrCimConnect"
                         Grid.Row="1"
                         Grid.Column="3"
                         Margin="5"
@@ -481,7 +481,7 @@
                                 Color="Black" />
                         </Border.Effect>
                         <TextBlock
-                            x:Name="txtMCRConnect"
+                            x:Name="txtCimConnect"
                             Margin="5,0,5,0"
                             Style="{StaticResource BodyTextBlockStyle}"
                             Text="HOST Disconnected" />

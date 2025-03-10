@@ -75,18 +75,24 @@ namespace ASOFTCIM
         {
             Initial();
             _cim = new CimHelper(EQPID);
-            _cim.Init(ATCPIP.ConnectMode.Passive, "127.0.0.1", 8000);
+            ATCPIP.ConnectMode connectMode = (ATCPIP.ConnectMode)Enum.Parse(typeof(ATCPIP.ConnectMode), equipmentConfig.CimConfig.ConnectMode);
+            string Ip = equipmentConfig.CimConfig.IP;
+            ushort Port = ushort.Parse(equipmentConfig.CimConfig.Port);
+            //0:Passive ; 1:Active
+            _cim.Init(connectMode, Ip, Port);
             _cim.SysPacketEvent += _cim_SysPacketEvent;
             _cim.TransTimeOutEvent += _cim_TransTimeOutEvent;
+            _cim.ConnectEvent += Con;
             _plc = new PlcComm();
             _eqpConfig = equipmentConfig;
             //LoadExcelConfig(@"D:\Project_New\ACIM\SDCCIM_ASOFT_Portal_Online_Map_SDC_Basic_V1.21_v0.1.xlsx");
             InitialPlc();
             
         }
-
-       
-
+        private void Con(bool isConnected)
+        {
+            var c = 1;
+        }
         public void Stop()
         {
             SysPacket sysPacket = new SysPacket(_cim.Conn);

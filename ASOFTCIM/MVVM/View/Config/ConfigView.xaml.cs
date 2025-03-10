@@ -20,6 +20,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO;
+using System.Diagnostics;
 
 namespace ASOFTCIM.MVVM.View.Config
 {
@@ -154,7 +155,27 @@ namespace ASOFTCIM.MVVM.View.Config
                 }
                 //LoadingPlcImage.Visibility = Visibility.Hidden;
             };
-
+            btnSaveCimConfig.Click += async (s, e) =>
+            {
+                try
+                {
+                    _equipmentConfig.CimConfig = new CimConfig()
+                    {
+                        IP = txtIp.Text,
+                        ConnectMode = txtConectMode.Text,
+                        Port = txtPort.Text,
+                    };
+                    var debug = string.Format("Class:{0} Method:{1} Event:{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ((System.Windows.Controls.Control)s).Name);
+                    LogTxt.Add(LogTxt.Type.UI, debug);
+                    await SaveConfig();
+                    await LoadConfig();
+                }
+                catch (Exception ex)
+                {
+                    var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.", MethodBase.GetCurrentMethod().DeclaringType.Name.ToString(), MethodBase.GetCurrentMethod().Name, ex.Message);
+                    LogTxt.Add(LogTxt.Type.Exception, debug);
+                }
+            };
 
         }
         private async Task SaveConfig()
@@ -201,6 +222,13 @@ namespace ASOFTCIM.MVVM.View.Config
                             cbbplcConnectType.SelectedItem = _equipmentConfig.PLCConfig.PlcConnectType;
                             var ipPlcSegments = _equipmentConfig.PLCConfig.IpPlc.Split('.');
                            
+                        }
+                        //cimConfig
+                        {
+                            txtIp.Text = _equipmentConfig.CimConfig.IP.ToString();
+                            txtConectMode.Text = _equipmentConfig.CimConfig.ConnectMode.ToString();
+                            txtPort.Text = _equipmentConfig.CimConfig.Port.ToString();
+
                         }
                     });
                 }

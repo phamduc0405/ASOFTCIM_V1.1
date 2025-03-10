@@ -20,10 +20,18 @@ namespace ASOFTCIM.Config
         public PLCHelper PLCHelper { get; set; } = new PLCHelper();
         public PLCConfig PLCConfig { get; set; } = new PLCConfig();
         public string LineName { get; set; } = "";
+        public CimConfig CimConfig { get; set; } = new CimConfig();
     }
     public class DefineConst
     {
         public const int ShortBits = sizeof(short) * 8;
+
+    }
+    public class CimConfig
+    {
+        public string ConnectMode { get; set; } ="0";
+        public string IP { get; set; } = "127.0.0.1";
+        public string Port { get; set; } = "8000";
 
     }
 }
