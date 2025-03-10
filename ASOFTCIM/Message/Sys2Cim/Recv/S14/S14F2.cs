@@ -34,7 +34,10 @@ namespace ASOFTCIM
                 }
                 attrequest.REPLYCODE = _cim.SysPacket.GetItemString();
                 attrequest.REPLYCODE = _cim.SysPacket.GetItemString();
-
+                for (int i = 1; i <= count; i++) 
+                {
+                    SendMessage2PLC($"GETATTRIBUTEREQUEST{i}", attrequest);
+                }
             }
             catch (Exception ex)
             {

@@ -42,7 +42,7 @@ namespace ASOFTCIM
                     items.Add(item);
                 }
                 cellLotInfor.ITEMS = items;
-
+                SendMessage2PLC("CELLLOTINFORMATIONSEND11", cellLotInfor);
                 SendS3F110( ACK);
             }
             catch (Exception ex)

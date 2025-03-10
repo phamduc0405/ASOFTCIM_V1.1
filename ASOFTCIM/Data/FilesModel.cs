@@ -21,4 +21,13 @@ namespace ASOFTCIM.Data
         public string LOCALCHECKSUM { get; set; }
         public string CURRENTCHECKSUM { get; set; }
     }
+    public class ControlInfoMation
+    {
+        public string ACTIONTYPE { get; set; }
+        public string ACTIONDETAIL { get; set; }
+        public string ACTION { get; set; }
+        public string DESCRIPTION { get; set; }
+
+    }
+
 }

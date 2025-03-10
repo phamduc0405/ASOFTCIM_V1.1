@@ -42,6 +42,7 @@ namespace ASOFTCIM
                               //  new S1F6_6().SendMessage(_cim.Conn, EqpData);
                                 break;
                             default:
+                                SendS1F6_default(_cim.Conn, EqpData);
                                 break;
                         }
                     }

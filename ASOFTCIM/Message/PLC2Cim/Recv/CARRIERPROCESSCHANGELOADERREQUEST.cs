@@ -34,15 +34,15 @@ namespace ASOFTCIM.Message.PLC2Cim.Recv
                     SUBCARRIER sub = new SUBCARRIER();
                     sub.SUBCARRIERID = word.FirstOrDefault(x => x.Item == "SUBCARRIERID" + i.ToString()).GetValue(eq.PLC);
                     sub.CELLQTY = word.FirstOrDefault(x => x.Item == "CELLQTY").GetValue(eq.PLC);
-                    for (int j = 1; j < 51; j++)
-                    {
-                        CELLINFO cell = new CELLINFO();
-                        cell.CELLID = word.FirstOrDefault(x => x.Item == "CELLID" + j.ToString()).GetValue(eq.PLC);
-                        cell.LOCATIONNO = word.FirstOrDefault(x => x.Item == "LOCATIONNO" + j.ToString()).GetValue(eq.PLC);
-                        cell.JUDGE = word.FirstOrDefault(x => x.Item == "JUDGE" + j.ToString()).GetValue(eq.PLC);
-                        cell.REASONCODE = word.FirstOrDefault(x => x.Item == "REASONCODE" + j.ToString()).GetValue(eq.PLC);
-                        sub.CELLSINFOR.Add(cell);
-                    }
+                    //for (int j = 1; j < 51; j++)
+                    //{
+                    //    CELLINFO cell = new CELLINFO();
+                    //    cell.CELLID = word.FirstOrDefault(x => x.Item == "CELLID" + j.ToString()).GetValue(eq.PLC);
+                    //    cell.LOCATIONNO = word.FirstOrDefault(x => x.Item == "LOCATIONNO" + j.ToString()).GetValue(eq.PLC);
+                    //    cell.JUDGE = word.FirstOrDefault(x => x.Item == "JUDGE" + j.ToString()).GetValue(eq.PLC);
+                    //    cell.REASONCODE = word.FirstOrDefault(x => x.Item == "REASONCODE" + j.ToString()).GetValue(eq.PLC);
+                    //    sub.CELLSINFOR.Add(cell);
+                    //}
                     carr.SUBCARRIERS.Add(sub);
                 }
 

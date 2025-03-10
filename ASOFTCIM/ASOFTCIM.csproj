@@ -192,6 +192,7 @@
     <Compile Include="Message\PLC2Cim\Send\CARRIERINFORMATIONSENDCASSETTEBATCH.cs" />
     <Compile Include="Message\PLC2Cim\Send\DATETIMESET.cs" />
     <Compile Include="Message\PLC2Cim\Send\FORMATTEDPROCESSPROGRAMREQUEST.cs" />
+    <Compile Include="Message\PLC2Cim\Send\GETATTRIBUTEREQUEST.cs" />
     <Compile Include="Message\PLC2Cim\Send\INSPECTIONCARRIERASSIGNINFOSEND.cs" />
     <Compile Include="Message\PLC2Cim\Send\INSPECTIONCARRIERRELEASEINFOSEND.cs" />
     <Compile Include="Message\PLC2Cim\Send\LABELINFORMATIONSEND.cs" />

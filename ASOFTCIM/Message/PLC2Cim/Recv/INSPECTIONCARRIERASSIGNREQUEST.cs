@@ -28,12 +28,12 @@ namespace ASOFTCIM.Message.PLC2Cim.Recv
                 carr.CARRIER_C_COUNT = word.FirstOrDefault(x => x.Item == "CARRIER_C_COUNT").GetValue(eq.PLC);
                 carr.PORTNO = word.FirstOrDefault(x => x.Item == "CARRIER_C_COUNT").GetValue(eq.PLC);
                 carr.CEID = word.FirstOrDefault(x => x.Item == "CEID").GetValue(eq.PLC);
-                for (int i = 1; i < 51; i++)
+                for (int i = 1; i < 2; i++)
                 {
                     SUBCARRIER sub = new SUBCARRIER();
                     sub.SUBCARRIERID = word.FirstOrDefault(x => x.Item == "SUBCARRIERID" + i.ToString()).GetValue(eq.PLC);
-                    sub.CELLQTY = word.FirstOrDefault(x => x.Item == "CELLQTY").GetValue(eq.PLC);
-                    for (int j = 1; j < 51; j++)
+                    sub.CELLQTY = word.FirstOrDefault(x => x.Item == $"CELLQTY{i}").GetValue(eq.PLC);
+                    for (int j = 1; j < 2; j++)
                     {
                         CELLINFO cell = new CELLINFO();
                         cell.CELLID = word.FirstOrDefault(x => x.Item == "CELLID" + j.ToString()).GetValue(eq.PLC);

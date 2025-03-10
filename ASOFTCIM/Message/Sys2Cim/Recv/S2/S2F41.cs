@@ -33,6 +33,7 @@ namespace ASOFTCIM
                     jobProcess.PPID = _cim.SysPacket.GetItemString();
                     jobProcess.CELLCNT = _cim.SysPacket.GetItemString();
                     jobProcess.MESSAGE = _cim.SysPacket.GetItemString();
+                    SendMessage2PLC("JOBEVENT1", jobProcess);
                 }
                 if (RCMD == "11" || RCMD == "12" || RCMD == "13" || RCMD == "14" || RCMD == "41" || RCMD == "42" || RCMD == "43" || RCMD == "44" || RCMD == "45")
                 {
@@ -41,6 +42,7 @@ namespace ASOFTCIM
                     interlock.UNITID = _cim.SysPacket.GetItemString();
                     interlock.INTERLOCKID = _cim.SysPacket.GetItemString();
                     interlock.MESSAGE = _cim.SysPacket.GetItemString();
+                    SendMessage2PLC("INTERLOCK", interlock);
                 }
                 switch (RCMD)
                 {
@@ -104,13 +106,20 @@ namespace ASOFTCIM
                         interlock12.INTERLOCKID = _cim.SysPacket.GetItemString();
                         interlock12.MESSAGE = _cim.SysPacket.GetItemString();
 
-                        SendMessage2PLC("INTERLOCK", interlock12);
+                        //SendMessage2PLC("INTERLOCK", interlock12);
                         break;
                     case "13":  // (Step Stop)
                         break;
                     case "14":  //(OWN Stop)
                         break;
                     case "15":  //Equipment Command (Control Information)
+                        ControlInfoMation controlInfoMation =new ControlInfoMation();
+                        controlInfoMation.ACTIONTYPE = _cim.SysPacket.GetItemString(7);
+                        controlInfoMation.ACTIONDETAIL = _cim.SysPacket.GetItemString(10);
+                        controlInfoMation.ACTION = _cim.SysPacket.GetItemString(13);
+                        controlInfoMation.DESCRIPTION = _cim.SysPacket.GetItemString(16);
+                        SendMessage2PLC("EQUIPMENTCONTROLINFORMATION", controlInfoMation);
+
                         break;
                     case "16":  //(Unit Op-call Send)
                         OPCALLMESS opcallUnit = new OPCALLMESS();

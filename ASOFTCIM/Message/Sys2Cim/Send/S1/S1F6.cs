@@ -28,7 +28,7 @@ namespace ASOFTCIM
                 packet.DeviceId = EqpData.DeviceId;
                 packet.SystemByte = EqpData.TransactionSys;
                 packet.WaitBit = true;
-				AddTrans(EqpData.TransactionSys);
+				            AddTrans(EqpData.TransactionSys);
                 packet.addItem(DataType.List, 2);
                 {
                     packet.addItem(DataType.Ascii, "1"); // SFCD :1
@@ -80,7 +80,7 @@ namespace ASOFTCIM
                 packet.DeviceId = EqpData.DeviceId;
                 packet.SystemByte = EqpData.TransactionSys;
                 packet.WaitBit = true;
-				AddTrans(EqpData.TransactionSys);
+				            AddTrans(EqpData.TransactionSys);
                 packet.addItem(DataType.List, 2);
                 {
                     packet.addItem(DataType.Ascii, "2"); // SFCD :2
@@ -155,7 +155,7 @@ namespace ASOFTCIM
                 packet.DeviceId = EqpData.DeviceId; // Cần sửa lại
                 packet.SystemByte = EqpData.TransactionSys;
                 packet.WaitBit = true;
-				AddTrans(EqpData.TransactionSys);
+				            AddTrans(EqpData.TransactionSys);
                 packet.addItem(DataType.List, 2);
                 {
                     packet.addItem(DataType.Ascii, "3"); // SFCD :3
@@ -223,7 +223,7 @@ namespace ASOFTCIM
                 packet.DeviceId = EqpData.DeviceId; // Cần sửa lại
                 packet.SystemByte = EqpData.TransactionSys;
                 packet.WaitBit = true;
-				AddTrans(EqpData.TransactionSys);
+				            AddTrans(EqpData.TransactionSys);
                 packet.addItem(DataType.List, 2);
                 {
                     packet.addItem(DataType.Ascii, "4"); // SFCD :4
@@ -271,13 +271,13 @@ namespace ASOFTCIM
             try
             {
                 SysPacket packet = new SysPacket(_cim.Conn);
-                packet.Stream = 5;
-                packet.Function = 1;
+                packet.Stream = 1;
+                packet.Function = 6;
                 packet.Command = Command.UserData;
                 packet.DeviceId = EqpData.DeviceId;
                 packet.SystemByte = EqpData.TransactionSys;
                 packet.WaitBit = true;
-				AddTrans(EqpData.TransactionSys);
+				            AddTrans(EqpData.TransactionSys);
                 packet.addItem(DataType.List, 2);
                 {
                     packet.addItem(DataType.Ascii, "5"); // SFCD :5
@@ -311,6 +311,35 @@ namespace ASOFTCIM
                             }
                         }
                     }
+                }
+                packet.Send2Sys();
+            }
+            catch (Exception ex)
+            {
+                var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message);
+                LogTxt.Add(LogTxt.Type.Exception, debug);
+            }
+        }
+        //TODO: SDFCD 6 
+        /// <summary>
+        ///  SDFCD:1000
+        /// </summary>
+
+        public void SendS1F6_default(IConnect con, EQPDATA eqp)
+        {
+            try
+            {
+                SysPacket packet = new SysPacket(_cim.Conn);
+                packet.Stream = 1;
+                packet.Function = 6;
+                packet.Command = Command.UserData;
+                packet.DeviceId = EqpData.DeviceId;
+                packet.SystemByte = EqpData.TransactionSys;
+                packet.WaitBit = true;
+                AddTrans(EqpData.TransactionSys);
+                packet.addItem(DataType.List, 0);
+                {
+                    
                 }
                 packet.Send2Sys();
             }

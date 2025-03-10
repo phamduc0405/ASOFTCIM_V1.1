@@ -45,7 +45,7 @@ namespace ASOFTCIM.Data
         [Description("SUBCARRIERINFOSET Array")]
         [XmlArray("SUBCARRIERINFOSETS")]
         [XmlArrayItem("ITEM")]
-        public List<SUBCARRIER> SUBCARRIERS { get; set; }
+        public List<SUBCARRIER> SUBCARRIERS { get; set; } = new List<SUBCARRIER>();
     }
     public class CARRIERINFODOWNLOAD
     {

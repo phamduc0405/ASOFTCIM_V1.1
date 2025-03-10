@@ -21,7 +21,7 @@ namespace ASOFTCIM
                 string eqpId = _cim.SysPacket.GetItemString(1);
                 Validation validation = new Validation();
                 validation.CARRIERID = _cim.SysPacket.GetItemString();
-                validation.UNIQUEID = _cim.SysPacket.GetItemString();
+                validation.UNIQUEID = _cim.SysPacket.GetItemString(4);
                 validation.UNIQUETYPE = _cim.SysPacket.GetItemString();
                 validation.PRODUCTID = _cim.SysPacket.GetItemString();
                 validation.PRODUCTSPEC = _cim.SysPacket.GetItemString();
@@ -45,9 +45,9 @@ namespace ASOFTCIM
                 }
                 validation.ITEMS = items;
                 string lst = _cim.SysPacket.GetItemString();
-                validation.REPLY.REPLYCODE = _cim.SysPacket.GetItemString();
+                validation.REPLY.REPLYSTATUS = _cim.SysPacket.GetItemString();
                 validation.REPLY.REPLYTEXT = _cim.SysPacket.GetItemString();
-
+                SendMessage2PLC("SPECIFICVALIDATIONDATASEND1", validation);
                 SendS3F104( ACK);
             }
             catch (Exception ex)

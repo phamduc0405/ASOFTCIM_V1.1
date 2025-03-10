@@ -54,7 +54,7 @@ namespace ASOFTCIM
                 else
                 {
                     //   new ECSETREQUEST(EqpData,cim.EQHelper.Conn,lst);
-
+                    SendMessage2PLC("", lst);// trong map không có => không cho phép thay đổi EC by Host
                 }
             }
             catch (Exception ex)

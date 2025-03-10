@@ -222,31 +222,38 @@ namespace ASOFTCIM.Helper
         {
 
             BitModel bit = new BitModel(_plc);
-
-            if (_bit.Any(x => x.PLCAddress == status.Address))
-
+            try
             {
-                bit = _bit.FirstOrDefault(x => x.PLCAddress == status.Address);
-                bit.BitChangeByPlc();
-                if (bit.Type == "Event")
+                if (_bit.Any(x => x.PLCAddress == status.Address))
+
                 {
-                    if (!status.IsOn)
+                    bit = _bit.FirstOrDefault(x => x.PLCAddress == status.Address);
+                    bit.BitChangeByPlc();
+                    if (bit.Type == "Event")
                     {
-                        bit.SetPCValue = false;
-                        return;
+                        if (!status.IsOn)
+                        {
+                            bit.SetPCValue = false;
+                            return;
+                        }
+                        MakeLogBit(false, bit, status.IsOn);
+                        BitChangedEventHandle(bit);
                     }
-                    MakeLogBit(false, bit, status.IsOn);
-                    BitChangedEventHandle(bit);
+                    if (!status.IsOn) return;
+                    if (bit.Type == "Command")
+                    {
+                        string name = bit.Item.Trim() + "CONFIRM";
+                        MakeLogBit(true, bit, status.IsOn);
+                        bit.SetPCValue = false;
+                    }
+                    else return;
                 }
-                if (!status.IsOn) return;
-                if (bit.Type == "Command")
-                {
-                    string name = bit.Item.Trim() + "CONFIRM";
-                    MakeLogBit(true, bit, status.IsOn);
-                    bit.SetPCValue = false;
-                }
-                else return;
             }
+            catch
+            {
+
+            }
+            
         }
 
         private void MakeLogBit(bool isSend, BitModel bit, bool value)
