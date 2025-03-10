@@ -94,6 +94,7 @@ namespace ASOFTCIM
                         func.EFID = _cim.SysPacket.GetItemString();
                         func.EFST = _cim.SysPacket.GetItemString(); 
                         func.MESSAGE = _cim.SysPacket.GetItemString();
+                        SendMessage2PLC("EQUIPMENTFUNCTIONCHANGECOMMAND", func);
                      //   new FUNCTIONCHANGEREQUEST(EqpData, cim.EQHelper.Conn, func);
                         break;
                     case "11":  //(Transfer Stop)

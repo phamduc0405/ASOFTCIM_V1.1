@@ -22,7 +22,7 @@ namespace ASOFTCIM.Message.PLC2Cim.Recv
                 BitModel bit = (BitModel)body;
                 
 
-List<IWordModel> word = bit.LstWord;
+                List<IWordModel> word = bit.LstWord;
                 OPERATOR op = new OPERATOR();
                 op.OPTIONINFO = word.FirstOrDefault(x => x.Item == "OPTIONINFO").GetValue(eq.PLC);
                 op.COMMENT = word.FirstOrDefault(x => x.Item == "COMMENT").GetValue(eq.PLC);
