@@ -82,16 +82,11 @@ namespace ASOFTCIM
             _cim.Init(connectMode, Ip, Port);
             _cim.SysPacketEvent += _cim_SysPacketEvent;
             _cim.TransTimeOutEvent += _cim_TransTimeOutEvent;
-            _cim.ConnectEvent += Con;
             _plc = new PlcComm();
             _eqpConfig = equipmentConfig;
             //LoadExcelConfig(@"D:\Project_New\ACIM\SDCCIM_ASOFT_Portal_Online_Map_SDC_Basic_V1.21_v0.1.xlsx");
             InitialPlc();
             
-        }
-        private void Con(bool isConnected)
-        {
-            var c = 1;
         }
         public void Stop()
         {

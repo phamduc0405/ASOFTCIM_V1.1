@@ -171,7 +171,7 @@
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="2*" />
-                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="150" />
                                     </Grid.ColumnDefinitions>
                                     <Border
                                         Grid.ColumnSpan="2"
@@ -189,69 +189,81 @@
                                     <TextBlock
                                         Grid.Row="1"
                                         Grid.Column="0"
-                                        Margin="10,0,0,0"
+                                        Margin="10,5,0,5"
+                                        FontSize="15"
+                                        Style="{StaticResource HeaderTextBlockStyle}"
                                         Text="EQP ID:" />
                                     <TextBlock
                                         Grid.Row="2"
                                         Grid.Column="0"
-                                        Margin="10,0,0,0"
+                                        Margin="10,5,0,5"
+                                        FontSize="15"
+                                        Style="{StaticResource HeaderTextBlockStyle}"
                                         Text="EQP NAME :" />
                                     <TextBlock
                                         Grid.Row="3"
                                         Grid.Column="0"
-                                        Margin="10,0,0,0"
+                                        Margin="10,5,0,5"
+                                        FontSize="15"
+                                        Style="{StaticResource HeaderTextBlockStyle}"
                                         Text="ID ADDRESS :" />
                                     <TextBlock
                                         Grid.Row="4"
                                         Grid.Column="0"
-                                        Margin="10,0,0,0"
+                                        Margin="10,5,0,5"
+                                        FontSize="15"
+                                        Style="{StaticResource HeaderTextBlockStyle}"
                                         Text="RECIPY :" />
                                     <TextBlock
                                         Grid.Row="5"
                                         Grid.Column="0"
-                                        Margin="10,0,0,0"
+                                        Margin="10,5,0,5"
+                                        FontSize="15"
+                                        Style="{StaticResource HeaderTextBlockStyle}"
                                         Text="PORT NO :" />
                                     <TextBlock
                                         Grid.Row="6"
                                         Grid.Column="0"
-                                        Margin="10,0,0,0"
+                                        Margin="10,5,0,5"
+                                        FontSize="15"
+                                        Style="{StaticResource HeaderTextBlockStyle}"
                                         Text="IQC MODE :" />
                                     <!--  commend  -->
                                     <TextBlock
                                         x:Name="txtEQPID"
                                         Grid.Row="1"
                                         Grid.Column="1"
-                                        Margin="10,0,0,0"
+                                        Margin="10,5,0,5"
                                         Text="EQP ID:" />
                                     <TextBlock
                                         x:Name="txtEQPName"
                                         Grid.Row="2"
                                         Grid.Column="1"
-                                        Margin="10,0,0,0"
+                                        Margin="10,5,0,5"
                                         Text="EQP NAME :" />
                                     <TextBlock
                                         x:Name="txtIDAddress"
                                         Grid.Row="3"
                                         Grid.Column="1"
-                                        Margin="10,0,0,0"
+                                        Margin="10,5,0,5"
                                         Text="ID ADDRESS :" />
                                     <TextBlock
                                         x:Name="txtRecipy"
                                         Grid.Row="4"
                                         Grid.Column="1"
-                                        Margin="10,0,0,0"
+                                        Margin="10,5,0,5"
                                         Text="RECIPY :" />
                                     <TextBlock
                                         x:Name="txtPortNo"
                                         Grid.Row="5"
                                         Grid.Column="1"
-                                        Margin="10,0,0,0"
+                                        Margin="10,5,0,5"
                                         Text="PORT NO :" />
                                     <TextBlock
                                         x:Name="txtIQCMode"
                                         Grid.Row="6"
                                         Grid.Column="1"
-                                        Margin="10,0,0,0"
+                                        Margin="10,5,0,5"
                                         Text="IQC MODE :" />
                                 </Grid>
                             </Border>
@@ -273,8 +285,8 @@
                                         <RowDefinition Height="*" />
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="3*" />
-                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="2*" />
+                                        <ColumnDefinition Width="150" />
                                     </Grid.ColumnDefinitions>
                                     <Border
                                         Grid.ColumnSpan="2"
@@ -292,18 +304,43 @@
                                     <TextBlock
                                         Grid.Row="1"
                                         Grid.Column="0"
-                                        Margin="10,0,0,0"
-                                        Text="IP :" />
+                                        Margin="10,5,0,5"
+                                        FontSize="15"
+                                        Style="{StaticResource HeaderTextBlockStyle}"
+                                        Text="IP " />
                                     <TextBlock
                                         Grid.Row="2"
                                         Grid.Column="0"
-                                        Margin="10,0,0,0"
-                                        Text="PORT : " />
+                                        Margin="10,5,0,5"
+                                        FontSize="15"
+                                        Style="{StaticResource HeaderTextBlockStyle}"
+                                        Text="PORT  " />
                                     <TextBlock
                                         Grid.Row="3"
                                         Grid.Column="0"
-                                        Margin="10,0,0,0"
-                                        Text="STATE : " />
+                                        Margin="10,5,0,5"
+                                        FontSize="15"
+                                        Style="{StaticResource HeaderTextBlockStyle}"
+                                        Text="STATE  " />
+                                    <!--  commend  -->
+                                    <TextBlock
+                                        x:Name="txtIp"
+                                        Grid.Row="1"
+                                        Grid.Column="1"
+                                        Margin="10,5,0,5"
+                                        Text="Ip" />
+                                    <TextBlock
+                                        x:Name="txtPort"
+                                        Grid.Row="2"
+                                        Grid.Column="1"
+                                        Margin="10,5,0,5"
+                                        Text=": Port" />
+                                    <TextBlock
+                                        x:Name="txtState"
+                                        Grid.Row="3"
+                                        Grid.Column="1"
+                                        Margin="10,5,0,5"
+                                        Text=": State" />
                                 </Grid>
                             </Border>
                             <Border
@@ -326,7 +363,7 @@
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="3*" />
-                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="150" />
                                     </Grid.ColumnDefinitions>
                                     <Border
                                         Grid.ColumnSpan="2"
@@ -344,32 +381,44 @@
                                     <TextBlock
                                         Grid.Row="1"
                                         Grid.Column="0"
-                                        Margin="10,0,0,0"
+                                        Margin="10,5,0,5"
+                                        FontSize="15"
+                                        Style="{StaticResource HeaderTextBlockStyle}"
                                         Text="AVAILABILITYSTATE :" />
                                     <TextBlock
                                         Grid.Row="2"
                                         Grid.Column="0"
-                                        Margin="10,0,0,0"
+                                        Margin="10,5,0,5"
+                                        FontSize="15"
+                                        Style="{StaticResource HeaderTextBlockStyle}"
                                         Text="INTERLOCKSTATE :" />
                                     <TextBlock
                                         Grid.Row="3"
                                         Grid.Column="0"
-                                        Margin="10,0,0,0"
+                                        Margin="10,5,0,5"
+                                        FontSize="15"
+                                        Style="{StaticResource HeaderTextBlockStyle}"
                                         Text="RUNSTATE :" />
                                     <TextBlock
                                         Grid.Row="4"
                                         Grid.Column="0"
-                                        Margin="10,0,0,0"
+                                        Margin="10,5,0,5"
+                                        FontSize="15"
+                                        Style="{StaticResource HeaderTextBlockStyle}"
                                         Text="FRONSTATE :" />
                                     <TextBlock
                                         Grid.Row="5"
                                         Grid.Column="0"
-                                        Margin="10,0,0,0"
+                                        Margin="10,5,0,5"
+                                        FontSize="15"
+                                        Style="{StaticResource HeaderTextBlockStyle}"
                                         Text="REARSTATE :" />
                                     <TextBlock
                                         Grid.Row="6"
                                         Grid.Column="0"
-                                        Margin="10,0,0,0"
+                                        Margin="10,5,0,5"
+                                        FontSize="15"
+                                        Style="{StaticResource HeaderTextBlockStyle}"
                                         Text="MOVESTATE :" />
 
                                 </Grid>

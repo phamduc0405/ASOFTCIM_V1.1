@@ -11,6 +11,7 @@ using ASOFTCIM.MVVM.View.Popup;
 using ASOFTCIM.MVVM.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -36,15 +37,35 @@ namespace ASOFTCIM
     {
         public static Controller Controller;
         private ExitDisplay _displayPopupCode;
+        private PerformanceCounter memoryCounter;
+        private Thread memoryUsageThread;
+        private bool isMonitoringMemory = true;
+        
+        private MainViewModel viewModel;
+        private Thread _updateTime;
+        private PartialCpuChart _cpuChart;
+
+        private static bool _running = true;
+        public static bool Running
+        {
+            get
+            {
+                return _running;
+            }
+        }
         public MainWindow()
         {
             InitializeComponent();
+            _cpuChart = new PartialCpuChart();
+            grdCpu.Children.Add(_cpuChart);
+            StartMemoryMonitoring();
             DataContext = new MainViewModel();
             Initial();
             maincontent.Content = new HomeView();
             Controller.CIM.PlcConnectChangeEvent -= Controller_PlcConnectChangeEvent;
             Controller.CIM.PlcConnectChangeEvent += Controller_PlcConnectChangeEvent;
-            Controller.CIM.Cim.ConnectEvent += Controller_CimConnectChangeEvent;
+            Controller.CIM.Cim.Conn.OnConnectEvent -= Controller_CimConnectChangeEvent;
+            Controller.CIM.Cim.Conn.OnConnectEvent += Controller_CimConnectChangeEvent;
             CreateEvent();
         }
         private void Initial()
@@ -182,5 +203,40 @@ namespace ASOFTCIM
                 txtCimConnect.Text = isConnected ? "Cim Connected" : "Cim Disconnected";
             }));
         }
+        private void StartMemoryMonitoring()
+        {
+            memoryCounter = new PerformanceCounter("Memory", "Available MBytes");
+            memoryUsageThread = new Thread(() =>
+            {
+                while (isMonitoringMemory)
+                {
+                    Thread.Sleep(1000);
+                    UpdateMemoryUsage();
+                }
+            });
+            memoryUsageThread.IsBackground = true;
+            memoryUsageThread.Start();
+        }
+
+        private void UpdateMemoryUsage()
+        {
+            Dispatcher.Invoke(() =>
+            {
+                try
+                {
+                    //double totalMemory = new Microsoft.VisualBasic.Devices.ComputerInfo().TotalPhysicalMemory / (1024.0 * 1024.0);
+                    //double availableMemory = memoryCounter.NextValue();
+                    //double usedMemory = totalMemory - availableMemory;
+                    //double usagePercentage = (usedMemory / totalMemory) * 100;
+                    //txtMemoryUsage.Text = $"Memory Usage: {usedMemory:F1} MB / {totalMemory:F1} MB ({usagePercentage:F1}%)";
+                }
+                catch (Exception ex)
+                {
+                    txtMemoryUsage.Text = "Error retrieving memory info.";
+                    Debug.WriteLine($"Error: {ex.Message}");
+                }
+            });
+        }
+
     }
 }
