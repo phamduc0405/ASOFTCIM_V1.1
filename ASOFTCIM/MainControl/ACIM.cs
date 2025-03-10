@@ -185,5 +185,28 @@ namespace ASOFTCIM
                 }
             }
         }
+        public void SendMessage2PLC(string classname, object obj, PlcComm plcComm)
+        {
+            string namespaces = "ASOFTCIM.Message.PLC2Cim.Send";
+            Type[] typelist = GetTypesInNamespace(Assembly.GetExecutingAssembly(), namespaces);
+            Type t = Assembly.GetExecutingAssembly().GetType($"{namespaces}.{classname}");
+
+            if (t != null && typelist.Contains(t))
+            {
+                try
+                {
+                    object instance = Activator.CreateInstance(t, new object[] { _plcH, _plc, obj});
+
+                    if (instance != null)
+                    {
+                        Console.WriteLine($"Tạo instance của {classname} thành công!");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Lỗi khi tạo instance: {ex.Message}");
+                }
+            }
+        }
     }
 }

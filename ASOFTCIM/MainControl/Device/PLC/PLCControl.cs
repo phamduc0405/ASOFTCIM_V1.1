@@ -28,70 +28,70 @@ namespace ASOFTCIM
 
 
         public void InitialPlc()
-{
-    if (_eqpConfig.PLCConfig != null)
-    {
-        Task.Run(async () =>
         {
-            try
+            if (_eqpConfig.PLCConfig != null)
             {
-                // Khởi tạo đối tượng PLC
-                _plc = new PlcComm();
-                _eqpConfig.PLCConfig.PlcConnectType = PlcConnectType.Component;
-                _eqpConfig.PLCConfig.StationNo = 255;
-                _plc.ConfigComm(_eqpConfig.PLCConfig);
-                _plc.Start();
-                
-                _plcH = new PLCHelper();
-                _plcH = _eqpConfig.PLCHelper;
-                _plcH.Start(_plc, _eqpConfig.EQPID);
-                
-                _aliveBit = new Thread(Alive)
+                Task.Run(async () =>
                 {
-                    IsBackground = true
-                };
-                _aliveBit.Start();
-                
-                // Đọc dữ liệu từ PLC
-                ReadEqpState();
-                ReadRMS();
-                ReadECM();
-                ReadAPC();
-                
-                // Gán sự kiện thay đổi trạng thái bit
-                _plcH.BitChangedEvent += (bit) =>
-                {
-                    PLCBitChange(bit.Comment, bit);
-                };
-                
-                _plcH.WordChangedEvent += _plcH_WordChangedEvent;
-                
-                // Kiểm tra trạng thái các từ đầu vào của PLC
-                foreach (var item in _plc.InputWordStatuses)
-                {
-                    WordStatus w = item;
-                    WordModel word = _plcH.Words.FirstOrDefault(x => x.Item.ToUpper() == "ALARM" && x.IsPlc);
-                    
-                    if (word != null && w.Address >= word.Address && w.Address < word.Address + word.Length)
+                    try
                     {
-                        if (!w.IsOn)
+                        // Khởi tạo đối tượng PLC
+                        _plc = new PlcComm();
+                        _eqpConfig.PLCConfig.PlcConnectType = PlcConnectType.Component;
+                        _eqpConfig.PLCConfig.StationNo = 255;
+                        _plc.ConfigComm(_eqpConfig.PLCConfig);
+                        _plc.Start();
+
+                        _plcH = new PLCHelper();
+                        _plcH = _eqpConfig.PLCHelper;
+                        _plcH.Start(_plc, _eqpConfig.EQPID);
+
+                        _aliveBit = new Thread(Alive)
                         {
-                            var alid = w.Index - word.Address * 16 + 2;
+                            IsBackground = true
+                        };
+                        _aliveBit.Start();
+
+                        // Đọc dữ liệu từ PLC
+                        ReadEqpState();
+                        ReadRMS();
+                        ReadECM();
+                        ReadAPC();
+
+                        // Gán sự kiện thay đổi trạng thái bit
+                        _plcH.BitChangedEvent += (bit) =>
+                        {
+                            PLCBitChange(bit.Comment, bit);
+                        };
+
+                        _plcH.WordChangedEvent += _plcH_WordChangedEvent;
+
+                        // Kiểm tra trạng thái các từ đầu vào của PLC
+                        foreach (var item in _plc.InputWordStatuses)
+                        {
+                            WordStatus w = item;
+                            WordModel word = _plcH.Words.FirstOrDefault(x => x.Item.ToUpper() == "ALARM" && x.IsPlc);
+
+                            if (word != null && w.Address >= word.Address && w.Address < word.Address + word.Length)
+                            {
+                                if (!w.IsOn)
+                                {
+                                    var alid = w.Index - word.Address * 16 + 2;
+                                }
+                            }
                         }
+
+                        // Gán danh sách báo động
+                        this.EqpData.ALS = _eqpConfig.PLCHelper.Alarms;
                     }
-                }
-                
-                // Gán danh sách báo động
-                this.EqpData.ALS = _eqpConfig.PLCHelper.Alarms;
+                    catch (Exception ex)
+                    {
+                        var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message);
+                        LogTxt.Add(LogTxt.Type.Exception, debug);
+                    }
+                });
             }
-            catch (Exception ex)
-            {
-                var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message);
-                LogTxt.Add(LogTxt.Type.Exception, debug);
-            }
-        });
-    }
-}
+        }
         public void LoadExcelConfig(string path)
         {
             try
