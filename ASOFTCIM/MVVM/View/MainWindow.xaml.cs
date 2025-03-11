@@ -4,6 +4,7 @@ using ASOFTCIM.Data;
 using ASOFTCIM.MainControl;
 using ASOFTCIM.MVVM.Model;
 using ASOFTCIM.MVVM.View.Config;
+using ASOFTCIM.MVVM.View.ECM;
 using ASOFTCIM.MVVM.View.Home;
 using ASOFTCIM.MVVM.View.Material;
 using ASOFTCIM.MVVM.View.Monitor;
@@ -67,6 +68,12 @@ namespace ASOFTCIM
             Controller.CIM.Cim.Conn.OnConnectEvent -= Controller_CimConnectChangeEvent;
             Controller.CIM.Cim.Conn.OnConnectEvent += Controller_CimConnectChangeEvent;
             CreateEvent();
+            _updateTime = new Thread(UpdateTime)
+            {
+                IsBackground = true,
+            };
+            _updateTime.Start();
+            txtVersion.Text = "Version: 250311";
         }
         private void Initial()
         {
@@ -77,6 +84,7 @@ namespace ASOFTCIM
             this.Closing += (s, e) =>
             {
                 Controller.Stop();
+                _updateTime.Abort();
                 LogTxt.Stop();
 
             };
@@ -137,15 +145,15 @@ namespace ASOFTCIM
             };
             btnSvid.Click += (sender, e) =>
             {
-                maincontent.Content = new FDCView();
+                maincontent.Content = new MVVM.View.FDC.FDCView();
             };
             btnRecipes.Click += (sender, e) =>
             {
-                //maincontent.Content = new RMSView();
+                maincontent.Content = new MVVM.View.RMS.RMSView();
             };
             btnEcm.Click += (sender, e) =>
             {
-                //maincontent.Content = new ECM.ECM();
+                maincontent.Content = new MVVM.View.ECM.ECMView();
             };
             btnAlarm.Click += (sender, e) =>
             {
@@ -191,7 +199,7 @@ namespace ASOFTCIM
         {
             Dispatcher.Invoke(new Action(() =>
             {
-                bdrPlcConnect.Background = isConnected ? Brushes.Green : Brushes.Red;
+                bdrPlcConnect.Background = isConnected ? Brushes.Green : Brushes.Gray;
                 txtPlcConnect.Text = isConnected ? "Plc Connected" : "Plc Disconnected";
             }));
         }
@@ -199,7 +207,7 @@ namespace ASOFTCIM
         {
             Dispatcher.Invoke(new Action(() =>
             {
-                bdrCimConnect.Background = isConnected ? Brushes.Green : Brushes.Red;
+                bdrCimConnect.Background = isConnected ? Brushes.Green : Brushes.Gray;
                 txtCimConnect.Text = isConnected ? "Cim Connected" : "Cim Disconnected";
             }));
         }
@@ -236,6 +244,18 @@ namespace ASOFTCIM
                     Debug.WriteLine($"Error: {ex.Message}");
                 }
             });
+        }
+        private void UpdateTime()
+        {
+            while (_running)
+            {
+                Dispatcher.Invoke(new Action(() =>
+                {
+                    tblDateTime.Text = "DateTime: "+ DateTime.Now.ToString();
+                }));
+                Thread.Sleep(100);
+            }
+
         }
 
     }

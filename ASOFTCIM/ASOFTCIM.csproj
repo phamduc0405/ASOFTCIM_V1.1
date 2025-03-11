@@ -133,6 +133,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="MVVM\View\FDC\FDCView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MVVM\View\Home\HomeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -229,6 +233,9 @@
     <Compile Include="MVVM\View\ECM\ECMView.xaml.cs">
       <DependentUpon>ECMView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MVVM\View\FDC\FDCView.xaml.cs">
+      <DependentUpon>FDCView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MVVM\View\Home\HomeView.xaml.cs">
       <DependentUpon>HomeView.xaml</DependentUpon>
     </Compile>
@@ -260,6 +267,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MVVM\View\Popup\LogInDisplay.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\RMS\RMSView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -514,6 +525,9 @@
     <Compile Include="MVVM\View\Popup\LogInDisplay.xaml.cs">
       <DependentUpon>LogInDisplay.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MVVM\View\RMS\RMSView.xaml.cs">
+      <DependentUpon>RMSView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -547,7 +561,6 @@
     <Resource Include="HPSocket\hpsocket_cn.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Images\" />
     <Folder Include="Message\PLC2Cim\Recv\S10\" />
     <Folder Include="Message\PLC2Cim\Recv\S14\" />
     <Folder Include="Message\PLC2Cim\Recv\S16\" />
@@ -558,10 +571,12 @@
     <Folder Include="Message\PLC2Cim\Recv\S7\" />
     <Folder Include="Message\PLC2Cim\Recv\S8\" />
     <Folder Include="Message\PLC2Cim\Recv\S9\" />
-    <Folder Include="MVVM\View\FDC\" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\SamsungLogo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\HPSocket.Net.5.9.3.1\build\HPSocket.Net.targets" Condition="Exists('..\packages\HPSocket.Net.5.9.3.1\build\HPSocket.Net.targets')" />

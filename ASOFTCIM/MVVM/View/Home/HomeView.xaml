@@ -36,7 +36,7 @@
                         </Grid.RowDefinitions>
                         <Grid Grid.Row="0">
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="*" />
+                                <RowDefinition Height="45" />
                                 <RowDefinition Height="*" />
                                 <RowDefinition Height="*" />
                                 <RowDefinition Height="*" />
@@ -50,9 +50,11 @@
                             </Grid.ColumnDefinitions>
                             <Border
                                 Grid.ColumnSpan="2"
-                                Margin="3"
+                                Margin="2"
                                 VerticalAlignment="Center"
-                                Background="CornflowerBlue"
+                                Background="Blue"
+                                BorderBrush="Black"
+                                BorderThickness="1"
                                 CornerRadius="5">
                                 <Border.Effect>
                                     <DropShadowEffect
@@ -60,11 +62,18 @@
                                         ShadowDepth="2"
                                         Color="Black" />
                                 </Border.Effect>
-                                <TextBlock
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Top"
-                                    Style="{StaticResource HeaderTextBlockStyle}"
-                                    Text="ALARM" />
+                                <Border
+                                    Margin="0,2,0,2"
+                                    VerticalAlignment="Center"
+                                    Background="White"
+                                    CornerRadius="5">
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Top"
+                                        Style="{StaticResource HeaderTextBlockStyle}"
+                                        Text="ALARM" />
+                                </Border>
+
                             </Border>
                             <ListView
                                 x:Name="listView"
@@ -81,7 +90,7 @@
                         </Grid>
                         <Grid Grid.Row="1">
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="*" />
+                                <RowDefinition Height="45" />
                                 <RowDefinition Height="*" />
                                 <RowDefinition Height="*" />
                                 <RowDefinition Height="*" />
@@ -97,7 +106,9 @@
                                 Grid.ColumnSpan="2"
                                 Margin="3"
                                 VerticalAlignment="Center"
-                                Background="CornflowerBlue"
+                                Background="Blue"
+                                BorderBrush="Black"
+                                BorderThickness="1"
                                 CornerRadius="5">
                                 <Border.Effect>
                                     <DropShadowEffect
@@ -105,12 +116,16 @@
                                         ShadowDepth="2"
                                         Color="Black" />
                                 </Border.Effect>
-                                <TextBlock
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Top"
-                                    Style="{StaticResource HeaderTextBlockStyle}"
-                                    Text="MESSAGE" />
-
+                                <Border
+                                    Margin="0,2,0,2"
+                                    VerticalAlignment="Center"
+                                    Background="White">
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Top"
+                                        Style="{StaticResource HeaderTextBlockStyle}"
+                                        Text="MESSAGE" />
+                                </Border>
                             </Border>
                             <ListView
                                 x:Name="listViewMesage"
