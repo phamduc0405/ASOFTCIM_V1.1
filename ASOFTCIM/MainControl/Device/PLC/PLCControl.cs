@@ -25,7 +25,7 @@ namespace ASOFTCIM
 
         public delegate void PlcConnectChangeEventDelegate(bool isConnected);
         public event PlcConnectChangeEventDelegate PlcConnectChangeEvent;
-
+        public event Action ResetEvent;
 
         public void InitialPlc()
         {
@@ -153,6 +153,7 @@ namespace ASOFTCIM
             if (Method.Contains("ALARMREPORT"))
             {
                 new ALARMREPORT().Excute(this, data);
+                ResetEvent?.Invoke();
             }
             if (new[] { "UNITSTATUS", "MATERIALPORTSTATE", "PORTSTATUS" }.Any(Method.Contains))
             {

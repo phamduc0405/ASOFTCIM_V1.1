@@ -8,5 +8,83 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
-    <Grid />
+    <Grid>
+        <Border Background="Transparent" CornerRadius="5">
+
+            <Grid ShowGridLines="False">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Border
+                    Margin="10,5,5,10"
+                    Background="White"
+                    BorderBrush="Black"
+                    BorderThickness="0.5"
+                    CornerRadius="5">
+                    <Border.Effect>
+                        <DropShadowEffect
+                            BlurRadius="5"
+                            ShadowDepth="2"
+                            Color="Black" />
+                    </Border.Effect>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="45" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Border
+                                Grid.ColumnSpan="2"
+                                Margin="2"
+                                VerticalAlignment="Center"
+                                Background="Blue"
+                                BorderBrush="Black"
+                                BorderThickness="1"
+                                CornerRadius="5">
+                                <Border.Effect>
+                                    <DropShadowEffect
+                                        BlurRadius="5"
+                                        ShadowDepth="2"
+                                        Color="Black" />
+                                </Border.Effect>
+                                <Border
+                                    Margin="0,2,0,2"
+                                    VerticalAlignment="Center"
+                                    Background="White"
+                                    CornerRadius="5">
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Top"
+                                        Style="{StaticResource HeaderTextBlockStyle}"
+                                        Text="Material" />
+                                </Border>
+
+                            </Border>
+                            <Grid Grid.Row="1" ShowGridLines="True">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="2.5*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <Grid Grid.Row="0" ShowGridLines="True">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+
+                    </Grid>
+                </Border>
+            </Grid>
+
+        </Border>
+    </Grid>
 </UserControl>

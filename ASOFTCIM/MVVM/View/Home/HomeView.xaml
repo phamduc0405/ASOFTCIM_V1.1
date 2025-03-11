@@ -38,11 +38,6 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="45" />
                                 <RowDefinition Height="*" />
-                                <RowDefinition Height="*" />
-                                <RowDefinition Height="*" />
-                                <RowDefinition Height="*" />
-                                <RowDefinition Height="*" />
-                                <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="3*" />
@@ -75,7 +70,7 @@
                                 </Border>
 
                             </Border>
-                            <ListView
+                            <!--<ListView
                                 x:Name="listView"
                                 Grid.Row="1"
                                 Grid.Column="0"
@@ -85,7 +80,14 @@
                                 <ListView.View>
                                     <GridView x:Name="grdView" />
                                 </ListView.View>
-                            </ListView>
+                            </ListView>-->
+                            <DataGrid
+                                x:Name="dtgrtView"
+                                Grid.Row="1"
+                                Grid.Column="0"
+                                Grid.ColumnSpan="2"
+                                AutoGenerateColumns="True"
+                                ItemsSource="{Binding Data}" />
 
                         </Grid>
                         <Grid Grid.Row="1">
@@ -336,7 +338,7 @@
                                         Margin="10,5,0,5"
                                         FontSize="15"
                                         Style="{StaticResource HeaderTextBlockStyle}"
-                                        Text="STATE  " />
+                                        Text="MODE  " />
                                     <!--  commend  -->
                                     <TextBlock
                                         x:Name="txtIp"
@@ -435,6 +437,43 @@
                                         FontSize="15"
                                         Style="{StaticResource HeaderTextBlockStyle}"
                                         Text="MOVESTATE :" />
+                                    <!--  commend  -->
+                                    <TextBlock
+                                        x:Name="txtAvailabilityState"
+                                        Grid.Row="1"
+                                        Grid.Column="1"
+                                        Margin="10,5,0,5"
+                                        Text="Ip" />
+                                    <TextBlock
+                                        x:Name="txtInterLockState"
+                                        Grid.Row="2"
+                                        Grid.Column="1"
+                                        Margin="10,5,0,5"
+                                        Text=": Port" />
+                                    <TextBlock
+                                        x:Name="txtRunState"
+                                        Grid.Row="3"
+                                        Grid.Column="1"
+                                        Margin="10,5,0,5"
+                                        Text=": State" />
+                                    <TextBlock
+                                        x:Name="txtFronState"
+                                        Grid.Row="4"
+                                        Grid.Column="1"
+                                        Margin="10,5,0,5"
+                                        Text=": State" />
+                                    <TextBlock
+                                        x:Name="txtRearState"
+                                        Grid.Row="5"
+                                        Grid.Column="1"
+                                        Margin="10,5,0,5"
+                                        Text=": State" />
+                                    <TextBlock
+                                        x:Name="txtMoveState"
+                                        Grid.Row="6"
+                                        Grid.Column="1"
+                                        Margin="10,5,0,5"
+                                        Text=": State" />
 
                                 </Grid>
                             </Border>
