@@ -9,58 +9,122 @@
     d:DesignWidth="800"
     mc:Ignorable="d">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
-        <Grid Grid.Column="0">
-            <Border
-                Background="White"
-                BorderBrush="LightSlateGray"
-                BorderThickness="2">
-                <Border.Effect>
-                    <DropShadowEffect
-                        BlurRadius="5"
-                        ShadowDepth="2"
-                        Color="Black" />
-                </Border.Effect>
-            </Border>
+        <Border Background="Transparent" CornerRadius="5">
 
-            <StackPanel Orientation="Vertical">
-                <!--  EQUIP SETTING  -->
-                <Button
-                    x:Name="btnEquipSetting"
-                    Width="auto"
-                    Height="50"
-                    Margin="20,35,20,5"
-                    Content="EQUIP SETTING"
-                    Style="{StaticResource ButtonControl}"
-                    Tag="Gear" />
-                <Button
-                    x:Name="btnManualSendDataConfig"
-                    Width="auto"
-                    Height="50"
-                    Margin="20,20,20,5"
-                    Content="SQL TEST"
-                    Style="{StaticResource ButtonControl}"
-                    Tag="CloudArrowUp" />
-                <Button
-                    x:Name="btnMCRConfig"
-                    Width="auto"
-                    Height="50"
-                    Margin="20,20,20,5"
-                    Content="MCR SETTING"
-                    Style="{StaticResource ButtonControl}"
-                    Tag="CameraAlt" />
-                <Button
-                    x:Name="btnTest"
-                    Width="auto"
-                    Height="50"
-                    Margin="20,20,20,5"
-                    Content="TEST"
-                    Style="{StaticResource ButtonControl}"
-                    Tag="TEST" />
-            </StackPanel>
-        </Grid>
+            <Grid ShowGridLines="False">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Border
+                    Margin="10,5,5,5"
+                    Background="White"
+                    BorderBrush="Black"
+                    BorderThickness="0.5"
+                    CornerRadius="5">
+                    <Border.Effect>
+                        <DropShadowEffect
+                            BlurRadius="5"
+                            ShadowDepth="2"
+                            Color="Black" />
+                    </Border.Effect>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="45" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Border
+                                Grid.ColumnSpan="2"
+                                Margin="2"
+                                VerticalAlignment="Center"
+                                Background="Blue"
+                                BorderBrush="Black"
+                                BorderThickness="1"
+                                CornerRadius="5">
+                                <Border.Effect>
+                                    <DropShadowEffect
+                                        BlurRadius="5"
+                                        ShadowDepth="2"
+                                        Color="Black" />
+                                </Border.Effect>
+                                <Border
+                                    Margin="0,2,0,2"
+                                    VerticalAlignment="Center"
+                                    Background="White"
+                                    CornerRadius="5">
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Top"
+                                        FontSize="25"
+                                        Style="{StaticResource HeaderTextBlockStyle}"
+                                        Text="Config" />
+                                </Border>
+
+                            </Border>
+                            <Grid Grid.Row="1" Grid.Column="0">
+                                <Border
+                                    Background="White"
+                                    BorderBrush="LightSlateGray"
+                                    BorderThickness="2">
+                                    <Border.Effect>
+                                        <DropShadowEffect
+                                            BlurRadius="5"
+                                            ShadowDepth="2"
+                                            Color="Black" />
+                                    </Border.Effect>
+                                </Border>
+
+                                <StackPanel Orientation="Vertical">
+                                    <!--  EQUIP SETTING  -->
+                                    <Button
+                                        x:Name="btnEquipSetting"
+                                        Width="auto"
+                                        Height="50"
+                                        Margin="20,35,20,5"
+                                        Content="EQUIP SETTING"
+                                        Style="{StaticResource ButtonControl}"
+                                        Tag="Gear" />
+                                    <Button
+                                        x:Name="btnManualSendDataConfig"
+                                        Width="auto"
+                                        Height="50"
+                                        Margin="20,20,20,5"
+                                        Content="SQL TEST"
+                                        Style="{StaticResource ButtonControl}"
+                                        Tag="CloudArrowUp" />
+                                    <Button
+                                        x:Name="btnMCRConfig"
+                                        Width="auto"
+                                        Height="50"
+                                        Margin="20,20,20,5"
+                                        Content="MCR SETTING"
+                                        Style="{StaticResource ButtonControl}"
+                                        Tag="CameraAlt" />
+                                    <Button
+                                        x:Name="btnTest"
+                                        Width="auto"
+                                        Height="50"
+                                        Margin="20,20,20,5"
+                                        Content="TEST"
+                                        Style="{StaticResource ButtonControl}"
+                                        Tag="TEST" />
+                                </StackPanel>
+                            </Grid>
+
+                        </Grid>
+
+                    </Grid>
+                </Border>
+            </Grid>
+
+        </Border>
     </Grid>
+
 </UserControl>

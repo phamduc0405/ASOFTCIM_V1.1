@@ -16,16 +16,16 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Border
-                Margin="10,5,5,10"
-                Background="White"
-                BorderBrush="Black"
-                BorderThickness="0.5"
-                CornerRadius="5">
+                    Margin="10,5,5,5"
+                    Background="White"
+                    BorderBrush="Black"
+                    BorderThickness="0.5"
+                    CornerRadius="5">
                     <Border.Effect>
                         <DropShadowEffect
-                        BlurRadius="5"
-                        ShadowDepth="2"
-                        Color="Black" />
+                            BlurRadius="5"
+                            ShadowDepth="2"
+                            Color="Black" />
                     </Border.Effect>
                     <Grid>
                         <Grid.RowDefinitions>
@@ -46,39 +46,39 @@
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
                             <Border
-                            Grid.ColumnSpan="2"
-                            Margin="2"
-                            VerticalAlignment="Center"
-                            Background="Blue"
-                            BorderBrush="Black"
-                            BorderThickness="1"
-                            CornerRadius="5">
+                                Grid.ColumnSpan="2"
+                                Margin="2"
+                                VerticalAlignment="Center"
+                                Background="Blue"
+                                BorderBrush="Black"
+                                BorderThickness="1"
+                                CornerRadius="5">
                                 <Border.Effect>
                                     <DropShadowEffect
-                                    BlurRadius="5"
-                                    ShadowDepth="2"
-                                    Color="Black" />
+                                        BlurRadius="5"
+                                        ShadowDepth="2"
+                                        Color="Black" />
                                 </Border.Effect>
                                 <Border
-                                Margin="0,2,0,2"
-                                VerticalAlignment="Center"
-                                Background="White"
-                                CornerRadius="5">
+                                    Margin="0,2,0,2"
+                                    VerticalAlignment="Center"
+                                    Background="White"
+                                    CornerRadius="5">
                                     <TextBlock
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Top"
-                                    Style="{StaticResource HeaderTextBlockStyle}"
-                                    Text="ECMParameter" />
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Top"
+                                        Style="{StaticResource HeaderTextBlockStyle}"
+                                        Text="ECMParameter" />
                                 </Border>
 
                             </Border>
                             <ListView
-                            x:Name="listView"
-                            Grid.Row="1"
-                            Grid.Column="0"
-                            Grid.ColumnSpan="2"
-                            HorizontalAlignment="Stretch"
-                            VerticalAlignment="Stretch">
+                                x:Name="listView"
+                                Grid.Row="1"
+                                Grid.Column="0"
+                                Grid.ColumnSpan="2"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Stretch">
                                 <ListView.View>
                                     <GridView x:Name="grdView" />
                                 </ListView.View>

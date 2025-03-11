@@ -63,6 +63,7 @@
                                     Background="White"
                                     CornerRadius="5">
                                     <TextBlock
+                                        FontSize="25"
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Top"
                                         Style="{StaticResource HeaderTextBlockStyle}"
@@ -123,6 +124,7 @@
                                     VerticalAlignment="Center"
                                     Background="White">
                                     <TextBlock
+                                        FontSize="25"
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Top"
                                         Style="{StaticResource HeaderTextBlockStyle}"

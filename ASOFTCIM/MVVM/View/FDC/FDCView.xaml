@@ -58,6 +58,7 @@
                                     <TextBlock
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Top"
+                                        FontSize="25"
                                         Style="{StaticResource HeaderTextBlockStyle}"
                                         Text="FDCParameter" />
                                 </Border>
@@ -151,10 +152,11 @@
                                     </Grid>
 
                                 </Grid>
-                                <Grid Grid.Column="1"
-                                      Background="#eff2f7">
-                                </Grid>
-                                <Grid x:Name="mainGrid2" Grid.Column="2" Margin="0,0,0,0"
+                                <Grid Grid.Column="1" Background="#eff2f7" />
+                                <Grid
+                                    x:Name="mainGrid2"
+                                    Grid.Column="2"
+                                    Margin="0,0,0,0"
                                     ShowGridLines="True">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="2*" />

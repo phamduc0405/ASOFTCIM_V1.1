@@ -77,6 +77,7 @@ namespace ASOFTCIM.MVVM.View.Home
                     }
 
                     await LoadConfig();
+                    UpdateAlarm();
                 }
                 catch (Exception ex)
                 {

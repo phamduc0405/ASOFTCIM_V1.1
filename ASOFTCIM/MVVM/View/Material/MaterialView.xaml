@@ -16,7 +16,7 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Border
-                    Margin="10,5,5,10"
+                    Margin="10,5,5,5"
                     Background="White"
                     BorderBrush="Black"
                     BorderThickness="0.5"
@@ -61,6 +61,7 @@
                                     <TextBlock
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Top"
+                                        FontSize="25"
                                         Style="{StaticResource HeaderTextBlockStyle}"
                                         Text="Material" />
                                 </Border>
@@ -68,14 +69,14 @@
                             </Border>
                             <Grid Grid.Row="1" ShowGridLines="True">
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="2.5*"/>
-                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="2.5*" />
+                                    <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
                                 <Grid Grid.Row="0" ShowGridLines="True">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
                                 </Grid>
                             </Grid>
