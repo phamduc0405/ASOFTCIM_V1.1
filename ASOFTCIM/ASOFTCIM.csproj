@@ -40,8 +40,9 @@
     <Reference Include="A_SOFT.CMM">
       <HintPath>..\..\A_SOFT\Bin\Debug\A_SOFT.CMM.dll</HintPath>
     </Reference>
-    <Reference Include="A_SOFT.Ctl.Mitsu">
-      <HintPath>..\..\A_SOFT\Bin\Debug\A_SOFT.Ctl.Mitsu.dll</HintPath>
+    <Reference Include="A_SOFT.Ctl.Mitsu, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>E:\MrDuc\ASOFTLIB\AsoftCommon\Bin\Debug\A_SOFT.Ctl.Mitsu.dll</HintPath>
     </Reference>
     <Reference Include="A_SOFT.Ctl.SecGem">
       <HintPath>..\..\A_SOFT\Bin\Debug\A_SOFT.Ctl.SecGem.dll</HintPath>
