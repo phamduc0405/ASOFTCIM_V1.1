@@ -2,9 +2,11 @@
 using A_SOFT.PLC;
 using ASOFTCIM.Helper;
 using ASOFTCIM.MainControl;
+using ASOFTCIM.MVVM.View.Popup;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -16,6 +18,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static OfficeOpenXml.ExcelErrorValue;
 
 namespace ASOFTCIM.MVVM.View.Monitor
 {
@@ -24,6 +27,7 @@ namespace ASOFTCIM.MVVM.View.Monitor
     /// </summary>
     public partial class MonitorBits : UserControl
     {
+        private PopupIOWord _popupWindow;
         private PLCHelper _plcH;
         private PlcComm _plc;
         private Controller _controller;
@@ -45,6 +49,11 @@ namespace ASOFTCIM.MVVM.View.Monitor
         private void Initial()
         {
             if (_plcH == null) return;
+            this.MouseLeave += (s, e) =>
+            {
+              //  _popupWindow?.Close();
+            };
+            
             // Unloaded += MonitorBits_Unloaded;// Khai báo biến để lưu trữ tham chiếu đến hàm xử lý sự kiện BitOutChangedEvent
             //   EventHandler bitOutChangedHandler = null;
             foreach (var bit in _plcH.Bits)
@@ -68,7 +77,18 @@ namespace ASOFTCIM.MVVM.View.Monitor
                 });
                 b.BitChangedEvent += bitChangedHandler;
                 _bitChangedHandlers.Add(bitChangedHandler);
-
+                io.MouseEnter += (s, e) =>
+                {
+                    _popupWindow?.Close();
+                    _popupWindow = new PopupIOWord(b.LstWord);
+                    _popupWindow.Left = Mouse.GetPosition(Application.Current.MainWindow).X + Application.Current.MainWindow.Left + 10;
+                    _popupWindow.Top = Mouse.GetPosition(Application.Current.MainWindow).Y + Application.Current.MainWindow.Top + 10;
+                    _popupWindow.Show();
+                };
+                io.MouseLeave += (s, e) =>
+                {
+                    
+                };
                 // Output
                 IOComment ioOut = CreateIOComment(bit, b.GetPCValue, false);
                 wrpOutput.Children.Add(ioOut);
