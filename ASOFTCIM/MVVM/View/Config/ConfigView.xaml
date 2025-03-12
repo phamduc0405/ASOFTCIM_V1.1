@@ -13,7 +13,7 @@
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="1.5*" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
             <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto">
@@ -429,6 +429,14 @@
                         </Border>
                         <!--  =============        EQUIPMENT CONFIG        ===============  -->
 
+
+                    </DockPanel>
+                </Border>
+            </ScrollViewer>
+            <!--  =============        EQP CONFIG        ===============  -->
+            <ScrollViewer Grid.Column="1">
+                <Border Grid.Column="1">
+                    <StackPanel>
                         <Border
                             Margin="3"
                             Background="#FF7FA6EF"
@@ -530,60 +538,6 @@
                                         Text="" />
 
                                 </DockPanel>
-                                <DockPanel Grid.Row="1" LastChildFill="True">
-                                    <TextBlock
-                                        Margin="10,0,0,0"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Center"
-                                        DockPanel.Dock="Left"
-                                        Style="{StaticResource HeaderTextBlockStyle}"
-                                        Text="NUMBER CELL IN 1 TRAY  : " />
-
-                                    <TextBox
-                                        x:Name="txtNumberCellin1Tray"
-                                        Margin="10,0,0,0"
-                                        HorizontalAlignment="Stretch"
-                                        VerticalAlignment="Center"
-                                        HorizontalContentAlignment="Stretch"
-                                        Style="{StaticResource TextBoxStandard}"
-                                        Tag="12"
-                                        Text="" />
-
-                                </DockPanel>
-                                <DockPanel Grid.Row="1" LastChildFill="True">
-                                    <TextBlock
-                                        Margin="10,0,0,0"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Center"
-                                        DockPanel.Dock="Left"
-                                        Style="{StaticResource HeaderTextBlockStyle}"
-                                        Text="NUMBER TRAY IN 1 SLOT  : " />
-                                    <TextBox
-                                        x:Name="txtNumberTrayin1LOT"
-                                        Margin="10,0,0,0"
-                                        HorizontalAlignment="Stretch"
-                                        VerticalAlignment="Center"
-                                        HorizontalContentAlignment="Stretch"
-                                        Style="{StaticResource TextBoxStandard}"
-                                        Tag="6"
-                                        Text="" />
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock
-                                            Margin="10,0,0,0"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Center"
-                                            Style="{StaticResource HeaderTextBlockStyle}"
-                                            Text="SKIP REQUEST DATABASE : " />
-                                        <ToggleButton
-                                            x:Name="tglIsRqSQL"
-                                            HorizontalAlignment="Right"
-                                            Background="LawnGreen"
-                                            IsChecked="False"
-                                            Style="{StaticResource ToggleFlipFlop}"
-                                            Tag="GreenYellow" />
-                                    </StackPanel>
-
-                                </DockPanel>
                                 <Button
                                     x:Name="btnSaveEqpConfig"
                                     Width="200"
@@ -615,10 +569,128 @@
                             </StackPanel>
 
                         </Border>
-                    </DockPanel>
+                        <Border
+                            Margin="3"
+                            Background="#FF7FA6EF"
+                            CornerRadius="3"
+                            DockPanel.Dock="Top">
+                            <TextBlock
+                                Margin="10,0,0,0"
+                                HorizontalAlignment="Left"
+                                Foreground="Black"
+                                Style="{StaticResource HeaderTextBlockStyle}"
+                                Text="CIM CONFIG" />
+                        </Border>
+                        <Border
+                            Margin="3"
+                            Padding="5"
+                            BorderBrush="Black"
+                            BorderThickness="0.5"
+                            CornerRadius="3">
+                            <StackPanel Grid.Row="1" Orientation="Vertical">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1*" />
+                                        <ColumnDefinition Width="2*" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock
+                                        Grid.Column="0"
+                                        Margin="10,10,0,0"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        Style="{StaticResource HeaderTextBlockStyle}"
+                                        Text="IP :" />
+                                    <TextBox
+                                        x:Name="txtIp"
+                                        Grid.Column="1"
+                                        Margin="10,10,10,0"
+                                        HorizontalAlignment="Stretch"
+                                        VerticalAlignment="Center"
+                                        HorizontalContentAlignment="Center"
+                                        Style="{StaticResource TextBoxStandard}"
+                                        Text="127.0.0.1" />
+                                </Grid>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1*" />
+                                        <ColumnDefinition Width="2*" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock
+                                        Grid.Column="0"
+                                        Margin="10,10,0,0"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        Style="{StaticResource HeaderTextBlockStyle}"
+                                        Text="ConectMode :" />
+                                    <TextBox
+                                        x:Name="txtConectMode"
+                                        Grid.Column="1"
+                                        Margin="10,10,10,0"
+                                        HorizontalAlignment="Stretch"
+                                        VerticalAlignment="Center"
+                                        HorizontalContentAlignment="Center"
+                                        Style="{StaticResource TextBoxStandard}"
+                                        Text="0" />
+                                </Grid>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1*" />
+                                        <ColumnDefinition Width="2*" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock
+                                        Grid.Column="0"
+                                        Margin="10,10,0,0"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        Style="{StaticResource HeaderTextBlockStyle}"
+                                        Text="Port:" />
+                                    <TextBox
+                                        x:Name="txtPort"
+                                        Grid.Column="1"
+                                        Margin="10,10,10,0"
+                                        HorizontalAlignment="Stretch"
+                                        VerticalAlignment="Center"
+                                        HorizontalContentAlignment="Center"
+                                        Style="{StaticResource TextBoxStandard}"
+                                        Text="8000" />
+                                </Grid>
+
+                                <Button
+                                    x:Name="btnSaveCimConfig"
+                                    Width="200"
+                                    Height="50"
+                                    Margin="50,20"
+                                    HorizontalAlignment="Center"
+                                    Style="{StaticResource ButtonSave}">
+                                    <StackPanel Width="200" Orientation="Horizontal">
+                                        <fa:IconImage
+                                            x:Name="LoadingCimImage"
+                                            Width="25"
+                                            Margin="10,0,0,0"
+                                            HorizontalAlignment="Left"
+                                            fa:Awesome.Spin="true"
+                                            Icon="Spinner"
+                                            Visibility="Hidden" />
+                                        <TextBlock
+                                            Height="30"
+                                            Margin="40,10,5,0"
+                                            HorizontalAlignment="Center"
+                                            Style="{StaticResource HeaderTextBlockStyle}"
+                                            Text="Save" />
+
+                                    </StackPanel>
+
+                                </Button>
+
+
+                            </StackPanel>
+
+                        </Border>
+                    </StackPanel>
                 </Border>
             </ScrollViewer>
-            <!--  =============        SQL CONFIG        ===============  -->
+
+
 
         </Grid>
     </Border>

@@ -75,7 +75,11 @@ namespace ASOFTCIM
         {
             Initial();
             _cim = new CimHelper(EQPID);
-            _cim.Init(ATCPIP.ConnectMode.Passive, "127.0.0.1", 8000);
+            ATCPIP.ConnectMode connectMode = (ATCPIP.ConnectMode)Enum.Parse(typeof(ATCPIP.ConnectMode), equipmentConfig.CimConfig.ConnectMode);
+            string Ip = equipmentConfig.CimConfig.IP;
+            ushort Port = ushort.Parse(equipmentConfig.CimConfig.Port);
+            //0:Passive ; 1:Active
+            _cim.Init(connectMode, Ip, Port);
             _cim.SysPacketEvent += _cim_SysPacketEvent;
             _cim.TransTimeOutEvent += _cim_TransTimeOutEvent;
             _plc = new PlcComm();
@@ -84,9 +88,6 @@ namespace ASOFTCIM
             InitialPlc();
             
         }
-
-       
-
         public void Stop()
         {
             SysPacket sysPacket = new SysPacket(_cim.Conn);
@@ -172,6 +173,29 @@ namespace ASOFTCIM
                 try
                 {
                     object instance = Activator.CreateInstance(t, new object[] { _plcH, obj });
+
+                    if (instance != null)
+                    {
+                        Console.WriteLine($"Tạo instance của {classname} thành công!");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Lỗi khi tạo instance: {ex.Message}");
+                }
+            }
+        }
+        public void SendMessage2PLC(string classname, object obj, PlcComm plcComm)
+        {
+            string namespaces = "ASOFTCIM.Message.PLC2Cim.Send";
+            Type[] typelist = GetTypesInNamespace(Assembly.GetExecutingAssembly(), namespaces);
+            Type t = Assembly.GetExecutingAssembly().GetType($"{namespaces}.{classname}");
+
+            if (t != null && typelist.Contains(t))
+            {
+                try
+                {
+                    object instance = Activator.CreateInstance(t, new object[] { _plcH, _plc, obj});
 
                     if (instance != null)
                     {

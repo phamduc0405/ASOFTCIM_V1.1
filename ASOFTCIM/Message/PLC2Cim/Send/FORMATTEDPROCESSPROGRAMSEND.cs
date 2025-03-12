@@ -15,7 +15,7 @@ namespace ASOFTCIM.Message.PLC2Cim.Send
     public class FORMATTEDPROCESSPROGRAMSEND
     {
 
-        public FORMATTEDPROCESSPROGRAMSEND(PLCHelper plcdata, PPIDINFOR ppid)
+        public FORMATTEDPROCESSPROGRAMSEND(PLCHelper plcdata,PlcComm plcComm , PPIDINFOR ppid)
         {
 
             try
@@ -24,8 +24,12 @@ namespace ASOFTCIM.Message.PLC2Cim.Send
                 word.FirstOrDefault(x => x.Item == "PPIDTYPE").SetValue = ppid.PPID_TYPE;
                 word.FirstOrDefault(x => x.Item == "CCODE").SetValue = ppid.COMMANDCODEs[0].CCODE;
                 word.FirstOrDefault(x => x.Item == "PPID_NUMBER").SetValue = ppid.PPID_NUMBER;
-
-
+                List<PPIDModel> param = plcdata.PPIDParams.ToList();
+                int paramcount = ppid.COMMANDCODEs[0].PARAMs.Count;
+                for(int i = 0;i<212; i++)
+                {
+                    param[i+2].SetValue(plcComm, ppid.COMMANDCODEs[0].PARAMs[i].PARAMVALUE);
+                }
                 BitModel bit = plcdata.Bits.First(x => x.Comment == this.GetType().Name);
                 bit.SetPCValue = true;
             }
