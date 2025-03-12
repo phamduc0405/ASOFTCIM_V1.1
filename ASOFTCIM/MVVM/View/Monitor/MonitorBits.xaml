@@ -12,10 +12,12 @@
         <Grid ShowGridLines="True">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
+                <ColumnDefinition Width="5"/>
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
+            <GridSplitter Grid.Column="1"/>
             <Grid Grid.Column="0">
-                <DockPanel LastChildFill="True">
+                <DockPanel LastChildFill="True" >
                     <Border
                         Height="30"
                         Margin="5"
@@ -32,11 +34,14 @@
                             Style="{StaticResource HeaderTextBlockStyle}"
                             Text="PLC -&gt; PC" />
                     </Border>
-                    <WrapPanel x:Name="wrpInput" Orientation="Vertical" />
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <WrapPanel x:Name="wrpInput" Orientation="Vertical"  />
+                    </ScrollViewer>
+                    
                 </DockPanel>
 
             </Grid>
-            <Grid Grid.Column="1">
+            <Grid Grid.Column="2">
                 <DockPanel LastChildFill="True">
                     <Border
                         Height="30"
@@ -54,7 +59,10 @@
                             Style="{StaticResource HeaderTextBlockStyle}"
                             Text="PC -&gt; PLC" />
                     </Border>
-                    <WrapPanel x:Name="wrpOutput" Orientation="Vertical" />
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <WrapPanel x:Name="wrpOutput" Orientation="Vertical" />
+
+                    </ScrollViewer>
                 </DockPanel>
 
             </Grid>

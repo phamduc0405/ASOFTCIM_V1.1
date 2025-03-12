@@ -32,7 +32,10 @@
                             Style="{StaticResource HeaderTextBlockStyle}"
                             Text="PLC -&gt; PC" />
                     </Border>
-                    <WrapPanel x:Name="wrpInput" Orientation="Vertical" />
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <WrapPanel x:Name="wrpInput" Orientation="Vertical" />
+
+                    </ScrollViewer>
                 </DockPanel>
 
             </Grid>
@@ -54,7 +57,10 @@
                             Style="{StaticResource HeaderTextBlockStyle}"
                             Text="PC -&gt; PLC" />
                     </Border>
-                    <WrapPanel x:Name="wrpOutput" Orientation="Vertical" />
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <WrapPanel x:Name="wrpOutput" Orientation="Vertical" />
+
+                    </ScrollViewer>
                 </DockPanel>
 
             </Grid>

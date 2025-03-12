@@ -32,77 +32,79 @@ namespace ASOFTCIM.MVVM.View.Monitor
         private List<BitModel.BitOutChangedEventDelegate> _bitOutChangedHandlers = new List<BitModel.BitOutChangedEventDelegate>();
         public MonitorBits()
         {
+            
+            _controller = MainWindow.Controller;
+            _plc = _controller.CIM.PLC;
+            _plcH = _controller.CIM.PLCH;
+            
             InitializeComponent();
-            //this.DataContext = this;
-            //_controller = MainWindow.Controller;
-            //_plc = _controller.CIM.PLC;
-            //_plcH = _controller.CIM.PLCH;
-            //Initial();
+            this.DataContext = this;
+            Initial();
         }
         #region Private Method
-        //private void Initial()
-        //{
-        //    if (_plcH == null) return;
-        //    // Unloaded += MonitorBits_Unloaded;// Khai báo biến để lưu trữ tham chiếu đến hàm xử lý sự kiện BitOutChangedEvent
-        //    //   EventHandler bitOutChangedHandler = null;
-        //    foreach (var bit in _plcH.Bits)
-        //    {
-        //        BitModel b = new BitModel(_plc);
-        //        b = bit;
+        private void Initial()
+        {
+            if (_plcH == null) return;
+            // Unloaded += MonitorBits_Unloaded;// Khai báo biến để lưu trữ tham chiếu đến hàm xử lý sự kiện BitOutChangedEvent
+            //   EventHandler bitOutChangedHandler = null;
+            foreach (var bit in _plcH.Bits)
+            {
+                BitModel b = new BitModel(_plc);
+                b = bit;
 
-        //        // Input
-        //        IOComment io = CreateIOComment(bit, b.GetPLCValue, true);
-        //        io.InitializeComponent();
-        //        wrpInput.Children.Add(io);
+                // Input
+                IOComment io = CreateIOComment(bit, b.GetPLCValue, true);
+                io.InitializeComponent();
+                wrpInput.Children.Add(io);
 
-        //        var bitChangedHandler = new BitModel.BitChangedEventDelegate(() =>
-        //        {
-        //            Dispatcher.Invoke(() =>
-        //            {
-        //                io.elpOnOff.Fill = b.GetPLCValue ? Brushes.YellowGreen : Brushes.Gray;
-                        
-        //                io.UpdateEffect();
-        //            });
-        //        });
-        //        b.BitChangedEvent += bitChangedHandler;
-        //        _bitChangedHandlers.Add(bitChangedHandler);
+                var bitChangedHandler = new BitModel.BitChangedEventDelegate(() =>
+                {
+                    Dispatcher.Invoke(() =>
+                    {
+                        io.IsOn = b.GetPLCValue;
 
-        //        // Output
-        //        IOComment ioOut = CreateIOComment(bit, b.GetPCValue, false);
-        //        wrpOutput.Children.Add(ioOut);
-        //        ioOut.elpOnOff.MouseUp += (s, e) =>
-        //        {
-        //            b.SetPCValue = !b.GetPCValue;
-        //        };
-        //        Ellipse ellOnOffOut = ioOut.elpOnOff;
-        //        var bitOutChangedHandler = new BitModel.BitOutChangedEventDelegate(() =>
-        //        {
-        //            Dispatcher.Invoke(() =>
-        //            {
-        //                ioOut.elpOnOff.Fill = b.GetPCValue ? Brushes.YellowGreen : Brushes.Gray;
-        //                ioOut.UpdateEffect();
-        //            });
-        //        });
-        //        b.BitOutChangedEvent += bitOutChangedHandler;
-        //        _bitOutChangedHandlers.Add(bitOutChangedHandler);
-        //    }
-        //}
-        //private IOComment CreateIOComment(BitModel bit, bool value, bool isPLC)
-        //{
-        //    IOComment io = new IOComment();
-        //    if (isPLC)
-        //    {
-        //        io.txtAddress.Text = "B" + bit.PLCHexAdd.ToString();
-        //    }
-        //    else
-        //    {
-        //        io.txtAddress.Text = "B" + bit.PCHexAdd.ToString();
-        //    }
-        //    io.txtIO.Text = bit.Comment.ToString();
-        //    io.elpOnOff.Fill = value ? Brushes.YellowGreen : Brushes.Gray;
-        //    io.UpdateEffect();
-        //    return io;
-        //}
+                        io.UpdateEffect();
+                    });
+                });
+                b.BitChangedEvent += bitChangedHandler;
+                _bitChangedHandlers.Add(bitChangedHandler);
+
+                // Output
+                IOComment ioOut = CreateIOComment(bit, b.GetPCValue, false);
+                wrpOutput.Children.Add(ioOut);
+                ioOut.ElipClickEvent += () =>
+                {
+                    b.SetPCValue = !b.GetPCValue;
+                };
+               
+                var bitOutChangedHandler = new BitModel.BitOutChangedEventDelegate(() =>
+                {
+                    Dispatcher.Invoke(() =>
+                    {
+                        ioOut.IsOn = b.GetPCValue ;
+                        ioOut.UpdateEffect();
+                    });
+                });
+                b.BitOutChangedEvent += bitOutChangedHandler;
+                _bitOutChangedHandlers.Add(bitOutChangedHandler);
+            }
+        }
+        private IOComment CreateIOComment(BitModel bit, bool value, bool isPLC)
+        {
+            IOComment io = new IOComment();
+            if (isPLC)
+            {
+                io.Address = "B" + bit.PLCHexAdd.ToString();
+            }
+            else
+            {
+                io.Address = "B" + bit.PCHexAdd.ToString();
+            }
+            io.Comment = bit.Comment.ToString();
+            io.IsOn = value ;
+            io.UpdateEffect();
+            return io;
+        }
 
         #endregion
         #region IDisposable Implementation

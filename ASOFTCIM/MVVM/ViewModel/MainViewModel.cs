@@ -62,7 +62,7 @@ namespace ASOFTCIM.MVVM.ViewModel
         {
 
             //ConfigVM = new ConfigViewModel();
-            MonitorIOVM = new MonitorIOView();
+         //   MonitorIOVM = new MonitorIOView();
 
             Header = "HOME";
 

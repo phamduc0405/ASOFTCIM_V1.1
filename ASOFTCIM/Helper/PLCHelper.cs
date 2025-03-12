@@ -166,6 +166,7 @@ namespace ASOFTCIM.Helper
                     {
                         if (status.Address <= (w.Address + w.Length - 1) && status.Address >= w.Address)
                         {
+                            w.WordChangeFromPlc();
                             switch (w.Area.ToUpper())
                             {
                                 case string a when a.Contains("ALARM"):
