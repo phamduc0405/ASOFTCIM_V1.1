@@ -32,6 +32,7 @@ namespace ASOFTCIM
                 packet.addItem(DataType.Ascii, alarm.ALID);
                 packet.addItem(DataType.Ascii, alarm.ALTEXT);
                 packet.Send2Sys();
+                Console.WriteLine(alarm.ALID);
             }
             catch (Exception ex)
             {

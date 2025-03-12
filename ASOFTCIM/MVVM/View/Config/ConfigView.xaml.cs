@@ -133,14 +133,14 @@ namespace ASOFTCIM.MVVM.View.Config
                         WriteStartWordAddress = txtPLCStartOutW.Text,
                         SizeWriteWord = int.Parse(txtPLCLengthOutW.Text),
 
-                        //PlcConnectType = (PlcConnectType)cbbplcConnectType.SelectedItem,
+                        PlcConnectType = (PlcConnectType)cbbplcConnectType.SelectedItem,
 
                         //PortPlc = int.Parse(txtPLCPort.Text),
                         
                     };
                     if (File.Exists(txtPathPlcExcel.Text))
                     {
-                        _controller.CIM.LoadExcelConfig(@"D:\Project_New\ACIM\SDCCIM_ASOFT_Portal_Online_Map_SDC_Basic_V1.21_v0.1.xlsx");
+                        _controller.CIM.LoadExcelConfig(txtPathPlcExcel.Text);
                     }
                     var debug = string.Format("Class:{0} Method:{1} Event:{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ((System.Windows.Controls.Control)s).Name);
                     LogTxt.Add(LogTxt.Type.UI, debug);

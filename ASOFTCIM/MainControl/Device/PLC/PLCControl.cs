@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using static A_SOFT.PLC.MelsecIF;
 using Type = System.Type;
+using System.Xml.Linq;
 
 namespace ASOFTCIM
 {
@@ -37,8 +38,8 @@ namespace ASOFTCIM
                     {
                         // Khởi tạo đối tượng PLC
                         _plc = new PlcComm();
-                        _eqpConfig.PLCConfig.PlcConnectType = PlcConnectType.Component;
-                        _eqpConfig.PLCConfig.StationNo = 255;
+                        _eqpConfig.PLCConfig.PlcConnectType = PlcConnectType.CCLinkIe;
+                        //_eqpConfig.PLCConfig.StationNo = ;
                         _plc.ConfigComm(_eqpConfig.PLCConfig);
                         _plc.Start();
 
@@ -314,7 +315,12 @@ namespace ASOFTCIM
         }
         public void ReadECM()
         {
-            foreach(var ecm in _eqpConfig.PLCHelper.ECMS)
+            //var count = this.EqpData.ECS.Count;
+            //for (int i = 0; i < count; i++)
+            //{
+            //    this.EqpData.ECS.RemoveAt(i);
+            //}    
+            foreach (var ecm in _eqpConfig.PLCHelper.ECMS)
             {
                 if (ecm.ECNAME != "RESERVED")
                 {
@@ -322,6 +328,12 @@ namespace ASOFTCIM
                     ec.ECNAME = ecm.ECNAME;
                     ec.ECID = ecm.ECID;
                     ec.ECDEF = ecm.GetValue(this.PLC);
+                    var index = _eqpConfig.PLCHelper.ECMS.IndexOf(ecm);
+
+                    if(this.EqpData.ECS.Any(x => x.ECID == ec.ECID))
+                    {
+                        this.EqpData.ECS = this.EqpData.ECS.Where(x => x.ECID != ec.ECID).ToList();
+                    }    
                     this.EqpData.ECS.Add(ec);
                 }
             }
@@ -378,6 +390,10 @@ namespace ASOFTCIM
                             {
                                 BitModel bitAlive = _plcH.Bits.FirstOrDefault(x => x.Item.ToUpper() == "ALIVE");
                                 bitAlive.SetPCValue = isOn;
+                                //DateTime dateTime = DateTime.ParseExact(DateTime.Now, "yyyyMMddHHmmss", null);
+
+                                WordModel word = _plcH.Words.FirstOrDefault(x => x.Area == "DATETIMESET");
+                                word.SetValue = DateTime.Now.ToString("yyyyMMddHHmmss");
                             }
                         }
                         catch (Exception ex)
@@ -393,6 +409,7 @@ namespace ASOFTCIM
                                 PlcConnectChangeEventHandle(false);
                                 _isPlcConnected = false;
                             }
+
                         }
                         else
                         {

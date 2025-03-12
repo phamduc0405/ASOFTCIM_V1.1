@@ -25,8 +25,8 @@ namespace ASOFTCIM
                 packet.SystemByte = EqpData.TransactionSys;
                 packet.WaitBit = true;
 				            AddTrans(EqpData.TransactionSys);
-                List<SV> svid = EqpData.SVID;
-                
+                List<SV> svid = new List<SV>();
+                svid = EqpData.SVID;
                 if (lstSv.Count == 0)
                 {
                     packet.addItem(DataType.List, 2);
