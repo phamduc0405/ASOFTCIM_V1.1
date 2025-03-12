@@ -23,18 +23,19 @@ namespace ASOFTCIM.Message.PLC2Cim.Recv
                 bool isSend = false;
                 eq.EqpData.TransactionSys += 1;
                 List<WordModel> word = (List<WordModel>)body;
-                int unitId = int.Parse(word[0].Area[word[0].Area.Length - 1].ToString()) - 1;
+                //int unitId = int.Parse(word[0].Area[word[0].Area.Length - 1].ToString()) - 1;
+                int unitId = 0;
                 EQPSTATE oldstate = eq.EqpData.UNITSTATES[unitId].Copy<EQPSTATE>();
                 foreach (var item in eq.EqpData.UNITSTATES[unitId].GetType().GetProperties())
                 {
-                    if (word.Any(x => x.Item == item.Name))
+                    if (word.Any(x => x.Item == item.Name + $"{unitId + 1}"))
                     {
-                        WordModel w = word.FirstOrDefault(x => x.Item == item.Name);
+                        WordModel w = word.FirstOrDefault(x => x.Item == item.Name+ $"{unitId+1}");
                         var a = item.GetValue(eq.EqpData.UNITSTATES[unitId], null) == null ? "" : item.GetValue(eq.EqpData.UNITSTATES[unitId], null).ToString();
                         if (w.GetValue() != a)
                         {
                             isSend = true;
-                            item.SetValue(eq.EqpData.UNITSTATES[unitId], w.GetValue());
+                            item.SetValue(eq.EqpData.UNITSTATES[unitId+1], w.GetValue());
                         }
                     }
                 }

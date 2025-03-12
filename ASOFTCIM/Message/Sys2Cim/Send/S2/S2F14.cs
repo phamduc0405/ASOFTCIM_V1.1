@@ -23,7 +23,7 @@ namespace ASOFTCIM
                 packet.Command = Command.UserData;
                 packet.DeviceId = EqpData.DeviceId;
                 packet.SystemByte = EqpData.TransactionSys;
-                  
+                ReadECM();
                 if (lstEC.Count > 0)
                 {
                     if (lstEC[0] == "EQPID")

@@ -2628,7 +2628,7 @@ namespace ASOFTCIM
             packet.SystemByte = EqpData.TransactionSys;
             packet.addItem(DataType.List, 3);
             packet.addItem(DataType.Ascii, "0");
-            packet.addItem(DataType.Ascii, "604");
+            packet.addItem(DataType.Ascii, "606");
             packet.addItem(DataType.List, 3);
             {
                 packet.addItem(DataType.List, 2);

@@ -23,15 +23,19 @@ namespace ASOFTCIM.Message.PLC2Cim.Recv
                 eq.EqpData.TransactionSys += 1;
                 BitModel bit = (BitModel)body;
 
-                List<WordModel> word = (List<WordModel>)body;
+                //List<WordModel> word = (List<WordModel>)body;
+                //List<IWordModel> word = bit.LstWord;
+                List<WordModel> word = new List<WordModel>();
+                word = eq.PLCH.Words.Where(x => x.Area == "EquipFunctionChangeEvent").ToList();
                 int i = 0;
                 foreach (var item in eq.EqpData.FUNCTIONSTATE.GetType().GetProperties())
                 {
                     i++;
                     if (word.Any(x => x.Item == item.Name))
                     {
-                        WordModel w = word.FirstOrDefault(x => x.Item == item.Name);
+                        WordModel w = (WordModel)word.FirstOrDefault(x => x.Item == item.Name);
                         var a = item.GetValue(eq.EqpData.FUNCTIONSTATE, null) == null ? "" : item.GetValue(eq.EqpData.FUNCTIONSTATE, null).ToString();
+                        var v = w.GetValue(eq.PLC);
                         if (w.GetValue() != a)
                         {
                             FUNCTION func = new FUNCTION();
