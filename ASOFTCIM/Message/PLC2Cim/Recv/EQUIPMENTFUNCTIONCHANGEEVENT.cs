@@ -35,7 +35,7 @@ namespace ASOFTCIM.Message.PLC2Cim.Recv
                     {
                         WordModel w = (WordModel)word.FirstOrDefault(x => x.Item == item.Name);
                         var a = item.GetValue(eq.EqpData.FUNCTIONSTATE, null) == null ? "" : item.GetValue(eq.EqpData.FUNCTIONSTATE, null).ToString();
-                        var v = w.GetValue(eq.PLC);
+                        var v = w.GetValue();
                         if (w.GetValue() != a)
                         {
                             FUNCTION func = new FUNCTION();
