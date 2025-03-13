@@ -47,7 +47,7 @@
                                 Grid.ColumnSpan="2"
                                 Margin="2"
                                 VerticalAlignment="Center"
-                                Background="Blue"
+                                Background="White"
                                 BorderBrush="Black"
                                 BorderThickness="1"
                                 CornerRadius="5">
@@ -63,9 +63,9 @@
                                     Background="White"
                                     CornerRadius="5">
                                     <TextBlock
-                                        FontSize="25"
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Top"
+                                        FontSize="25"
                                         Style="{StaticResource HeaderTextBlockStyle}"
                                         Text="ALARM" />
                                 </Border>
@@ -109,7 +109,7 @@
                                 Grid.ColumnSpan="2"
                                 Margin="3"
                                 VerticalAlignment="Center"
-                                Background="Blue"
+                                Background="White"
                                 BorderBrush="Black"
                                 BorderThickness="1"
                                 CornerRadius="5">
@@ -124,9 +124,9 @@
                                     VerticalAlignment="Center"
                                     Background="White">
                                     <TextBlock
-                                        FontSize="25"
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Top"
+                                        FontSize="25"
                                         Style="{StaticResource HeaderTextBlockStyle}"
                                         Text="MESSAGE" />
                                 </Border>
@@ -180,6 +180,7 @@
                                 CornerRadius="5">
                                 <Grid>
                                     <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
                                         <RowDefinition Height="*" />
                                         <RowDefinition Height="*" />
                                         <RowDefinition Height="*" />
@@ -247,6 +248,13 @@
                                         FontSize="15"
                                         Style="{StaticResource HeaderTextBlockStyle}"
                                         Text="IQC MODE :" />
+                                    <TextBlock
+                                        Grid.Row="7"
+                                        Grid.Column="0"
+                                        Margin="10,5,0,5"
+                                        FontSize="15"
+                                        Style="{StaticResource HeaderTextBlockStyle}"
+                                        Text="CONNECTSTATE " />
                                     <!--  commend  -->
                                     <TextBlock
                                         x:Name="txtEQPID"
@@ -284,6 +292,12 @@
                                         Grid.Column="1"
                                         Margin="10,5,0,5"
                                         Text="IQC MODE :" />
+                                    <TextBlock
+                                        x:Name="txtPlcConnect"
+                                        Grid.Row="7"
+                                        Grid.Column="1"
+                                        Margin="10,5,0,5"
+                                        Text="PLC CONNECT" />
                                 </Grid>
                             </Border>
                             <Border
@@ -341,6 +355,13 @@
                                         FontSize="15"
                                         Style="{StaticResource HeaderTextBlockStyle}"
                                         Text="MODE  " />
+                                    <TextBlock
+                                        Grid.Row="4"
+                                        Grid.Column="0"
+                                        Margin="10,5,0,5"
+                                        FontSize="15"
+                                        Style="{StaticResource HeaderTextBlockStyle}"
+                                        Text="CONNECTSTATE" />
                                     <!--  commend  -->
                                     <TextBlock
                                         x:Name="txtIp"
@@ -360,6 +381,13 @@
                                         Grid.Column="1"
                                         Margin="10,5,0,5"
                                         Text=": State" />
+                                    <TextBlock
+                                        x:Name="txtCimConnect"
+                                        Grid.Row="4"
+                                        Grid.Column="1"
+                                        Margin="10,5,0,5"
+                                        Text=": Cim Connect" />
+
                                 </Grid>
                             </Border>
                             <Border
@@ -478,6 +506,11 @@
                                         Text=": State" />
 
                                 </Grid>
+                            </Border>
+                            <Border Grid.Row="3" Margin="3,3,3,2">
+                                <Grid x:Name="grdCpu" Grid.Column="0" 
+                                      Height="150"/>
+
                             </Border>
                         </Grid>
                     </ScrollViewer>
