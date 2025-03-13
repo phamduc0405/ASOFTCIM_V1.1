@@ -16,6 +16,7 @@ using System.Windows;
 using static A_SOFT.PLC.MelsecIF;
 using Type = System.Type;
 using System.Xml.Linq;
+using ASOFTCIM.Message.PLC2Cim.Send;
 
 namespace ASOFTCIM
 {
@@ -55,7 +56,7 @@ namespace ASOFTCIM
 
                         // Đọc dữ liệu từ PLC
                         ReadEqpState();
-                        ReadRMS();
+                        //ReadRMS();
                         ReadECM();
                         ReadAPC();
 
@@ -280,14 +281,17 @@ namespace ASOFTCIM
         }
         public void ReadRMS()
         {
+            this.EqpData.PPIDList.PPID = null;
+            List<string> list = new List<string>();
             foreach (var ppid in _eqpConfig.PLCHelper.ListPPID)
             {
-                if(!string.IsNullOrEmpty(ppid.GetValue(this.PLC)))
-                {
-                    this.EqpData.PPIDList.PPID.Add(ppid.Item);
-                }    
+                
+                    list.Add(ppid.GetValue(this.PLC));
+                    this.EqpData.PPIDList.PPID = list;
+                   
             }
             List<PPIDModel> word = this.PLCH.PPIDParams.ToList();
+            List<WordModel> words = _plcH.Words.Where(x => x.Area == "EQPStatus").ToList();
             this.EqpData.CurrPPID.PPID = word.FirstOrDefault(x => x.Item == "PPID").GetValue(this.PLC);
             COMMANDCODE commandcode = new COMMANDCODE();
             PPPARAMS ppparam = new PPPARAMS();
@@ -303,6 +307,7 @@ namespace ASOFTCIM
                     commandcode.PARAMs.Add(param);
                 }    
             }
+
             for (int i = 0; i < this.EqpData.PPIDList.PPID.Count; i++)
             {
                 if (this.EqpData.PPIDList.PPID[i] == this.EqpData.CurrPPID.PPID)
@@ -310,6 +315,10 @@ namespace ASOFTCIM
                     this.EqpData.CurrPPID.PPID_NUMBER = i.ToString();
                     break;
                 }
+            }
+            if (this.EqpData.CurrPPID.COMMANDCODEs.Any(x => x.CCODE == commandcode.CCODE))
+            {
+                this.EqpData.CurrPPID.COMMANDCODEs = this.EqpData.CurrPPID.COMMANDCODEs.Where(x => x.CCODE != commandcode.CCODE).ToList();
             }
             this.EqpData.CurrPPID.COMMANDCODEs.Add(commandcode);
         }
@@ -394,6 +403,8 @@ namespace ASOFTCIM
 
                                 WordModel word = _plcH.Words.FirstOrDefault(x => x.Area == "DATETIMESET");
                                 word.SetValue = DateTime.Now.ToString("yyyyMMddHHmmss");
+
+                               
                             }
                         }
                         catch (Exception ex)

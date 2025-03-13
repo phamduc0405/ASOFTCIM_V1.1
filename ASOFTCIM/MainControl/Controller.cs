@@ -53,7 +53,7 @@ namespace ASOFTCIM.MainControl
                     _equipmentConfig = XmlHelper<EquipmentConfig>.DeserializeFromString(readText);
                     foreach (var b in _equipmentConfig.PLCHelper.Bits)
                     {
-                        List<WordModel> wm = _equipmentConfig.PLCHelper.Words.Where(x => x.BitEvent.Contains($"{b.PLCDevice}{b.PLCHexAdd}")).ToList();
+                        List<WordModel> wm = _equipmentConfig.PLCHelper.Words.Where(x => x.BitEvent==($"{b.PLCDevice}{b.PLCHexAdd}") || x.BitEvent == ($"{b.PLCDevice}{b.PCHexAdd}")).ToList();
                         b.LstWord.AddRange(wm);
                         List<MaterialModel> material = _equipmentConfig.PLCHelper.Materrials.Where(x => x.BitEvent.Contains($"{b.PLCDevice}{b.PLCHexAdd}")).ToList();
                         b.LstWord.AddRange(material);

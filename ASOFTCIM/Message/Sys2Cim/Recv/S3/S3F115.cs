@@ -51,7 +51,7 @@ namespace ASOFTCIM
                 lst = _cim.SysPacket.GetItemString();
                 carrierinfor.REPLY.REPLYCODE = _cim.SysPacket.GetItemString();
                 carrierinfor.REPLY.REPLYTEXT = _cim.SysPacket.GetItemString();
-                SendMessage2PLC("CARRIERINFORMATIONSENDLOADER1",carrierinfor);
+                SendMessage2PLC("INSPECTIONCARRIERRELEASEINFOSEND1", carrierinfor);
                 SendS3F116( ACK);
             }
             catch (Exception ex)

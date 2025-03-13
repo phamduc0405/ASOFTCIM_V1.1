@@ -39,6 +39,12 @@ namespace ASOFTCIM
                 packet.addItem(DataType.Ascii, ppid.PPID);
                 packet.addItem(DataType.Ascii, ppid.PPID_TYPE);
                 packet.addItem(DataType.Ascii, ppid.PPID_NUMBER); //ppid number
+                if(ppid.MODE == "2")
+                {
+                    packet.addItem(DataType.List,0);
+                    packet.Send2Sys();
+                    return;
+                }
                 packet.addItem(DataType.List, ppid.COMMANDCODEs.Count);
                 foreach (var item in ppid.COMMANDCODEs)
                 {

@@ -106,6 +106,7 @@ namespace ASOFTCIM
                         Thread.Sleep(600);
                         WordModel word = _plcH.Words.FirstOrDefault(x => x.Area == "EquipFunctionChangeCommand");
                         HACK = word.GetValue(PLC);
+                        Console.WriteLine($"{DateTime.Now.Second}kk" + $"{DateTime.Now.Millisecond}" + 222);
                         break;
                     case "11":  //(Transfer Stop)
                         break;

@@ -16,6 +16,7 @@ namespace ASOFTCIM
         {
             try
             {
+                ReadRMS();
                 string ACK = "0";
                 // nếu thiết bị cho phép Recipe Delete By Host => false , nếu không cho phép => true
                 if (false)
@@ -52,37 +53,49 @@ namespace ASOFTCIM
                     ACK = "5";
                     SendS7F24(ACK);
                     return;
-                }    
-                //Abnormal 
-                int count = int.Parse(_cim.SysPacket.GetItemString());
-                for (int i = 0; i < count; i++)
+                }
+                foreach( var item in EqpData.PPIDList.PPID)
                 {
-                    string lst = _cim.SysPacket.GetItemString();
-                    COMMANDCODE cmd = new COMMANDCODE();
-                    cmd.CCODE = _cim.SysPacket.GetItemString();
-                    //Abnormal 
-                    if (cmd.CCODE == "4" || string.IsNullOrEmpty(cmd.CCODE))
+                    if(item == ppid.PPID)
                     {
-                        ACK = "9";
+                        int count = int.Parse(_cim.SysPacket.GetItemString());
+                        for (int i = 0; i < count; i++)
+                        {
+                            string lst = _cim.SysPacket.GetItemString();
+                            COMMANDCODE cmd = new COMMANDCODE();
+                            cmd.CCODE = _cim.SysPacket.GetItemString();
+                            //Abnormal 
+                            if (cmd.CCODE == "4" || string.IsNullOrEmpty(cmd.CCODE))
+                            {
+                                ACK = "9";
+                                SendS7F24(ACK);
+                                return;
+                            }
+                            //Abnormal
+                            int countParams = int.Parse(_cim.SysPacket.GetItemString());
+                            for (int j = 0; j < countParams; j++)
+                            {
+                                string lst2 = _cim.SysPacket.GetItemString();
+                                PARAM param = new PARAM();
+                                param.PARAMNAME = _cim.SysPacket.GetItemString();
+                                param.PARAMVALUE = _cim.SysPacket.GetItemString();
+                                cmd.PARAMs.Add(param);
+                            }
+                            ppid.COMMANDCODEs.Add(cmd);
+                        }
+                        EQPDATA data = EqpData;
+
+                        SendMessage2PLC("FORMATTEDPROCESSPROGRAMSEND", ppid, _plc);
                         SendS7F24(ACK);
                         return;
                     }
-                    //Abnormal
-                    int countParams = int.Parse(_cim.SysPacket.GetItemString());
-                    for (int j = 0; j < countParams; j++)
-                    {
-                        string lst2 = _cim.SysPacket.GetItemString();
-                        PARAM param = new PARAM();
-                        param.PARAMNAME = _cim.SysPacket.GetItemString();
-                        param.PARAMVALUE = _cim.SysPacket.GetItemString();
-                        cmd.PARAMs.Add(param);
-                    }
-                    ppid.COMMANDCODEs.Add(cmd);
+                    
                 }
-                EQPDATA data = EqpData;
-               
-                SendMessage2PLC("FORMATTEDPROCESSPROGRAMSEND", ppid,_plc);
+                ACK = "6";
                 SendS7F24(ACK);
+                return;
+                //Abnormal 
+
             }
             catch (Exception ex)
             {

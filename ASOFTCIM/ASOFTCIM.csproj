@@ -211,6 +211,7 @@
     <Compile Include="Message\PLC2Cim\Send\LABELINFORMATIONSEND.cs" />
     <Compile Include="Message\PLC2Cim\Send\LABELPRECHECKSEND.cs" />
     <Compile Include="Message\PLC2Cim\Send\LABELVALIDATIONSEND.cs" />
+    <Compile Include="Message\PLC2Cim\Send\PACKINGINFORMATION.cs" />
     <Compile Include="Message\Sys2Cim\Send\S1\S1F1.cs" />
     <Compile Include="Message\Sys2Cim\Send\S3\S3F217.cs" />
     <Compile Include="MVVM\Model\AlarmView.cs" />

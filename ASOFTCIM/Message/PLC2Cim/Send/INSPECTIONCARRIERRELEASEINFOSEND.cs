@@ -4,6 +4,7 @@ using ASOFTCIM.Data;
 using ASOFTCIM.Helper;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -18,7 +19,12 @@ namespace ASOFTCIM.Message.PLC2Cim.Send
 
             try
             {
+                Stopwatch stopWatch = new Stopwatch();
+                stopWatch.Start();
                 List<WordModel> word = plcdata.Words.Where(x => x.Area == this.GetType().Name).ToList();
+                stopWatch.Stop();
+                Console.WriteLine($"LINQ:{ stopWatch.ElapsedMilliseconds}");
+                stopWatch.Restart();
                 word.FirstOrDefault(x => x.Item == "CARRIERID").SetValue = carrier.CARRIERID;
                 word.FirstOrDefault(x => x.Item == "CARRIERTYPE").SetValue = carrier.CARRIERTYPE;
                 word.FirstOrDefault(x => x.Item == "CARRIERPRODUCT").SetValue = carrier.CARRIERPRODUCT;
@@ -29,18 +35,26 @@ namespace ASOFTCIM.Message.PLC2Cim.Send
                 word.FirstOrDefault(x => x.Item == "SUBCARRIERID").SetValue = carrier.SUBCARRIERS[0].SUBCARRIERID;
                 word.FirstOrDefault(x => x.Item == "CELLQTY").SetValue = carrier.SUBCARRIERS[0].CELLQTY;
                 int cellCount = carrier.SUBCARRIERS[0].CELLSINFOR.Count;
+
                 for (int i = 0; i < cellCount; i++)
                 {
-                    word.FirstOrDefault(x => x.Item == "CELLID" + (i + 1).ToString()).SetValue = carrier.SUBCARRIERS[0].CELLSINFOR[i].CELLID;
-                    word.FirstOrDefault(x => x.Item == "LOCATIONNO" + (i + 1).ToString()).SetValue = carrier.SUBCARRIERS[0].CELLSINFOR[i].LOCATIONNO;
-                    word.FirstOrDefault(x => x.Item == "JUDGE" + (i + 1).ToString()).SetValue = carrier.SUBCARRIERS[0].CELLSINFOR[i].JUDGE;
-                    word.FirstOrDefault(x => x.Item == "REASONCODE" + (i + 1).ToString()).SetValue = carrier.SUBCARRIERS[0].CELLSINFOR[i].REASONCODE;
+                    //word.FirstOrDefault(x => x.Item == "CELLID" + (i + 1).ToString()).SetValue = carrier.SUBCARRIERS[0].CELLSINFOR[i].CELLID;
+                    //word.FirstOrDefault(x => x.Item == "LOCATIONNO" + (i + 1).ToString()).SetValue = carrier.SUBCARRIERS[0].CELLSINFOR[i].LOCATIONNO;
+                    //word.FirstOrDefault(x => x.Item == "JUDGE" + (i + 1).ToString()).SetValue = carrier.SUBCARRIERS[0].CELLSINFOR[i].JUDGE;
+                    //word.FirstOrDefault(x => x.Item == "REASONCODE" + (i + 1).ToString()).SetValue = carrier.SUBCARRIERS[0].CELLSINFOR[i].REASONCODE;
+                    word.FirstOrDefault(x => x.Item == "CELLID").SetValue = carrier.SUBCARRIERS[0].CELLSINFOR[i].CELLID;
+                    word.FirstOrDefault(x => x.Item == "LOCATIONNO").SetValue = carrier.SUBCARRIERS[0].CELLSINFOR[i].LOCATIONNO;
+                    word.FirstOrDefault(x => x.Item == "JUDGE").SetValue = carrier.SUBCARRIERS[0].CELLSINFOR[i].JUDGE;
+                    word.FirstOrDefault(x => x.Item == "REASONCODE").SetValue = carrier.SUBCARRIERS[0].CELLSINFOR[i].REASONCODE;
                 }
 
                 word.FirstOrDefault(x => x.Item == "REPLYCODE").SetValue = carrier.REPLY.REPLYCODE;
                 word.FirstOrDefault(x => x.Item == "REPLYTEXT").SetValue = carrier.REPLY.REPLYTEXT;
 
+                stopWatch.Restart();
                 BitModel bit = plcdata.Bits.First(x => x.Comment == this.GetType().Name);
+                stopWatch.Stop();
+                Console.WriteLine($"SetValue:{stopWatch.ElapsedMilliseconds}");
                 bit.SetPCValue = true;
             }
             catch (Exception ex)

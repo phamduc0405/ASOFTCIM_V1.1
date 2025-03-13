@@ -198,6 +198,10 @@ namespace ASOFTCIM.Data
 
 
         }
+        public string SetValue
+        {
+            set { }
+        }
     }
    
     public class APCModel
