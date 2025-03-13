@@ -3,10 +3,12 @@ using A_SOFT.PLC;
 using ASOFTCIM.Config;
 using ASOFTCIM.Data;
 using ASOFTCIM.MainControl;
+using ASOFTCIM.MVVM.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.SqlTypes;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -34,6 +36,13 @@ namespace ASOFTCIM.MVVM.View.Home
         private Thread _updateData;
         private static bool _running = true;
         private List<Data.Alarm> _data = new List<Data.Alarm>();
+        private PerformanceCounter memoryCounter;
+        private Thread memoryUsageThread;
+        private bool isMonitoringMemory = true;
+
+        private MainViewModel viewModel;
+        private Thread _updateTime;
+        private PartialCpuChart _cpuChart;
         public static bool Running
         {
             get
@@ -53,10 +62,17 @@ namespace ASOFTCIM.MVVM.View.Home
         public HomeView()
         {
             InitializeComponent();
+            _cpuChart = new PartialCpuChart();
+            grdCpu.Children.Add(_cpuChart);
+            
             this.DataContext = this;
             _controller = MainWindow.Controller;
             CreaterEvent();
             _controller.CIM.ResetEvent += UpdateAlarm;
+            _controller.CIM.PlcConnectChangeEvent -= Controller_PlcConnectChangeEvent;
+            _controller.CIM.PlcConnectChangeEvent += Controller_PlcConnectChangeEvent;
+            _controller.CIM.Cim.Conn.OnConnectEvent -= Controller_CimConnectChangeEvent;
+            _controller.CIM.Cim.Conn.OnConnectEvent += Controller_CimConnectChangeEvent;
             _updateData = new Thread(UpdateData)
             {
                 IsBackground = true,
@@ -186,6 +202,23 @@ namespace ASOFTCIM.MVVM.View.Home
                 }));
             }
             catch { }
+        }
+
+        private void Controller_PlcConnectChangeEvent(bool isConnected)
+        {
+            Dispatcher.Invoke(new Action(() =>
+            {
+                //bdrPlcConnect.Background = isConnected ? Brushes.Green : Brushes.Gray;
+                txtPlcConnect.Text = isConnected ? "Plc Connected" : "Plc Disconnected";
+            }));
+        }
+        private void Controller_CimConnectChangeEvent(bool isConnected)
+        {
+            Dispatcher.Invoke(new Action(() =>
+            {
+             //   bdrCimConnect.Background = isConnected ? Brushes.Green : Brushes.Gray;
+                txtCimConnect.Text = isConnected ? "Cim Connected" : "Cim Disconnected";
+            }));
         }
     }
 }
