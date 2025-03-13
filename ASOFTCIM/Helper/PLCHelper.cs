@@ -187,7 +187,7 @@ namespace ASOFTCIM.Helper
                                 case string a when a.Contains("PORTSTATUS"):
                                     WordChangedEventHandle("PORTSTATUS", _words.Where(x => x.Area == w.Area).ToList());
                                     break;
-
+                               
                                 default:
                                     break;
                             }

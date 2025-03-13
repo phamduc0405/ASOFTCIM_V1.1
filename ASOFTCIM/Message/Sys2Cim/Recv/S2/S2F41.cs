@@ -10,6 +10,8 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using ASOFTCIM.Message.PLC2Cim.Send;
+using A_SOFT.PLC;
+using System.Threading;
 
 namespace ASOFTCIM
 {
@@ -94,8 +96,16 @@ namespace ASOFTCIM
                         func.EFID = _cim.SysPacket.GetItemString();
                         func.EFST = _cim.SysPacket.GetItemString(); 
                         func.MESSAGE = _cim.SysPacket.GetItemString();
+                        if(EqpData.EQINFORMATION.EQPID != _cim.SysPacket.GetItemString(2))
+                        {
+                            HACK = "1";
+                            SendS2F42(RCMD, HACK);
+                            return;
+                        }  
                         SendMessage2PLC("EQUIPMENTFUNCTIONCHANGECOMMAND", func);
-                     //   new FUNCTIONCHANGEREQUEST(EqpData, cim.EQHelper.Conn, func);
+                        Thread.Sleep(600);
+                        WordModel word = _plcH.Words.FirstOrDefault(x => x.Area == "EquipFunctionChangeCommand");
+                        HACK = word.GetValue(PLC);
                         break;
                     case "11":  //(Transfer Stop)
                         break;

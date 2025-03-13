@@ -16,9 +16,9 @@
     WindowStyle="none"
     mc:Ignorable="d">
     <Border
-        Margin="5"
-        Background="#eff2f7"
-        CornerRadius="10">
+    Margin="5"
+    Background="#eff2f7"
+    CornerRadius="10">
 
         <!--  Grid Window  -->
         <Grid>
@@ -38,85 +38,62 @@
 
                     <Grid Grid.Row="0">
                         <Border
-                            x:Name="grdTopMain"
-                            Margin="0,0,0,0"
-                            Background="AliceBlue"
-                            CornerRadius="20,20,0,0">
+                        x:Name="grdTopMain"
+                        Margin="0,0,0,0"
+                        Background="AliceBlue"
+                        CornerRadius="20,20,0,0">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="120" />
                                     <ColumnDefinition Width="120" />
-                                    <ColumnDefinition Width="4*" />
+                                    <ColumnDefinition Width="3*" />
                                     <ColumnDefinition Width="3*" />
                                     <ColumnDefinition Width="4*" />
                                     <ColumnDefinition Width="1*" />
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="1.5*" />
+                                    <RowDefinition Height="3*" />
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
 
                                 <Border
-                                    Grid.RowSpan="2"
-                                    Grid.Column="0"
-                                    Grid.ColumnSpan="2"
-                                    Width="160"
-                                    Height="95"
-                                    Margin="-55,0,0,0"
-                                    Background="Blue"
-                                    BorderBrush="Black"
-                                    BorderThickness="2"
-                                    CornerRadius="10">
+                                Grid.RowSpan="2"
+                                Grid.Column="0"
+                                Grid.ColumnSpan="2"
+                                Width="160"
+                                Height="95"
+                                Margin="-75,0,0,0"
+                                Background="AntiqueWhite"
+                                BorderBrush="Black"
+                                BorderThickness="2"
+                                CornerRadius="10">
                                     <Image Margin="0" Source="/Images/SamsungLogo.png" />
                                 </Border>
                                 <StackPanel
-                                    Grid.Row="1"
-                                    Grid.Column="1"
-                                    Orientation="Horizontal" />
+                                Grid.Row="1"
+                                Grid.Column="1"
+                                Orientation="Horizontal" />
 
 
-                                <Grid
-                                    Grid.RowSpan="2"
-                                    Grid.Column="2"
-                                    Margin="0,10,0,0">
-                                    <Border
-                                        Margin="4"
-                                        Background="Transparent"
-                                        CornerRadius="5">
-                                        <StackPanel>
-                                            <TextBlock
-                                                x:Name="txtVersion"
-                                                Margin="10,0,0,0"
-                                                Style="{StaticResource HeaderTextBlockStyle}"
-                                                Text="Version" />
-                                            <TextBlock
-                                                x:Name="tblDateTime"
-                                                Margin="10,0,0,0"
-                                                HorizontalAlignment="Left"
-                                                Style="{StaticResource HeaderTextBlockStyle}"
-                                                Text="datetime" />
-                                        </StackPanel>
 
-                                    </Border>
-                                </Grid>
                                 <Grid Grid.Column="3">
                                     <Border
-                                        Margin="4,10,4,4"
-                                        Background="CornflowerBlue"
-                                        CornerRadius="5">
+                                    Margin="4,10,4,4"
+                                    Background="CornflowerBlue"
+                                    CornerRadius="5">
                                         <Border.Effect>
                                             <DropShadowEffect
-                                                BlurRadius="5"
-                                                ShadowDepth="2"
-                                                Color="Black" />
+                                            BlurRadius="5"
+                                            ShadowDepth="2"
+                                            Color="Black" />
                                         </Border.Effect>
                                         <TextBlock
-                                            Height="40"
-                                            Margin="0,10,0,0"
-                                            HorizontalAlignment="Center"
-                                            VerticalAlignment="Top"
-                                            Style="{StaticResource HeaderTextBlockStyle}"
-                                            Text="ACIM" />
+                                        Margin="0,10,0,0"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Top"
+                                        FontSize="40"
+                                        Style="{StaticResource HeaderTextBlockStyle}"
+                                        Text="CIM" />
                                     </Border>
 
                                 </Grid>
@@ -126,69 +103,70 @@
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*" />
                                         <ColumnDefinition Width="200" />
-                                        <ColumnDefinition Width="150" />
+                                        <ColumnDefinition Width="120" />
                                     </Grid.ColumnDefinitions>
                                     <Button
-                                        x:Name="btnLogIn"
-                                        Grid.Column="1"
-                                        Width="150"
-                                        Margin="10,10,10,10"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Center"
-                                        Style="{StaticResource ButtonSave}">
+                                    x:Name="btnLogIn"
+                                    Grid.Column="1"
+                                    Width="120"
+                                    Height="30"
+                                    Margin="50,2,0,40"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    Style="{StaticResource ButtonSave}">
                                         <StackPanel Orientation="Horizontal">
                                             <fa:IconImage
-                                                x:Name="icLogIn"
-                                                Margin="0,5,0,5"
-                                                HorizontalAlignment="Left"
-                                                Icon="ArrowRightFromBracket" />
+                                            x:Name="icLogIn"
+                                            Margin="0,5,0,5"
+                                            HorizontalAlignment="Left"
+                                            Icon="ArrowRightFromBracket" />
                                             <TextBlock
-                                                x:Name="txtLogIn"
-                                                Margin="10,0,5,0"
-                                                HorizontalAlignment="Center"
-                                                FontSize="20"
-                                                Style="{StaticResource HeaderTextBlockStyle}"
-                                                Text="LogIn" />
+                                            x:Name="txtLogIn"
+                                            Margin="10,0,5,0"
+                                            HorizontalAlignment="Center"
+                                            FontSize="15"
+                                            Style="{StaticResource HeaderTextBlockStyle}"
+                                            Text="LogIn" />
                                         </StackPanel>
                                     </Button>
                                     <StackPanel
-                                        Grid.Column="2"
-                                        Margin="0,0,15,0"
-                                        HorizontalAlignment="Right"
-                                        Orientation="Horizontal">
+                                    Grid.Column="2"
+                                    Margin="0,0,0,37"
+                                    HorizontalAlignment="Right"
+                                    Orientation="Horizontal" Width="107">
                                         <Button
-                                            x:Name="btnHideMenu"
-                                            Grid.Column="1"
-                                            Height="30"
-                                            Margin="0,0,10,0"
-                                            Cursor="Hand"
-                                            Style="{StaticResource ButtonTransparent}"
-                                            Tag="Minus" />
+                                        x:Name="btnHideMenu"
+                                        Grid.Column="1"
+                                        Height="20"
+                                        Margin="0,0,10,0"
+                                        Cursor="Hand"
+                                        Style="{StaticResource ButtonTransparent}"
+                                        Tag="Minus" />
 
                                         <Button
-                                            x:Name="btnResize"
-                                            Grid.Column="1"
-                                            Height="30"
-                                            Margin="0,0,10,0"
-                                            Cursor="Hand"
-                                            Style="{StaticResource ButtonTransparent}"
-                                            Tag="Square" />
+                                        x:Name="btnResize"
+                                        Grid.Column="1"
+                                        Height="20"
+                                        Margin="0,0,10,0"
+                                        Cursor="Hand"
+                                        Style="{StaticResource ButtonTransparent}"
+                                        Tag="Square" />
 
                                         <Button
-                                            x:Name="btnClose"
-                                            Height="30"
-                                            Margin="0,0,3,0"
-                                            VerticalAlignment="Center"
-                                            Cursor="Hand"
-                                            Style="{StaticResource ButtonTransparent}"
-                                            Tag="Xmark" />
+                                        x:Name="btnClose"
+                                        Height="20"
+                                        Margin="0,0,3,0"
+                                        VerticalAlignment="Center"
+                                        Cursor="Hand"
+                                        Style="{StaticResource ButtonTransparent}"
+                                        Tag="Xmark" />
                                     </StackPanel>
                                 </Grid>
 
                                 <Grid
-                                    Grid.Row="1"
-                                    Grid.Column="0"
-                                    Grid.ColumnSpan="5">
+                                Grid.Row="1"
+                                Grid.Column="0"
+                                Grid.ColumnSpan="5">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="3*" />
                                         <ColumnDefinition Width="4*" />
@@ -199,27 +177,27 @@
 
 
                                     <!--<Border
-                                Grid.Column="1"
-                                Height="26"
-                                Background="#DDE9F7"
-                                CornerRadius="3">
-                                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                                    <TextBlock
-                                        Height="40"
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Top"
-                                        Style="{StaticResource HeaderTextBlockStyle}"
-                                        Text="  CURRENT STATE: " />
-                                    <TextBlock
-                                        x:Name="txtState"
-                                        Height="40"
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Top"
-                                        Style="{StaticResource HeaderTextBlockStyle}"
-                                        Text="AMS642DF01" />
-                                </StackPanel>
+                            Grid.Column="1"
+                            Height="26"
+                            Background="#DDE9F7"
+                            CornerRadius="3">
+                            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                                <TextBlock
+                                    Height="40"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Top"
+                                    Style="{StaticResource HeaderTextBlockStyle}"
+                                    Text="  CURRENT STATE: " />
+                                <TextBlock
+                                    x:Name="txtState"
+                                    Height="40"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Top"
+                                    Style="{StaticResource HeaderTextBlockStyle}"
+                                    Text="AMS642DF01" />
+                            </StackPanel>
 
-                            </Border>-->
+                        </Border>-->
                                 </Grid>
                             </Grid>
                         </Border>
@@ -239,17 +217,17 @@
                         <RowDefinition Height="70" />
                     </Grid.RowDefinitions>
                     <Border
-                        Grid.Row="1"
-                        Margin="10,2,10,5"
-                        Background="White"
-                        BorderBrush="Blue"
-                        BorderThickness="1"
-                        CornerRadius="5">
+                    Grid.Row="1"
+                    Margin="10,2,10,5"
+                    Background="White"
+                    BorderBrush="Blue"
+                    BorderThickness="1"
+                    CornerRadius="5">
                         <Border.Effect>
                             <DropShadowEffect
-                                BlurRadius="5"
-                                ShadowDepth="2"
-                                Color="Gray" />
+                            BlurRadius="5"
+                            ShadowDepth="2"
+                            Color="Gray" />
                         </Border.Effect>
                         <Grid>
                             <Grid x:Name="grdPanel">
@@ -266,103 +244,103 @@
 
                                 <!--  Grid for Menu Toggle Button  -->
                                 <Border
-                                    Margin="1"
-                                    Background="White"
-                                    BorderBrush="Black"
-                                    BorderThickness="1"
-                                    CornerRadius="5" />
+                                Margin="1"
+                                Background="White"
+                                BorderBrush="Black"
+                                BorderThickness="1"
+                                CornerRadius="5" />
                                 <Border
-                                    Grid.Column="1"
-                                    Margin="1"
-                                    Background="White"
-                                    BorderBrush="Black"
-                                    BorderThickness="1"
-                                    CornerRadius="5" />
+                                Grid.Column="1"
+                                Margin="1"
+                                Background="White"
+                                BorderBrush="Black"
+                                BorderThickness="1"
+                                CornerRadius="5" />
                                 <Border
-                                    Grid.Column="2"
-                                    Margin="1"
-                                    Background="White"
-                                    BorderBrush="Black"
-                                    BorderThickness="1"
-                                    CornerRadius="5" />
+                                Grid.Column="2"
+                                Margin="1"
+                                Background="White"
+                                BorderBrush="Black"
+                                BorderThickness="1"
+                                CornerRadius="5" />
                                 <Border
-                                    Grid.Column="3"
-                                    Margin="1"
-                                    Background="White"
-                                    BorderBrush="Black"
-                                    BorderThickness="1"
-                                    CornerRadius="5" />
+                                Grid.Column="3"
+                                Margin="1"
+                                Background="White"
+                                BorderBrush="Black"
+                                BorderThickness="1"
+                                CornerRadius="5" />
                                 <Border
-                                    Grid.Column="4"
-                                    Margin="1"
-                                    Background="White"
-                                    BorderBrush="Black"
-                                    BorderThickness="1"
-                                    CornerRadius="5" />
+                                Grid.Column="4"
+                                Margin="1"
+                                Background="White"
+                                BorderBrush="Black"
+                                BorderThickness="1"
+                                CornerRadius="5" />
                                 <Border
-                                    Grid.Column="5"
-                                    Margin="1"
-                                    Background="White"
-                                    BorderBrush="Black"
-                                    BorderThickness="1"
-                                    CornerRadius="5" />
+                                Grid.Column="5"
+                                Margin="1"
+                                Background="White"
+                                BorderBrush="Black"
+                                BorderThickness="1"
+                                CornerRadius="5" />
                                 <Border
-                                    Grid.Column="6"
-                                    Margin="1"
-                                    Background="White"
-                                    BorderBrush="Black"
-                                    BorderThickness="1"
-                                    CornerRadius="5" />
+                                Grid.Column="6"
+                                Margin="1"
+                                Background="White"
+                                BorderBrush="Black"
+                                BorderThickness="1"
+                                CornerRadius="5" />
                                 <Border
-                                    Grid.Column="7"
-                                    Margin="1"
-                                    Background="White"
-                                    BorderBrush="Black"
-                                    BorderThickness="1"
-                                    CornerRadius="5" />
+                                Grid.Column="7"
+                                Margin="1"
+                                Background="White"
+                                BorderBrush="Black"
+                                BorderThickness="1"
+                                CornerRadius="5" />
                                 <RadioButton
-                                    x:Name="btnHome"
-                                    Grid.Column="0"
-                                    Margin="2,2,2,2"
-                                    Command="{Binding T5ViewCommand}"
-                                    CommandParameter="T5s"
-                                    Content="Home"
-                                    FontSize="25"
-                                    GroupName="btnPanel"
-                                    Style="{StaticResource controlButtonPanel}"
-                                    Tag="Home">
+                                x:Name="btnHome"
+                                Grid.Column="0"
+                                Margin="2,2,2,2"
+                                Command="{Binding T5ViewCommand}"
+                                CommandParameter="T5s"
+                                Content="Home"
+                                FontSize="25"
+                                GroupName="btnPanel"
+                                Style="{StaticResource controlButtonPanel}"
+                                Tag="Home">
                                     <RadioButton.ToolTip>
                                         <ToolTip
-                                            x:Name="ttT5s"
-                                            Content="Home"
-                                            Style="{StaticResource tt_style}" />
+                                        x:Name="ttT5s"
+                                        Content="Home"
+                                        Style="{StaticResource tt_style}" />
                                     </RadioButton.ToolTip>
 
                                 </RadioButton>
                                 <!--  SVID  -->
                                 <RadioButton
-                                    x:Name="btnSvid"
-                                    Grid.Column="1"
-                                    Margin="2,2,2,2"
-                                    Content="SVID"
-                                    FontSize="25"
-                                    GroupName="btnPanel"
-                                    Style="{StaticResource controlButtonPanel}"
-                                    Tag="list">
+                                x:Name="btnSvid"
+                                Grid.Column="1"
+                                Margin="2,2,2,2"
+                                Content="SVID"
+                                FontSize="25"
+                                GroupName="btnPanel"
+                                Style="{StaticResource controlButtonPanel}"
+                                Tag="list">
                                     <RadioButton.ToolTip>
                                         <ToolTip Content="SVID" Style="{StaticResource tt_style}" />
                                     </RadioButton.ToolTip>
                                 </RadioButton>
                                 <!--  ECM  -->
                                 <RadioButton
-                                    x:Name="btnEcm"
-                                    Grid.Column="2"
-                                    Margin="2,2,2,2"
-                                    Content="ECM"
-                                    FontSize="25"
-                                    GroupName="btnPanel"
-                                    Style="{StaticResource controlButtonPanel}"
-                                    Tag="calendar">
+                                x:Name="btnEcm"
+                                Grid.Column="2"
+                                Margin="2,2,2,2"
+                                Content="ECM"
+                                FontSize="25"
+                                GroupName="btnPanel"
+                                Style="{StaticResource controlButtonPanel}"
+                                Tag="calendar">
 
                                     <RadioButton.ToolTip>
                                         <ToolTip Content="ECM" Style="{StaticResource tt_style}" />
@@ -370,14 +348,14 @@
                                 </RadioButton>
                                 <!--  RECIPES  -->
                                 <RadioButton
-                                    x:Name="btnRecipes"
-                                    Grid.Column="3"
-                                    Margin="2,2,2,2"
-                                    Content="RECIPES"
-                                    FontSize="25"
-                                    GroupName="btnPanel"
-                                    Style="{StaticResource controlButtonPanel}"
-                                    Tag="tachographdigital">
+                                x:Name="btnRecipes"
+                                Grid.Column="3"
+                                Margin="2,2,2,2"
+                                Content="RECIPES"
+                                FontSize="25"
+                                GroupName="btnPanel"
+                                Style="{StaticResource controlButtonPanel}"
+                                Tag="tachographdigital">
 
                                     <RadioButton.ToolTip>
                                         <ToolTip Content="RECIPES" Style="{StaticResource tt_style}" />
@@ -385,14 +363,14 @@
                                 </RadioButton>
                                 <!--  ALARM  -->
                                 <RadioButton
-                                    x:Name="btnAlarm"
-                                    Grid.Column="4"
-                                    Margin="2,2,2,2"
-                                    Content="ALARM"
-                                    FontSize="25"
-                                    GroupName="btnPanel"
-                                    Style="{StaticResource controlButtonPanel}"
-                                    Tag="clock">
+                                x:Name="btnAlarm"
+                                Grid.Column="4"
+                                Margin="2,2,2,2"
+                                Content="ALARM"
+                                FontSize="25"
+                                GroupName="btnPanel"
+                                Style="{StaticResource controlButtonPanel}"
+                                Tag="clock">
 
                                     <RadioButton.ToolTip>
                                         <ToolTip Content="ALARM" Style="{StaticResource tt_style}" />
@@ -400,52 +378,52 @@
                                 </RadioButton>
                                 <!--  MATERIAL  -->
                                 <RadioButton
-                                    x:Name="btnMaterial"
-                                    Grid.Column="5"
-                                    Margin="2,2,2,2"
-                                    Content="MATERIAL"
-                                    FontSize="25"
-                                    GroupName="btnPanel"
-                                    Style="{StaticResource controlButtonPanel}"
-                                    Tag="Maxcdn">
+                                x:Name="btnMaterial"
+                                Grid.Column="5"
+                                Margin="2,2,2,2"
+                                Content="MATERIAL"
+                                FontSize="25"
+                                GroupName="btnPanel"
+                                Style="{StaticResource controlButtonPanel}"
+                                Tag="Maxcdn">
                                     <RadioButton.ToolTip>
                                         <ToolTip Content="MATERIAL" Style="{StaticResource tt_style}" />
                                     </RadioButton.ToolTip>
                                 </RadioButton>
                                 <!--  Config  -->
                                 <RadioButton
-                                    x:Name="btnConfig"
-                                    Grid.Column="6"
-                                    Margin="2,2,2,2"
-                                    Content="Config"
-                                    FontSize="25"
-                                    GroupName="btnPanel"
-                                    Style="{StaticResource controlButtonPanel}"
-                                    Tag="Gears">
+                                x:Name="btnConfig"
+                                Grid.Column="6"
+                                Margin="2,2,2,2"
+                                Content="Config"
+                                FontSize="25"
+                                GroupName="btnPanel"
+                                Style="{StaticResource controlButtonPanel}"
+                                Tag="Gears">
 
                                     <RadioButton.ToolTip>
                                         <ToolTip
-                                            x:Name="ttConfig"
-                                            Content="Config"
-                                            Style="{StaticResource tt_style}" />
+                                        x:Name="ttConfig"
+                                        Content="Config"
+                                        Style="{StaticResource tt_style}" />
                                     </RadioButton.ToolTip>
                                 </RadioButton>
 
                                 <RadioButton
-                                    x:Name="btnMonitor"
-                                    Grid.Column="7"
-                                    Margin="2,2,2,2"
-                                    Content="Monitor"
-                                    FontSize="25"
-                                    GroupName="btnPanel"
-                                    Style="{StaticResource controlButtonPanel}"
-                                    Tag="book">
+                                x:Name="btnMonitor"
+                                Grid.Column="7"
+                                Margin="2,2,2,2"
+                                Content="Monitor"
+                                FontSize="25"
+                                GroupName="btnPanel"
+                                Style="{StaticResource controlButtonPanel}"
+                                Tag="book">
 
                                     <RadioButton.ToolTip>
                                         <ToolTip
-                                            x:Name="ttMonitor"
-                                            Content="Monitor"
-                                            Style="{StaticResource tt_style}" />
+                                        x:Name="ttMonitor"
+                                        Content="Monitor"
+                                        Style="{StaticResource tt_style}" />
                                     </RadioButton.ToolTip>
                                 </RadioButton>
 
@@ -459,9 +437,9 @@
                         <Grid Background="AliceBlue">
                             <Grid.RowDefinitions />
                             <ContentControl
-                                x:Name="maincontent"
-                                Grid.RowSpan="3"
-                                Content="{Binding Currentview}" />
+                            x:Name="maincontent"
+                            Grid.RowSpan="3"
+                            Content="{Binding Currentview}" />
                         </Grid>
                     </Border>
 
@@ -492,60 +470,72 @@
                         <ColumnDefinition Width="200" />
 
                     </Grid.ColumnDefinitions>
-                    <Grid x:Name="grdCpu" Grid.Column="0" />
+                    <Grid
+                    Grid.RowSpan="1"
+                    Grid.Column="0"
+                    Margin="0,10,0,0">
+                        <Border
+                        Margin="4"
+                        Background="Transparent"
+                        CornerRadius="5">
+                            <StackPanel>
+                                <TextBlock
+                                x:Name="txtVersion"
+                                Margin="10,0,0,0"
+                                Style="{StaticResource CaptionTextBlockStyle}"
+                                Text="Version" />
+                                <TextBlock
+                                x:Name="tblDateTime"
+                                Margin="10,0,0,0"
+                                HorizontalAlignment="Left"
+                                Style="{StaticResource CaptionTextBlockStyle}"
+                                Text="datetime" />
+                            </StackPanel>
 
+                        </Border>
+                    </Grid>
+                    <!--<Border
+                    x:Name="bdrPlcConnect"
+                    Grid.Row="1"
+                    Grid.Column="2"
+                    Margin="5"
+                    HorizontalAlignment="Center"
+                    Background="IndianRed"
+                    BorderBrush="Gray"
+                    CornerRadius="5">
+                    <Border.Effect>
+                        <DropShadowEffect
+                            BlurRadius="5"
+                            ShadowDepth="2"
+                            Color="Black" />
+                    </Border.Effect>
                     <TextBlock
-                        x:Name="txtMemoryUsage"
-                        Grid.Column="1"
-                        Height="40"
-                        Margin="10,20,393,-7"
-                        Style="{StaticResource HeaderTextBlockStyle}"
-                        Text="Memory Usage: Calculating..." />
-
-
-
-                    <Border
-                        x:Name="bdrPlcConnect"
-                        Grid.Row="1"
-                        Grid.Column="2"
-                        Margin="5"
-                        HorizontalAlignment="Center"
-                        Background="IndianRed"
-                        BorderBrush="Gray"
-                        CornerRadius="5">
-                        <Border.Effect>
-                            <DropShadowEffect
-                                BlurRadius="5"
-                                ShadowDepth="2"
-                                Color="Black" />
-                        </Border.Effect>
-                        <TextBlock
-                            x:Name="txtPlcConnect"
-                            Margin="5,0,5,0"
-                            Style="{StaticResource BodyTextBlockStyle}"
-                            Text="PLC Disconnected" />
-                    </Border>
-                    <Border
-                        x:Name="bdrCimConnect"
-                        Grid.Row="1"
-                        Grid.Column="3"
-                        Margin="5"
-                        HorizontalAlignment="Center"
-                        Background="IndianRed"
-                        BorderBrush="Gray"
-                        CornerRadius="5">
-                        <Border.Effect>
-                            <DropShadowEffect
-                                BlurRadius="5"
-                                ShadowDepth="2"
-                                Color="Black" />
-                        </Border.Effect>
-                        <TextBlock
-                            x:Name="txtCimConnect"
-                            Margin="5,0,5,0"
-                            Style="{StaticResource BodyTextBlockStyle}"
-                            Text="HOST Disconnected" />
-                    </Border>
+                        x:Name="txtPlcConnect"
+                        Margin="5,0,5,0"
+                        Style="{StaticResource BodyTextBlockStyle}"
+                        Text="PLC Disconnected" />
+                </Border>
+                <Border
+                    x:Name="bdrCimConnect"
+                    Grid.Row="1"
+                    Grid.Column="3"
+                    Margin="5"
+                    HorizontalAlignment="Center"
+                    Background="IndianRed"
+                    BorderBrush="Gray"
+                    CornerRadius="5">
+                    <Border.Effect>
+                        <DropShadowEffect
+                            BlurRadius="5"
+                            ShadowDepth="2"
+                            Color="Black" />
+                    </Border.Effect>
+                    <TextBlock
+                        x:Name="txtCimConnect"
+                        Margin="5,0,5,0"
+                        Style="{StaticResource BodyTextBlockStyle}"
+                        Text="HOST Disconnected" />
+                </Border>-->
 
 
                 </Grid>

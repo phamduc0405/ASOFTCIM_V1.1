@@ -44,7 +44,7 @@ namespace ASOFTCIM
         
         private MainViewModel viewModel;
         private Thread _updateTime;
-        private PartialCpuChart _cpuChart;
+       
 
         private static bool _running = true;
         public static bool Running
@@ -57,16 +57,10 @@ namespace ASOFTCIM
         public MainWindow()
         {
             InitializeComponent();
-            _cpuChart = new PartialCpuChart();
-            grdCpu.Children.Add(_cpuChart);
-            StartMemoryMonitoring();
             DataContext = new MainViewModel();
             Initial();
             maincontent.Content = new HomeView();
-            Controller.CIM.PlcConnectChangeEvent -= Controller_PlcConnectChangeEvent;
-            Controller.CIM.PlcConnectChangeEvent += Controller_PlcConnectChangeEvent;
-            Controller.CIM.Cim.Conn.OnConnectEvent -= Controller_CimConnectChangeEvent;
-            Controller.CIM.Cim.Conn.OnConnectEvent += Controller_CimConnectChangeEvent;
+           
             CreateEvent();
             _updateTime = new Thread(UpdateTime)
             {
@@ -194,56 +188,6 @@ namespace ASOFTCIM
                 LogTxt.Add(LogTxt.Type.Exception, debug);
                 return false;
             }
-        }
-        private void Controller_PlcConnectChangeEvent(bool isConnected)
-        {
-            Dispatcher.Invoke(new Action(() =>
-            {
-                bdrPlcConnect.Background = isConnected ? Brushes.Green : Brushes.Gray;
-                txtPlcConnect.Text = isConnected ? "Plc Connected" : "Plc Disconnected";
-            }));
-        }
-        private void Controller_CimConnectChangeEvent(bool isConnected)
-        {
-            Dispatcher.Invoke(new Action(() =>
-            {
-                bdrCimConnect.Background = isConnected ? Brushes.Green : Brushes.Gray;
-                txtCimConnect.Text = isConnected ? "Cim Connected" : "Cim Disconnected";
-            }));
-        }
-        private void StartMemoryMonitoring()
-        {
-            memoryCounter = new PerformanceCounter("Memory", "Available MBytes");
-            memoryUsageThread = new Thread(() =>
-            {
-                while (isMonitoringMemory)
-                {
-                    Thread.Sleep(1000);
-                    UpdateMemoryUsage();
-                }
-            });
-            memoryUsageThread.IsBackground = true;
-            memoryUsageThread.Start();
-        }
-
-        private void UpdateMemoryUsage()
-        {
-            Dispatcher.Invoke(() =>
-            {
-                try
-                {
-                    //double totalMemory = new Microsoft.VisualBasic.Devices.ComputerInfo().TotalPhysicalMemory / (1024.0 * 1024.0);
-                    //double availableMemory = memoryCounter.NextValue();
-                    //double usedMemory = totalMemory - availableMemory;
-                    //double usagePercentage = (usedMemory / totalMemory) * 100;
-                    //txtMemoryUsage.Text = $"Memory Usage: {usedMemory:F1} MB / {totalMemory:F1} MB ({usagePercentage:F1}%)";
-                }
-                catch (Exception ex)
-                {
-                    txtMemoryUsage.Text = "Error retrieving memory info.";
-                    Debug.WriteLine($"Error: {ex.Message}");
-                }
-            });
         }
         private void UpdateTime()
         {

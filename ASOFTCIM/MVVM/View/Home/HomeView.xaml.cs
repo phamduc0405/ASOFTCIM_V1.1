@@ -34,6 +34,7 @@ namespace ASOFTCIM.MVVM.View.Home
         private Thread _updateData;
         private static bool _running = true;
         private List<Data.Alarm> _data = new List<Data.Alarm>();
+        private PartialCpuChart _cpuChart;
         public static bool Running
         {
             get
@@ -54,8 +55,14 @@ namespace ASOFTCIM.MVVM.View.Home
         {
             InitializeComponent();
             this.DataContext = this;
+            _cpuChart = new PartialCpuChart();
+            grdCpu.Children.Add(_cpuChart);
             _controller = MainWindow.Controller;
             CreaterEvent();
+            _controller.CIM.PlcConnectChangeEvent -= Controller_PlcConnectChangeEvent;
+            _controller.CIM.PlcConnectChangeEvent += Controller_PlcConnectChangeEvent;
+            _controller.CIM.Cim.Conn.OnConnectEvent -= Controller_CimConnectChangeEvent;
+            _controller.CIM.Cim.Conn.OnConnectEvent += Controller_CimConnectChangeEvent;
             _controller.CIM.ResetEvent += UpdateAlarm;
             _updateData = new Thread(UpdateData)
             {
@@ -141,10 +148,10 @@ namespace ASOFTCIM.MVVM.View.Home
                         {
                             txtAvailabilityState.Text = ":   " + (_controller.CIM.EqpData.EQPSTATE.AVAILABILITYSTATE == "2" ? "UP" : "DOWN");
                             txtInterLockState.Text = ":   " + (_controller.CIM.EqpData.EQPSTATE.INTERLOCKSTATE == "2" ? "INTERLOCKOFF" : "INTERLOCKON");
-                            txtRunState.Text = ":   " + (_controller.CIM.EqpData.EQPSTATE.RUNSTATE == "2" ? "RUNNING" : "PAUSE");
-                            txtFronState.Text = ":   " + (_controller.CIM.EqpData.EQPSTATE.FRONTSTATE == "2" ? "RUN" : "IDLE");
+                            txtRunState.Text = ":   " + (_controller.CIM.EqpData.EQPSTATE.RUNSTATE == "2" ? "RUN" : "IDLE");
+                            txtFronState.Text = ":   " + (_controller.CIM.EqpData.EQPSTATE.FRONTSTATE == "2" ? "UP" : "DOWN");
                             txtRearState.Text = ":   " + (_controller.CIM.EqpData.EQPSTATE.REARSTATE == "2" ? "UP" : "DOWN");
-                            txtMoveState.Text = ":   " + (_controller.CIM.EqpData.EQPSTATE.MOVESTATE == "2" ? "UP" : "DOWN");
+                            txtMoveState.Text = ":   " + (_controller.CIM.EqpData.EQPSTATE.MOVESTATE == "2" ? "RUNNING" : "PAUSE");
                         }
                         //PlcConfig
                         {
@@ -186,6 +193,22 @@ namespace ASOFTCIM.MVVM.View.Home
                 }));
             }
             catch { }
+        }
+        private void Controller_PlcConnectChangeEvent(bool isConnected)
+        {
+            Dispatcher.Invoke(new Action(() =>
+            {
+                //bdrPlcConnect.Background = isConnected ? Brushes.Green : Brushes.Gray;
+                txtPlcConnect.Text = isConnected ? "Plc Connected" : "Plc Disconnected";
+            }));
+        }
+        private void Controller_CimConnectChangeEvent(bool isConnected)
+        {
+            Dispatcher.Invoke(new Action(() =>
+            {
+                //bdrCimConnect.Background = isConnected ? Brushes.Green : Brushes.Gray;
+                txtCimConnect.Text = isConnected ? "Cim Connected" : "Cim Disconnected";
+            }));
         }
     }
 }
