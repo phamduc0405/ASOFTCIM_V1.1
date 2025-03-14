@@ -17,6 +17,7 @@ using static A_SOFT.PLC.MelsecIF;
 using Type = System.Type;
 using System.Xml.Linq;
 using ASOFTCIM.Message.PLC2Cim.Send;
+using HPSocket.Sdk;
 
 namespace ASOFTCIM
 {
@@ -59,7 +60,7 @@ namespace ASOFTCIM
                         //ReadRMS();
                         ReadECM();
                         ReadAPC();
-
+                        ReadFunction();
                         // Gán sự kiện thay đổi trạng thái bit
                         _plcH.BitChangedEvent += (bit) =>
                         {
@@ -362,6 +363,36 @@ namespace ASOFTCIM
                 EqpData.PROCESSDATACONTROL.CELLs.Add(processcell);
             }
             
+        }
+        public void ReadFunction()
+        {
+            EqpData.FUNCTION = null;
+            List<FUNCTION> functions = new List<FUNCTION>();
+            List<WordModel> word = new List<WordModel>();
+            word = PLCH.Words.Where(x => x.Area == "EQUIPMENTFUNCTIONCHANGEEVENT").ToList();
+            int i = 0;
+            foreach (var item in EqpData.FUNCTIONSTATE.GetType().GetProperties())
+            {
+                i++;
+                if (word.Any(x => x.Item == item.Name))
+                {
+                    WordModel w = (WordModel)word.FirstOrDefault(x => x.Item == item.Name);
+                    var a = item.GetValue(EqpData.FUNCTIONSTATE, null) == null ? "" : item.GetValue(EqpData.FUNCTIONSTATE, null).ToString();
+                    var v = w.GetValue();
+                    if (w.GetValue() != a)
+                    {
+                        FUNCTION func = new FUNCTION();
+                        func.BYWHO = word.FirstOrDefault(x => x.Item == "BYWHO").GetValue(PLC);
+                        func.OLDEFST = a;
+                        func.EFNAME = item.Name;
+                        func.NEWEFST = w.GetValue();
+                        func.EFID = i.ToString();
+                        functions.Add(func);
+                    }
+                }
+            }
+            EqpData.FUNCTION = functions;
+
         }
         public void ReadEqpState()
         {

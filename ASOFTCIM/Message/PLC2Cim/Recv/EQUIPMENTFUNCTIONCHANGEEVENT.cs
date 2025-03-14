@@ -27,7 +27,8 @@ namespace ASOFTCIM.Message.PLC2Cim.Recv
                 //List<WordModel> word = (List<WordModel>)body;
                 //List<IWordModel> word = bit.LstWord;
                 List<WordModel> word = new List<WordModel>();
-                word = eq.PLCH.Words.Where(x => x.Area == "EquipFunctionChangeEvent").ToList();
+                word = eq.PLCH.Words.Where(x => x.Area == "EQUIPMENTFUNCTIONCHANGEEVENT").ToList();
+                List<FUNCTION> functions = new List<FUNCTION>();
                 int i = 0;
                 foreach (var item in eq.EqpData.FUNCTIONSTATE.GetType().GetProperties())
                 {
@@ -45,7 +46,7 @@ namespace ASOFTCIM.Message.PLC2Cim.Recv
                             func.EFNAME = item.Name;
                             func.NEWEFST = w.GetValue();
                             func.EFID = i.ToString();
-                            eq.EqpData.FUNCTION.Add(func);
+                            functions.Add(func);
                             isSend = true;
                             item.SetValue(eq.EqpData.FUNCTIONSTATE, w.GetValue());
                         }
@@ -53,7 +54,7 @@ namespace ASOFTCIM.Message.PLC2Cim.Recv
                 }
                 if (isSend)
                 {
-                    eq.SendS6F11_111( eq.EqpData.FUNCTION);
+                    eq.SendS6F11_111(functions);
                     eq.EqpData.FUNCTION = new List<FUNCTION>();
                 }
             }

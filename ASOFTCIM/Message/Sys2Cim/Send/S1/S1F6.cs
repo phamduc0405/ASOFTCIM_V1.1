@@ -270,6 +270,7 @@ namespace ASOFTCIM
         {
             try
             {
+                ReadFunction();
                 SysPacket packet = new SysPacket(_cim.Conn);
                 packet.Stream = 1;
                 packet.Function = 6;
@@ -307,7 +308,7 @@ namespace ASOFTCIM
                             packet.addItem(DataType.List, 2);
                             {
                                 packet.addItem(DataType.Ascii, item.EFID);
-                                packet.addItem(DataType.Ascii, item.EFST);
+                                packet.addItem(DataType.Ascii, item.NEWEFST);
                             }
                         }
                     }

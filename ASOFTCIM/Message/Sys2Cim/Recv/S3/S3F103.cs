@@ -45,8 +45,8 @@ namespace ASOFTCIM
                 }
                 validation.ITEMS = items;
                 string lst = _cim.SysPacket.GetItemString();
-                validation.REPLY.REPLYSTATUS = _cim.SysPacket.GetItemString();
                 validation.REPLY.REPLYTEXT = _cim.SysPacket.GetItemString();
+                validation.REPLY.REPLYSTATUS = _cim.SysPacket.GetItemString();
                 SendMessage2PLC("SPECIFICVALIDATIONDATASEND1", validation);
                 SendS3F104( ACK);
             }

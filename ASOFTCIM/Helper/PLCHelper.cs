@@ -225,7 +225,7 @@ namespace ASOFTCIM.Helper
             BitModel bit = new BitModel(_plc);
             try
             {
-                if (_bit.Any(x => x.PLCAddress == status.Address))
+                if (_bit.Any(x => x.PLCAddress == status.Address)  )
 
                 {
                     bit = _bit.FirstOrDefault(x => x.PLCAddress == status.Address);
