@@ -107,30 +107,30 @@ namespace ASOFTCIM
                 {
                     _eqpConfig.PLCHelper.LoadExcel(path);
                 }
-                if (_eqpConfig.PLCHelper.PlcMemms?.Count > 0)
-                {
-                    if (_eqpConfig.PLCHelper.Bits.Any(x => x.Item.ToUpper().Contains("ALIVE")))
-                    {
-                        BitModel bAlive = _eqpConfig.PLCHelper.Bits.FirstOrDefault(x => x.Item.ToUpper().Contains("ALIVE"));
-                        if (_eqpConfig.PLCHelper.PlcMemms.Any(x => x.BPLCStart == bAlive.PLCHexAdd))
-                        {
-                            PlcMemmory plcmem = _eqpConfig.PLCHelper.PlcMemms.FirstOrDefault(x => x.BPLCStart == bAlive.PLCHexAdd);
+                //if (_eqpConfig.PLCHelper.PlcMemms?.Count > 0)
+                //{
+                //    if (_eqpConfig.PLCHelper.Bits.Any(x => x.Item.ToUpper().Contains("ALIVE")))
+                //    {
+                //        BitModel bAlive = _eqpConfig.PLCHelper.Bits.FirstOrDefault(x => x.Item.ToUpper().Contains("ALIVE"));
+                //        if (_eqpConfig.PLCHelper.PlcMemms.Any(x => x.BPLCStart == bAlive.PLCHexAdd))
+                //        {
+                //            PlcMemmory plcmem = _eqpConfig.PLCHelper.PlcMemms.FirstOrDefault(x => x.BPLCStart == bAlive.PLCHexAdd);
 
-                            _eqpConfig.PLCConfig.ReadStartBitAddress = plcmem.BPLCStart;
-                            _eqpConfig.PLCConfig.SizeReadBit = int.Parse(plcmem.BPLCPoints);
-                            _eqpConfig.PLCConfig.ReadStartWordAddress = plcmem.WPLCStart;
-                            _eqpConfig.PLCConfig.SizeReadWord = int.Parse(plcmem.WPLCPoints);
+                //            _eqpConfig.PLCConfig.ReadStartBitAddress = plcmem.BPLCStart;
+                //            _eqpConfig.PLCConfig.SizeReadBit = int.Parse(plcmem.BPLCPoints);
+                //            _eqpConfig.PLCConfig.ReadStartWordAddress = plcmem.WPLCStart;
+                //            _eqpConfig.PLCConfig.SizeReadWord = int.Parse(plcmem.WPLCPoints);
 
-                            _eqpConfig.PLCConfig.WriteStartBitAddress = plcmem.BPCStart;
-                            _eqpConfig.PLCConfig.SizeWriteBit = int.Parse(plcmem.BPCPoints);
-                            _eqpConfig.PLCConfig.WriteStartWordAddress = plcmem.WPCStart;
-                            _eqpConfig.PLCConfig.SizeWriteWord = int.Parse(plcmem.WPCPoints);
+                //            _eqpConfig.PLCConfig.WriteStartBitAddress = plcmem.BPCStart;
+                //            _eqpConfig.PLCConfig.SizeWriteBit = int.Parse(plcmem.BPCPoints);
+                //            _eqpConfig.PLCConfig.WriteStartWordAddress = plcmem.WPCStart;
+                //            _eqpConfig.PLCConfig.SizeWriteWord = int.Parse(plcmem.WPCPoints);
 
-                            _eqpConfig.PLCConfig.BitDevice = plcmem.BitDevice;
-                            _eqpConfig.PLCConfig.WordDevice = plcmem.WordDevice;
-                        }
-                    }
-                }
+                //            _eqpConfig.PLCConfig.BitDevice = plcmem.BitDevice;
+                //            _eqpConfig.PLCConfig.WordDevice = plcmem.WordDevice;
+                //        }
+                //    }
+                //}
             }
             catch (Exception ex)
             {

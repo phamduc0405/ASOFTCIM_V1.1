@@ -108,6 +108,9 @@ namespace ASOFTCIM.Helper
         #region Public Method
         public void LoadExcel(string ExcelPath)
         {
+            _plc.BitChangedEvent -= PlcComm_BitChangedEvent;
+            _plc.WordChangedEvent -= PlcComm_WordChangedEvent;
+
             Task.Run( async () =>
             {
                 _bit = await ExcelHelper.ReadExcel<BitModel>(ExcelPath, "Local PLC Bit");
@@ -260,9 +263,10 @@ namespace ASOFTCIM.Helper
                     else return;
                 }
             }
-            catch
+            catch (Exception ex)
             {
-
+                var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message);
+                LogTxt.Add(LogTxt.Type.Exception, debug);
             }
             
         }
