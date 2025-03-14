@@ -91,6 +91,7 @@ namespace ASOFTCIM
                      case "9":   //Equipment Job Command (Job(=PPID) Change Reserve))
                         break;
                     case "10":  //(Function Change)
+                        
                         FUNCTION func = new FUNCTION();
                         func.UNITID = _cim.SysPacket.GetItemString(5);
                         func.EFID = _cim.SysPacket.GetItemString();
@@ -101,12 +102,17 @@ namespace ASOFTCIM
                             HACK = "1";
                             SendS2F42(RCMD, HACK);
                             return;
-                        }  
+                        }
+                        if (_cim.SysPacket.GetItemString(7) == "")
+                        {
+                            HACK = "3";
+                            SendS2F42(RCMD, HACK);
+                            return;
+                        }
                         SendMessage2PLC("EQUIPMENTFUNCTIONCHANGECOMMAND", func);
-                        Thread.Sleep(600);
+                        Thread.Sleep(500);
                         WordModel word = _plcH.Words.FirstOrDefault(x => x.Area == "EquipFunctionChangeCommand");
                         HACK = word.GetValue(PLC);
-                        Console.WriteLine($"{DateTime.Now.Second}kk" + $"{DateTime.Now.Millisecond}" + 222);
                         break;
                     case "11":  //(Transfer Stop)
                         break;

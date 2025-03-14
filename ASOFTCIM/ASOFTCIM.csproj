@@ -190,6 +190,7 @@
     <Compile Include="MainControl\Device\PC\PCControl.cs" />
     <Compile Include="MainControl\Device\PLC\PLCControl.cs" />
     <Compile Include="MainControl\TRACESV.cs" />
+    <Compile Include="Message\PLC2Cim\Recv\EQUIPMENTFUNCTIONCHANGECOMMAND.cs" />
     <Compile Include="Message\PLC2Cim\Recv\INSPECTIONCARRIERASSIGNREQUEST.cs" />
     <Compile Include="Message\PLC2Cim\Recv\INSPECTIONCARRIERRELEASEREQUEST.cs" />
     <Compile Include="Message\PLC2Cim\Recv\MATERIALIDREADINGRESULTREQUEST.cs" />

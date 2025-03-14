@@ -100,7 +100,7 @@ namespace ASOFTCIM.Data
                 if (CIMAddress < plc.WriteStartWordAddress) return;
                 if (Type.ToUpper() == "ASCII")
                 {
-                    plc.SetWordFromString(CIMAddress - plc.WriteStartWordAddress, value);
+                    plc.SetWordFromString(CIMAddress - plc.WriteStartWordAddress, value,Length);
                 }
                 if (Type.ToUpper() == "DEC")
                 {

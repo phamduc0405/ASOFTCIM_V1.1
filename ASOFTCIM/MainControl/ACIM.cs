@@ -34,7 +34,7 @@ namespace ASOFTCIM
         public EQPDATA EqpData { get; set; }
         public string EQPID { get; set; } = "EQPTEST";
         public EquipmentConfig _eqpConfig;
-
+        
 
         private bool _isEqStatusUpdate = false;
         private bool _isSvidUpdate = false;

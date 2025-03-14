@@ -19,6 +19,7 @@ namespace ASOFTCIM.Message.PLC2Cim.Recv
 
             try
             {
+                
                 bool isSend = false;
                 eq.EqpData.TransactionSys += 1;
                 BitModel bit = (BitModel)body;

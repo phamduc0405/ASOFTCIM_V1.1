@@ -240,6 +240,16 @@ namespace ASOFTCIM.Helper
                         MakeLogBit(false, bit, status.IsOn);
                         BitChangedEventHandle(bit);
                     }
+                    //if(bit.Type == "Reverse")
+                    //{
+                    //    if (status.IsOn)
+                    //    {
+                    //        bit.SetPCValue = false;
+                    //        return;
+                    //    }
+                    //    MakeLogBit(false, bit, status.IsOn);
+                    //    BitChangedEventHandle(bit);
+                    //}    
                     if (!status.IsOn) return;
                     if (bit.Type == "Command")
                     {
