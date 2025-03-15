@@ -28,8 +28,9 @@ namespace ASOFTCIM
                 {
                     SendS7F102(null);
                     return;
-                }    
+                }
                 //this.EqpData.PPIDList.PPID_TYPE = _cim.SysPacket.GetItemString(2);
+                ReadRMS();
                 SendS7F102(this.EqpData.PPIDList);
             }
             catch (Exception ex)

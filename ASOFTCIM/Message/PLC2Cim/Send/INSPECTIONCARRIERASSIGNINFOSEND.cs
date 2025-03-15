@@ -31,10 +31,15 @@ namespace ASOFTCIM.Message.PLC2Cim.Send
                 int cellCount = carrier.SUBCARRIERS[0].CELLSINFOR.Count;
                 for (int i = 0; i < cellCount; i++)
                 {
-                    word.FirstOrDefault(x => x.Item == "CELLID" + (i + 1).ToString()).SetValue = carrier.SUBCARRIERS[0].CELLSINFOR[i].CELLID;
-                    word.FirstOrDefault(x => x.Item == "LOCATIONNO" + (i + 1).ToString()).SetValue = carrier.SUBCARRIERS[0].CELLSINFOR[i].LOCATIONNO;
-                    word.FirstOrDefault(x => x.Item == "JUDGE" + (i + 1).ToString()).SetValue = carrier.SUBCARRIERS[0].CELLSINFOR[i].JUDGE;
-                    word.FirstOrDefault(x => x.Item == "REASONCODE" + (i + 1).ToString()).SetValue = carrier.SUBCARRIERS[0].CELLSINFOR[i].REASONCODE;
+                    //word.FirstOrDefault(x => x.Item == "CELLID" + (i + 1).ToString()).SetValue = carrier.SUBCARRIERS[0].CELLSINFOR[i].CELLID;
+                    //word.FirstOrDefault(x => x.Item == "LOCATIONNO" + (i + 1).ToString()).SetValue = carrier.SUBCARRIERS[0].CELLSINFOR[i].LOCATIONNO;
+                    //word.FirstOrDefault(x => x.Item == "JUDGE" + (i + 1).ToString()).SetValue = carrier.SUBCARRIERS[0].CELLSINFOR[i].JUDGE;
+                    //word.FirstOrDefault(x => x.Item == "REASONCODE" + (i + 1).ToString()).SetValue = carrier.SUBCARRIERS[0].CELLSINFOR[i].REASONCODE;
+
+                    word.FirstOrDefault(x => x.Item == "CELLID").SetValue = carrier.SUBCARRIERS[0].CELLSINFOR[i].CELLID;
+                    word.FirstOrDefault(x => x.Item == "LOCATIONNO").SetValue = carrier.SUBCARRIERS[0].CELLSINFOR[i].LOCATIONNO;
+                    word.FirstOrDefault(x => x.Item == "JUDGE").SetValue = carrier.SUBCARRIERS[0].CELLSINFOR[i].JUDGE;
+                    word.FirstOrDefault(x => x.Item == "REASONCODE").SetValue = carrier.SUBCARRIERS[0].CELLSINFOR[i].REASONCODE;
                 }
 
                 word.FirstOrDefault(x => x.Item == "REPLYCODE").SetValue = carrier.REPLY.REPLYCODE;

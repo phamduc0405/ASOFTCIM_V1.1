@@ -29,6 +29,7 @@ namespace ASOFTCIM
                 carrierinfor.CARRIER_C_COUNT = _cim.SysPacket.GetItemString();
                 carrierinfor.PORTNO = _cim.SysPacket.GetItemString();
                 int count1 = int.Parse(_cim.SysPacket.GetItemString());
+                
                 for (int i = 0; i < count1; i++)
                 {
                     string lst1 = _cim.SysPacket.GetItemString();
@@ -51,7 +52,58 @@ namespace ASOFTCIM
                 lst = _cim.SysPacket.GetItemString();
                 carrierinfor.REPLY.REPLYCODE = _cim.SysPacket.GetItemString();
                 carrierinfor.REPLY.REPLYTEXT = _cim.SysPacket.GetItemString();
-                SendMessage2PLC("CARRIERINFORMATIONSENDLOADER1",carrierinfor);
+
+                int cellpallet = int.Parse(_cim.SysPacket.GetItemString(15));
+
+                //loader
+                //if(carrierinfor.CARRIERTYPE == "11" && carrierinfor.PORTNO == "LS01")//262
+                //{
+                //    SendMessage2PLC("CARRIERINFORMATIONSENDLOADER1", carrierinfor);
+                //}
+                //if (cellpallet == 0 && carrierinfor.CARRIERTYPE == "21")//257
+                //{
+                //    SendMessage2PLC("INSPECTIONCARRIERRELEASEINFOSEND1", carrierinfor);
+                //}
+                //if (cellpallet != 0 && carrierinfor.CARRIERTYPE == "21")//261
+                //{
+                //    SendMessage2PLC("INSPECTIONCARRIERASSIGNINFOSEND1", carrierinfor);
+                //}
+                //if (carrierinfor.PORTNO == "LI01")
+                //{
+                //    SendMessage2PLC("CARRIERINOFRMATIONSENDCASSETTE1", carrierinfor);
+                //}
+                //if (carrierinfor.CARRIERTYPE == "1" || carrierinfor.CARRIERTYPE == "11" || carrierinfor.CARRIERTYPE == "13")//256 //260
+                //{
+                //    SendMessage2PLC("CARRIERINFORMATIONSENDLOADER1", carrierinfor);
+                //}
+                //loader
+                //unloader
+                if (carrierinfor.CARRIERTYPE == "11" && carrierinfor.PORTNO == "LS01")//262
+                {
+                    SendMessage2PLC("CARRIERINFORMATIONSENDLOADER1", carrierinfor);
+                }
+                if (cellpallet == 0 && carrierinfor.CARRIERTYPE == "21")//257
+                {
+                    SendMessage2PLC("INSPECTIONCARRIERRELEASEINFOSEND1", carrierinfor);
+                }
+                if (cellpallet != 0 && carrierinfor.CARRIERTYPE == "21")//261
+                {
+                    SendMessage2PLC("INSPECTIONCARRIERASSIGNINFOSEND1", carrierinfor);
+                }
+                if (carrierinfor.PORTNO == "LI01")
+                {
+                    SendMessage2PLC("CARRIERINOFRMATIONSENDCASSETTE1", carrierinfor);
+                }
+                if (carrierinfor.CARRIERTYPE == "1" || carrierinfor.CARRIERTYPE == "11" || carrierinfor.CARRIERTYPE == "13" || carrierinfor.CARRIERTYPE == "3")//256 //260
+                {
+                    SendMessage2PLC("CARRIERINFORMATIONSENDUNLOADER1", carrierinfor);
+                }
+                //unloader
+
+
+
+
+
                 SendS3F116( ACK);
             }
             catch (Exception ex)

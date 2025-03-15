@@ -10,6 +10,8 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using ASOFTCIM.Message.PLC2Cim.Send;
+using A_SOFT.PLC;
+using System.Threading;
 
 namespace ASOFTCIM
 {
@@ -89,13 +91,28 @@ namespace ASOFTCIM
                      case "9":   //Equipment Job Command (Job(=PPID) Change Reserve))
                         break;
                     case "10":  //(Function Change)
+                        
                         FUNCTION func = new FUNCTION();
                         func.UNITID = _cim.SysPacket.GetItemString(5);
                         func.EFID = _cim.SysPacket.GetItemString();
                         func.EFST = _cim.SysPacket.GetItemString(); 
                         func.MESSAGE = _cim.SysPacket.GetItemString();
+                        if(EqpData.EQINFORMATION.EQPID != _cim.SysPacket.GetItemString(2))
+                        {
+                            HACK = "1";
+                            SendS2F42(RCMD, HACK);
+                            return;
+                        }
+                        if (_cim.SysPacket.GetItemString(7) == "")
+                        {
+                            HACK = "3";
+                            SendS2F42(RCMD, HACK);
+                            return;
+                        }
                         SendMessage2PLC("EQUIPMENTFUNCTIONCHANGECOMMAND", func);
-                     //   new FUNCTIONCHANGEREQUEST(EqpData, cim.EQHelper.Conn, func);
+                        Thread.Sleep(500);
+                        WordModel word = _plcH.Words.FirstOrDefault(x => x.Area == "EquipFunctionChangeCommand");
+                        HACK = word.GetValue(PLC);
                         break;
                     case "11":  //(Transfer Stop)
                         break;
@@ -115,10 +132,10 @@ namespace ASOFTCIM
                         break;
                     case "15":  //Equipment Command (Control Information)
                         ControlInfoMation controlInfoMation =new ControlInfoMation();
-                        controlInfoMation.ACTIONTYPE = _cim.SysPacket.GetItemString(7);
-                        controlInfoMation.ACTIONDETAIL = _cim.SysPacket.GetItemString(10);
-                        controlInfoMation.ACTION = _cim.SysPacket.GetItemString(13);
-                        controlInfoMation.DESCRIPTION = _cim.SysPacket.GetItemString(16);
+                        controlInfoMation.ACTIONTYPE = _cim.SysPacket.GetItemString(6);
+                        controlInfoMation.ACTIONDETAIL = _cim.SysPacket.GetItemString(9);
+                        controlInfoMation.ACTION = _cim.SysPacket.GetItemString(12);
+                        controlInfoMation.DESCRIPTION = _cim.SysPacket.GetItemString(15);
                         SendMessage2PLC("EQUIPMENTCONTROLINFORMATION", controlInfoMation);
 
                         break;

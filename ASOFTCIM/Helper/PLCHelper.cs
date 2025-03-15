@@ -108,6 +108,9 @@ namespace ASOFTCIM.Helper
         #region Public Method
         public void LoadExcel(string ExcelPath)
         {
+            _plc.BitChangedEvent -= PlcComm_BitChangedEvent;
+            _plc.WordChangedEvent -= PlcComm_WordChangedEvent;
+
             Task.Run( async () =>
             {
                 _bit = await ExcelHelper.ReadExcel<BitModel>(ExcelPath, "Local PLC Bit");
@@ -187,7 +190,7 @@ namespace ASOFTCIM.Helper
                                 case string a when a.Contains("PORTSTATUS"):
                                     WordChangedEventHandle("PORTSTATUS", _words.Where(x => x.Area == w.Area).ToList());
                                     break;
-
+                               
                                 default:
                                     break;
                             }
@@ -225,7 +228,7 @@ namespace ASOFTCIM.Helper
             BitModel bit = new BitModel(_plc);
             try
             {
-                if (_bit.Any(x => x.PLCAddress == status.Address))
+                if (_bit.Any(x => x.PLCAddress == status.Address)  )
 
                 {
                     bit = _bit.FirstOrDefault(x => x.PLCAddress == status.Address);
@@ -240,6 +243,16 @@ namespace ASOFTCIM.Helper
                         MakeLogBit(false, bit, status.IsOn);
                         BitChangedEventHandle(bit);
                     }
+                    //if(bit.Type == "Reverse")
+                    //{
+                    //    if (status.IsOn)
+                    //    {
+                    //        bit.SetPCValue = false;
+                    //        return;
+                    //    }
+                    //    MakeLogBit(false, bit, status.IsOn);
+                    //    BitChangedEventHandle(bit);
+                    //}    
                     if (!status.IsOn) return;
                     if (bit.Type == "Command")
                     {
@@ -250,9 +263,10 @@ namespace ASOFTCIM.Helper
                     else return;
                 }
             }
-            catch
+            catch (Exception ex)
             {
-
+                var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message);
+                LogTxt.Add(LogTxt.Type.Exception, debug);
             }
             
         }

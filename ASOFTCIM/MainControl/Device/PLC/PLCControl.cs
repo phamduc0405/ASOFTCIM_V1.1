@@ -16,6 +16,8 @@ using System.Windows;
 using static A_SOFT.PLC.MelsecIF;
 using Type = System.Type;
 using System.Xml.Linq;
+using ASOFTCIM.Message.PLC2Cim.Send;
+using HPSocket.Sdk;
 
 namespace ASOFTCIM
 {
@@ -55,10 +57,10 @@ namespace ASOFTCIM
 
                         // Đọc dữ liệu từ PLC
                         ReadEqpState();
-                        ReadRMS();
+                        //ReadRMS();
                         ReadECM();
                         ReadAPC();
-
+                        ReadFunction();
                         // Gán sự kiện thay đổi trạng thái bit
                         _plcH.BitChangedEvent += (bit) =>
                         {
@@ -105,30 +107,30 @@ namespace ASOFTCIM
                 {
                     _eqpConfig.PLCHelper.LoadExcel(path);
                 }
-                if (_eqpConfig.PLCHelper.PlcMemms?.Count > 0)
-                {
-                    if (_eqpConfig.PLCHelper.Bits.Any(x => x.Item.ToUpper().Contains("ALIVE")))
-                    {
-                        BitModel bAlive = _eqpConfig.PLCHelper.Bits.FirstOrDefault(x => x.Item.ToUpper().Contains("ALIVE"));
-                        if (_eqpConfig.PLCHelper.PlcMemms.Any(x => x.BPLCStart == bAlive.PLCHexAdd))
-                        {
-                            PlcMemmory plcmem = _eqpConfig.PLCHelper.PlcMemms.FirstOrDefault(x => x.BPLCStart == bAlive.PLCHexAdd);
+                //if (_eqpConfig.PLCHelper.PlcMemms?.Count > 0)
+                //{
+                //    if (_eqpConfig.PLCHelper.Bits.Any(x => x.Item.ToUpper().Contains("ALIVE")))
+                //    {
+                //        BitModel bAlive = _eqpConfig.PLCHelper.Bits.FirstOrDefault(x => x.Item.ToUpper().Contains("ALIVE"));
+                //        if (_eqpConfig.PLCHelper.PlcMemms.Any(x => x.BPLCStart == bAlive.PLCHexAdd))
+                //        {
+                //            PlcMemmory plcmem = _eqpConfig.PLCHelper.PlcMemms.FirstOrDefault(x => x.BPLCStart == bAlive.PLCHexAdd);
 
-                            _eqpConfig.PLCConfig.ReadStartBitAddress = plcmem.BPLCStart;
-                            _eqpConfig.PLCConfig.SizeReadBit = int.Parse(plcmem.BPLCPoints);
-                            _eqpConfig.PLCConfig.ReadStartWordAddress = plcmem.WPLCStart;
-                            _eqpConfig.PLCConfig.SizeReadWord = int.Parse(plcmem.WPLCPoints);
+                //            _eqpConfig.PLCConfig.ReadStartBitAddress = plcmem.BPLCStart;
+                //            _eqpConfig.PLCConfig.SizeReadBit = int.Parse(plcmem.BPLCPoints);
+                //            _eqpConfig.PLCConfig.ReadStartWordAddress = plcmem.WPLCStart;
+                //            _eqpConfig.PLCConfig.SizeReadWord = int.Parse(plcmem.WPLCPoints);
 
-                            _eqpConfig.PLCConfig.WriteStartBitAddress = plcmem.BPCStart;
-                            _eqpConfig.PLCConfig.SizeWriteBit = int.Parse(plcmem.BPCPoints);
-                            _eqpConfig.PLCConfig.WriteStartWordAddress = plcmem.WPCStart;
-                            _eqpConfig.PLCConfig.SizeWriteWord = int.Parse(plcmem.WPCPoints);
+                //            _eqpConfig.PLCConfig.WriteStartBitAddress = plcmem.BPCStart;
+                //            _eqpConfig.PLCConfig.SizeWriteBit = int.Parse(plcmem.BPCPoints);
+                //            _eqpConfig.PLCConfig.WriteStartWordAddress = plcmem.WPCStart;
+                //            _eqpConfig.PLCConfig.SizeWriteWord = int.Parse(plcmem.WPCPoints);
 
-                            _eqpConfig.PLCConfig.BitDevice = plcmem.BitDevice;
-                            _eqpConfig.PLCConfig.WordDevice = plcmem.WordDevice;
-                        }
-                    }
-                }
+                //            _eqpConfig.PLCConfig.BitDevice = plcmem.BitDevice;
+                //            _eqpConfig.PLCConfig.WordDevice = plcmem.WordDevice;
+                //        }
+                //    }
+                //}
             }
             catch (Exception ex)
             {
@@ -280,14 +282,17 @@ namespace ASOFTCIM
         }
         public void ReadRMS()
         {
+            this.EqpData.PPIDList.PPID = null;
+            List<string> list = new List<string>();
             foreach (var ppid in _eqpConfig.PLCHelper.ListPPID)
             {
-                if(!string.IsNullOrEmpty(ppid.GetValue(this.PLC)))
-                {
-                    this.EqpData.PPIDList.PPID.Add(ppid.Item);
-                }    
+                
+                    list.Add(ppid.GetValue(this.PLC));
+                    this.EqpData.PPIDList.PPID = list;
+                   
             }
             List<PPIDModel> word = this.PLCH.PPIDParams.ToList();
+            List<WordModel> words = _plcH.Words.Where(x => x.Area == "EQPStatus").ToList();
             this.EqpData.CurrPPID.PPID = word.FirstOrDefault(x => x.Item == "PPID").GetValue(this.PLC);
             COMMANDCODE commandcode = new COMMANDCODE();
             PPPARAMS ppparam = new PPPARAMS();
@@ -303,6 +308,7 @@ namespace ASOFTCIM
                     commandcode.PARAMs.Add(param);
                 }    
             }
+
             for (int i = 0; i < this.EqpData.PPIDList.PPID.Count; i++)
             {
                 if (this.EqpData.PPIDList.PPID[i] == this.EqpData.CurrPPID.PPID)
@@ -310,6 +316,10 @@ namespace ASOFTCIM
                     this.EqpData.CurrPPID.PPID_NUMBER = i.ToString();
                     break;
                 }
+            }
+            if (this.EqpData.CurrPPID.COMMANDCODEs.Any(x => x.CCODE == commandcode.CCODE))
+            {
+                this.EqpData.CurrPPID.COMMANDCODEs = this.EqpData.CurrPPID.COMMANDCODEs.Where(x => x.CCODE != commandcode.CCODE).ToList();
             }
             this.EqpData.CurrPPID.COMMANDCODEs.Add(commandcode);
         }
@@ -354,6 +364,35 @@ namespace ASOFTCIM
             }
             
         }
+        public void ReadFunction()
+        {
+            EqpData.FUNCTION = null;
+            List<FUNCTION> functions = new List<FUNCTION>();
+            List<WordModel> word = new List<WordModel>();
+            word = PLCH.Words.Where(x => x.Area == "EQUIPMENTFUNCTIONCHANGEEVENT").ToList();
+            int i = 0;
+            foreach (var item in EqpData.FUNCTIONSTATE.GetType().GetProperties())
+            {
+                i++;
+                if (word.Any(x => x.Item == item.Name))
+                {
+                    WordModel w = (WordModel)word.FirstOrDefault(x => x.Item == item.Name);
+                    var a = item.GetValue(EqpData.FUNCTIONSTATE, null) == null ? "" : item.GetValue(EqpData.FUNCTIONSTATE, null).ToString();
+                    var v = w.GetValue();
+                    
+                        FUNCTION func = new FUNCTION();
+                        func.BYWHO = word.FirstOrDefault(x => x.Item == "BYWHO").GetValue(PLC);
+                        func.OLDEFST = a;
+                        func.EFNAME = item.Name;
+                        func.NEWEFST = w.GetValue();
+                        func.EFID = i.ToString();
+                        functions.Add(func);
+                    
+                }
+            }
+            EqpData.FUNCTION = functions;
+
+        }
         public void ReadEqpState()
         {
             this.EqpData.ALS = _eqpConfig.PLCHelper.Alarms;
@@ -394,6 +433,8 @@ namespace ASOFTCIM
 
                                 WordModel word = _plcH.Words.FirstOrDefault(x => x.Area == "DATETIMESET");
                                 word.SetValue = DateTime.Now.ToString("yyyyMMddHHmmss");
+
+                               
                             }
                         }
                         catch (Exception ex)

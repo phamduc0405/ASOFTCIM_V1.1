@@ -12,25 +12,41 @@ using System.Threading.Tasks;
 
 namespace ASOFTCIM.Message.PLC2Cim.Send
 {
-    public class FORMATTEDPROCESSPROGRAMSEND
+    public class FORMATTEDPROCESSPROGRAMSEND2
     {
 
-        public FORMATTEDPROCESSPROGRAMSEND(PLCHelper plcdata,PlcComm plcComm , PPIDINFOR ppid)
+        public FORMATTEDPROCESSPROGRAMSEND2(PLCHelper plcdata,PlcComm plcComm , PPIDINFOR ppid)
         {
 
             try
             {
+                BitModel bit = plcdata.Bits.First(x => x.Comment == this.GetType().Name);
                 List<WordModel> word = plcdata.Words.Where(x => x.Area == this.GetType().Name).ToList();
                 word.FirstOrDefault(x => x.Item == "PPIDTYPE").SetValue = ppid.PPID_TYPE;
                 word.FirstOrDefault(x => x.Item == "CCODE").SetValue = ppid.COMMANDCODEs[0].CCODE;
                 word.FirstOrDefault(x => x.Item == "PPID_NUMBER").SetValue = ppid.PPID_NUMBER;
+                
+                if(ppid.COMMANDCODEs[0].CCODE =="2")
+                {
+                    List<PPIDModel> param2 = plcdata.PPIDParams.ToList();
+                    param2[1].SetValue(plcComm,ppid.PPID);
+                    bit.SetPCValue = true;
+                    return;
+
+                }
+                else
+                {
+                    List<PPIDModel> param2 = plcdata.PPIDParams.ToList();
+                    param2[1].SetValue(plcComm, ppid.PPID);
+                }    
+                
                 List<PPIDModel> param = plcdata.PPIDParams.ToList();
                 int paramcount = ppid.COMMANDCODEs[0].PARAMs.Count;
-                for(int i = 0;i<212; i++)
+                for(int i = 0;i<paramcount; i++)
                 {
                     param[i+2].SetValue(plcComm, ppid.COMMANDCODEs[0].PARAMs[i].PARAMVALUE);
                 }
-                BitModel bit = plcdata.Bits.First(x => x.Comment == this.GetType().Name);
+               
                 bit.SetPCValue = true;
             }
             catch (Exception ex)

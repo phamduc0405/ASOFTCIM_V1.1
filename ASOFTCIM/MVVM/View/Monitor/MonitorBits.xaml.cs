@@ -87,7 +87,7 @@ namespace ASOFTCIM.MVVM.View.Monitor
                 };
                 io.MouseLeave += (s, e) =>
                 {
-                    
+                      _popupWindow?.Close();
                 };
                 // Output
                 IOComment ioOut = CreateIOComment(bit, b.GetPCValue, false);

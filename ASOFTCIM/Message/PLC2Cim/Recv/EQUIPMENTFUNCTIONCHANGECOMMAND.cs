@@ -1,7 +1,6 @@
-﻿using A_SOFT.PLC;
+﻿using A_SOFT.CMM.INIT;
 using A_SOFT.Ctl.Mitsu.Model;
-using A_SOFT.CMM.INIT;
-using ASOFTCIM.Data;
+using A_SOFT.PLC;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ASOFTCIM.Message.PLC2Cim.Recv
 {
-    public class CELLLOTINFORMATIONREQUEST
+    public class EQUIPMENTFUNCTIONCHANGECOMMAND
     {
         public void Excute(ACIM eq, object body)
         {
@@ -19,22 +18,18 @@ namespace ASOFTCIM.Message.PLC2Cim.Recv
             try
             {
                 BitModel bit = (BitModel)body;
-                
-
-List<IWordModel> word = bit.LstWord;
-                List<CELLLOT> lst = new List<CELLLOT>();
-                CELLLOT cell = new CELLLOT();
-                cell.CELLID = word.FirstOrDefault(x => x.Item == "CELLID").GetValue(eq.PLC);
-                lst.Add(cell);
-                eq.SendS6F205( lst);
-                bit.SetPCValue = true;
+                string HACK = "0";
+                WordModel word = eq.PLCH.Words.FirstOrDefault(x => x.Area == "EquipFunctionChangeCommand");
+                HACK = word.GetValue(eq.PLC);
+                eq.SendS2F42("10", HACK);
+                //bit.SetPCValue = true;
             }
             catch (Exception ex)
             {
                 var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message);
                 LogTxt.Add(LogTxt.Type.Exception, debug);
             }
-            
+
         }
     }
 }

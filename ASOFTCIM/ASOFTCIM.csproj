@@ -37,18 +37,27 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="A_SOFT.CMM">
-      <HintPath>..\..\A_SOFT\Bin\Debug\A_SOFT.CMM.dll</HintPath>
+    <Reference Include="A_SOFT.CMM, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>E:\MrDuc\ASOFTLIB\AsoftCommon\Bin\Debug\ASOFTLIB\A_SOFT.CMM.dll</HintPath>
+    </Reference>
+    <Reference Include="A_SOFT.CMM.UI">
+      <HintPath>E:\MrDuc\ASOFTLIB\AsoftCommon\Bin\Debug\ASOFTLIB\A_SOFT.CMM.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="A_SOFT.Ctl.Mcr">
+      <HintPath>E:\MrDuc\ASOFTLIB\AsoftCommon\Bin\Debug\ASOFTLIB\A_SOFT.Ctl.Mcr.dll</HintPath>
     </Reference>
     <Reference Include="A_SOFT.Ctl.Mitsu, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>E:\MrDuc\ASOFTLIB\AsoftCommon\Bin\Debug\A_SOFT.Ctl.Mitsu.dll</HintPath>
+      <HintPath>E:\MrDuc\ASOFTLIB\AsoftCommon\Bin\Debug\ASOFTLIB\A_SOFT.Ctl.Mitsu.dll</HintPath>
     </Reference>
-    <Reference Include="A_SOFT.Ctl.SecGem">
-      <HintPath>..\..\A_SOFT\Bin\Debug\A_SOFT.Ctl.SecGem.dll</HintPath>
+    <Reference Include="A_SOFT.Ctl.SecGem, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>E:\MrDuc\ASOFTLIB\AsoftCommon\Bin\Debug\ASOFTLIB\A_SOFT.Ctl.SecGem.dll</HintPath>
     </Reference>
-    <Reference Include="A_SOFT.Ctl.Tcp">
-      <HintPath>..\..\A_SOFT\Bin\Debug\A_SOFT.Ctl.Tcp.dll</HintPath>
+    <Reference Include="A_SOFT.Ctl.Tcp, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>E:\MrDuc\ASOFTLIB\AsoftCommon\Bin\Debug\ASOFTLIB\A_SOFT.Ctl.Tcp.dll</HintPath>
     </Reference>
     <Reference Include="EPPlus, Version=7.0.0.3, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
       <HintPath>..\packages\EPPlus.7.0.0\lib\net462\EPPlus.dll</HintPath>
@@ -80,9 +89,6 @@
     </Reference>
     <Reference Include="Microsoft.Xaml.Behaviors, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Xaml.Behaviors.Wpf.1.1.135\lib\net462\Microsoft.Xaml.Behaviors.dll</HintPath>
-    </Reference>
-    <Reference Include="Mitsu3E">
-      <HintPath>..\..\A_SOFT\Bin\Debug\Mitsu3E.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -190,6 +196,7 @@
     <Compile Include="MainControl\Device\PC\PCControl.cs" />
     <Compile Include="MainControl\Device\PLC\PLCControl.cs" />
     <Compile Include="MainControl\TRACESV.cs" />
+    <Compile Include="Message\PLC2Cim\Recv\EQUIPMENTFUNCTIONCHANGECOMMAND.cs" />
     <Compile Include="Message\PLC2Cim\Recv\INSPECTIONCARRIERASSIGNREQUEST.cs" />
     <Compile Include="Message\PLC2Cim\Recv\INSPECTIONCARRIERRELEASEREQUEST.cs" />
     <Compile Include="Message\PLC2Cim\Recv\MATERIALIDREADINGRESULTREQUEST.cs" />
@@ -211,6 +218,7 @@
     <Compile Include="Message\PLC2Cim\Send\LABELINFORMATIONSEND.cs" />
     <Compile Include="Message\PLC2Cim\Send\LABELPRECHECKSEND.cs" />
     <Compile Include="Message\PLC2Cim\Send\LABELVALIDATIONSEND.cs" />
+    <Compile Include="Message\PLC2Cim\Send\PACKINGINFORMATION.cs" />
     <Compile Include="Message\Sys2Cim\Send\S1\S1F1.cs" />
     <Compile Include="Message\Sys2Cim\Send\S3\S3F217.cs" />
     <Compile Include="MVVM\Model\AlarmView.cs" />

@@ -44,7 +44,7 @@ namespace ASOFTCIM
         
         private MainViewModel viewModel;
         private Thread _updateTime;
-        private PartialCpuChart _cpuChart;
+       
 
         private static bool _running = true;
         public static bool Running
@@ -57,10 +57,12 @@ namespace ASOFTCIM
         public MainWindow()
         {
             InitializeComponent();
-            
+
             DataContext = new MainViewModel();
             Initial();
             maincontent.Content = new HomeView();
+           
+
             CreateEvent();
             _updateTime = new Thread(UpdateTime)
             {
@@ -189,8 +191,7 @@ namespace ASOFTCIM
                 return false;
             }
         }
-        
-       
+
         private void UpdateTime()
         {
             while (_running)

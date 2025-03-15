@@ -1,4 +1,5 @@
 ﻿using A_SOFT.CMM.INIT;
+using ASOFTCIM.Data;
 using ASOFTCIM.Helper;
 using System;
 using System.Collections.Generic;
@@ -26,7 +27,9 @@ namespace ASOFTCIM
                 if(ppid_type!= "1")
                 {
                      ACK = "9";
-                }    
+                }
+                ReadRMS();
+                EqpData.CurrPPID.PPID_TYPE = ppid_type;
                 SendS7F110(EqpData.CurrPPID,ACK);
             }
             catch (Exception ex)

@@ -140,7 +140,8 @@ namespace ASOFTCIM.MVVM.View.Config
                     };
                     if (File.Exists(txtPathPlcExcel.Text))
                     {
-                        _controller.CIM.LoadExcelConfig(txtPathPlcExcel.Text);
+                        //_controller.CIM.LoadExcelConfig(txtPathPlcExcel.Text);
+                        _controller.EquipmentConfig.PLCHelper.LoadExcel(txtPathPlcExcel.Text);
                     }
                     var debug = string.Format("Class:{0} Method:{1} Event:{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ((System.Windows.Controls.Control)s).Name);
                     LogTxt.Add(LogTxt.Type.UI, debug);

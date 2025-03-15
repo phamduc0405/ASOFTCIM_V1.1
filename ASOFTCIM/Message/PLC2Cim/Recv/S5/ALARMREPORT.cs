@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using static A_SOFT.PLC.MelsecIF;
 
@@ -15,69 +16,80 @@ namespace ASOFTCIM.Message.PLC2Cim.Recv
 {
     public class ALARMREPORT
     {
-        public void Excute(ACIM eq, object body)
-        {
 
+
+        private static SemaphoreSlim _semaphore = new SemaphoreSlim(1); 
+
+        public async Task Excute(ACIM eq, object body)
+        {
+            await _semaphore.WaitAsync();
             try
             {
+                Console.WriteLine("Alarmtotal");
                 eq.EqpData.TransactionSys += 1;
                 WordStatus word = (WordStatus)body;
                 int alid = word.Index % (eq.PLCH.Words.FirstOrDefault(x => x.Area.Contains("ALARM")).Address * DefineConst.ShortBits) + 1;
                 Alarm alarm;
-                if (eq.EqpData.ALS.Any(x => x.ALID == alid))
+                lock (eq.EqpData.ALS) 
                 {
                     alarm = eq.EqpData.ALS.FirstOrDefault(x => x.ALID == alid);
-                    alarm.ALST = word.IsOn ? "1" : "2";
-                    alarm.EQPID = eq.EQPID.ToString();
-                    alarm.TIME = DateTime.Now.ToString("hh:mm:ss.fff");
+                    if (alarm != null)
+                    {
+                        alarm.ALST = word.IsOn ? "1" : "2";
+                        alarm.EQPID = eq.EQPID.ToString();
+                        alarm.TIME = DateTime.Now.ToString("hh:mm:ss.fff");
+                    }
+                    else
+                    {
+                        alarm = new Alarm
+                        {
+                            ALID = (uint)alid,
+                            ALST = word.IsOn ? "1" : "2",
+                            EQPID = eq.EQPID.ToString(),
+                            ALCD = "2",
+                            ALTEXT = "Not Registered"
+                        };
+                    }
                 }
-                else
+
+                if (alarm != null)
                 {
-                    alarm = new Alarm();
-                    alarm.ALID = (uint)alid;
-                    alarm.ALST = word.IsOn ? "1" : "2";
-                    alarm.EQPID = eq.EQPID.ToString();
-                    alarm.ALCD = "2";
-                    alarm.ALTEXT = "Not Registrated";
+                    Console.WriteLine($"{alid} send");
+                    await AddAlarmAsync(eq, alarm);
+                    eq.SendS5F1(alarm);
                 }
-                if (alarm == null)
-                    return;
-                AddAlarm(eq, alarm);
-                eq.SendS5F1( alarm);
-                //new S5F1().SendMessage( alarm);
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message);
                 LogTxt.Add(LogTxt.Type.Exception, debug);
             }
-
-        }
-        public void AddAlarm(ACIM acim, Alarm alarm)
-        {
-            if(acim.EqpData.ALS.Any(x =>x.ALID == alarm.ALID))
+            finally
             {
-                acim.EqpData.ALS.RemoveAll(x => x.ALID == alarm.ALID);
-            }    
-            acim.EqpData.ALS.Add(alarm);
-            if(acim.EqpData.CurrAlarm.Any(x => x.ALID == alarm.ALID))
-            {
-                acim.EqpData.CurrAlarm.Remove(alarm);
-                if(alarm.ALST=="1")
-                {
-                    acim.EqpData.CurrAlarm.Add(alarm);
-                }
+                _semaphore.Release();
             }
-            else
-            {
-                if(alarm.ALST == "1")
-                {
-                    acim.EqpData.CurrAlarm.Add(alarm);
-                }
-            }    
         }
 
+        public async Task AddAlarmAsync(ACIM acim, Alarm alarm)
+        {
+            await Task.Run(() =>
+            {
+                lock (acim.EqpData.ALS) 
+                {
+                    acim.EqpData.ALS.RemoveAll(x => x.ALID == alarm.ALID);
+                    acim.EqpData.ALS.Add(alarm);
+                }
 
+                lock (acim.EqpData.CurrAlarm)
+                {
+                    acim.EqpData.CurrAlarm.RemoveAll(x => x.ALID == alarm.ALID);
+                    if (alarm.ALST == "1")
+                    {
+                        acim.EqpData.CurrAlarm.Add(alarm);
+                    }
+                }
+            });
+        }
 
     }
 }

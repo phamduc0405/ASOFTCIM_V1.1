@@ -16,7 +16,7 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Border
-                    Margin="10,5,5,5"
+                    Margin="10,5,10,5"
                     Background="White"
                     BorderBrush="Black"
                     BorderThickness="0.5"

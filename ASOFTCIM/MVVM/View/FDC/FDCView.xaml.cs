@@ -37,7 +37,7 @@ namespace ASOFTCIM.MVVM.View.FDC
         {
             InitializeComponent();
             _controller = MainWindow.Controller;
-            res = (ResourceDictionary)Application.LoadComponent(new Uri("/A_SOFT.CMM;component/STYLE/ButtonStyle.xaml", UriKind.Relative));
+            res = (ResourceDictionary)Application.LoadComponent(new Uri("/A_SOFT.CMM.UI;component/STYLE/ButtonStyle.xaml", UriKind.Relative));
             Initial();
             _update = new Thread(Update);
         }
