@@ -25,6 +25,7 @@ List<IWordModel> word = bit.LstWord;
                 List<CELLLOT> lst = new List<CELLLOT>();
                 CELLLOT cell = new CELLLOT();
                 cell.CELLID = word.FirstOrDefault(x => x.Item == "CELLID").GetValue(eq.PLC);
+                lst.Add(cell);
                 eq.SendS6F205( lst);
                 bit.SetPCValue = true;
             }

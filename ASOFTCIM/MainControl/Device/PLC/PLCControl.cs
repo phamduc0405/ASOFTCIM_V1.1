@@ -379,8 +379,7 @@ namespace ASOFTCIM
                     WordModel w = (WordModel)word.FirstOrDefault(x => x.Item == item.Name);
                     var a = item.GetValue(EqpData.FUNCTIONSTATE, null) == null ? "" : item.GetValue(EqpData.FUNCTIONSTATE, null).ToString();
                     var v = w.GetValue();
-                    if (w.GetValue() != a)
-                    {
+                    
                         FUNCTION func = new FUNCTION();
                         func.BYWHO = word.FirstOrDefault(x => x.Item == "BYWHO").GetValue(PLC);
                         func.OLDEFST = a;
@@ -388,7 +387,7 @@ namespace ASOFTCIM
                         func.NEWEFST = w.GetValue();
                         func.EFID = i.ToString();
                         functions.Add(func);
-                    }
+                    
                 }
             }
             EqpData.FUNCTION = functions;

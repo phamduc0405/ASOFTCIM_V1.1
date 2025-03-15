@@ -26,7 +26,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="100" />
                 <RowDefinition Height="*" />
-                <RowDefinition Height="60" />
+                <RowDefinition Height="0" />
             </Grid.RowDefinitions>
             <!--  ===============================================  -->
             <Grid Grid.Row="0">
@@ -73,7 +73,30 @@
                                 Grid.Row="1"
                                 Grid.Column="1"
                                 Orientation="Horizontal" />
+                                <Grid
+                    Grid.RowSpan="1"
+                    Grid.Column="2"
+                    Margin="0,10,0,0">
+                                    <Border
+                        Margin="4"
+                        Background="Transparent"
+                        CornerRadius="5">
+                                        <StackPanel>
+                                            <TextBlock
+                                x:Name="txtVersion"
+                                Margin="10,0,0,0"
+                                Style="{StaticResource CaptionTextBlockStyle}"
+                                Text="Version" />
+                                            <TextBlock
+                                x:Name="tblDateTime"
+                                Margin="10,0,0,0"
+                                HorizontalAlignment="Left"
+                                Style="{StaticResource CaptionTextBlockStyle}"
+                                Text="datetime" />
+                                        </StackPanel>
 
+                                    </Border>
+                                </Grid>
 
 
                                 <Grid Grid.Column="3">
@@ -460,7 +483,7 @@
                     <RowDefinition Height="*" />
 
                 </Grid.RowDefinitions>
-                <Grid Grid.Row="0" Background="#FF7FA6EF" />
+                <!--<Grid Grid.Row="0" Background="#FF7FA6EF" />-->
 
                 <Grid Grid.Row="1" Margin="0,2,0,2">
                     <Grid.ColumnDefinitions>
@@ -470,30 +493,7 @@
                         <ColumnDefinition Width="200" />
 
                     </Grid.ColumnDefinitions>
-                    <Grid
-                    Grid.RowSpan="1"
-                    Grid.Column="0"
-                    Margin="0,10,0,0">
-                        <Border
-                        Margin="4"
-                        Background="Transparent"
-                        CornerRadius="5">
-                            <StackPanel>
-                                <TextBlock
-                                x:Name="txtVersion"
-                                Margin="10,0,0,0"
-                                Style="{StaticResource CaptionTextBlockStyle}"
-                                Text="Version" />
-                                <TextBlock
-                                x:Name="tblDateTime"
-                                Margin="10,0,0,0"
-                                HorizontalAlignment="Left"
-                                Style="{StaticResource CaptionTextBlockStyle}"
-                                Text="datetime" />
-                            </StackPanel>
-
-                        </Border>
-                    </Grid>
+                    
                     <!--<Border
                     x:Name="bdrPlcConnect"
                     Grid.Row="1"

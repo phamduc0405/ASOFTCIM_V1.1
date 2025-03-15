@@ -29,7 +29,7 @@ namespace ASOFTCIM.Message.PLC2Cim.Recv
                 carr.CARRIERSTEPID = word.FirstOrDefault(x => x.Item == "CARRIERSTEPID").GetValue(eq.PLC);
                 carr.CARRIER_S_COUNT = word.FirstOrDefault(x => x.Item == "CARRIER_S_COUNT").GetValue(eq.PLC);
                 carr.CARRIER_C_COUNT = word.FirstOrDefault(x => x.Item == "CARRIER_C_COUNT").GetValue(eq.PLC);
-                carr.PORTNO = word.FirstOrDefault(x => x.Item == "CARRIER_C_COUNT").GetValue(eq.PLC);
+                carr.PORTNO = word.FirstOrDefault(x => x.Item == "PORTNO").GetValue(eq.PLC);
                 carr.CEID = word.FirstOrDefault(x => x.Item == "CEID").GetValue(eq.PLC);
                 for (int i = 1; i <= 51; i++)
                 {

@@ -132,10 +132,10 @@ namespace ASOFTCIM
                         break;
                     case "15":  //Equipment Command (Control Information)
                         ControlInfoMation controlInfoMation =new ControlInfoMation();
-                        controlInfoMation.ACTIONTYPE = _cim.SysPacket.GetItemString(7);
-                        controlInfoMation.ACTIONDETAIL = _cim.SysPacket.GetItemString(10);
-                        controlInfoMation.ACTION = _cim.SysPacket.GetItemString(13);
-                        controlInfoMation.DESCRIPTION = _cim.SysPacket.GetItemString(16);
+                        controlInfoMation.ACTIONTYPE = _cim.SysPacket.GetItemString(6);
+                        controlInfoMation.ACTIONDETAIL = _cim.SysPacket.GetItemString(9);
+                        controlInfoMation.ACTION = _cim.SysPacket.GetItemString(12);
+                        controlInfoMation.DESCRIPTION = _cim.SysPacket.GetItemString(15);
                         SendMessage2PLC("EQUIPMENTCONTROLINFORMATION", controlInfoMation);
 
                         break;
