@@ -57,10 +57,12 @@ namespace ASOFTCIM
         public MainWindow()
         {
             InitializeComponent();
+
             DataContext = new MainViewModel();
             Initial();
             maincontent.Content = new HomeView();
            
+
             CreateEvent();
             _updateTime = new Thread(UpdateTime)
             {
@@ -189,6 +191,7 @@ namespace ASOFTCIM
                 return false;
             }
         }
+
         private void UpdateTime()
         {
             while (_running)

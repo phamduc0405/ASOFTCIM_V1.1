@@ -44,6 +44,7 @@
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
                             <Border
+
                             Grid.ColumnSpan="2"
                             Margin="2"
                             VerticalAlignment="Center"
@@ -51,6 +52,7 @@
                             BorderBrush="Black"
                             BorderThickness="1"
                             CornerRadius="5">
+
                                 <Border.Effect>
                                     <DropShadowEffect
                                     BlurRadius="5"
@@ -63,11 +65,13 @@
                                 Background="White"
                                 CornerRadius="5">
                                     <TextBlock
+
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Top"
                                     FontSize="25"
                                     Style="{StaticResource HeaderTextBlockStyle}"
                                     Text="ALARM" />
+
                                 </Border>
 
                             </Border>
@@ -106,6 +110,7 @@
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
                             <Border
+
                             Grid.ColumnSpan="2"
                             Margin="3"
                             VerticalAlignment="Center"
@@ -113,6 +118,7 @@
                             BorderBrush="Black"
                             BorderThickness="1"
                             CornerRadius="5">
+
                                 <Border.Effect>
                                     <DropShadowEffect
                                     BlurRadius="5"
@@ -124,11 +130,14 @@
                                 VerticalAlignment="Center"
                                 Background="White">
                                     <TextBlock
+
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Top"
                                     FontSize="25"
                                     Style="{StaticResource HeaderTextBlockStyle}"
                                     Text="MESSAGE" />
+
+ 
                                 </Border>
                             </Border>
                             <ListView
@@ -207,6 +216,7 @@
                                     </Border>
                                     <!--  header  -->
                                     <TextBlock
+
                                     Grid.Row="1"
                                     Grid.Column="0"
                                     Margin="10,5,0,5"
@@ -298,6 +308,7 @@
                                     Grid.Column="1"
                                     Margin="10,5,0,5"
                                     Text="PLC CONNECT" />
+
                                 </Grid>
                             </Border>
                             <Border
@@ -335,6 +346,7 @@
                                     </Border>
 
                                     <TextBlock
+
                                     Grid.Row="1"
                                     Grid.Column="0"
                                     Margin="10,5,0,5"
@@ -387,6 +399,8 @@
                                     Grid.Column="1"
                                     Margin="10,5,0,5"
                                     Text=": Cim Connect" />
+
+                                       
 
                                 </Grid>
                             </Border>
@@ -509,7 +523,9 @@
                             </Border>
                             <Border Grid.Row="3" Margin="3,3,3,2">
                                 <Grid x:Name="grdCpu" Grid.Column="0" 
+
                                   Height="150"/>
+
 
                             </Border>
                         </Grid>

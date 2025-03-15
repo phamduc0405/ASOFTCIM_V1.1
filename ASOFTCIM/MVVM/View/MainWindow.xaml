@@ -57,6 +57,7 @@
                                 </Grid.RowDefinitions>
 
                                 <Border
+
                                 Grid.RowSpan="2"
                                 Grid.Column="0"
                                 Grid.ColumnSpan="2"
@@ -99,6 +100,7 @@
                                 </Grid>
 
 
+
                                 <Grid Grid.Column="3">
                                     <Border
                                     Margin="4,10,4,4"
@@ -111,12 +113,14 @@
                                             Color="Black" />
                                         </Border.Effect>
                                         <TextBlock
+
                                         Margin="0,10,0,0"
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Top"
                                         FontSize="40"
                                         Style="{StaticResource HeaderTextBlockStyle}"
                                         Text="CIM" />
+
                                     </Border>
 
                                 </Grid>
@@ -129,6 +133,7 @@
                                         <ColumnDefinition Width="120" />
                                     </Grid.ColumnDefinitions>
                                     <Button
+
                                     x:Name="btnLogIn"
                                     Grid.Column="1"
                                     Width="120"
@@ -137,6 +142,7 @@
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
                                     Style="{StaticResource ButtonSave}">
+
                                         <StackPanel Orientation="Horizontal">
                                             <fa:IconImage
                                             x:Name="icLogIn"
@@ -153,6 +159,7 @@
                                         </StackPanel>
                                     </Button>
                                     <StackPanel
+
                                     Grid.Column="2"
                                     Margin="0,0,0,37"
                                     HorizontalAlignment="Right"
@@ -183,6 +190,7 @@
                                         Cursor="Hand"
                                         Style="{StaticResource ButtonTransparent}"
                                         Tag="Xmark" />
+
                                     </StackPanel>
                                 </Grid>
 
@@ -536,6 +544,7 @@
                         Style="{StaticResource BodyTextBlockStyle}"
                         Text="HOST Disconnected" />
                 </Border>-->
+
 
 
                 </Grid>
