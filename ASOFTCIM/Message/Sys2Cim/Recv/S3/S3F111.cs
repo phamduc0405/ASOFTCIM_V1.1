@@ -28,7 +28,7 @@ namespace ASOFTCIM
                 labelInfor.REPLYSTATUS = _cim.SysPacket.GetItemString();
                 labelInfor.REPLYCODE = _cim.SysPacket.GetItemString();
                 labelInfor.REPLYTEXT = _cim.SysPacket.GetItemString();
-
+                SendMessage2PLC("LABELINFORMATIONSEND", labelInfor);
                 SendS3F112( ACK);
             }
             catch (Exception ex)
