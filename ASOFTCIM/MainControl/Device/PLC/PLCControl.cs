@@ -351,6 +351,7 @@ namespace ASOFTCIM
         }
         public void ReadAPC()
         {
+            EqpData.PROCESSDATACONTROL.CELLs.Clear();
             foreach (var apc in _eqpConfig.PLCHelper.APCS)
             {
                 EqpData.PROCESSDATACONTROL.EQPID = EqpData.EQINFORMATION.EQPID;
@@ -439,6 +440,26 @@ namespace ASOFTCIM
             WordModel crst = _eqpConfig.PLCHelper.Words.FirstOrDefault(x => x.Item == "CRST");
 
             EqpData.EQINFORMATION.CRST = _eqpConfig.CRST;
+        }
+        public void ReadUnitstate()
+        {
+            EqpData.UNITSTATES.Clear();
+            List<EQPSTATE> unitstates = new List<EQPSTATE>();
+            List<WordModel> word = new List<WordModel>();
+            word = PLCH.Words.Where(x => x.Area == "UnitStatus").ToList();
+
+            for (var i = 1; i < 9; i++)
+            {
+                EQPSTATE unitstate = new EQPSTATE();
+                unitstate.AVAILABILITYSTATE = word.FirstOrDefault(x => x.Item == $"AVAILABILITYSTATE{i}").GetValue();
+                unitstate.INTERLOCKSTATE = word.FirstOrDefault(x => x.Item == $"INTERLOCKSTATE{i}").GetValue();
+                unitstate.MOVESTATE = word.FirstOrDefault(x => x.Item == $"MOVESTATE{i}").GetValue();
+                unitstate.RUNSTATE = word.FirstOrDefault(x => x.Item == $"RUNSTATE{i}").GetValue();
+                unitstate.FRONTSTATE = word.FirstOrDefault(x => x.Item == $"FRONTSTATE{i}").GetValue();
+                unitstate.REARSTATE = word.FirstOrDefault(x => x.Item == $"REARSTATE{i}").GetValue();
+                unitstate.PPSPLSTATE = word.FirstOrDefault(x => x.Item == $"PPSPLSTATE{i}").GetValue();
+                EqpData.UNITSTATES.Add(unitstate);
+            }
         }
         private void PlcConnectChangeEventHandle(bool isConnected)
         {

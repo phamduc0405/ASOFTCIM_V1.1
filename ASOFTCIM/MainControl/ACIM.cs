@@ -224,6 +224,31 @@ namespace ASOFTCIM
                 }
             }
         }
+        public void SendMessage2PLC(string classname, object obj,string Unitid)
+        {
+            string namespaces = "ASOFTCIM.Message.PLC2Cim.Send";
+            Type[] typelist = GetTypesInNamespace(Assembly.GetExecutingAssembly(), namespaces);
+            Type t = Assembly.GetExecutingAssembly().GetType($"{namespaces}.{classname}");
+
+            if (t != null && typelist.Contains(t))
+            {
+                try
+                {
+                    object instance = Activator.CreateInstance(t, new object[] { _plcH, obj, Unitid });
+
+                    if (instance != null)
+                    {
+                        Cim2PlcEventHandle($"CIM -> EQP :Recv {classname}");
+                        Console.WriteLine($"Tạo instance của {classname} thành công!");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Lỗi khi tạo instance: {ex.Message}");
+                }
+            }
+        }
+
         private void Plc2CimEventHandle(string bit)
         {
             var handle = Plc2CimChangeEvent;

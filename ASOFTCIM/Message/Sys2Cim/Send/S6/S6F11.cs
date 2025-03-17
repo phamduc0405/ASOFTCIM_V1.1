@@ -129,7 +129,7 @@ namespace ASOFTCIM
     /// T:102 Unit Status Change
     /// </summary>
     
-        public void SendS6F11_102( EQPSTATE oldState)
+        public void SendS6F11_102( EQPSTATE oldState, EQPSTATE newUnitState)
         {
             try
             {
@@ -161,7 +161,7 @@ namespace ASOFTCIM
                             packet.addItem(DataType.Ascii, oldState.UNITID);
                             packet.addItem(DataType.List, 9);           // NEW STATE
                             {
-                                EQPSTATE newUnitState = EqpData.UNITSTATES.First(x => x.UNITID == oldState.UNITID);
+                                //EQPSTATE newUnitState = EqpData.UNITSTATES.First(x => x.UNITID == oldState.UNITID);
                                 packet.addItem(DataType.Ascii, newUnitState.AVAILABILITYSTATE);
                                 packet.addItem(DataType.Ascii, newUnitState.INTERLOCKSTATE);
                                 packet.addItem(DataType.Ascii, newUnitState.MOVESTATE);
@@ -199,8 +199,8 @@ namespace ASOFTCIM
                     packet.addItem(DataType.List, 2);
                     {
                         packet.addItem(DataType.Ascii, "104");      //* RPTID
-                        packet.addItem(DataType.List, EqpData.ALS.Count);   //* Alarm List
-                        foreach (var item in EqpData.ALS)
+                        packet.addItem(DataType.List, EqpData.CurrAlarm.Count);   //* Alarm List
+                        foreach (var item in EqpData.CurrAlarm)
                         {
                             packet.addItem(DataType.List, 4);
                             {

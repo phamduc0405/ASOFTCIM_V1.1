@@ -15,6 +15,7 @@ namespace ASOFTCIM
         {
             try
             {
+                ReadAPC();
                 string eqpid = _cim.SysPacket.GetItemString();
                 EqpData.PROCESSDATACONTROL.TMACK = "0";
                 if (eqpid != EqpData.EQINFORMATION.EQPID)

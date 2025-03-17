@@ -17,7 +17,7 @@ namespace ASOFTCIM.Data
     public class UNITINTERLOCKCONFIRM
     {
         public EQPSTATE UNIT { get; set; }
-        public List<INTERLOCK> INTERLOCKs { get; set; }
+        public List<INTERLOCK> INTERLOCKs { get; set; } = new List<INTERLOCK>();
         public CELLINFOR CELL { get; set; }
     }
     /// <summary>

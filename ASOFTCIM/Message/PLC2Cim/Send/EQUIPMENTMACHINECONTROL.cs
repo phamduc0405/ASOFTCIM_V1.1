@@ -12,9 +12,9 @@ using System.Threading.Tasks;
 
 namespace ASOFTCIM.Message.PLC2Cim.Send
 {
-    public class EQUIPMENTMACHINECONTROL1
+    public class EQUIPMENTMACHINECONTROL
     {
-        public EQUIPMENTMACHINECONTROL1(PLCHelper plcdata, INTERLOCKMESS interlock,string UnitID)
+        public EQUIPMENTMACHINECONTROL(PLCHelper plcdata, INTERLOCKMESS interlock,string UnitID)
         {
 
             try

@@ -73,6 +73,7 @@ namespace ASOFTCIM
         {
             try
             {
+                ReadUnitstate();
                 SysPacket packet = new SysPacket(_cim.Conn);
                 packet.Stream = 1;
                 packet.Function = 6;

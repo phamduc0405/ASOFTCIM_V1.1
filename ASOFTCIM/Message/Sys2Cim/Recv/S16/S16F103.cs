@@ -46,7 +46,7 @@ namespace ASOFTCIM
                         module.MODULEID = _cim.SysPacket.GetItemString();
                         if (module.MODULEID != EqpData.PROCESSDATACONTROL.CELLs[0].MODULEs[0].MODULEID)
                         {
-                            ACK = "23";
+                            //ACK = "23";
                         }
                         module.PPID = _cim.SysPacket.GetItemString();
                         module.PPID_TYPE = _cim.SysPacket.GetItemString();
@@ -76,6 +76,7 @@ namespace ASOFTCIM
                     }
                     process.CELLs.Add(cell);
                 }
+
                 //if (_cim.EQHelper.IsPlc)
                 //    new ASOFTCIM.EQ.PLC.PLCMessage.Send.PROCESSCONTROLINFORMATIONSEND(_cim.EQHelper.PLCData, process);
                 //new PROCESSCONTROLINFORMATIONSEND(EqpData, cim.EQHelper.Conn, process);
@@ -88,7 +89,7 @@ namespace ASOFTCIM
                 
 
 
-                SendMessage2PLC("PROCESSCONTROLINFORMATIONSEND", process);
+                SendMessage2PLC("PROCESSCONTROLINFORMATIONSEND", process, PLC);
                 SendS16F104(ACK);
             }
             catch (Exception ex)

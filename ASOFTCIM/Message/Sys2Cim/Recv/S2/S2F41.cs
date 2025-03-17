@@ -40,11 +40,13 @@ namespace ASOFTCIM
                 if (RCMD == "11" || RCMD == "12" || RCMD == "13" || RCMD == "14" || RCMD == "41" || RCMD == "42" || RCMD == "43" || RCMD == "44" || RCMD == "45")
                 {
                     INTERLOCKMESS interlock = new INTERLOCKMESS();
+                    interlock.RCMD = _cim.SysPacket.GetItemString(1);
                     interlock.INTERLOCK = _cim.SysPacket.GetItemString(4);
-                    interlock.UNITID = _cim.SysPacket.GetItemString();
-                    interlock.INTERLOCKID = _cim.SysPacket.GetItemString();
-                    interlock.MESSAGE = _cim.SysPacket.GetItemString();
-                    SendMessage2PLC("INTERLOCK", interlock);
+                    interlock.UNITID = _cim.SysPacket.GetItemString(6);
+                    interlock.INTERLOCKID = _cim.SysPacket.GetItemString(7);
+                    interlock.MESSAGE = _cim.SysPacket.GetItemString(8);
+                    SendMessage2PLC("EQUIPMENTMACHINECONTROL", interlock, "1");//unitid = 1
+                    
                 }
                 switch (RCMD)
                 {
@@ -123,8 +125,13 @@ namespace ASOFTCIM
                         interlock12.EQPID = _cim.SysPacket.GetItemString();
                         interlock12.INTERLOCKID = _cim.SysPacket.GetItemString();
                         interlock12.MESSAGE = _cim.SysPacket.GetItemString();
+                        if(interlock12.INTERLOCKID == EqpData.EQINFORMATION.EQPID || interlock12.INTERLOCKID == "")
+                        {
+                            SendMessage2PLC("INTERLOCK", interlock12);
+                            break;
+                        }
 
-                        //SendMessage2PLC("INTERLOCK", interlock12);
+
                         break;
                     case "13":  // (Step Stop)
                         break;

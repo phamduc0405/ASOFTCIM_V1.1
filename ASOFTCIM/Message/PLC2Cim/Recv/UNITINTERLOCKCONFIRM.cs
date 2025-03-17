@@ -27,6 +27,7 @@ List<IWordModel> word = bit.LstWord;
                 INTERLOCK interlock = new INTERLOCK();
                 interlock.INTERLOCKID = word.FirstOrDefault(x => x.Item == "INTERLOCKID").GetValue(eq.PLC);
                 interlock.MESSAGE = word.FirstOrDefault(x => x.Item == "INTERLOCKMESSAGE").GetValue(eq.PLC);
+                unit.UNIT = eq.EqpData.UNITSTATES[0];
                 unit.INTERLOCKs.Add(interlock);
                 eq.SendS6F11_514( unit, "514");
                 bit.SetPCValue = true;

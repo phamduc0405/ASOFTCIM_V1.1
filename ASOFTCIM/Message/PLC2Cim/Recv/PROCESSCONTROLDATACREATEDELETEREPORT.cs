@@ -20,17 +20,14 @@ namespace ASOFTCIM.Message.PLC2Cim.Recv
                 BitModel bit = (BitModel)body;
                 
 
-List<IWordModel> word = bit.LstWord;
+                List<IWordModel> word = bit.LstWord;
                 PROCESSDATACONTROL pro = new PROCESSDATACONTROL();
+                pro = eq.EqpData.PROCESSDATACONTROL;
                 pro.MODE = word.FirstOrDefault(x => x.Item == "MODE").GetValue(eq.PLC);
                 pro.BYWHO = word.FirstOrDefault(x => x.Item == "BYWHO").GetValue(eq.PLC);
-                PROCESS_CELL cell = new PROCESS_CELL();
-                cell.CELLID = word.FirstOrDefault(x => x.Item == "CELLID").GetValue(eq.PLC);
-                cell.SEQ_NO = word.FirstOrDefault(x => x.Item == "SEQ_NO").GetValue(eq.PLC);
-                PROCESS_MODULE module = new PROCESS_MODULE();
-                module.MODULEID = word.FirstOrDefault(x => x.Item == "MODULEID").GetValue(eq.PLC);
-                cell.MODULEs.Add(module);
-                pro.CELLs.Add(cell);
+                pro.CELLs[0].CELLID= word.FirstOrDefault(x => x.Item == "CELLID").GetValue(eq.PLC);
+                pro.CELLs[0].SEQ_NO= word.FirstOrDefault(x => x.Item == "SEQ_NO").GetValue(eq.PLC);
+                pro.CELLs[0].MODULEs[0].MODULEID = word.FirstOrDefault(x => x.Item == "MODULEID").GetValue(eq.PLC);
                 eq.SendS16F105( pro);
                 bit.SetPCValue = true;
             }
