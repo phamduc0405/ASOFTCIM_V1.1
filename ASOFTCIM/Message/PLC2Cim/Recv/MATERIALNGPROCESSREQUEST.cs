@@ -41,7 +41,8 @@ List<IWordModel> word = bit.LstWord;
                 tracking.EQPMATERIALPROCNGQTY = word.FirstOrDefault(x => x.Item == "MATERIALPROCESSNGQTY").GetValue(eq.PLC);
                 tracking.EQPMATERIALSUPPLYREQUESTQTY = word.FirstOrDefault(x => x.Item == "MATERIALSUPPLYREQUESTQTY").GetValue(eq.PLC);
                 material.MATERIALs.Add(tracking);
-                string ceid = word.FirstOrDefault(x => x.Item == "CEID").GetValue(eq.PLC);
+                //string ceid = word.FirstOrDefault(x => x.Item == "CEID").GetValue(eq.PLC);
+                string ceid = "222";
                 eq.SendS6F11_211_227( material, ceid);
                 bit.SetPCValue = true;
             }

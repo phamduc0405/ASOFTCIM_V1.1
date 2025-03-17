@@ -394,6 +394,44 @@ namespace ASOFTCIM
             EqpData.FUNCTION = functions;
 
         }
+        public void ReadMaterial()
+        {
+            EqpData.MATERIALSTATES.Clear();
+            List<MATERIALSTATE> materialstates = new List<MATERIALSTATE>();
+            List<WordModel> word = new List<WordModel>();
+            word = PLCH.Words.Where(x => x.Area == "MaterialPortState").ToList();
+            for (var i = 1; i < 9; i++)
+            {
+                MATERIALSTATE materialstate = new MATERIALSTATE();
+                materialstate.MATERIALTYPE = word.FirstOrDefault(x => x.Item == $"MaterialPortStsType{i}").GetValue(PLC);
+                materialstate.MATERIALST = word.FirstOrDefault(x => x.Item == $"MaterialPortStsLST{i}").GetValue(PLC);
+                materialstate.MATERIALPORTID = word.FirstOrDefault(x => x.Item == $"MaterialPortStsID{i}").GetValue(PLC);
+                materialstate.MATERIALPORTLOADNO = word.FirstOrDefault(x => x.Item == $"MaterialPortStsLoaderNo{i}").GetValue(PLC);
+                materialstate.MATERIALUSAGE = word.FirstOrDefault(x => x.Item == $"MaterialPortStsUsage{i}").GetValue(PLC);
+                EqpData.MATERIALSTATES.Add(materialstate);
+            }
+
+        }
+        public void PortState()
+        {
+            EqpData.PORTSTATES.Clear();
+            List<PORTSTATE> portstates = new List<PORTSTATE>();
+            List<WordModel> word = new List<WordModel>();
+            word = PLCH.Words.Where(x => x.Area == "PortStatus").ToList();
+            
+            for (var i=1; i <5;i++)
+            {
+                
+                PORTSTATE portstate = new PORTSTATE();
+                portstate.PORTNO = word.FirstOrDefault(x => x.Item == $"PortNo{i}").GetValue();
+                portstate.PORTAVAILABILITYSTATE = word.FirstOrDefault(x => x.Item == $"PortAvailstate{i}").GetValue();
+                portstate.PORTACCESSMODE = word.FirstOrDefault(x => x.Item == $"PortAccessMode{i}").GetValue();
+                portstate.PORTTRANSFERSTATE = word.FirstOrDefault(x => x.Item == $"PortTransferState{i}").GetValue();
+                portstate.PORTPROCESSINGSTATE = word.FirstOrDefault(x => x.Item == $"PortProcessingState{i}").GetValue();
+                EqpData.PORTSTATES.Add(portstate);
+            }
+
+        }
         public void ReadEqpState()
         {
             this.EqpData.ALS = _eqpConfig.PLCHelper.Alarms;

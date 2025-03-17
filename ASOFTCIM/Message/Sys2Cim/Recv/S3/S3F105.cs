@@ -56,8 +56,14 @@ namespace ASOFTCIM
                 materialInfomationSend.MATERIALUSEINFO = materialInfor;
                 materialInfomationSend.MATERIALSTANDARD = materialEq;
                 materialInfomationSend.REPLY=reply;
-
-                SendMessage2PLC("MATERIALINFORMATIONSEND1",materialInfomationSend);
+                if(materialInfor.MATERIALPORTID == "1")//port1   material
+                {
+                    SendMessage2PLC("MATERIALINFORMATIONSEND1", materialInfomationSend);
+                }
+                if (materialInfor.MATERIALPORTID == "2")//port2  jig
+                {
+                    SendMessage2PLC("MATERIALINFORMATIONSEND2", materialInfomationSend);
+                }
                 SendS3F106( ACK);
             }
             catch (Exception ex)

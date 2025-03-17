@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace ASOFTCIM.Message.PLC2Cim.Recv
 {
-    public class c
+    public class MATERIALKITTINGREQUEST
     {
         public void Excute(ACIM eq, object body)
         {
