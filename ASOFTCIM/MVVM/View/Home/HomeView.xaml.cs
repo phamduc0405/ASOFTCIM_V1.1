@@ -80,7 +80,20 @@ namespace ASOFTCIM.MVVM.View.Home
             _controller.CIM.PlcConnectChangeEvent += Controller_PlcConnectChangeEvent;
             _controller.CIM.Cim.Conn.OnConnectEvent -= Controller_CimConnectChangeEvent;
             _controller.CIM.Cim.Conn.OnConnectEvent += Controller_CimConnectChangeEvent;
+            _controller.CIM.ResetEvent -= UpdateAlarm;
             _controller.CIM.ResetEvent += UpdateAlarm;
+
+            _controller.CIM.Cim2HostChangeEvent -= UpdateHostcimMessage;
+            _controller.CIM.Cim2HostChangeEvent += UpdateHostcimMessage;
+
+            _controller.CIM.Host2CimChangeEvent -= UpdateHostcimMessage;
+            _controller.CIM.Host2CimChangeEvent += UpdateHostcimMessage;
+
+            _controller.CIM.Plc2CimChangeEvent -= UpdatePlccimMessage;
+            _controller.CIM.Plc2CimChangeEvent += UpdatePlccimMessage;
+
+            _controller.CIM.Cim2PlcChangeEvent -= UpdatePlccimMessage;
+            _controller.CIM.Cim2PlcChangeEvent += UpdatePlccimMessage;
 
             _updateData = new Thread(UpdateData)
             {
@@ -168,14 +181,48 @@ namespace ASOFTCIM.MVVM.View.Home
         {
             try
             {
-                Dispatcher.Invoke(() =>
+                Dispatcher.Invoke(new Action(() =>
                 {
-                    dtgrtView.ItemsSource = null;
-                    _data = _controller.CIM.EqpData.CurrAlarm;
-                    dtgrtView.ItemsSource = Data;
-                });
+                    {
+                        lstErr.ItemsSource = null;
+                        _data = _controller.CIM.EqpData.CurrAlarm;
+                        lstErr.ItemsSource = Data;
+                    }
+                }));
             }
             catch { }
+        }
+        private void UpdateHostcimMessage(string SnFm)
+        {
+
+            Dispatcher.Invoke(new Action(() =>
+            {
+                string time = DateTime.Now.ToString("hh:mm:ss.fff");
+                txtCimHost.AppendText("\n" + time + ": " + SnFm);
+                LimitRichTextBoxLines(txtCimHost);
+            }));
+        }
+        private void UpdatePlccimMessage(string bit)
+        {
+
+            Dispatcher.Invoke(new Action(() =>
+            {
+                string time = DateTime.Now.ToString("hh:mm:ss.fff");
+                txtCimEqp.AppendText("\n" + time + ": " + bit);
+                LimitRichTextBoxLines(txtCimEqp);
+            }));
+        }
+        private void LimitRichTextBoxLines(RichTextBox richTextBox)
+        {
+            int maxLines = 20;
+            var textRange = new TextRange(richTextBox.Document.ContentStart, richTextBox.Document.ContentEnd);
+            string[] lines = textRange.Text.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
+            if (lines.Length > maxLines)
+            {
+                string newText = string.Join("\n", lines.Skip(lines.Length - maxLines));
+                richTextBox.Document.Blocks.Clear();
+                richTextBox.Document.Blocks.Add(new Paragraph(new Run(newText)));
+            }
         }
 
         private void Controller_PlcConnectChangeEvent(bool isConnected)

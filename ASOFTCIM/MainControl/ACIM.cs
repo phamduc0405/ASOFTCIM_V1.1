@@ -24,6 +24,19 @@ namespace ASOFTCIM
 {
     public partial class ACIM
     {
+        #region Event
+        public delegate void PLC2CIMEventDelegate(string bit);
+        public event PLC2CIMEventDelegate Plc2CimChangeEvent;
+        public delegate void CIM2PLCEventDelegate(string bit);
+        public event CIM2PLCEventDelegate Cim2PlcChangeEvent;
+        public delegate void Host2CimEventDelegate(string SnFm);
+        public event Host2CimEventDelegate Host2CimChangeEvent;
+        public delegate void Cim2HostChangeEventDelegate(string SnFm);
+        public event Cim2HostChangeEventDelegate Cim2HostChangeEvent;
+        #endregion
+
+
+
         #region Field
         private CimHelper _cim;
         private PlcComm _plc;
@@ -126,6 +139,7 @@ namespace ASOFTCIM
                 MethodInfo method = this.GetType().GetMethod($"RecvS{sysPacket.Stream}F{sysPacket.Function}");
                 if (method != null)
                 {
+                    Host2CimEventHandle($"HOST -> CIM :RecvS{sysPacket.Stream}F{sysPacket.Function}");
                     object result = method.Invoke(this, null);
 
                     return;
@@ -176,6 +190,7 @@ namespace ASOFTCIM
 
                     if (instance != null)
                     {
+                        Cim2PlcEventHandle($"CIM -> EQP :Recv {classname}");
                         Console.WriteLine($"Tạo instance của {classname} thành công!");
                     }
                 }
@@ -199,6 +214,7 @@ namespace ASOFTCIM
 
                     if (instance != null)
                     {
+                        Cim2PlcEventHandle($"CIM -> EQP :Recv {classname}");
                         Console.WriteLine($"Tạo instance của {classname} thành công!");
                     }
                 }
@@ -206,6 +222,38 @@ namespace ASOFTCIM
                 {
                     Console.WriteLine($"Lỗi khi tạo instance: {ex.Message}");
                 }
+            }
+        }
+        private void Plc2CimEventHandle(string bit)
+        {
+            var handle = Plc2CimChangeEvent;
+            if (handle != null)
+            {
+                handle(bit);
+            }
+        }
+        private void Cim2PlcEventHandle(string bit)
+        {
+            var handle = Cim2PlcChangeEvent;
+            if (handle != null)
+            {
+                handle(bit);
+            }
+        }
+        private void Host2CimEventHandle(string SnFm)
+        {
+            var handle = Host2CimChangeEvent;
+            if (handle != null)
+            {
+                handle(SnFm);
+            }
+        }
+        private void Cim2HostEventHandle(string SnFm)
+        {
+            var handle = Cim2HostChangeEvent;
+            if (handle != null)
+            {
+                handle(SnFm);
             }
         }
     }

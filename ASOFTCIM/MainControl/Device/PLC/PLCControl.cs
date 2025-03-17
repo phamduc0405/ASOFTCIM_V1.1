@@ -209,6 +209,7 @@ namespace ASOFTCIM
                         MethodInfo method = t.GetMethod($"Excute");
                         if (method != null)
                         {
+                            Plc2CimEventHandle("EQP -> CIM: B" + bit.PLCHexAdd + " - " + bit.Item);
                             object result = method.Invoke(s, new object[] { this, bit });
 
                         }
