@@ -23,10 +23,14 @@ namespace ASOFTCIM
                 if(eqpid != EqpData.EQINFORMATION.EQPID)
                 {
                      ACK = "7";
+                    SendS7F110(EqpData.CurrPPID, ACK);
+                    return;
                 }    
                 if(ppid_type!= "1")
                 {
                      ACK = "9";
+                    SendS7F110(EqpData.CurrPPID, ACK);
+                    return;
                 }
                 ReadRMS();
                 EqpData.CurrPPID.PPID_TYPE = ppid_type;

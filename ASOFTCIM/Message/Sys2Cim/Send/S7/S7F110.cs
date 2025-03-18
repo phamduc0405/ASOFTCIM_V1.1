@@ -25,6 +25,12 @@ namespace ASOFTCIM
                 packet.SystemByte = EqpData.TransactionSys;
                 packet.addItem(DataType.List, 2);
                 packet.addItem(DataType.Ascii, ACK);
+                if(ACK != "0")
+                {
+                    packet.addItem(DataType.List, 0);
+                    packet.Send2Sys();
+                    return;
+                }
                 packet.addItem(DataType.List, 3);
                 {
                     packet.addItem(DataType.Ascii, EqpData.EQINFORMATION.EQPID);
