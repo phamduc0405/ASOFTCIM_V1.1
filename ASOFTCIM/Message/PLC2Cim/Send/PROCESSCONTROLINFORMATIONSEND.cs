@@ -21,7 +21,7 @@ namespace ASOFTCIM.Message.PLC2Cim.Send
             {
                 int apccount = plcdata.APCS.Count;
                 int p = 0;
-                foreach (var apc in plcdata.APCS)
+                foreach (var apc in plcdata.APCS)//TAO DU 15 PARAMETER PHIA SECOM
                 {
                     apc.SetValue(plcComm, process.CELLs[0].MODULEs[0].PARAMs[p].PARAMVALUE);
                     p++;
