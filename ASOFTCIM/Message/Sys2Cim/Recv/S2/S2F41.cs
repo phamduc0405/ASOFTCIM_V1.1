@@ -45,8 +45,18 @@ namespace ASOFTCIM
                     interlock.UNITID = _cim.SysPacket.GetItemString(6);
                     interlock.INTERLOCKID = _cim.SysPacket.GetItemString(7);
                     interlock.MESSAGE = _cim.SysPacket.GetItemString(8);
-                    SendMessage2PLC("EQUIPMENTMACHINECONTROL", interlock, "1");//unitid = 1
-                    
+                    if (interlock.UNITID == EqpData.EQINFORMATION.EQPID || interlock.INTERLOCKID == "")
+                    {
+                        SendMessage2PLC("INTERLOCK", interlock);
+                    }
+                    else
+                    {
+                        SendMessage2PLC("EQUIPMENTMACHINECONTROL", interlock, "1");//unitid = 1
+                        Thread.Sleep(500);
+                        WordModel word = _plcH.Words.FirstOrDefault(x => x.Area == "EquipControlInformation");
+                        HACK = word.GetValue(PLC);
+                    }
+                   
                 }
                 switch (RCMD)
                 {

@@ -9,6 +9,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using ASOFTCIM.Message.PLC2Cim.Send;
+using A_SOFT.PLC;
+using System.Threading;
 
 namespace ASOFTCIM
 {
@@ -82,7 +84,8 @@ namespace ASOFTCIM
                 //new PROCESSCONTROLINFORMATIONSEND(EqpData, cim.EQHelper.Conn, process);
                 
                 
-                if(process.EQPID != EqpData.EQINFORMATION.EQPID)
+
+                if (process.EQPID != EqpData.EQINFORMATION.EQPID)
                 {
                     ACK = "22";
                 }
@@ -90,6 +93,9 @@ namespace ASOFTCIM
 
 
                 SendMessage2PLC("PROCESSCONTROLINFORMATIONSEND", process, PLC);
+                Thread.Sleep(500);
+                WordModel word = _plcH.Words.FirstOrDefault(x => x.Area == "ProcessControlInformSend1");
+                ACK = word.GetValue(PLC);
                 SendS16F104(ACK);
             }
             catch (Exception ex)

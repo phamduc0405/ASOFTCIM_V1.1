@@ -45,13 +45,13 @@ namespace ASOFTCIM
                 }
                 validation.ITEMS = items;
                 string lst = _cim.SysPacket.GetItemString();
-                validation.REPLY.REPLYTEXT = _cim.SysPacket.GetItemString();
                 validation.REPLY.REPLYSTATUS = _cim.SysPacket.GetItemString();
+                validation.REPLY.REPLYTEXT = _cim.SysPacket.GetItemString(); 
                 //ETC
-                //SendMessage2PLC("SPECIFICVALIDATIONDATASEND1", validation);
+                SendMessage2PLC("SPECIFICVALIDATIONDATASEND1", validation);
                 //ETC
                 //unloader
-                SendMessage2PLC("SPECIFICVALIDATIONDATASEND5", validation);
+                //SendMessage2PLC("SPECIFICVALIDATIONDATASEND5", validation);
                 //unloader
                 SendS3F104( ACK);
             }
