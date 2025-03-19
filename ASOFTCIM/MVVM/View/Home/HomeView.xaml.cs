@@ -30,14 +30,27 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.ComponentModel;
 
 namespace ASOFTCIM.MVVM.View.Home
 {
     /// <summary>
     /// Interaction logic for HomeView.xaml
     /// </summary>
-    public partial class HomeView : UserControl
+    public partial class HomeView : UserControl, INotifyPropertyChanged
     {
+
+        private ObservableCollection<Data.Alarm> _alarmList = new ObservableCollection<Data.Alarm>();
+        public ObservableCollection<Data.Alarm> AlarmList
+        {
+            get => _alarmList;
+            set
+            {
+                _alarmList = value;
+                OnPropertyChanged(nameof(AlarmList));
+            }
+        }
+
         private Controller _controller;
         private EquipmentConfig _equipmentConfig;
         private Thread _updateData;
@@ -67,7 +80,7 @@ namespace ASOFTCIM.MVVM.View.Home
         public HomeView()
         {
             InitializeComponent();
-
+            this.DataContext = this;
             _cpuChart = new PartialCpuChart();
             grdCpu.Children.Add(_cpuChart);
 
@@ -184,13 +197,24 @@ namespace ASOFTCIM.MVVM.View.Home
                 Dispatcher.Invoke(new Action(() =>
                 {
                     {
-                        lstErr.ItemsSource = null;
-                        _data = _controller.CIM.EqpData.CurrAlarm;
-                        lstErr.ItemsSource = Data;
+                        //lstErr.ItemsSource = null;
+                        //_data = _controller.CIM.EqpData.CurrAlarm;
+                        //lstErr.ItemsSource = Data;
+
+                        AlarmList.Clear();
+
+                        var tempList = _controller.CIM.EqpData.CurrAlarm.ToList(); 
+                        foreach (var item in tempList)
+                            AlarmList.Add(item);
                     }
                 }));
             }
-            catch { }
+            catch (Exception ex) {
+
+                var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message);
+                LogTxt.Add(LogTxt.Type.Exception, debug);
+            
+            }
         }
         private void UpdateHostcimMessage(string SnFm)
         {
@@ -240,6 +264,10 @@ namespace ASOFTCIM.MVVM.View.Home
                 txtCimConnect.Text = isConnected ? "Cim Connected" : "Cim Disconnected";
             });
         }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged(string name) =>
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
     }
 }
 

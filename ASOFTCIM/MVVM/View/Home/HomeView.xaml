@@ -91,7 +91,7 @@
 
 
             </DataGrid>-->
-                            <ListView
+                            <ListView ItemsSource="{Binding AlarmList}"
                 x:Name="lstErr"
                 Grid.Row="1"
                 Grid.Column="0"
