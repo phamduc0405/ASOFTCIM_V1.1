@@ -51,7 +51,6 @@ namespace ASOFTCIM
 
         private bool _isEqStatusUpdate = false;
         private bool _isSvidUpdate = false;
-        private List<string> _unitUpdate = new List<string>();
         #endregion
 
 

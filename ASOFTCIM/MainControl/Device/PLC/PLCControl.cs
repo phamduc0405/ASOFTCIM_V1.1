@@ -160,13 +160,8 @@ namespace ASOFTCIM
             }
             if (new[] { "UNITSTATUS", "MATERIALPORTSTATE", "PORTSTATUS" }.Any(Method.Contains))
             {
-                List<WordModel> word = (List<WordModel>)data;
-                string unit = word[0].Area;
-                if (_unitUpdate.Contains(unit)) return;
-                _unitUpdate.Add(unit);
-                Thread.Sleep(100);
                 PLCWordChange(Method, data);
-                _unitUpdate.Remove(unit);
+                
             }
         }
         private async void PLCWordChange(string name, object w)
