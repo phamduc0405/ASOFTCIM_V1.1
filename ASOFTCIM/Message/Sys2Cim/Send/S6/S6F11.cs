@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AComm.TCPIP;
 using A_SOFT.Ctl.SecGem;
+using ASOFTCIM.MainControl;
 
 namespace ASOFTCIM
 {
@@ -198,10 +199,13 @@ namespace ASOFTCIM
                     }
                     packet.addItem(DataType.List, 2);
                     {
+                        var tempList = EqpData.CurrAlarm.ToList();
                         packet.addItem(DataType.Ascii, "104");      //* RPTID
-                        packet.addItem(DataType.List, EqpData.CurrAlarm.Count);   //* Alarm List
-                        foreach (var item in EqpData.CurrAlarm)
+                        packet.addItem(DataType.List, tempList.Count);   //* Alarm List
+                        foreach (var item in tempList)
                         {
+                            if (item == null) continue;
+                            
                             packet.addItem(DataType.List, 4);
                             {
                                 packet.addItem(DataType.Ascii, item.ALST);

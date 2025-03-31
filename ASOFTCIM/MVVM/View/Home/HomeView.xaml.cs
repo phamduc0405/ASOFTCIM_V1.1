@@ -196,16 +196,18 @@ namespace ASOFTCIM.MVVM.View.Home
             {
                 Dispatcher.Invoke(new Action(() =>
                 {
+                    try
                     {
-                        //lstErr.ItemsSource = null;
-                        //_data = _controller.CIM.EqpData.CurrAlarm;
-                        //lstErr.ItemsSource = Data;
-
-                        AlarmList.Clear();
-
-                        var tempList = _controller.CIM.EqpData.CurrAlarm.ToList(); 
+                        AlarmList.Clear();  // Xóa dữ liệu cũ
+                        var tempList = _controller.CIM.EqpData.CurrAlarm.ToList();
                         foreach (var item in tempList)
-                            AlarmList.Add(item);
+                        {
+                            AlarmList.Add(item);  // Cập nhật lại dữ liệu mới
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Lỗi: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }));
             }
