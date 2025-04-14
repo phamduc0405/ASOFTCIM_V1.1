@@ -14,11 +14,19 @@ namespace ASOFTCIM.Message.PLC2Cim.Send
 {
     public class PROCESSCONTROLINFORMATIONSEND
     {
-        public PROCESSCONTROLINFORMATIONSEND(PLCHelper plcdata, PROCESSDATACONTROL process)
+        public PROCESSCONTROLINFORMATIONSEND(PLCHelper plcdata, PlcComm plcComm, PROCESSDATACONTROL process)
         {
 
             try
             {
+                int apccount = plcdata.APCS.Count;
+                int p = 0;
+                foreach (var apc in plcdata.APCS)//TAO DU 15 PARAMETER PHIA SECOM
+                {
+                    apc.SetValue(plcComm, process.CELLs[0].MODULEs[0].PARAMs[p].PARAMVALUE);
+                    p++;
+                    
+                }
                 if (process.CELLs.Count < 1) return;
 
                 List<WordModel> word = plcdata.Words.Where(x => x.Area == (this.GetType().Name + "1")).ToList();
@@ -29,7 +37,7 @@ namespace ASOFTCIM.Message.PLC2Cim.Send
                 word.FirstOrDefault(x => x.Item == "PPID").SetValue = process.CELLs[0].MODULEs[0].PPID;
                 word.FirstOrDefault(x => x.Item == "PPID_TYPE").SetValue = process.CELLs[0].MODULEs[0].PPID_TYPE;
 
-                BitModel bit = plcdata.Bits.First(x => x.Comment == this.GetType().Name);
+                BitModel bit = plcdata.Bits.First(x => x.Comment == this.GetType().Name+1);
                 bit.SetPCValue = true;
 
                 if (process.CELLs.Count < 2) return;

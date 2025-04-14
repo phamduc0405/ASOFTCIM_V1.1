@@ -22,11 +22,17 @@ namespace ASOFTCIM.Message.PLC2Cim.Recv
                 BitModel bit = (BitModel)body;
                 
 
-List<IWordModel> word = bit.LstWord;
+                List<IWordModel> word = bit.LstWord;
                 Data.UNITINTERLOCKCONFIRM unit = new Data.UNITINTERLOCKCONFIRM();
                 INTERLOCK interlock = new INTERLOCK();
+                CELL cell = new CELL();
+                cell.CELLID = "";
+                cell.PPID = "";
+                cell.PRODUCTID = "";
+                cell.STEPID = "";
                 interlock.INTERLOCKID = word.FirstOrDefault(x => x.Item == "INTERLOCKID").GetValue(eq.PLC);
                 interlock.MESSAGE = word.FirstOrDefault(x => x.Item == "INTERLOCKMESSAGE").GetValue(eq.PLC);
+                unit.UNIT = eq.EqpData.UNITSTATES[0];
                 unit.INTERLOCKs.Add(interlock);
                 eq.SendS6F11_514( unit, "514");
                 bit.SetPCValue = true;

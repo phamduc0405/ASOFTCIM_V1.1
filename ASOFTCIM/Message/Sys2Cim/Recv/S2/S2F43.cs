@@ -29,7 +29,17 @@ namespace ASOFTCIM
                     jobProcess.STEPID = _cim.SysPacket.GetItemString(14);
                     jobProcess.ACTIONTYPE = _cim.SysPacket.GetItemString(17);
                     jobProcess.EQPID = _cim.EQPID;
-                    SendMessage2PLC("CELLJOBPROCESS1", jobProcess);
+                    if(jobProcess.JOBID == "1")
+                    {
+                        SendMessage2PLC("CELLJOBPROCESS1", jobProcess);//DUNG CHO PORT 1
+
+                    }
+                    if (jobProcess.JOBID == "2")
+                    {
+                        SendMessage2PLC("CELLJOBPROCESS2", jobProcess);// DUNG CHO PORT 2
+
+                    }
+
                 }
                 else if (RCMD == "31" || RCMD == "32" )
                 {

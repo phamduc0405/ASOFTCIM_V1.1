@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace ASOFTCIM.Message.PLC2Cim.Recv
 {
-    public class Mc
+    public class MATERIALLOCATIONUPDATEREQUEST
     {
         public void Excute(ACIM eq, object body)
         {

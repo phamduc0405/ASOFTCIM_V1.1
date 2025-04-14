@@ -30,14 +30,27 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.ComponentModel;
 
 namespace ASOFTCIM.MVVM.View.Home
 {
     /// <summary>
     /// Interaction logic for HomeView.xaml
     /// </summary>
-    public partial class HomeView : UserControl
+    public partial class HomeView : UserControl, INotifyPropertyChanged
     {
+
+        private ObservableCollection<Data.Alarm> _alarmList = new ObservableCollection<Data.Alarm>();
+        public ObservableCollection<Data.Alarm> AlarmList
+        {
+            get => _alarmList;
+            set
+            {
+                _alarmList = value;
+                OnPropertyChanged(nameof(AlarmList));
+            }
+        }
+
         private Controller _controller;
         private EquipmentConfig _equipmentConfig;
         private Thread _updateData;
@@ -67,7 +80,7 @@ namespace ASOFTCIM.MVVM.View.Home
         public HomeView()
         {
             InitializeComponent();
-
+            this.DataContext = this;
             _cpuChart = new PartialCpuChart();
             grdCpu.Children.Add(_cpuChart);
 
@@ -80,7 +93,20 @@ namespace ASOFTCIM.MVVM.View.Home
             _controller.CIM.PlcConnectChangeEvent += Controller_PlcConnectChangeEvent;
             _controller.CIM.Cim.Conn.OnConnectEvent -= Controller_CimConnectChangeEvent;
             _controller.CIM.Cim.Conn.OnConnectEvent += Controller_CimConnectChangeEvent;
+            _controller.CIM.ResetEvent -= UpdateAlarm;
             _controller.CIM.ResetEvent += UpdateAlarm;
+
+            _controller.CIM.Cim2HostChangeEvent -= UpdateHostcimMessage;
+            _controller.CIM.Cim2HostChangeEvent += UpdateHostcimMessage;
+
+            _controller.CIM.Host2CimChangeEvent -= UpdateHostcimMessage;
+            _controller.CIM.Host2CimChangeEvent += UpdateHostcimMessage;
+
+            _controller.CIM.Plc2CimChangeEvent -= UpdatePlccimMessage;
+            _controller.CIM.Plc2CimChangeEvent += UpdatePlccimMessage;
+
+            _controller.CIM.Cim2PlcChangeEvent -= UpdatePlccimMessage;
+            _controller.CIM.Cim2PlcChangeEvent += UpdatePlccimMessage;
 
             _updateData = new Thread(UpdateData)
             {
@@ -168,14 +194,59 @@ namespace ASOFTCIM.MVVM.View.Home
         {
             try
             {
-                Dispatcher.Invoke(() =>
+                Dispatcher.Invoke(new Action(() =>
                 {
-                    dtgrtView.ItemsSource = null;
-                    _data = _controller.CIM.EqpData.CurrAlarm;
-                    dtgrtView.ItemsSource = Data;
-                });
+                    {
+                        //lstErr.ItemsSource = null;
+                        //_data = _controller.CIM.EqpData.CurrAlarm;
+                        //lstErr.ItemsSource = Data;
+
+                        AlarmList.Clear();
+
+                        var tempList = _controller.CIM.EqpData.CurrAlarm.ToList(); 
+                        foreach (var item in tempList)
+                            AlarmList.Add(item);
+                    }
+                }));
             }
-            catch { }
+            catch (Exception ex) {
+
+                var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message);
+                LogTxt.Add(LogTxt.Type.Exception, debug);
+            
+            }
+        }
+        private void UpdateHostcimMessage(string SnFm)
+        {
+
+            Dispatcher.Invoke(new Action(() =>
+            {
+                string time = DateTime.Now.ToString("hh:mm:ss.fff");
+                txtCimHost.AppendText("\n" + time + ": " + SnFm);
+                LimitRichTextBoxLines(txtCimHost);
+            }));
+        }
+        private void UpdatePlccimMessage(string bit)
+        {
+
+            Dispatcher.Invoke(new Action(() =>
+            {
+                string time = DateTime.Now.ToString("hh:mm:ss.fff");
+                txtCimEqp.AppendText("\n" + time + ": " + bit);
+                LimitRichTextBoxLines(txtCimEqp);
+            }));
+        }
+        private void LimitRichTextBoxLines(RichTextBox richTextBox)
+        {
+            int maxLines = 20;
+            var textRange = new TextRange(richTextBox.Document.ContentStart, richTextBox.Document.ContentEnd);
+            string[] lines = textRange.Text.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
+            if (lines.Length > maxLines)
+            {
+                string newText = string.Join("\n", lines.Skip(lines.Length - maxLines));
+                richTextBox.Document.Blocks.Clear();
+                richTextBox.Document.Blocks.Add(new Paragraph(new Run(newText)));
+            }
         }
 
         private void Controller_PlcConnectChangeEvent(bool isConnected)
@@ -193,6 +264,10 @@ namespace ASOFTCIM.MVVM.View.Home
                 txtCimConnect.Text = isConnected ? "Cim Connected" : "Cim Disconnected";
             });
         }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged(string name) =>
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
     }
 }
 

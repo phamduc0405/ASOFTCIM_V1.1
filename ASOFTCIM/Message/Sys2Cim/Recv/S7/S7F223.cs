@@ -37,7 +37,7 @@ namespace ASOFTCIM
                     {
                         string lst2 = _cim.SysPacket.GetItemString();
                         PARAM param = new PARAM();
-                        param.PARAMNAME = _cim.SysPacket.GetItemString();
+                        param.PARAMNAME = _cim.SysPacket.GetItemString(); 
                         param.PARAMVALUE = _cim.SysPacket.GetItemString();
                         if(param.PARAMVALUE== null || param.PARAMNAME == null)
                         {
@@ -50,24 +50,26 @@ namespace ASOFTCIM
                     ppid.COMMANDCODEs.Add(cmd);
                 }
 
-                
-                if(false) // Host không có quyền thay đổi
+                ppid.MODE = _cim.SysPacket.GetItemString(8);
+                if (false) // Host không có quyền thay đổi
                 {
                     ACK = "1";
                 }    
-                if(EqpData.PPIDList.PPID.Any(x => x != ppid.PPID) || ppid.PPID == null)
+                if((EqpData.PPIDList.PPID.Contains(ppid.PPID) || ppid.PPID == null ) && (ppid.MODE == "1" || ppid.MODE == "1"))
                 {
                     ACK = "6";
                        
                 }    
                     //  if (_cim.EQHelper.PLCData.LstPPID.Any(x => x.PPID_NUMBER == ppid.PPID_NUMBER && string.IsNullOrEmpty(x.GetValue))|| string.IsNullOrEmpty(ppid.PPID_NUMBER)) ACK = "7";
                 if (ppid.EQPID != _cim.EQPID) ACK = "7";
-                if (ppid.PPID == EqpData.CurrPPID.PPID) ACK = "3";
+                if (ppid.MODE == "3" && ppid.PPID != EqpData.CurrPPID.PPID) ACK = "3";
                 if (ppid.PPID_TYPE == "2" || string.IsNullOrEmpty(ppid.PPID_TYPE) || ppid.COMMANDCODEs[0].CCODE == "4" || string.IsNullOrEmpty(ppid.COMMANDCODEs[0].CCODE)) ACK = "9";
                 if (EqpData.EQPSTATE.MOVESTATE == "2")
                 {
                     ACK = "5";
                 }
+
+                
                 if ((ppid.PPID_NUMBER[1].ToString() == "D" || ppid.PPID_NUMBER[1].ToString() == "D") && (ppid.MODE != "2"))
                 {
                     ACK = "1";

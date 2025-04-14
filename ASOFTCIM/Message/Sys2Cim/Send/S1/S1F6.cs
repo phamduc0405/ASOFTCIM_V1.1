@@ -73,6 +73,7 @@ namespace ASOFTCIM
         {
             try
             {
+                ReadUnitstate();
                 SysPacket packet = new SysPacket(_cim.Conn);
                 packet.Stream = 1;
                 packet.Function = 6;
@@ -148,6 +149,7 @@ namespace ASOFTCIM
         {
             try
             {
+                //ReadMaterial();
                 SysPacket packet = new SysPacket(_cim.Conn);
                 packet.Stream = 1;
                 packet.Function = 6;
@@ -216,6 +218,7 @@ namespace ASOFTCIM
         {
             try
             {
+                PortState();
                 SysPacket packet = new SysPacket(_cim.Conn);
                 packet.Stream = 1;
                 packet.Function = 6;

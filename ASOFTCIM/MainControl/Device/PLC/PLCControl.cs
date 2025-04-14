@@ -160,13 +160,8 @@ namespace ASOFTCIM
             }
             if (new[] { "UNITSTATUS", "MATERIALPORTSTATE", "PORTSTATUS" }.Any(Method.Contains))
             {
-                List<WordModel> word = (List<WordModel>)data;
-                string unit = word[0].Area;
-                if (_unitUpdate.Contains(unit)) return;
-                _unitUpdate.Add(unit);
-                Thread.Sleep(100);
                 PLCWordChange(Method, data);
-                _unitUpdate.Remove(unit);
+                
             }
         }
         private async void PLCWordChange(string name, object w)
@@ -209,6 +204,7 @@ namespace ASOFTCIM
                         MethodInfo method = t.GetMethod($"Excute");
                         if (method != null)
                         {
+                            Plc2CimEventHandle("EQP -> CIM: B" + bit.PLCHexAdd + " - " + bit.Item);
                             object result = method.Invoke(s, new object[] { this, bit });
 
                         }
@@ -350,6 +346,7 @@ namespace ASOFTCIM
         }
         public void ReadAPC()
         {
+            EqpData.PROCESSDATACONTROL.CELLs.Clear();
             foreach (var apc in _eqpConfig.PLCHelper.APCS)
             {
                 EqpData.PROCESSDATACONTROL.EQPID = EqpData.EQINFORMATION.EQPID;
@@ -393,6 +390,44 @@ namespace ASOFTCIM
             EqpData.FUNCTION = functions;
 
         }
+        public void ReadMaterial()
+        {
+            EqpData.MATERIALSTATES.Clear();
+            List<MATERIALSTATE> materialstates = new List<MATERIALSTATE>();
+            List<WordModel> word = new List<WordModel>();
+            word = PLCH.Words.Where(x => x.Area == "MaterialPortState").ToList();
+            for (var i = 1; i < 9; i++)
+            {
+                MATERIALSTATE materialstate = new MATERIALSTATE();
+                materialstate.MATERIALTYPE = word.FirstOrDefault(x => x.Item == $"MaterialPortStsType{i}").GetValue(PLC);
+                materialstate.MATERIALST = word.FirstOrDefault(x => x.Item == $"MaterialPortStsLST{i}").GetValue(PLC);
+                materialstate.MATERIALPORTID = word.FirstOrDefault(x => x.Item == $"MaterialPortStsID{i}").GetValue(PLC);
+                materialstate.MATERIALPORTLOADNO = word.FirstOrDefault(x => x.Item == $"MaterialPortStsLoaderNo{i}").GetValue(PLC);
+                materialstate.MATERIALUSAGE = word.FirstOrDefault(x => x.Item == $"MaterialPortStsUsage{i}").GetValue(PLC);
+                EqpData.MATERIALSTATES.Add(materialstate);
+            }
+
+        }
+        public void PortState()
+        {
+            EqpData.PORTSTATES.Clear();
+            List<PORTSTATE> portstates = new List<PORTSTATE>();
+            List<WordModel> word = new List<WordModel>();
+            word = PLCH.Words.Where(x => x.Area == "PortStatus").ToList();
+            
+            for (var i=1; i <5;i++)
+            {
+                
+                PORTSTATE portstate = new PORTSTATE();
+                portstate.PORTNO = word.FirstOrDefault(x => x.Item == $"PortNo{i}").GetValue();
+                portstate.PORTAVAILABILITYSTATE = word.FirstOrDefault(x => x.Item == $"PortAvailstate{i}").GetValue();
+                portstate.PORTACCESSMODE = word.FirstOrDefault(x => x.Item == $"PortAccessMode{i}").GetValue();
+                portstate.PORTTRANSFERSTATE = word.FirstOrDefault(x => x.Item == $"PortTransferState{i}").GetValue();
+                portstate.PORTPROCESSINGSTATE = word.FirstOrDefault(x => x.Item == $"PortProcessingState{i}").GetValue();
+                EqpData.PORTSTATES.Add(portstate);
+            }
+
+        }
         public void ReadEqpState()
         {
             this.EqpData.ALS = _eqpConfig.PLCHelper.Alarms;
@@ -400,6 +435,26 @@ namespace ASOFTCIM
             WordModel crst = _eqpConfig.PLCHelper.Words.FirstOrDefault(x => x.Item == "CRST");
 
             EqpData.EQINFORMATION.CRST = _eqpConfig.CRST;
+        }
+        public void ReadUnitstate()
+        {
+            EqpData.UNITSTATES.Clear();
+            List<EQPSTATE> unitstates = new List<EQPSTATE>();
+            List<WordModel> word = new List<WordModel>();
+            word = PLCH.Words.Where(x => x.Area == "UnitStatus").ToList();
+
+            for (var i = 1; i < 9; i++)
+            {
+                EQPSTATE unitstate = new EQPSTATE();
+                unitstate.AVAILABILITYSTATE = word.FirstOrDefault(x => x.Item == $"AVAILABILITYSTATE{i}").GetValue();
+                unitstate.INTERLOCKSTATE = word.FirstOrDefault(x => x.Item == $"INTERLOCKSTATE{i}").GetValue();
+                unitstate.MOVESTATE = word.FirstOrDefault(x => x.Item == $"MOVESTATE{i}").GetValue();
+                unitstate.RUNSTATE = word.FirstOrDefault(x => x.Item == $"RUNSTATE{i}").GetValue();
+                unitstate.FRONTSTATE = word.FirstOrDefault(x => x.Item == $"FRONTSTATE{i}").GetValue();
+                unitstate.REARSTATE = word.FirstOrDefault(x => x.Item == $"REARSTATE{i}").GetValue();
+                unitstate.PPSPLSTATE = word.FirstOrDefault(x => x.Item == $"PPSPLSTATE{i}").GetValue();
+                EqpData.UNITSTATES.Add(unitstate);
+            }
         }
         private void PlcConnectChangeEventHandle(bool isConnected)
         {
