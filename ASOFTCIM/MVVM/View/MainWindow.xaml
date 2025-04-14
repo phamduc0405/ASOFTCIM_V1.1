@@ -251,7 +251,7 @@
                     Grid.Row="1"
                     Margin="10,2,10,5"
                     Background="White"
-                    BorderBrush="Blue"
+                    BorderBrush="#FF7FA6EF"
                     BorderThickness="1"
                     CornerRadius="5">
                         <Border.Effect>
@@ -466,11 +466,14 @@
 
                     <Border Margin="0,0,0,10">
                         <Grid Background="AliceBlue">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="597*"/>
+                                <ColumnDefinition Width="148*"/>
+                            </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions />
                             <ContentControl
                             x:Name="maincontent"
-                            Grid.RowSpan="3"
-                            Content="{Binding Currentview}" />
+                            Content="{Binding Currentview}" Grid.ColumnSpan="2" />
                         </Grid>
                     </Border>
 
@@ -501,7 +504,7 @@
                         <ColumnDefinition Width="200" />
 
                     </Grid.ColumnDefinitions>
-                    
+
                     <!--<Border
                     x:Name="bdrPlcConnect"
                     Grid.Row="1"
