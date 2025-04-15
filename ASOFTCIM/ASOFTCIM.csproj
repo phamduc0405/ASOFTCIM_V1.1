@@ -41,7 +41,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>E:\MrDuc\ASOFTLIB\AsoftCommon\Bin\Debug\ASOFTLIB\A_SOFT.CMM.dll</HintPath>
     </Reference>
-    <Reference Include="A_SOFT.CMM.UI">
+    <Reference Include="A_SOFT.CMM.UI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>E:\MrDuc\ASOFTLIB\AsoftCommon\Bin\Debug\ASOFTLIB\A_SOFT.CMM.UI.dll</HintPath>
     </Reference>
     <Reference Include="A_SOFT.Ctl.Mcr">

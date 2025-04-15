@@ -155,8 +155,10 @@ namespace ASOFTCIM
             }
             if (Method.Contains("ALARMREPORT"))
             {
-                new ALARMREPORT().Excute(this, data);
+               var resul = new ALARMREPORT().Excute(this, data);
+                Task.WaitAll(resul); // Ducph sửa await để chờ update xong thì mới hiện UI
                 ResetEvent?.Invoke();
+
             }
             if (new[] { "UNITSTATUS", "MATERIALPORTSTATE", "PORTSTATUS" }.Any(Method.Contains))
             {
