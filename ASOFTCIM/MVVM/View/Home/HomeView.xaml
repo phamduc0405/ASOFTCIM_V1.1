@@ -158,18 +158,20 @@
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
+                                        <GridViewColumn Width="100" Header="ALCD">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock
+Margin="35,0,0,0"
+HorizontalAlignment="Center"
+VerticalAlignment="Center"
+Text="{Binding ALCD}" />
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
                                     </GridView>
                                 </ListView.View>
-                                <ListView.Resources>
-                                    <Style TargetType="{x:Type ListViewItem}">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding IsOccur}" Value="True">
-                                                <Setter Property="Foreground" Value="Red" />
-                                                <Setter Property="FontWeight" Value="Bold" />
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </ListView.Resources>
+
                             </ListView>
 
                             <!--<ListBox
@@ -381,34 +383,15 @@
                                     FontSize="15"
                                     Style="{StaticResource HeaderTextBlockStyle}"
                                     Text="EQP NAME :" />
-                                    <TextBlock
-                                    Grid.Row="3"
-                                    Grid.Column="0"
-                                    Margin="10,5,0,5"
-                                    FontSize="15"
-                                    Style="{StaticResource HeaderTextBlockStyle}"
-                                    Text="ID ADDRESS :" />
+
                                     <TextBlock
                                     Grid.Row="4"
                                     Grid.Column="0"
                                     Margin="10,5,0,5"
                                     FontSize="15"
                                     Style="{StaticResource HeaderTextBlockStyle}"
-                                    Text="RECIPY :" />
-                                    <TextBlock
-                                    Grid.Row="5"
-                                    Grid.Column="0"
-                                    Margin="10,5,0,5"
-                                    FontSize="15"
-                                    Style="{StaticResource HeaderTextBlockStyle}"
-                                    Text="PORT NO :" />
-                                    <TextBlock
-                                    Grid.Row="6"
-                                    Grid.Column="0"
-                                    Margin="10,5,0,5"
-                                    FontSize="15"
-                                    Style="{StaticResource HeaderTextBlockStyle}"
-                                    Text="IQC MODE :" />
+                                    Text="PPID :" />
+
                                     <TextBlock
                                     Grid.Row="7"
                                     Grid.Column="0"
@@ -430,29 +413,11 @@
                                     Margin="10,5,0,5"
                                     Text="EQP NAME :" />
                                     <TextBlock
-                                    x:Name="txtIDAddress"
-                                    Grid.Row="3"
-                                    Grid.Column="1"
-                                    Margin="10,5,0,5"
-                                    Text="ID ADDRESS :" />
-                                    <TextBlock
                                     x:Name="txtRecipy"
                                     Grid.Row="4"
                                     Grid.Column="1"
                                     Margin="10,5,0,5"
-                                    Text="RECIPY :" />
-                                    <TextBlock
-                                    x:Name="txtPortNo"
-                                    Grid.Row="5"
-                                    Grid.Column="1"
-                                    Margin="10,5,0,5"
-                                    Text="PORT NO :" />
-                                    <TextBlock
-                                    x:Name="txtIQCMode"
-                                    Grid.Row="6"
-                                    Grid.Column="1"
-                                    Margin="10,5,0,5"
-                                    Text="IQC MODE :" />
+                                    Text="PPID :" />
                                     <TextBlock
                                     x:Name="txtPlcConnect"
                                     Grid.Row="7"
@@ -551,7 +516,7 @@
                                     Margin="10,5,0,5"
                                     Text=": Cim Connect" />
 
-                                       
+
 
                                 </Grid>
                             </Border>

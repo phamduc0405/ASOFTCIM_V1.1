@@ -33,14 +33,6 @@ namespace ASOFTCIM.MVVM.View.Config
                 this.Content = new ConfigView();
             };
 
-            btnManualSendDataConfig.Click += (s, e) =>
-            {
-                //this.Content = new TestSQLConfig();
-            };
-            btnMCRConfig.Click += (s, e) =>
-            {
-                //this.Content = new MCRConfigView();
-            };
             btnTest.Click += (s, e) =>
             {
                 this.Content = new Test();

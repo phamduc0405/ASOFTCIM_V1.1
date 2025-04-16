@@ -178,7 +178,7 @@ namespace ASOFTCIM.MVVM.View.Home
                     Dispatcher.Invoke(() =>
                     {
                         txtAvailabilityState.Text = ":   " + (_controller.CIM.EqpData.EQPSTATE.AVAILABILITYSTATE == "2" ? "UP" : "DOWN");
-                        txtInterLockState.Text = ":   " + (_controller.CIM.EqpData.EQPSTATE.INTERLOCKSTATE == "2" ? "INTERLOCKOFF" : "INTERLOCKON");
+                        txtInterLockState.Text = ":   " + (_controller.CIM.EqpData.EQPSTATE.INTERLOCKSTATE == "2" ? "OFF" : "ON");
                         txtRunState.Text = ":   " + (_controller.CIM.EqpData.EQPSTATE.RUNSTATE == "2" ? "RUN" : "IDLE");
                         txtFronState.Text = ":   " + (_controller.CIM.EqpData.EQPSTATE.FRONTSTATE == "2" ? "UP" : "DOWN");
                         txtRearState.Text = ":   " + (_controller.CIM.EqpData.EQPSTATE.REARSTATE == "2" ? "UP" : "DOWN");
