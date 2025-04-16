@@ -35,21 +35,17 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="45" />
                                 <RowDefinition Height="*" />
+                                <RowDefinition Height="50" />
                             </Grid.RowDefinitions>
                             <Border
                                 Grid.ColumnSpan="2"
                                 Margin="2"
                                 VerticalAlignment="Center"
-                                Background="Blue"
-                                BorderBrush="Black"
+
+                                BorderBrush="#FF7FA6EF"
                                 BorderThickness="1"
                                 CornerRadius="5">
-                                <Border.Effect>
-                                    <DropShadowEffect
-                                        BlurRadius="5"
-                                        ShadowDepth="2"
-                                        Color="Black" />
-                                </Border.Effect>
+     
                                 <Border
                                     Margin="0,2,0,2"
                                     VerticalAlignment="Center"
@@ -59,8 +55,9 @@
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Top"
                                         FontSize="25"
+                                        FontWeight="DemiBold"
                                         Style="{StaticResource HeaderTextBlockStyle}"
-                                        Text="FDCParameter" />
+                                        Text="FDC Parameter" />
                                 </Border>
 
                             </Border>
@@ -113,6 +110,20 @@
                                         Grid.Column="3"
                                         Margin="1"
                                         Background="LightGray" />
+                                    
+
+                                </Grid>
+                                <Grid
+                                    Grid.Column="0" Height="40" VerticalAlignment="Top"
+                                    Margin="0,10,0,0"
+                                    ShowGridLines="True">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="2*" />
+                                        <ColumnDefinition Width="2*" />
+                                        <ColumnDefinition Width="5*" />
+                                        <ColumnDefinition Width="5*" />
+                                    </Grid.ColumnDefinitions>
+
                                     <!--  ROW 0  -->
                                     <Grid Grid.Column="0">
                                         <Border Background="#424349">
@@ -152,6 +163,7 @@
                                     </Grid>
 
                                 </Grid>
+
                                 <Grid Grid.Column="1" Background="#eff2f7" />
                                 <Grid
                                     x:Name="mainGrid2"
@@ -200,6 +212,20 @@
                                         Grid.Column="3"
                                         Margin="1"
                                         Background="LightGray" />
+
+
+                                </Grid>
+                                <Grid
+                                    Grid.Column="2" Height="40" VerticalAlignment="Top"
+                                    Margin="0,10,0,0"
+                                    ShowGridLines="True">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="2*" />
+                                        <ColumnDefinition Width="2*" />
+                                        <ColumnDefinition Width="5*" />
+                                        <ColumnDefinition Width="5*" />
+                                    </Grid.ColumnDefinitions>
+                                    
                                     <!--  ROW 0  -->
                                     <Grid Grid.Column="0">
                                         <Border Background="#424349">
@@ -240,8 +266,18 @@
 
                                 </Grid>
                             </Grid>
-
+                            <Grid Grid.Row="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Button Style="{StaticResource ButtonControl}" Content="BACK" FontSize="5" Grid.Column="0"
+                                        Name="btnBack"/>
+                                <Button Style="{StaticResource ButtonControl}" Content="NEXT" FontSize="5" Grid.Column="1"
+                                        Name="btnNext"/>
+                            </Grid>
                         </Grid>
+                        
 
                     </Grid>
                 </Border>
