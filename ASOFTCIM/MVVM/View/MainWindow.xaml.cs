@@ -10,6 +10,7 @@ using ASOFTCIM.MVVM.View.Material;
 using ASOFTCIM.MVVM.View.Monitor;
 using ASOFTCIM.MVVM.View.Popup;
 using ASOFTCIM.MVVM.ViewModel;
+using OfficeOpenXml.FormulaParsing.Excel.Operators;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -37,7 +38,11 @@ namespace ASOFTCIM
     public partial class MainWindow : Window
     {
         public static Controller Controller;
+        public static string User = "User";
+        public static string Pass = "123";
+        public static int LeveLogin = 0;
         private ExitDisplay _displayPopupCode;
+        private LogInDisplay _displayPopupLogIn;
         private PerformanceCounter memoryCounter;
         private Thread memoryUsageThread;
         private bool isMonitoringMemory = true;
@@ -133,11 +138,13 @@ namespace ASOFTCIM
             };
             btnMonitor.Click += (sender, e) =>
             {
-                maincontent.Content = new MonitorIOView();
+                if (LeveLogin != 3)
+                    maincontent.Content = new MonitorIOView();
             };
             btnConfig.Click += (sender, e) =>
             {
-                maincontent.Content = new ConfigMainView();
+                if (LeveLogin == 1)
+                    maincontent.Content = new ConfigMainView();
             };
             btnSvid.Click += (sender, e) =>
             {
@@ -159,7 +166,10 @@ namespace ASOFTCIM
             {
                 maincontent.Content = new MaterialView();
             };
-
+            btnLogIn.Click += (sender, e) =>
+            {
+                PopupLogIn();
+            };
         }
         private async Task<bool> PopupMessage(string message)
         {
@@ -176,6 +186,7 @@ namespace ASOFTCIM
                         _displayPopupCode.Closing += (sender, a) =>
                         {
                             _displayPopupCode = null;
+
                         };
                         _displayPopupCode.Topmost = true;
                         _displayPopupCode.Close();
@@ -191,7 +202,62 @@ namespace ASOFTCIM
                 return false;
             }
         }
-
+        private async Task<bool> PopupLogIn()
+        {
+            bool result = false;
+            try
+            {
+                if (_displayPopupLogIn == null)
+                {
+                    Dispatcher.Invoke(() => {
+                        _displayPopupLogIn = new LogInDisplay();
+                        result = (bool)_displayPopupLogIn.ShowDialog();
+                        // Check the DialogResult
+                        _displayPopupLogIn.Closing += (sender, a) =>
+                        {
+                            LogIn();
+                            _displayPopupCode = null;
+                        };
+                        _displayPopupLogIn.Topmost = true;
+                        LogIn();
+                        _displayPopupLogIn.Close();
+                        _displayPopupLogIn = null;
+                    });
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message);
+                LogTxt.Add(LogTxt.Type.Exception, debug);
+                return false;
+            }
+        }
+        public void LogIn()
+        {
+            if(User=="Admin" && Pass=="1")
+            {
+                txtUser.Text = User;
+                LeveLogin = 1;
+                return;
+            }
+            if (User == "User" && Pass == "2")
+            {
+                txtUser.Text = User;
+                LeveLogin = 2;
+                return;
+            }
+            if (User == "Operator" && Pass == "3")
+            {
+                txtUser.Text = User;
+                LeveLogin = 3;
+            }
+            else
+            {
+                txtUser.Text = "User";
+                LeveLogin = 2;
+            }    
+        }
         private void UpdateTime()
         {
             while (_running)

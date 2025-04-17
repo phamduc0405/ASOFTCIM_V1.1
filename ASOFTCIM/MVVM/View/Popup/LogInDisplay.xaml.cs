@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ASOFTCIM.MainControl;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +20,41 @@ namespace ASOFTCIM.MVVM.View.Popup
     /// </summary>
     public partial class LogInDisplay : Window
     {
+        
         public LogInDisplay()
         {
             InitializeComponent();
+            cbb.ItemsSource = new List<string>() { "Admin","User","Operator" };
+            CreaterEvents();
+        }
+        private void CreaterEvents()
+        {
+            Loaded += (sender, args) =>
+            {
+                
+            };
+            btnLogIn.Click += (sender, args) =>
+            {
+                MainWindow.User = cbb.Text;
+                MainWindow.Pass = txtPass.Text;
+                CloseView();            
+            };
+            Closing += (sender, args) =>
+            {
+                MainWindow.User = cbb.Text;
+                MainWindow.Pass = txtPass.Text;
+            };
+        }
+        private void CloseView()
+        {
+            MainWindow.User = cbb.Text;
+            MainWindow.Pass = txtPass.Text;
+            this.Close();
+        }
+
+        private void btnLogIn_Click(object sender, RoutedEventArgs e)
+        {
+            CloseView();
         }
     }
 }
