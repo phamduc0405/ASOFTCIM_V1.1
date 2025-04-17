@@ -16,7 +16,7 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Border
-                    Margin="10,5,5,5"
+                    Margin="10,5,10,5"
                     Background="White"
                     BorderBrush="Black"
                     BorderThickness="0.5"
@@ -43,16 +43,10 @@
                                 Grid.ColumnSpan="2"
                                 Margin="2"
                                 VerticalAlignment="Center"
-                                Background="Blue"
-                                BorderBrush="Black"
+                                BorderBrush="#FF7FA6EF"
                                 BorderThickness="1"
                                 CornerRadius="5">
-                                <Border.Effect>
-                                    <DropShadowEffect
-                                        BlurRadius="5"
-                                        ShadowDepth="2"
-                                        Color="Black" />
-                                </Border.Effect>
+
                                 <Border
                                     Margin="0,2,0,2"
                                     VerticalAlignment="Center"
@@ -65,11 +59,10 @@
                                         Style="{StaticResource HeaderTextBlockStyle}"
                                         Text="Material" />
                                 </Border>
-
                             </Border>
                             <Grid Grid.Row="1" ShowGridLines="True">
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="2.5*" />
+                                    <RowDefinition Height="500" />
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
                                 <Grid Grid.Row="0" ShowGridLines="True">
@@ -78,15 +71,17 @@
                                         <ColumnDefinition Width="*" />
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
-                                    <StackPanel Grid.Column="0" Orientation="Vertical">
+                                    <StackPanel
+                                        Grid.Column="0"
+                                        Background="LightGray"
+                                        Orientation="Vertical">
                                         <!--  ============================  -->
                                         <DockPanel>
                                             <Border
                                                 Grid.ColumnSpan="2"
                                                 Margin="2"
                                                 VerticalAlignment="Center"
-                                                Background="Blue"
-                                                BorderBrush="Black"
+                                                BorderBrush="#FF7FA6EF"
                                                 BorderThickness="1"
                                                 CornerRadius="5">
                                                 <Border.Effect>
@@ -98,19 +93,20 @@
                                                 <Border
                                                     Margin="0,2,0,2"
                                                     VerticalAlignment="Center"
-                                                    Background="White"
+                                                    Background="#424349"
                                                     CornerRadius="5">
                                                     <TextBlock
                                                         HorizontalAlignment="Center"
                                                         VerticalAlignment="Top"
                                                         FontSize="25"
+                                                        Foreground="White"
                                                         Style="{StaticResource HeaderTextBlockStyle}"
                                                         Text="PORT 1" />
                                                 </Border>
 
                                             </Border>
                                         </DockPanel>
-                                        <StackPanel Orientation="Horizontal">
+                                        <StackPanel Margin="0,10,0,10" Orientation="Horizontal">
                                             <TextBlock
                                                 Margin="10,0,0,0"
                                                 HorizontalAlignment="Left"
@@ -118,13 +114,14 @@
                                                 FontSize="20"
                                                 Text="Material Batch ID" />
                                             <TextBlock
+                                                x:Name="txtMaterialBatchID_P1"
                                                 Margin="10,0,0,0"
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Center"
                                                 FontSize="20"
                                                 Text=" " />
                                         </StackPanel>
-                                        <StackPanel Orientation="Horizontal">
+                                        <StackPanel Margin="0,10,0,10" Orientation="Horizontal">
                                             <TextBlock
                                                 Margin="10,0,0,0"
                                                 HorizontalAlignment="Left"
@@ -132,13 +129,14 @@
                                                 FontSize="20"
                                                 Text="Material Port ID" />
                                             <TextBlock
+                                                x:Name="txtMaterialPortID_P1"
                                                 Margin="10,0,0,0"
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Center"
                                                 FontSize="20"
                                                 Text=" " />
                                         </StackPanel>
-                                        <StackPanel Orientation="Horizontal">
+                                        <StackPanel Margin="0,10,0,10" Orientation="Horizontal">
                                             <TextBlock
                                                 Margin="10,0,0,0"
                                                 HorizontalAlignment="Left"
@@ -146,13 +144,14 @@
                                                 FontSize="20"
                                                 Text="Material State" />
                                             <TextBlock
+                                                x:Name="txtMaterialState_P1"
                                                 Margin="10,0,0,0"
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Center"
                                                 FontSize="20"
                                                 Text=" " />
                                         </StackPanel>
-                                        <StackPanel Orientation="Horizontal">
+                                        <StackPanel Margin="0,10,0,10" Orientation="Horizontal">
                                             <TextBlock
                                                 Margin="10,0,0,0"
                                                 HorizontalAlignment="Left"
@@ -160,13 +159,14 @@
                                                 FontSize="20"
                                                 Text="Assemble QTY" />
                                             <TextBlock
+                                                x:Name="txtAssembleQTY_P1"
                                                 Margin="10,0,0,0"
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Center"
                                                 FontSize="20"
                                                 Text=" " />
                                         </StackPanel>
-                                        <StackPanel Orientation="Horizontal">
+                                        <StackPanel Margin="0,10,0,10" Orientation="Horizontal">
                                             <TextBlock
                                                 Margin="10,0,0,0"
                                                 HorizontalAlignment="Left"
@@ -174,13 +174,14 @@
                                                 FontSize="20"
                                                 Text="Total QTY" />
                                             <TextBlock
+                                                x:Name="txtTotalQTY_P1"
                                                 Margin="10,0,0,0"
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Center"
                                                 FontSize="20"
                                                 Text=" " />
                                         </StackPanel>
-                                        <StackPanel Orientation="Horizontal">
+                                        <StackPanel Margin="0,10,0,10" Orientation="Horizontal">
                                             <TextBlock
                                                 Margin="10,0,0,0"
                                                 HorizontalAlignment="Left"
@@ -188,13 +189,14 @@
                                                 FontSize="20"
                                                 Text="Remain QTY" />
                                             <TextBlock
+                                                x:Name="txtRemainQTY_P1"
                                                 Margin="10,0,0,0"
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Center"
                                                 FontSize="20"
                                                 Text=" " />
                                         </StackPanel>
-                                        <StackPanel Orientation="Horizontal">
+                                        <StackPanel Margin="0,10,0,10" Orientation="Horizontal">
                                             <TextBlock
                                                 Margin="10,0,0,0"
                                                 HorizontalAlignment="Left"
@@ -202,27 +204,15 @@
                                                 FontSize="20"
                                                 Text="Used QTY" />
                                             <TextBlock
+                                                x:Name="txtUsedQTY_P1"
                                                 Margin="10,0,0,0"
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Center"
                                                 FontSize="20"
                                                 Text=" " />
                                         </StackPanel>
-                                        <StackPanel Orientation="Horizontal">
-                                            <TextBlock
-                                                Margin="10,0,0,0"
-                                                HorizontalAlignment="Left"
-                                                VerticalAlignment="Center"
-                                                FontSize="20"
-                                                Text="Used QTY" />
-                                            <TextBlock
-                                                Margin="10,0,0,0"
-                                                HorizontalAlignment="Left"
-                                                VerticalAlignment="Center"
-                                                FontSize="20"
-                                                Text=" " />
-                                        </StackPanel>
-                                        <StackPanel Orientation="Horizontal">
+
+                                        <StackPanel Margin="0,10,0,10" Orientation="Horizontal">
                                             <TextBlock
                                                 Margin="10,0,0,0"
                                                 HorizontalAlignment="Left"
@@ -230,6 +220,7 @@
                                                 FontSize="20"
                                                 Text="NG QTY" />
                                             <TextBlock
+                                                x:Name="txtNGQTY_P1"
                                                 Margin="10,0,0,0"
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Center"
@@ -241,15 +232,17 @@
 
 
                                     </StackPanel>
-                                    <StackPanel Grid.Column="1" Orientation="Vertical">
+                                    <StackPanel
+                                        Grid.Column="1"
+                                        Background="LightGray"
+                                        Orientation="Vertical">
                                         <!--  ============================  -->
                                         <DockPanel>
                                             <Border
                                                 Grid.ColumnSpan="2"
                                                 Margin="2"
                                                 VerticalAlignment="Center"
-                                                Background="Blue"
-                                                BorderBrush="Black"
+                                                BorderBrush="#FF7FA6EF"
                                                 BorderThickness="1"
                                                 CornerRadius="5">
                                                 <Border.Effect>
@@ -261,19 +254,20 @@
                                                 <Border
                                                     Margin="0,2,0,2"
                                                     VerticalAlignment="Center"
-                                                    Background="White"
+                                                    Background="#424349"
                                                     CornerRadius="5">
                                                     <TextBlock
                                                         HorizontalAlignment="Center"
                                                         VerticalAlignment="Top"
                                                         FontSize="25"
+                                                        Foreground="White"
                                                         Style="{StaticResource HeaderTextBlockStyle}"
                                                         Text="PORT 2" />
                                                 </Border>
 
                                             </Border>
                                         </DockPanel>
-                                        <StackPanel Orientation="Horizontal">
+                                        <StackPanel Margin="0,10,0,10" Orientation="Horizontal">
                                             <TextBlock
                                                 Margin="10,0,0,0"
                                                 HorizontalAlignment="Left"
@@ -281,13 +275,14 @@
                                                 FontSize="20"
                                                 Text="Material Batch ID" />
                                             <TextBlock
+                                                x:Name="txtMaterialBatchID_P2"
                                                 Margin="10,0,0,0"
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Center"
                                                 FontSize="20"
                                                 Text=" " />
                                         </StackPanel>
-                                        <StackPanel Orientation="Horizontal">
+                                        <StackPanel Margin="0,10,0,10" Orientation="Horizontal">
                                             <TextBlock
                                                 Margin="10,0,0,0"
                                                 HorizontalAlignment="Left"
@@ -295,13 +290,14 @@
                                                 FontSize="20"
                                                 Text="Material Port ID" />
                                             <TextBlock
+                                                x:Name="txtMaterialPortID_P2"
                                                 Margin="10,0,0,0"
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Center"
                                                 FontSize="20"
                                                 Text=" " />
                                         </StackPanel>
-                                        <StackPanel Orientation="Horizontal">
+                                        <StackPanel Margin="0,10,0,10" Orientation="Horizontal">
                                             <TextBlock
                                                 Margin="10,0,0,0"
                                                 HorizontalAlignment="Left"
@@ -309,13 +305,14 @@
                                                 FontSize="20"
                                                 Text="Material State" />
                                             <TextBlock
+                                                x:Name="txtMaterialState_P2"
                                                 Margin="10,0,0,0"
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Center"
                                                 FontSize="20"
                                                 Text=" " />
                                         </StackPanel>
-                                        <StackPanel Orientation="Horizontal">
+                                        <StackPanel Margin="0,10,0,10" Orientation="Horizontal">
                                             <TextBlock
                                                 Margin="10,0,0,0"
                                                 HorizontalAlignment="Left"
@@ -323,13 +320,14 @@
                                                 FontSize="20"
                                                 Text="Assemble QTY" />
                                             <TextBlock
+                                                x:Name="txtAssembleQTY_P2"
                                                 Margin="10,0,0,0"
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Center"
                                                 FontSize="20"
                                                 Text=" " />
                                         </StackPanel>
-                                        <StackPanel Orientation="Horizontal">
+                                        <StackPanel Margin="0,10,0,10" Orientation="Horizontal">
                                             <TextBlock
                                                 Margin="10,0,0,0"
                                                 HorizontalAlignment="Left"
@@ -337,13 +335,14 @@
                                                 FontSize="20"
                                                 Text="Total QTY" />
                                             <TextBlock
+                                                x:Name="txtTotalQTY_P2"
                                                 Margin="10,0,0,0"
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Center"
                                                 FontSize="20"
                                                 Text=" " />
                                         </StackPanel>
-                                        <StackPanel Orientation="Horizontal">
+                                        <StackPanel Margin="0,10,0,10" Orientation="Horizontal">
                                             <TextBlock
                                                 Margin="10,0,0,0"
                                                 HorizontalAlignment="Left"
@@ -351,13 +350,14 @@
                                                 FontSize="20"
                                                 Text="Remain QTY" />
                                             <TextBlock
+                                                x:Name="txtRemainQTY_P2"
                                                 Margin="10,0,0,0"
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Center"
                                                 FontSize="20"
                                                 Text=" " />
                                         </StackPanel>
-                                        <StackPanel Orientation="Horizontal">
+                                        <StackPanel Margin="0,10,0,10" Orientation="Horizontal">
                                             <TextBlock
                                                 Margin="10,0,0,0"
                                                 HorizontalAlignment="Left"
@@ -365,27 +365,15 @@
                                                 FontSize="20"
                                                 Text="Used QTY" />
                                             <TextBlock
+                                                x:Name="txtUsedQTY_P2"
                                                 Margin="10,0,0,0"
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Center"
                                                 FontSize="20"
                                                 Text=" " />
                                         </StackPanel>
-                                        <StackPanel Orientation="Horizontal">
-                                            <TextBlock
-                                                Margin="10,0,0,0"
-                                                HorizontalAlignment="Left"
-                                                VerticalAlignment="Center"
-                                                FontSize="20"
-                                                Text="Used QTY" />
-                                            <TextBlock
-                                                Margin="10,0,0,0"
-                                                HorizontalAlignment="Left"
-                                                VerticalAlignment="Center"
-                                                FontSize="20"
-                                                Text=" " />
-                                        </StackPanel>
-                                        <StackPanel Orientation="Horizontal">
+
+                                        <StackPanel Margin="0,10,0,10" Orientation="Horizontal">
                                             <TextBlock
                                                 Margin="10,0,0,0"
                                                 HorizontalAlignment="Left"
@@ -393,22 +381,29 @@
                                                 FontSize="20"
                                                 Text="NG QTY" />
                                             <TextBlock
+                                                x:Name="txtNGQTY_P2"
                                                 Margin="10,0,0,0"
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Center"
                                                 FontSize="20"
                                                 Text=" " />
                                         </StackPanel>
+
+
+
+
                                     </StackPanel>
-                                    <StackPanel Grid.Column="2" Orientation="Vertical">
+                                    <StackPanel
+                                        Grid.Column="2"
+                                        Background="LightGray"
+                                        Orientation="Vertical">
                                         <!--  ============================  -->
                                         <DockPanel>
                                             <Border
                                                 Grid.ColumnSpan="2"
                                                 Margin="2"
                                                 VerticalAlignment="Center"
-                                                Background="Blue"
-                                                BorderBrush="Black"
+                                                BorderBrush="#FF7FA6EF"
                                                 BorderThickness="1"
                                                 CornerRadius="5">
                                                 <Border.Effect>
@@ -420,19 +415,20 @@
                                                 <Border
                                                     Margin="0,2,0,2"
                                                     VerticalAlignment="Center"
-                                                    Background="White"
+                                                    Background="#424349"
                                                     CornerRadius="5">
                                                     <TextBlock
                                                         HorizontalAlignment="Center"
                                                         VerticalAlignment="Top"
                                                         FontSize="25"
+                                                        Foreground="White"
                                                         Style="{StaticResource HeaderTextBlockStyle}"
                                                         Text="PORT 3" />
                                                 </Border>
 
                                             </Border>
                                         </DockPanel>
-                                        <StackPanel Orientation="Horizontal">
+                                        <StackPanel Margin="0,10,0,10" Orientation="Horizontal">
                                             <TextBlock
                                                 Margin="10,0,0,0"
                                                 HorizontalAlignment="Left"
@@ -440,13 +436,14 @@
                                                 FontSize="20"
                                                 Text="Material Batch ID" />
                                             <TextBlock
+                                                x:Name="txtMaterialBatchID_P3"
                                                 Margin="10,0,0,0"
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Center"
                                                 FontSize="20"
                                                 Text=" " />
                                         </StackPanel>
-                                        <StackPanel Orientation="Horizontal">
+                                        <StackPanel Margin="0,10,0,10" Orientation="Horizontal">
                                             <TextBlock
                                                 Margin="10,0,0,0"
                                                 HorizontalAlignment="Left"
@@ -454,13 +451,14 @@
                                                 FontSize="20"
                                                 Text="Material Port ID" />
                                             <TextBlock
+                                                x:Name="txtMaterialPortID_P3"
                                                 Margin="10,0,0,0"
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Center"
                                                 FontSize="20"
                                                 Text=" " />
                                         </StackPanel>
-                                        <StackPanel Orientation="Horizontal">
+                                        <StackPanel Margin="0,10,0,10" Orientation="Horizontal">
                                             <TextBlock
                                                 Margin="10,0,0,0"
                                                 HorizontalAlignment="Left"
@@ -468,13 +466,14 @@
                                                 FontSize="20"
                                                 Text="Material State" />
                                             <TextBlock
+                                                x:Name="txtMaterialState_P3"
                                                 Margin="10,0,0,0"
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Center"
                                                 FontSize="20"
                                                 Text=" " />
                                         </StackPanel>
-                                        <StackPanel Orientation="Horizontal">
+                                        <StackPanel Margin="0,10,0,10" Orientation="Horizontal">
                                             <TextBlock
                                                 Margin="10,0,0,0"
                                                 HorizontalAlignment="Left"
@@ -482,13 +481,14 @@
                                                 FontSize="20"
                                                 Text="Assemble QTY" />
                                             <TextBlock
+                                                x:Name="txtAssembleQTY_P3"
                                                 Margin="10,0,0,0"
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Center"
                                                 FontSize="20"
                                                 Text=" " />
                                         </StackPanel>
-                                        <StackPanel Orientation="Horizontal">
+                                        <StackPanel Margin="0,10,0,10" Orientation="Horizontal">
                                             <TextBlock
                                                 Margin="10,0,0,0"
                                                 HorizontalAlignment="Left"
@@ -496,13 +496,14 @@
                                                 FontSize="20"
                                                 Text="Total QTY" />
                                             <TextBlock
+                                                x:Name="txtTotalQTY_P3"
                                                 Margin="10,0,0,0"
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Center"
                                                 FontSize="20"
                                                 Text=" " />
                                         </StackPanel>
-                                        <StackPanel Orientation="Horizontal">
+                                        <StackPanel Margin="0,10,0,10" Orientation="Horizontal">
                                             <TextBlock
                                                 Margin="10,0,0,0"
                                                 HorizontalAlignment="Left"
@@ -510,13 +511,14 @@
                                                 FontSize="20"
                                                 Text="Remain QTY" />
                                             <TextBlock
+                                                x:Name="txtRemainQTY_P3"
                                                 Margin="10,0,0,0"
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Center"
                                                 FontSize="20"
                                                 Text=" " />
                                         </StackPanel>
-                                        <StackPanel Orientation="Horizontal">
+                                        <StackPanel Margin="0,10,0,10" Orientation="Horizontal">
                                             <TextBlock
                                                 Margin="10,0,0,0"
                                                 HorizontalAlignment="Left"
@@ -524,27 +526,15 @@
                                                 FontSize="20"
                                                 Text="Used QTY" />
                                             <TextBlock
+                                                x:Name="txtUsedQTY_P3"
                                                 Margin="10,0,0,0"
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Center"
                                                 FontSize="20"
                                                 Text=" " />
                                         </StackPanel>
-                                        <StackPanel Orientation="Horizontal">
-                                            <TextBlock
-                                                Margin="10,0,0,0"
-                                                HorizontalAlignment="Left"
-                                                VerticalAlignment="Center"
-                                                FontSize="20"
-                                                Text="Used QTY" />
-                                            <TextBlock
-                                                Margin="10,0,0,0"
-                                                HorizontalAlignment="Left"
-                                                VerticalAlignment="Center"
-                                                FontSize="20"
-                                                Text=" " />
-                                        </StackPanel>
-                                        <StackPanel Orientation="Horizontal">
+
+                                        <StackPanel Margin="0,10,0,10" Orientation="Horizontal">
                                             <TextBlock
                                                 Margin="10,0,0,0"
                                                 HorizontalAlignment="Left"
@@ -552,15 +542,317 @@
                                                 FontSize="20"
                                                 Text="NG QTY" />
                                             <TextBlock
+                                                x:Name="txtNGQTY_P3"
                                                 Margin="10,0,0,0"
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Center"
                                                 FontSize="20"
                                                 Text=" " />
                                         </StackPanel>
+
+
+
+
                                     </StackPanel>
                                 </Grid>
-                                <Grid Grid.Row="1" ShowGridLines="True" />
+                                <Grid Grid.Row="1" ShowGridLines="True">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel
+                                        Grid.Column="0"
+                                        Background="LightGray"
+                                        Orientation="Vertical">
+                                        <!--  ============================  -->
+                                        <DockPanel>
+                                            <Border
+                                                Grid.ColumnSpan="2"
+                                                Margin="2"
+                                                VerticalAlignment="Center"
+                                                BorderBrush="#FF7FA6EF"
+                                                BorderThickness="1"
+                                                CornerRadius="5">
+                                                <Border.Effect>
+                                                    <DropShadowEffect
+                                                        BlurRadius="5"
+                                                        ShadowDepth="2"
+                                                        Color="Black" />
+                                                </Border.Effect>
+                                                <Border
+                                                    Margin="0,2,0,2"
+                                                    VerticalAlignment="Center"
+                                                    Background="#424349"
+                                                    CornerRadius="5">
+                                                    <TextBlock
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Top"
+                                                        FontSize="25"
+                                                        Foreground="White"
+                                                        Style="{StaticResource HeaderTextBlockStyle}"
+                                                        Text="KITTING/KITTING_CANCEL_P1" />
+                                                </Border>
+
+                                            </Border>
+                                        </DockPanel>
+                                        <StackPanel Orientation="Vertical">
+                                            <TextBlock
+                                                Margin="10,0,0,0"
+                                                HorizontalAlignment="Left"
+                                                VerticalAlignment="Center"
+                                                FontSize="20"
+                                                Text="Material Batch ID:" />
+                                            <TextBlock
+                                                x:Name="txtMaterialBatchID_kitting_P1"
+                                                Margin="10,0,0,0"
+                                                HorizontalAlignment="Left"
+                                                VerticalAlignment="Center"
+                                                FontSize="20"
+                                                Text="123" />
+                                        </StackPanel>
+                                        <StackPanel Orientation="Vertical">
+                                            <TextBlock
+                                                Margin="10,0,0,0"
+                                                HorizontalAlignment="Left"
+                                                VerticalAlignment="Center"
+                                                FontSize="20"
+                                                Text="Material Port ID:" />
+                                            <TextBlock
+                                                x:Name="txtMaterialPortID_kitting_P1"
+                                                Margin="10,0,0,0"
+                                                HorizontalAlignment="Left"
+                                                VerticalAlignment="Center"
+                                                FontSize="20"
+                                                Text="1" />
+                                        </StackPanel>
+                                        <StackPanel Orientation="Vertical">
+                                            <TextBlock
+                                                Margin="10,0,0,0"
+                                                HorizontalAlignment="Left"
+                                                VerticalAlignment="Center"
+                                                FontSize="20"
+                                                Text="Reply Code:" />
+                                            <TextBlock
+                                                x:Name="txtReplyCode_kitting_P1"
+                                                Margin="10,0,0,0"
+                                                HorizontalAlignment="Left"
+                                                VerticalAlignment="Center"
+                                                FontSize="20"
+                                                Text="OK" />
+                                        </StackPanel>
+                                        <StackPanel Orientation="Vertical">
+                                            <TextBlock
+                                                Margin="10,0,0,0"
+                                                HorizontalAlignment="Left"
+                                                VerticalAlignment="Center"
+                                                FontSize="20"
+                                                Text="Reply Text:" />
+                                            <TextBlock
+                                                x:Name="txtReplyText_kitting_P1"
+                                                Margin="10,0,0,0"
+                                                HorizontalAlignment="Left"
+                                                VerticalAlignment="Center"
+                                                FontSize="20"
+                                                Text="123" />
+                                        </StackPanel>
+
+                                    </StackPanel>
+                                    <StackPanel
+                                        Grid.Column="1"
+                                        Background="LightGray"
+                                        Orientation="Vertical">
+                                        <!--  ============================  -->
+                                        <DockPanel>
+                                            <Border
+                                                Grid.ColumnSpan="2"
+                                                Margin="2"
+                                                VerticalAlignment="Center"
+                                                BorderBrush="#FF7FA6EF"
+                                                BorderThickness="1"
+                                                CornerRadius="5">
+                                                <Border.Effect>
+                                                    <DropShadowEffect
+                                                        BlurRadius="5"
+                                                        ShadowDepth="2"
+                                                        Color="Black" />
+                                                </Border.Effect>
+                                                <Border
+                                                    Margin="0,2,0,2"
+                                                    VerticalAlignment="Center"
+                                                    Background="#424349"
+                                                    CornerRadius="5">
+                                                    <TextBlock
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Top"
+                                                        FontSize="25"
+                                                        Foreground="White"
+                                                        Style="{StaticResource HeaderTextBlockStyle}"
+                                                        Text="KITTING/KITTING_CANCEL_P1" />
+                                                </Border>
+
+                                            </Border>
+                                        </DockPanel>
+                                        <StackPanel Orientation="Vertical">
+                                            <TextBlock
+                                                Margin="10,0,0,0"
+                                                HorizontalAlignment="Left"
+                                                VerticalAlignment="Center"
+                                                FontSize="20"
+                                                Text="Material Batch ID:" />
+                                            <TextBlock
+                                                x:Name="txtMaterialBatchID_kitting_P2"
+                                                Margin="10,0,0,0"
+                                                HorizontalAlignment="Left"
+                                                VerticalAlignment="Center"
+                                                FontSize="20"
+                                                Text="123" />
+                                        </StackPanel>
+                                        <StackPanel Orientation="Vertical">
+                                            <TextBlock
+                                                Margin="10,0,0,0"
+                                                HorizontalAlignment="Left"
+                                                VerticalAlignment="Center"
+                                                FontSize="20"
+                                                Text="Material Port ID:" />
+                                            <TextBlock
+                                                x:Name="txtMaterialPortID_kitting_P2"
+                                                Margin="10,0,0,0"
+                                                HorizontalAlignment="Left"
+                                                VerticalAlignment="Center"
+                                                FontSize="20"
+                                                Text="1" />
+                                        </StackPanel>
+                                        <StackPanel Orientation="Vertical">
+                                            <TextBlock
+                                                Margin="10,0,0,0"
+                                                HorizontalAlignment="Left"
+                                                VerticalAlignment="Center"
+                                                FontSize="20"
+                                                Text="Reply Code:" />
+                                            <TextBlock
+                                                x:Name="txtReplyCode_kitting_P2"
+                                                Margin="10,0,0,0"
+                                                HorizontalAlignment="Left"
+                                                VerticalAlignment="Center"
+                                                FontSize="20"
+                                                Text="OK" />
+                                        </StackPanel>
+                                        <StackPanel Orientation="Vertical">
+                                            <TextBlock
+                                                Margin="10,0,0,0"
+                                                HorizontalAlignment="Left"
+                                                VerticalAlignment="Center"
+                                                FontSize="20"
+                                                Text="Reply Text:" />
+                                            <TextBlock
+                                                x:Name="txtReplyText_kitting_P2"
+                                                Margin="10,0,0,0"
+                                                HorizontalAlignment="Left"
+                                                VerticalAlignment="Center"
+                                                FontSize="20"
+                                                Text="123" />
+                                        </StackPanel>
+
+                                    </StackPanel>
+                                    <StackPanel
+                                        Grid.Column="2"
+                                        Background="LightGray"
+                                        Orientation="Vertical">
+                                        <!--  ============================  -->
+                                        <DockPanel>
+                                            <Border
+                                                Grid.ColumnSpan="2"
+                                                Margin="2"
+                                                VerticalAlignment="Center"
+                                                BorderBrush="#FF7FA6EF"
+                                                BorderThickness="1"
+                                                CornerRadius="5">
+                                                <Border.Effect>
+                                                    <DropShadowEffect
+                                                        BlurRadius="5"
+                                                        ShadowDepth="2"
+                                                        Color="Black" />
+                                                </Border.Effect>
+                                                <Border
+                                                    Margin="0,2,0,2"
+                                                    VerticalAlignment="Center"
+                                                    Background="#424349"
+                                                    CornerRadius="5">
+                                                    <TextBlock
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Top"
+                                                        FontSize="25"
+                                                        Foreground="White"
+                                                        Style="{StaticResource HeaderTextBlockStyle}"
+                                                        Text="KITTING/KITTING_CANCEL_P1" />
+                                                </Border>
+
+                                            </Border>
+                                        </DockPanel>
+                                        <StackPanel Orientation="Vertical">
+                                            <TextBlock
+                                                Margin="10,0,0,0"
+                                                HorizontalAlignment="Left"
+                                                VerticalAlignment="Center"
+                                                FontSize="20"
+                                                Text="Material Batch ID:" />
+                                            <TextBlock
+                                                x:Name="txtMaterialBatchID_kitting_P3"
+                                                Margin="10,0,0,0"
+                                                HorizontalAlignment="Left"
+                                                VerticalAlignment="Center"
+                                                FontSize="20"
+                                                Text="123" />
+                                        </StackPanel>
+                                        <StackPanel Orientation="Vertical">
+                                            <TextBlock
+                                                Margin="10,0,0,0"
+                                                HorizontalAlignment="Left"
+                                                VerticalAlignment="Center"
+                                                FontSize="20"
+                                                Text="Material Port ID:" />
+                                            <TextBlock
+                                                x:Name="txtMaterialPortID_kitting_P3"
+                                                Margin="10,0,0,0"
+                                                HorizontalAlignment="Left"
+                                                VerticalAlignment="Center"
+                                                FontSize="20"
+                                                Text="1" />
+                                        </StackPanel>
+                                        <StackPanel Orientation="Vertical">
+                                            <TextBlock
+                                                Margin="10,0,0,0"
+                                                HorizontalAlignment="Left"
+                                                VerticalAlignment="Center"
+                                                FontSize="20"
+                                                Text="Reply Code:" />
+                                            <TextBlock
+                                                x:Name="txtReplyCode_kitting_P3"
+                                                Margin="10,0,0,0"
+                                                HorizontalAlignment="Left"
+                                                VerticalAlignment="Center"
+                                                FontSize="20"
+                                                Text="OK" />
+                                        </StackPanel>
+                                        <StackPanel Orientation="Vertical">
+                                            <TextBlock
+                                                Margin="10,0,0,0"
+                                                HorizontalAlignment="Left"
+                                                VerticalAlignment="Center"
+                                                FontSize="20"
+                                                Text="Reply Text:" />
+                                            <TextBlock
+                                                x:Name="txtReplyText_kitting_P3"
+                                                Margin="10,0,0,0"
+                                                HorizontalAlignment="Left"
+                                                VerticalAlignment="Center"
+                                                FontSize="20"
+                                                Text="123" />
+                                        </StackPanel>
+
+                                    </StackPanel>
+                                </Grid>
                             </Grid>
                         </Grid>
 
