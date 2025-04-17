@@ -91,7 +91,7 @@
                                         Content="EQUIP SETTING"
                                         Style="{StaticResource ButtonControl}"
                                         Tag="Gear" />
-                                   
+
                                     <Button
                                         x:Name="btnTest"
                                         Width="auto"
