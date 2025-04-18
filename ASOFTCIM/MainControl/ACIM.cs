@@ -195,7 +195,9 @@ namespace ASOFTCIM
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Lỗi khi tạo instance: {ex.Message}");
+                    var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.",
+                        MethodBase.GetCurrentMethod().DeclaringType.Name.ToString(), MethodBase.GetCurrentMethod().Name, ex.Message);
+                    LogTxt.Add(LogTxt.Type.Exception, debug);
                 }
             }
         }
@@ -219,7 +221,9 @@ namespace ASOFTCIM
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Lỗi khi tạo instance: {ex.Message}");
+                    var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.",
+                        MethodBase.GetCurrentMethod().DeclaringType.Name.ToString(), MethodBase.GetCurrentMethod().Name, ex.Message);
+                    LogTxt.Add(LogTxt.Type.Exception, debug);
                 }
             }
         }
@@ -243,7 +247,9 @@ namespace ASOFTCIM
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Lỗi khi tạo instance: {ex.Message}");
+                    var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.",
+                        MethodBase.GetCurrentMethod().DeclaringType.Name.ToString(), MethodBase.GetCurrentMethod().Name, ex.Message);
+                    LogTxt.Add(LogTxt.Type.Exception, debug);
                 }
             }
         }

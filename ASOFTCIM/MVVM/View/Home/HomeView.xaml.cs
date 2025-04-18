@@ -186,7 +186,12 @@ namespace ASOFTCIM.MVVM.View.Home
                     });
                     Thread.Sleep(500);
                 }
-                catch { }
+                catch (Exception ex)
+                {
+                    var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.",
+                        MethodBase.GetCurrentMethod().DeclaringType.Name.ToString(), MethodBase.GetCurrentMethod().Name, ex.Message);
+                    LogTxt.Add(LogTxt.Type.Exception, debug);
+                }
             }
         }
 
@@ -208,6 +213,9 @@ namespace ASOFTCIM.MVVM.View.Home
                     catch (Exception ex)
                     {
                         MessageBox.Show($"Lỗi: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.",
+                        MethodBase.GetCurrentMethod().DeclaringType.Name.ToString(), MethodBase.GetCurrentMethod().Name, ex.Message);
+                        LogTxt.Add(LogTxt.Type.Exception, debug);
                     }
                 }));
             }

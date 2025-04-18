@@ -53,8 +53,10 @@
                                     <TextBlock
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Top"
+                                        FontSize="25"
+                                        FontWeight="DemiBold"
                                         Style="{StaticResource HeaderTextBlockStyle}"
-                                        Text="ECMParameter" />
+                                        Text="ECM Parameter" />
                                 </Border>
 
                             </Border>

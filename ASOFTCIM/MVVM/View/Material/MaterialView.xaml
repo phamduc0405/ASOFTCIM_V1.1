@@ -56,8 +56,9 @@
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Top"
                                         FontSize="25"
+                                        FontWeight="DemiBold"
                                         Style="{StaticResource HeaderTextBlockStyle}"
-                                        Text="Material" />
+                                        Text="MATERIAL" />
                                 </Border>
                             </Border>
                             <Grid Grid.Row="1" ShowGridLines="True">

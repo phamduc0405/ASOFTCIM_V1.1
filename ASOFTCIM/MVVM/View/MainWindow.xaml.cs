@@ -3,6 +3,7 @@ using A_SOFT.CMM.INIT;
 using ASOFTCIM.Data;
 using ASOFTCIM.MainControl;
 using ASOFTCIM.MVVM.Model;
+using ASOFTCIM.MVVM.View.Alarm;
 using ASOFTCIM.MVVM.View.Config;
 using ASOFTCIM.MVVM.View.ECM;
 using ASOFTCIM.MVVM.View.Home;
@@ -39,7 +40,7 @@ namespace ASOFTCIM
     {
         public static Controller Controller;
         public static string User = "User";
-        public static string Pass = "123";
+        public static string Pass = "2";
         public static int LeveLogin = 0;
         private ExitDisplay _displayPopupCode;
         private LogInDisplay _displayPopupLogIn;
@@ -74,7 +75,7 @@ namespace ASOFTCIM
                 IsBackground = true,
             };
             _updateTime.Start();
-            txtVersion.Text = "Version: 250311";
+            txtVersion.Text = "Version: 250417";
         }
         private void Initial()
         {
@@ -160,7 +161,7 @@ namespace ASOFTCIM
             };
             btnAlarm.Click += (sender, e) =>
             {
-                maincontent.Content = new Alarm();
+                maincontent.Content = new MVVM.View.Alarm.AlarmView();
             };
             btnMaterial.Click += (sender, e) =>
             {
