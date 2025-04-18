@@ -253,7 +253,7 @@ namespace ASOFTCIM
                 }
             }
         }
-
+        
         private void Plc2CimEventHandle(string bit)
         {
             var handle = Plc2CimChangeEvent;

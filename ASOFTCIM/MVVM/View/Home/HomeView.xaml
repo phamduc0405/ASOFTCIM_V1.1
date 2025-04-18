@@ -423,7 +423,7 @@
                                         Grid.Row="7"
                                         Grid.Column="1"
                                         Margin="10,5,0,5"
-                                        Text="PLC CONNECT" />
+                                        Text="Plc Disconnected" />
 
                                 </Grid>
                             </Border>

@@ -40,7 +40,7 @@ namespace ASOFTCIM
                     {
                         // Khởi tạo đối tượng PLC
                         _plc = new PlcComm();
-                        _eqpConfig.PLCConfig.PlcConnectType = PlcConnectType.CCLinkIe;
+                        _eqpConfig.PLCConfig.PlcConnectType = PlcConnectType.Component;
                         //_eqpConfig.PLCConfig.StationNo = ;
                         _plc.ConfigComm(_eqpConfig.PLCConfig);
                         _plc.Start();
@@ -48,7 +48,6 @@ namespace ASOFTCIM
                         _plcH = new PLCHelper();
                         _plcH = _eqpConfig.PLCHelper;
                         _plcH.Start(_plc, _eqpConfig.EQPID);
-
                         _aliveBit = new Thread(Alive)
                         {
                             IsBackground = true

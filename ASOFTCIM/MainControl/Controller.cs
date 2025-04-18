@@ -19,7 +19,7 @@ namespace ASOFTCIM.MainControl
     {
         private ACIM _cim;
         private EquipmentConfig _equipmentConfig = new EquipmentConfig();
-        
+        private string _start = "disconnect";
         public EquipmentConfig EquipmentConfig
         {
             get { return _equipmentConfig; }
@@ -34,10 +34,11 @@ namespace ASOFTCIM.MainControl
 
         public Controller()
         {
-            
             ReadControllerConfig();
             _cim = new ACIM(_equipmentConfig);
-            
+            _cim.PlcConnectChangeEvent += SendWhenStart;
+            _cim.Cim.Conn.OnConnectEvent += OnConnectEvent;
+
         }
         public void Stop()
         {
@@ -91,6 +92,25 @@ namespace ASOFTCIM.MainControl
                 var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message);
                 LogTxt.Add(LogTxt.Type.Exception, debug);
             }
+        }
+        private void SendWhenStart(bool isConnect) 
+        {
+            if(isConnect && _start == "disconnect")
+            {
+                _cim.SendS1F1(_cim.Cim.Conn);
+                _start = "connect";
+            }
+            if(!isConnect)
+            {
+                _start = "disconnect";
+            }    
+        }
+        private void OnConnectEvent(bool isConnect)
+        {
+            if(isConnect)
+            {
+                _start = "disconnect";
+            }    
         }
     }
 }
