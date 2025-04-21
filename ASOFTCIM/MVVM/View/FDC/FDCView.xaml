@@ -218,6 +218,7 @@
                                 <Grid
                                     Grid.Column="2" Height="40" VerticalAlignment="Top"
                                     Margin="0,10,0,0"
+                                    VerticalAlignment="Top"
                                     ShowGridLines="True">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="2*" />
