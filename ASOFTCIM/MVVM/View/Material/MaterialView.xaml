@@ -689,7 +689,7 @@
                                                         FontSize="25"
                                                         Foreground="White"
                                                         Style="{StaticResource HeaderTextBlockStyle}"
-                                                        Text="KITTING/KITTING_CANCEL_P1" />
+                                                        Text="KITTING/KITTING_CANCEL_P2" />
                                                 </Border>
 
                                             </Border>
@@ -786,7 +786,7 @@
                                                         FontSize="25"
                                                         Foreground="White"
                                                         Style="{StaticResource HeaderTextBlockStyle}"
-                                                        Text="KITTING/KITTING_CANCEL_P1" />
+                                                        Text="KITTING/KITTING_CANCEL_P3" />
                                                 </Border>
 
                                             </Border>

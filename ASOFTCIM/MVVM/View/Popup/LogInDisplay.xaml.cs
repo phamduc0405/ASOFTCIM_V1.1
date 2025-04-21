@@ -24,7 +24,7 @@ namespace ASOFTCIM.MVVM.View.Popup
         public LogInDisplay()
         {
             InitializeComponent();
-            cbb.ItemsSource = new List<string>() { "Admin","User","Operator" };
+            cbb.ItemsSource = new List<string>() { "Admin","Enginer","Operator" };
             CreaterEvents();
         }
         private void CreaterEvents()

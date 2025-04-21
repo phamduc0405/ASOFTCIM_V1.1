@@ -137,7 +137,7 @@
                                             Height="30"
                                             Margin="0,2,0,40"
                                             VerticalAlignment="Center"
-                                            Content="LogIn"
+                                            Content="LogOut"
                                             Style="{StaticResource ButtonTransparent}" />
                                         <Grid
                                             Width="2"

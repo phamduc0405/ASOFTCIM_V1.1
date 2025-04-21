@@ -22,8 +22,12 @@
             CornerRadius="10">
             <Border.Background>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                    <GradientStop Offset="0" Color="#FF2196F3" />
-                    <GradientStop Offset="1" Color="#FF21CBF3" />
+                    <GradientStop Offset="0" Color="#FFB4E2FF" />
+                    <GradientStop Offset="1" Color="#FFB9D2E2" />
+                    <GradientStop Offset="0" Color="#FFE3F2FD" />
+                    <GradientStop Offset="1" Color="#FFBBDEFB" />
+
+
                 </LinearGradientBrush>
             </Border.Background>
             <Border.Effect>
@@ -32,7 +36,7 @@
                     ShadowDepth="2"
                     Color="Black" />
             </Border.Effect>
-            <Grid Background="Transparent">
+            <Grid >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*" />
                     <RowDefinition Height="10*" />

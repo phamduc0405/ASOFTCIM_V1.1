@@ -4,11 +4,13 @@ using A_SOFT.PLC;
 using ASOFTCIM.Config;
 using ASOFTCIM.Data;
 using ASOFTCIM.Helper;
+using LiveCharts.Maps;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Security.Claims;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,7 +21,9 @@ namespace ASOFTCIM.MainControl
     {
         private ACIM _cim;
         private EquipmentConfig _equipmentConfig = new EquipmentConfig();
-        private string _start = "disconnect";
+        private bool _plcConnect = false;
+        private int _countconnectPLC = 0;
+        private bool _cimConnect = false;
         public EquipmentConfig EquipmentConfig
         {
             get { return _equipmentConfig; }
@@ -36,9 +40,8 @@ namespace ASOFTCIM.MainControl
         {
             ReadControllerConfig();
             _cim = new ACIM(_equipmentConfig);
-            _cim.PlcConnectChangeEvent += SendWhenStart;
+            _cim.PlcConnectChangeEvent += PlcConnectEvent;
             _cim.Cim.Conn.OnConnectEvent += OnConnectEvent;
-
         }
         public void Stop()
         {
@@ -93,23 +96,57 @@ namespace ASOFTCIM.MainControl
                 LogTxt.Add(LogTxt.Type.Exception, debug);
             }
         }
-        private void SendWhenStart(bool isConnect) 
+        private async void SendWhenStart() 
         {
-            if(isConnect && _start == "disconnect")
+            await Task.Delay(500);
+            _cim.SendS1F1(_cim.Cim.Conn);
+            await Task.Delay(10);
+            _cim.EqpData.EQINFORMATION.CRST = "1";
+            WordModel crst = _cim.PLCH.Words.FirstOrDefault(x => x.Item == "CRST");
+            if (crst.GetValue() != _cim.EqpData.EQINFORMATION.CRST)
             {
-                _cim.SendS1F1(_cim.Cim.Conn);
-                _start = "connect";
+                _cim.EqpData.EQINFORMATION.CRST = crst.GetValue();
+                string ceiID = "106";
+                    _cim.SendS6F11_104_106(ceiID);
             }
-            if(!isConnect)
-            {
-                _start = "disconnect";
-            }    
+            await Task.Delay(10);
+            SendAlarmWhenStart();
         }
-        private void OnConnectEvent(bool isConnect)
+        private async void OnConnectEvent(bool isConnect)
         {
             if(isConnect)
             {
-                _start = "disconnect";
+                _cimConnect = true;
+                if(_plcConnect)
+                {
+                    SendWhenStart();
+                }    
+                return;
+            } 
+            _cimConnect = false;
+        }
+        private async void PlcConnectEvent(bool isConnect)
+        {
+            if (isConnect)
+            {
+                _plcConnect = true;
+                if(_cimConnect && _countconnectPLC == 0 )
+                {
+                    SendWhenStart();
+                    _countconnectPLC++;
+                }
+                return;
+            }
+            _countconnectPLC = 0;
+            _plcConnect = false;
+        }
+        private void SendAlarmWhenStart()
+        {
+            List<Alarm> Alarmlst = new List<Alarm>();
+            Alarmlst =  _cim.EqpData.CurrAlarm;
+            foreach( var item in Alarmlst)
+            {
+                _cim.SendS5F1(item);
             }    
         }
     }

@@ -77,7 +77,16 @@ namespace ASOFTCIM.Message.PLC2Cim.Recv
 
                 lock (acim.EqpData.AlarmHistory)
                 {
-                    acim.EqpData.AlarmHistory.Add(alarm);
+                    var alarmh = new Alarm
+                    {
+                        ALST = alarm.ALST,
+                        ALID = alarm.ALID,
+                        ALCD = alarm.ALCD,
+                        EQPID = alarm.EQPID,
+                        TIME = alarm.TIME,
+                        ALTEXT = alarm.ALTEXT
+                    };
+                    acim.EqpData.AlarmHistory.Add(alarmh);
                     if (acim.EqpData.AlarmHistory.Count > 100)
                     {
                         acim.EqpData.AlarmHistory.RemoveAt(0);

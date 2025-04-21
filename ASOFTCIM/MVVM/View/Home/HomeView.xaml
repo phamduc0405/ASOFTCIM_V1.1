@@ -8,6 +8,40 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <!--  Tạo style cho ListView  -->
+        <Style x:Key="CustomListViewStyle" TargetType="ListView">
+            <Setter Property="Background" Value="LightGreen" />
+            <Setter Property="BorderBrush" Value="DarkGreen" />
+            <Setter Property="BorderThickness" Value="2" />
+            <Setter Property="Padding" Value="8" />
+        </Style>
+        <Style TargetType="GridViewColumnHeader">
+            <Setter Property="Background" Value="White" />
+            <!--  Màu nền  -->
+            <Setter Property="Foreground" Value="#FF2D2D30" />
+            <!--  Màu chữ  -->
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="Padding" Value="5" />
+            <Setter Property="BorderBrush" Value="Black" />
+            <Setter Property="BorderThickness" Value="2" />
+            <Setter Property="FontWeight" Value="Bold" />
+        </Style>
+        <!--  Tạo style cho ListViewItem  -->
+        <Style x:Key="CustomListViewItemStyle" TargetType="ListViewItem">
+            <Setter Property="Background" Value="LightYellow" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="Margin" Value="0" />
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="LightSkyBlue" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+    </UserControl.Resources>
     <Grid>
         <Border Background="Transparent" CornerRadius="5">
 
@@ -70,27 +104,6 @@
                                 </Border>
 
                             </Border>
-                            <!--<ListView
-                x:Name="listView"
-                Grid.Row="1"
-                Grid.Column="0"
-                Grid.ColumnSpan="2"
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Stretch">
-                <ListView.View>
-                    <GridView x:Name="grdView" />
-                </ListView.View>
-            </ListView>-->
-                            <!--<DataGrid
-                x:Name="dtgrtView"
-                Grid.Row="1"
-                Grid.Column="0"
-                Grid.ColumnSpan="2"
-                AutoGenerateColumns="True"
-                ItemsSource="{Binding Data}" >
-
-
-            </DataGrid>-->
                             <ListView
                                 x:Name="lstErr"
                                 Grid.Row="1"
@@ -172,27 +185,17 @@
                                         </GridViewColumn>
                                     </GridView>
                                 </ListView.View>
-
+                                <ListView.ItemContainerStyle>
+                                    <Style TargetType="ListViewItem">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ALST}" Value="1">
+                                                <Setter Property="Foreground" Value="Red" />
+                                                <Setter Property="FontWeight" Value="Bold" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ListView.ItemContainerStyle>
                             </ListView>
-
-                            <!--<ListBox
-                x:Name="lstErr"
-                Grid.Row="1"
-                Grid.Column="0"
-                Grid.ColumnSpan="2"
-                Height="200">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Margin="5" Text="{Binding ALID}" />
-                            <TextBlock Margin="5" Text="{Binding ALST}" />
-                            <TextBlock Margin="5" Text="{Binding EQPID}" />
-                            <TextBlock Margin="5" Text="{Binding TIME}" />
-                        </StackPanel>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>-->
-
                         </Grid>
                         <Grid Grid.Row="1">
                             <Grid.RowDefinitions>
@@ -231,7 +234,7 @@
                             <Grid Grid.Row="1">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="2" />
+                                    <ColumnDefinition Width="5" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
 
@@ -271,7 +274,7 @@
                                     </Grid>
 
                                 </Grid>
-                                <Grid Grid.Column="1" Background="Black" />
+                                <Grid Grid.Column="1" Background="White" />
                                 <Grid
                                     Grid.Row="1"
                                     Grid.Column="2"
@@ -353,8 +356,8 @@
                                         <RowDefinition Height="*" />
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="2*" />
-                                        <ColumnDefinition Width="150" />
+                                        <ColumnDefinition Width="1.5*" />
+                                        <ColumnDefinition Width="180" />
                                     </Grid.ColumnDefinitions>
                                     <Border
                                         Grid.ColumnSpan="2"
@@ -374,30 +377,26 @@
                                         Grid.Column="0"
                                         Margin="10,5,0,5"
                                         FontSize="15"
-                                        Style="{StaticResource HeaderTextBlockStyle}"
-                                        Text="EQP ID:" />
+                                        Text="EQP ID" />
                                     <TextBlock
                                         Grid.Row="2"
                                         Grid.Column="0"
                                         Margin="10,5,0,5"
                                         FontSize="15"
-                                        Style="{StaticResource HeaderTextBlockStyle}"
-                                        Text="EQP NAME :" />
+                                        Text="EQP NAME " />
 
                                     <TextBlock
                                         Grid.Row="4"
                                         Grid.Column="0"
                                         Margin="10,5,0,5"
                                         FontSize="15"
-                                        Style="{StaticResource HeaderTextBlockStyle}"
-                                        Text="PPID :" />
+                                        Text="PPID " />
 
                                     <TextBlock
                                         Grid.Row="7"
                                         Grid.Column="0"
                                         Margin="10,5,0,5"
                                         FontSize="15"
-                                        Style="{StaticResource HeaderTextBlockStyle}"
                                         Text="CONNECTSTATE " />
                                     <!--  commend  -->
                                     <TextBlock
@@ -405,24 +404,32 @@
                                         Grid.Row="1"
                                         Grid.Column="1"
                                         Margin="10,5,0,5"
+                                        FontSize="15"
+                                        Style="{StaticResource HeaderTextBlockStyle}"
                                         Text="EQP ID:" />
                                     <TextBlock
                                         x:Name="txtEQPName"
                                         Grid.Row="2"
                                         Grid.Column="1"
                                         Margin="10,5,0,5"
+                                        FontSize="15"
+                                        Style="{StaticResource HeaderTextBlockStyle}"
                                         Text="EQP NAME :" />
                                     <TextBlock
                                         x:Name="txtRecipy"
                                         Grid.Row="4"
                                         Grid.Column="1"
                                         Margin="10,5,0,5"
+                                        FontSize="15"
+                                        Style="{StaticResource HeaderTextBlockStyle}"
                                         Text="PPID :" />
                                     <TextBlock
                                         x:Name="txtPlcConnect"
                                         Grid.Row="7"
                                         Grid.Column="1"
                                         Margin="10,5,0,5"
+                                        FontSize="15"
+                                        Style="{StaticResource HeaderTextBlockStyle}"
                                         Text="Plc Disconnected" />
 
                                 </Grid>
@@ -446,7 +453,7 @@
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="2*" />
-                                        <ColumnDefinition Width="150" />
+                                        <ColumnDefinition Width="180" />
                                     </Grid.ColumnDefinitions>
                                     <Border
                                         Grid.ColumnSpan="2"
@@ -466,28 +473,24 @@
                                         Grid.Column="0"
                                         Margin="10,5,0,5"
                                         FontSize="15"
-                                        Style="{StaticResource HeaderTextBlockStyle}"
                                         Text="IP " />
                                     <TextBlock
                                         Grid.Row="2"
                                         Grid.Column="0"
                                         Margin="10,5,0,5"
                                         FontSize="15"
-                                        Style="{StaticResource HeaderTextBlockStyle}"
                                         Text="PORT  " />
                                     <TextBlock
                                         Grid.Row="3"
                                         Grid.Column="0"
                                         Margin="10,5,0,5"
                                         FontSize="15"
-                                        Style="{StaticResource HeaderTextBlockStyle}"
                                         Text="MODE  " />
                                     <TextBlock
                                         Grid.Row="4"
                                         Grid.Column="0"
                                         Margin="10,5,0,5"
                                         FontSize="15"
-                                        Style="{StaticResource HeaderTextBlockStyle}"
                                         Text="CONNECTSTATE" />
                                     <!--  commend  -->
                                     <TextBlock
@@ -495,25 +498,33 @@
                                         Grid.Row="1"
                                         Grid.Column="1"
                                         Margin="10,5,0,5"
+                                        FontSize="15"
+                                        Style="{StaticResource HeaderTextBlockStyle}"
                                         Text="Ip" />
                                     <TextBlock
                                         x:Name="txtPort"
                                         Grid.Row="2"
                                         Grid.Column="1"
                                         Margin="10,5,0,5"
+                                        FontSize="15"
+                                        Style="{StaticResource HeaderTextBlockStyle}"
                                         Text=": Port" />
                                     <TextBlock
                                         x:Name="txtState"
                                         Grid.Row="3"
                                         Grid.Column="1"
                                         Margin="10,5,0,5"
+                                        FontSize="15"
+                                        Style="{StaticResource HeaderTextBlockStyle}"
                                         Text=": State" />
                                     <TextBlock
                                         x:Name="txtCimConnect"
                                         Grid.Row="4"
                                         Grid.Column="1"
                                         Margin="10,5,0,5"
-                                        Text=": Cim Connect" />
+                                        FontSize="15"
+                                        Style="{StaticResource HeaderTextBlockStyle}"
+                                        Text=":  Cim Disconnect" />
 
 
 
@@ -539,7 +550,7 @@
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="3*" />
-                                        <ColumnDefinition Width="150" />
+                                        <ColumnDefinition Width="180" />
                                     </Grid.ColumnDefinitions>
                                     <Border
                                         Grid.ColumnSpan="2"
@@ -559,79 +570,85 @@
                                         Grid.Column="0"
                                         Margin="10,5,0,5"
                                         FontSize="15"
-                                        Style="{StaticResource HeaderTextBlockStyle}"
-                                        Text="AVAILABILITYSTATE :" />
+                                        Text="AVAILABILITYSTATE" />
                                     <TextBlock
                                         Grid.Row="2"
                                         Grid.Column="0"
                                         Margin="10,5,0,5"
                                         FontSize="15"
-                                        Style="{StaticResource HeaderTextBlockStyle}"
-                                        Text="INTERLOCKSTATE :" />
+                                        Text="INTERLOCKSTATE" />
                                     <TextBlock
                                         Grid.Row="3"
                                         Grid.Column="0"
                                         Margin="10,5,0,5"
                                         FontSize="15"
-                                        Style="{StaticResource HeaderTextBlockStyle}"
-                                        Text="RUNSTATE :" />
+                                        Text="RUNSTATE" />
                                     <TextBlock
                                         Grid.Row="4"
                                         Grid.Column="0"
                                         Margin="10,5,0,5"
                                         FontSize="15"
-                                        Style="{StaticResource HeaderTextBlockStyle}"
-                                        Text="FRONSTATE :" />
+                                        Text="FRONSTATE" />
                                     <TextBlock
                                         Grid.Row="5"
                                         Grid.Column="0"
                                         Margin="10,5,0,5"
                                         FontSize="15"
-                                        Style="{StaticResource HeaderTextBlockStyle}"
-                                        Text="REARSTATE :" />
+                                        Text="REARSTATE" />
                                     <TextBlock
                                         Grid.Row="6"
                                         Grid.Column="0"
                                         Margin="10,5,0,5"
                                         FontSize="15"
-                                        Style="{StaticResource HeaderTextBlockStyle}"
-                                        Text="MOVESTATE :" />
+                                        Text="MOVESTATE" />
                                     <!--  commend  -->
                                     <TextBlock
                                         x:Name="txtAvailabilityState"
                                         Grid.Row="1"
                                         Grid.Column="1"
                                         Margin="10,5,0,5"
+                                        FontSize="15"
+                                        Style="{StaticResource HeaderTextBlockStyle}"
                                         Text="Ip" />
                                     <TextBlock
                                         x:Name="txtInterLockState"
                                         Grid.Row="2"
                                         Grid.Column="1"
                                         Margin="10,5,0,5"
+                                        FontSize="15"
+                                        Style="{StaticResource HeaderTextBlockStyle}"
                                         Text=": Port" />
                                     <TextBlock
                                         x:Name="txtRunState"
                                         Grid.Row="3"
                                         Grid.Column="1"
                                         Margin="10,5,0,5"
+                                        FontSize="15"
+                                        Style="{StaticResource HeaderTextBlockStyle}"
                                         Text=": State" />
                                     <TextBlock
                                         x:Name="txtFronState"
                                         Grid.Row="4"
                                         Grid.Column="1"
                                         Margin="10,5,0,5"
+                                        FontSize="15"
+                                        Style="{StaticResource HeaderTextBlockStyle}"
                                         Text=": State" />
                                     <TextBlock
                                         x:Name="txtRearState"
                                         Grid.Row="5"
                                         Grid.Column="1"
                                         Margin="10,5,0,5"
+                                        FontSize="15"
+                                        Style="{StaticResource HeaderTextBlockStyle}"
                                         Text=": State" />
                                     <TextBlock
                                         x:Name="txtMoveState"
                                         Grid.Row="6"
                                         Grid.Column="1"
                                         Margin="10,5,0,5"
+                                        FontSize="15"
+                                        Style="{StaticResource HeaderTextBlockStyle}"
                                         Text=": State" />
 
                                 </Grid>

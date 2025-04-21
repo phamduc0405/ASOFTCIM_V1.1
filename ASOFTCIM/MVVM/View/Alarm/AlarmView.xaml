@@ -8,6 +8,37 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
+    <UserControl.Resources>
+        <!-- Tạo style cho ListView -->
+        <Style x:Key="CustoListViewStyle" TargetType="ListView">
+            <Setter Property="Background" Value="LightGreen"/>
+            <Setter Property="BorderBrush" Value="DarkGreen"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="Padding" Value="8"/>
+        </Style>
+        <Style TargetType="GridViewColumnHeader">
+            <Setter Property="Background" Value="White"/>
+            <!-- Màu nền -->
+            <Setter Property="Foreground" Value="#FF2D2D30"/>
+            <!-- Màu chữ -->
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="BorderBrush" Value="Black"/>
+            <Setter Property="BorderThickness" Value="2"/>
+        </Style>
+        <!-- Tạo style cho ListViewItem -->
+        <Style x:Key="CustomListViewItemStyle" TargetType="ListViewItem">
+            <Setter Property="Background" Value="LightYellow"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Margin" Value="4"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="LightSkyBlue"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
     <Grid>
         <Border Background="Transparent" CornerRadius="5">
 
@@ -58,6 +89,7 @@
                                 </Border>
                             </Border>
                             <ListView
+                                
                                 x:Name="lstErr"
                                 Grid.Row="1"
                                 Grid.Column="0"
@@ -138,7 +170,15 @@
                                         </GridViewColumn>
                                     </GridView>
                                 </ListView.View>
-
+                                <ListView.ItemContainerStyle>
+                                    <Style TargetType="ListViewItem">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ALST}" Value="1">
+                                                <Setter Property="FontWeight" Value="Bold"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ListView.ItemContainerStyle>
                             </ListView>
 
                         </Grid>

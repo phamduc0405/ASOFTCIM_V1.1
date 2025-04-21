@@ -75,7 +75,7 @@ namespace ASOFTCIM
                 IsBackground = true,
             };
             _updateTime.Start();
-            txtVersion.Text = "Version: 250417";
+            txtVersion.Text = "Version: 250421";
         }
         private void Initial()
         {
@@ -242,7 +242,7 @@ namespace ASOFTCIM
                 LeveLogin = 1;
                 return;
             }
-            if (User == "User" && Pass == "2")
+            if (User == "Enginer" && Pass == "2")
             {
                 txtUser.Text = User;
                 LeveLogin = 2;
