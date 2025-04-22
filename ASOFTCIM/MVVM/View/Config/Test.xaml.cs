@@ -59,14 +59,9 @@ namespace ASOFTCIM.MVVM.View.Config
                         string m = "";
                         object instance = Activator.CreateInstance(t, new object[] { _controller.CIM.PLCH, batchlotInstance });
 
-                        if (instance != null)
-                        {
-                            Console.WriteLine($"Tạo instance của {txtNameClass.Text} thành công!");
-                        }
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine($"Lỗi khi tạo instance: {ex.Message}");
                         var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.",
                         MethodBase.GetCurrentMethod().DeclaringType.Name.ToString(), MethodBase.GetCurrentMethod().Name, ex.Message);
                         LogTxt.Add(LogTxt.Type.Exception, debug);
@@ -104,7 +99,6 @@ namespace ASOFTCIM.MVVM.View.Config
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Lỗi khi tạo instance: {ex.Message}");
                 var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.",
                         MethodBase.GetCurrentMethod().DeclaringType.Name.ToString(), MethodBase.GetCurrentMethod().Name, ex.Message);
                 LogTxt.Add(LogTxt.Type.Exception, debug);

@@ -27,8 +27,7 @@ namespace ASOFTCIM
                 packet.Command = Command.UserData;
                 packet.DeviceId = EqpData.DeviceId;
                 packet.SystemByte = EqpData.TransactionSys;
-                packet.WaitBit = true;
-				            AddTrans(EqpData.TransactionSys);
+                packet.WaitBit = false;
                 packet.addItem(DataType.List, 2);
                 {
                     packet.addItem(DataType.Ascii, "1"); // SFCD :1
@@ -80,8 +79,7 @@ namespace ASOFTCIM
                 packet.Command = Command.UserData;
                 packet.DeviceId = EqpData.DeviceId;
                 packet.SystemByte = EqpData.TransactionSys;
-                packet.WaitBit = true;
-				            AddTrans(EqpData.TransactionSys);
+                packet.WaitBit = false;
                 packet.addItem(DataType.List, 2);
                 {
                     packet.addItem(DataType.Ascii, "2"); // SFCD :2
@@ -156,8 +154,7 @@ namespace ASOFTCIM
                 packet.Command = Command.UserData;
                 packet.DeviceId = EqpData.DeviceId; // Cần sửa lại
                 packet.SystemByte = EqpData.TransactionSys;
-                packet.WaitBit = true;
-				            AddTrans(EqpData.TransactionSys);
+                packet.WaitBit = false;
                 packet.addItem(DataType.List, 2);
                 {
                     packet.addItem(DataType.Ascii, "3"); // SFCD :3
@@ -225,8 +222,7 @@ namespace ASOFTCIM
                 packet.Command = Command.UserData;
                 packet.DeviceId = EqpData.DeviceId; // Cần sửa lại
                 packet.SystemByte = EqpData.TransactionSys;
-                packet.WaitBit = true;
-				            AddTrans(EqpData.TransactionSys);
+                packet.WaitBit = false;
                 packet.addItem(DataType.List, 2);
                 {
                     packet.addItem(DataType.Ascii, "4"); // SFCD :4
@@ -280,8 +276,7 @@ namespace ASOFTCIM
                 packet.Command = Command.UserData;
                 packet.DeviceId = EqpData.DeviceId;
                 packet.SystemByte = EqpData.TransactionSys;
-                packet.WaitBit = true;
-				            AddTrans(EqpData.TransactionSys);
+                packet.WaitBit = false;
                 packet.addItem(DataType.List, 2);
                 {
                     packet.addItem(DataType.Ascii, "5"); // SFCD :5
@@ -339,8 +334,7 @@ namespace ASOFTCIM
                 packet.Command = Command.UserData;
                 packet.DeviceId = EqpData.DeviceId;
                 packet.SystemByte = EqpData.TransactionSys;
-                packet.WaitBit = true;
-                AddTrans(EqpData.TransactionSys);
+                packet.WaitBit = false;
                 packet.addItem(DataType.List, 0);
                 {
                     

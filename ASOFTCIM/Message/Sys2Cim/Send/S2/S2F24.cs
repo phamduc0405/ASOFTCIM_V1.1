@@ -23,7 +23,7 @@ namespace ASOFTCIM
                 packet.Command = Command.UserData;
                 packet.DeviceId = EqpData.DeviceId;
                 packet.SystemByte = EqpData.TransactionSys;
-                packet.addItem(DataType.Ascii, TIAACK);
+                packet.addItem(DataType.Ascii, TIAACK=="" ? "0":TIAACK);
                 packet.Send2Sys();
             }
             catch (Exception ex)

@@ -25,7 +25,6 @@ namespace ASOFTCIM.Message.PLC2Cim.Recv
             await _semaphore.WaitAsync();
             try
             {
-                Console.WriteLine("Alarmtotal");
                 eq.EqpData.TransactionSys += 1;
                 WordStatus word = (WordStatus)body;
                 int alid = word.Index % (eq.PLCH.Words.FirstOrDefault(x => x.Area.Contains("ALARM")).Address * DefineConst.ShortBits) + 1;
@@ -54,7 +53,6 @@ namespace ASOFTCIM.Message.PLC2Cim.Recv
 
                 if (alarm != null)
                 {
-                    Console.WriteLine($"{alid} send");
                     await AddAlarmAsync(eq, alarm);
                     eq.SendS5F1(alarm);
                 }

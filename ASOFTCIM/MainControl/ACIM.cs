@@ -45,7 +45,7 @@ namespace ASOFTCIM
 
 
         public EQPDATA EqpData { get; set; }
-        public string EQPID { get; set; } = "EQPTEST";
+        public string EQPID { get; set; } = "";
         public EquipmentConfig _eqpConfig;
         
 
@@ -88,6 +88,7 @@ namespace ASOFTCIM
         public ACIM(EquipmentConfig equipmentConfig)
         {
             Initial();
+            EQPID = equipmentConfig.EQPID;  
             _cim = new CimHelper(EQPID);
             ATCPIP.ConnectMode connectMode = (ATCPIP.ConnectMode)Enum.Parse(typeof(ATCPIP.ConnectMode), equipmentConfig.CimConfig.ConnectMode);
             string Ip = equipmentConfig.CimConfig.IP;
@@ -107,6 +108,7 @@ namespace ASOFTCIM
         private void Initial()
         {
             EqpData = new EQPDATA();
+            
             EqpData.EQINFORMATION.EQPVER = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
         }
         private void _cim_TransTimeOutEvent(TransactionWait trans)
@@ -114,14 +116,14 @@ namespace ASOFTCIM
             SysPacket sysPacket = new SysPacket(_cim.Conn);
             sysPacket.DeviceId = 1;
             sysPacket.SystemByte = trans.TransactionSys;
-          //  SendS9F9(sysPacket);
+            SendS9F9(sysPacket);
 
         }
         private void _cim_SysPacketEvent(SysPacket sysPacket)
         {
             try
             {
-                EqpData.TransactionSys = sysPacket.SystemByte;
+                
                 EqpData.DeviceId = sysPacket.DeviceId;
                 sysPacket.MakeCimLog();
                 if (sysPacket.DeviceId != 1)
@@ -133,7 +135,17 @@ namespace ASOFTCIM
                 MethodInfo method = this.GetType().GetMethod($"RecvS{sysPacket.Stream}F{sysPacket.Function}");
                 if (method != null)
                 {
+                    if (sysPacket.Function%2 == 0)
+                    {
+                        EqpData.TransactionSys = sysPacket.SystemByte + 1;
+                        RemoveTrans(sysPacket.SystemByte);
+                    }
+                    else
+                    {
+                        EqpData.TransactionSys = sysPacket.SystemByte;
+                    }
                     Host2CimEventHandle($"HOST -> CIM :RecvS{sysPacket.Stream}F{sysPacket.Function}");
+
                     object result = method.Invoke(this, null);
 
                     return;
@@ -164,7 +176,7 @@ namespace ASOFTCIM
         {
             SysPacket sysPacket = new SysPacket(_cim.Conn);
             sysPacket.DeviceId = 1;
-            sysPacket.SystemByte = EqpData.TransactionSys + 1;
+            sysPacket.SystemByte = EqpData.TransactionSys ++;
             sysPacket.Command = Command.SeparateReq;
             sysPacket.Send2Sys();
             Thread.Sleep(1000);
@@ -184,6 +196,10 @@ namespace ASOFTCIM
         {
             _cim.AddTrans(trans);
         }
+        public void RemoveTrans(uint trans)
+        {
+            _cim.RemoveTrans(trans);
+        }
         public void SendMessage2PLC(string classname, object obj)
         {
             string namespaces = "ASOFTCIM.Message.PLC2Cim.Send";
@@ -199,7 +215,6 @@ namespace ASOFTCIM
                     if (instance != null)
                     {
                         Cim2PlcEventHandle($"CIM -> EQP :Recv {classname}");
-                        Console.WriteLine($"Tạo instance của {classname} thành công!");
                     }
                 }
                 catch (Exception ex)
@@ -225,7 +240,6 @@ namespace ASOFTCIM
                     if (instance != null)
                     {
                         Cim2PlcEventHandle($"CIM -> EQP :Recv {classname}");
-                        Console.WriteLine($"Tạo instance của {classname} thành công!");
                     }
                 }
                 catch (Exception ex)
@@ -251,7 +265,6 @@ namespace ASOFTCIM
                     if (instance != null)
                     {
                         Cim2PlcEventHandle($"CIM -> EQP :Recv {classname}");
-                        Console.WriteLine($"Tạo instance của {classname} thành công!");
                     }
                 }
                 catch (Exception ex)

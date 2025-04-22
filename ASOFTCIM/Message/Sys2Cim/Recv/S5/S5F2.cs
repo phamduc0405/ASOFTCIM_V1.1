@@ -16,6 +16,7 @@ namespace ASOFTCIM
             try
             {
                string ack  = _cim.SysPacket.GetItemString();
+
             }
             catch (Exception ex)
             {

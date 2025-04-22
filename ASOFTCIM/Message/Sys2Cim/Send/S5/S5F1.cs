@@ -1,7 +1,8 @@
 ﻿using A_SOFT.CMM.INIT;
-using ASOFTCIM.Data;
-using AComm.TCPIP;
 using A_SOFT.Ctl.SecGem;
+using AComm.TCPIP;
+using ASOFTCIM.Data;
+using LiveCharts.Maps;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,9 +23,9 @@ namespace ASOFTCIM
                 packet.Function = 1;
                 packet.Command = Command.UserData;
                 packet.DeviceId = EqpData.DeviceId;
-                packet.SystemByte = EqpData.TransactionSys;
+                packet.SystemByte = EqpData.TransactionSys++;
                 packet.WaitBit = true;
-				AddTrans(EqpData.TransactionSys);
+				AddTrans(packet.SystemByte);
                 packet.addItem(DataType.List, 5);
                 packet.addItem(DataType.Ascii, alarm.EQPID);
                 packet.addItem(DataType.Ascii, alarm.ALST);
@@ -32,7 +33,7 @@ namespace ASOFTCIM
                 packet.addItem(DataType.Ascii, alarm.ALID);
                 packet.addItem(DataType.Ascii, alarm.ALTEXT);
                 packet.Send2Sys();
-                Console.WriteLine(alarm.ALID);
+               
             }
             catch (Exception ex)
             {

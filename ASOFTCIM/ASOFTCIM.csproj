@@ -60,7 +60,7 @@
     </Reference>
     <Reference Include="A_SOFT.Ctl.SecGem, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>E:\MrDuc\ASOFTLIB\AsoftCommon\Bin\Debug\ASOFTLIB\A_SOFT.Ctl.SecGem.dll</HintPath>
+      <HintPath>..\..\A_SOFT.Ctl.SecGem.dll</HintPath>
     </Reference>
     <Reference Include="A_SOFT.Ctl.Tcp, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

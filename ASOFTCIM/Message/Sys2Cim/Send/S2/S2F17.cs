@@ -21,9 +21,9 @@ namespace ASOFTCIM
                 packet.Command = Command.UserData;
                 packet.DeviceId = mes.DeviceId;
                 packet.SystemByte = mes.SystemByte;
-                packet.SystemByte = EqpData.TransactionSys;
+                packet.SystemByte = EqpData.TransactionSys++;
                 packet.WaitBit = true;
-                AddTrans(EqpData.TransactionSys);
+                AddTrans(packet.SystemByte);
 
                 packet.Send2Sys();
             }

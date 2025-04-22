@@ -23,7 +23,6 @@ namespace ASOFTCIM.Message.PLC2Cim.Send
                 stopWatch.Start();
                 List<WordModel> word = plcdata.Words.Where(x => x.Area == this.GetType().Name).ToList();
                 stopWatch.Stop();
-                Console.WriteLine($"LINQ:{ stopWatch.ElapsedMilliseconds}");
                 stopWatch.Restart();
                 word.FirstOrDefault(x => x.Item == "CARRIERID").SetValue = carrier.CARRIERID;
                 word.FirstOrDefault(x => x.Item == "CARRIERTYPE").SetValue = carrier.CARRIERTYPE;
@@ -54,7 +53,6 @@ namespace ASOFTCIM.Message.PLC2Cim.Send
                 stopWatch.Restart();
                 BitModel bit = plcdata.Bits.First(x => x.Comment == this.GetType().Name);
                 stopWatch.Stop();
-                Console.WriteLine($"SetValue:{stopWatch.ElapsedMilliseconds}");
                 bit.SetPCValue = true;
             }
             catch (Exception ex)
