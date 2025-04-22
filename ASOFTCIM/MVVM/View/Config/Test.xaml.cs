@@ -1,4 +1,5 @@
-﻿using ASOFTCIM.MainControl;
+﻿using A_SOFT.CMM.INIT;
+using ASOFTCIM.MainControl;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -66,6 +67,9 @@ namespace ASOFTCIM.MVVM.View.Config
                     catch (Exception ex)
                     {
                         Console.WriteLine($"Lỗi khi tạo instance: {ex.Message}");
+                        var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.",
+                        MethodBase.GetCurrentMethod().DeclaringType.Name.ToString(), MethodBase.GetCurrentMethod().Name, ex.Message);
+                        LogTxt.Add(LogTxt.Type.Exception, debug);
                     }
                 }
             };
@@ -101,6 +105,9 @@ namespace ASOFTCIM.MVVM.View.Config
             catch (Exception ex)
             {
                 Console.WriteLine($"Lỗi khi tạo instance: {ex.Message}");
+                var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.",
+                        MethodBase.GetCurrentMethod().DeclaringType.Name.ToString(), MethodBase.GetCurrentMethod().Name, ex.Message);
+                LogTxt.Add(LogTxt.Type.Exception, debug);
                 return null;
             }
         }

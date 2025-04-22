@@ -17,6 +17,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using A_SOFT.CMM.INIT;
+using System.Reflection;
 
 namespace ASOFTCIM.MVVM.View.Home
 {
@@ -70,8 +72,11 @@ namespace ASOFTCIM.MVVM.View.Home
                             txtTarget.Text = $"CPU Usage: {cpuUsage:F2}%";
                         });
                     }
-                    catch (Exception)
+                    catch (Exception ex )
                     {
+                        var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.",
+                        MethodBase.GetCurrentMethod().DeclaringType.Name.ToString(), MethodBase.GetCurrentMethod().Name, ex.Message);
+                        LogTxt.Add(LogTxt.Type.Exception, debug);
                         return;
                     }
 

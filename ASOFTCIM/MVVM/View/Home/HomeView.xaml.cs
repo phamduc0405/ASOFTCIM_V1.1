@@ -178,15 +178,35 @@ namespace ASOFTCIM.MVVM.View.Home
                     Dispatcher.Invoke(() =>
                     {
                         txtAvailabilityState.Text = ":   " + (_controller.CIM.EqpData.EQPSTATE.AVAILABILITYSTATE == "2" ? "UP" : "DOWN");
+                        txtAvailabilityState.Foreground = _controller.CIM.EqpData.EQPSTATE.AVAILABILITYSTATE == "2" ? Brushes.Green : Brushes.Red;
+
                         txtInterLockState.Text = ":   " + (_controller.CIM.EqpData.EQPSTATE.INTERLOCKSTATE == "2" ? "OFF" : "ON");
+                        txtInterLockState.Foreground = _controller.CIM.EqpData.EQPSTATE.INTERLOCKSTATE == "2" ? Brushes.Green : Brushes.Red;
+
                         txtRunState.Text = ":   " + (_controller.CIM.EqpData.EQPSTATE.RUNSTATE == "2" ? "RUN" : "IDLE");
+                        txtRunState.Foreground = _controller.CIM.EqpData.EQPSTATE.RUNSTATE == "2" ? Brushes.Green : Brushes.Red;
+
+
                         txtFronState.Text = ":   " + (_controller.CIM.EqpData.EQPSTATE.FRONTSTATE == "2" ? "UP" : "DOWN");
+                        txtFronState.Foreground = _controller.CIM.EqpData.EQPSTATE.FRONTSTATE == "2" ? Brushes.Green : Brushes.Red;
+
+
                         txtRearState.Text = ":   " + (_controller.CIM.EqpData.EQPSTATE.REARSTATE == "2" ? "UP" : "DOWN");
+                        txtRearState.Foreground = _controller.CIM.EqpData.EQPSTATE.REARSTATE == "2" ? Brushes.Green : Brushes.Red;
+
+
                         txtMoveState.Text = ":   " + (_controller.CIM.EqpData.EQPSTATE.MOVESTATE == "2" ? "RUNNING" : "PAUSE");
+                        txtMoveState.Foreground = _controller.CIM.EqpData.EQPSTATE.MOVESTATE == "2" ? Brushes.Green : Brushes.Red;
+
                     });
                     Thread.Sleep(500);
                 }
-                catch { }
+                catch (Exception ex)
+                {
+                    var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.",
+                        MethodBase.GetCurrentMethod().DeclaringType.Name.ToString(), MethodBase.GetCurrentMethod().Name, ex.Message);
+                    LogTxt.Add(LogTxt.Type.Exception, debug);
+                }
             }
         }
 
@@ -208,6 +228,9 @@ namespace ASOFTCIM.MVVM.View.Home
                     catch (Exception ex)
                     {
                         MessageBox.Show($"Lỗi: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.",
+                        MethodBase.GetCurrentMethod().DeclaringType.Name.ToString(), MethodBase.GetCurrentMethod().Name, ex.Message);
+                        LogTxt.Add(LogTxt.Type.Exception, debug);
                     }
                 }));
             }
@@ -255,7 +278,9 @@ namespace ASOFTCIM.MVVM.View.Home
         {
             Dispatcher.Invoke(() =>
             {
-                txtPlcConnect.Text = isConnected ? "Plc Connected" : "Plc Disconnected";
+                txtPlcConnect.Text = isConnected ? ":   Plc Connected" : ":   Plc Disconnected";
+                txtPlcConnect.Background = isConnected ? Brushes.Transparent : Brushes.Red;
+                txtPlcConnect.Foreground = isConnected ? Brushes.Green : Brushes.Black;
             });
         }
 
@@ -263,7 +288,9 @@ namespace ASOFTCIM.MVVM.View.Home
         {
             Dispatcher.Invoke(() =>
             {
-                txtCimConnect.Text = isConnected ? "Cim Connected" : "Cim Disconnected";
+                txtCimConnect.Text = isConnected ? ":   Cim Connected" : ":   Cim Disconnected";
+                txtCimConnect.Background = isConnected ? Brushes.Transparent : Brushes.Red;
+                txtCimConnect.Foreground = isConnected ? Brushes.Green : Brushes.Black;
             });
         }
 

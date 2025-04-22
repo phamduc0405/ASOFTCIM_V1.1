@@ -8,6 +8,40 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <!--  Tạo style cho ListView  -->
+        <Style x:Key="CustomListViewStyle" TargetType="ListView">
+            <Setter Property="Background" Value="LightGreen" />
+            <Setter Property="BorderBrush" Value="DarkGreen" />
+            <Setter Property="BorderThickness" Value="2" />
+            <Setter Property="Padding" Value="8" />
+        </Style>
+        <Style TargetType="GridViewColumnHeader">
+            <Setter Property="Background" Value="White" />
+            <!--  Màu nền  -->
+            <Setter Property="Foreground" Value="#FF2D2D30" />
+            <!--  Màu chữ  -->
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="Padding" Value="5" />
+            <Setter Property="BorderBrush" Value="Black" />
+            <Setter Property="BorderThickness" Value="2" />
+            <Setter Property="FontWeight" Value="Bold" />
+        </Style>
+        <!--  Tạo style cho ListViewItem  -->
+        <Style x:Key="CustomListViewItemStyle" TargetType="ListViewItem">
+            <Setter Property="Background" Value="LightYellow" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="Margin" Value="0" />
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="LightSkyBlue" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+    </UserControl.Resources>
     <Grid>
         <Border Background="Transparent" CornerRadius="5">
 
@@ -17,16 +51,16 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Border
-    Margin="10,5,5,5"
-    Background="White"
-    BorderBrush="Black"
-    BorderThickness="0.5"
-    CornerRadius="5">
+                    Margin="10,5,5,5"
+                    Background="White"
+                    BorderBrush="Black"
+                    BorderThickness="0.5"
+                    CornerRadius="5">
                     <Border.Effect>
                         <DropShadowEffect
-            BlurRadius="5"
-            ShadowDepth="2"
-            Color="Black" />
+                            BlurRadius="5"
+                            ShadowDepth="2"
+                            Color="Black" />
                     </Border.Effect>
                     <Grid>
                         <Grid.RowDefinitions>
@@ -43,74 +77,54 @@
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
                             <Border
-                Grid.ColumnSpan="2"
-                Margin="2"
-                VerticalAlignment="Center"
-                Background="White"
-                BorderBrush="Black"
-                BorderThickness="1"
-                CornerRadius="5">
+                                Grid.ColumnSpan="2"
+                                Margin="2"
+                                VerticalAlignment="Center"
+                                Background="White"
+                                BorderBrush="Black"
+                                BorderThickness="1"
+                                CornerRadius="5">
                                 <Border.Effect>
                                     <DropShadowEffect
-                        BlurRadius="5"
-                        ShadowDepth="2"
-                        Color="Black" />
+                                        BlurRadius="5"
+                                        ShadowDepth="2"
+                                        Color="Black" />
                                 </Border.Effect>
                                 <Border
-                    Margin="0,2,0,2"
-                    VerticalAlignment="Center"
-                    Background="White"
-                    CornerRadius="5">
+                                    Margin="0,2,0,2"
+                                    VerticalAlignment="Center"
+                                    Background="White"
+                                    CornerRadius="5">
                                     <TextBlock
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Top"
-                        FontSize="25"
-                        Style="{StaticResource HeaderTextBlockStyle}"
-                        Text="ALARM" />
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Top"
+                                        FontSize="25"
+                                        Style="{StaticResource HeaderTextBlockStyle}"
+                                        Text="ALARM" />
                                 </Border>
 
                             </Border>
-                            <!--<ListView
-                x:Name="listView"
-                Grid.Row="1"
-                Grid.Column="0"
-                Grid.ColumnSpan="2"
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Stretch">
-                <ListView.View>
-                    <GridView x:Name="grdView" />
-                </ListView.View>
-            </ListView>-->
-                            <!--<DataGrid
-                x:Name="dtgrtView"
-                Grid.Row="1"
-                Grid.Column="0"
-                Grid.ColumnSpan="2"
-                AutoGenerateColumns="True"
-                ItemsSource="{Binding Data}" >
-
-
-            </DataGrid>-->
-                            <ListView ItemsSource="{Binding AlarmList}"
-                x:Name="lstErr"
-                Grid.Row="1"
-                Grid.Column="0"
-                Grid.ColumnSpan="2"
-                Background="#D6DAF3"
-                BorderBrush="#D7D3CB"
-                BorderThickness="2"
-                FontWeight="Light"
-                Foreground="Black">
+                            <ListView
+                                x:Name="lstErr"
+                                Grid.Row="1"
+                                Grid.Column="0"
+                                Grid.ColumnSpan="2"
+                                Background="#D6DAF3"
+                                BorderBrush="#D7D3CB"
+                                BorderThickness="2"
+                                FontWeight="Light"
+                                Foreground="Black"
+                                ItemsSource="{Binding AlarmList}">
                                 <ListView.View>
                                     <GridView>
                                         <GridViewColumn Width="100" Header="TIME">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <TextBlock
-                                        Margin="15,0,0,0"
-                                        HorizontalAlignment="Right"
-                                        VerticalAlignment="Center"
-                                        Text="{Binding TIME}" />
+                                                        Margin="15,0,0,0"
+                                                        HorizontalAlignment="Right"
+                                                        VerticalAlignment="Center"
+                                                        Text="{Binding TIME}" />
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
@@ -118,10 +132,10 @@
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <TextBlock
-                                        Margin="20,0,0,0"
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"
-                                        Text="{Binding EQPID}" />
+                                                        Margin="20,0,0,0"
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        Text="{Binding EQPID}" />
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
@@ -129,10 +143,10 @@
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <TextBlock
-                                        Margin="20,0,0,0"
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"
-                                        Text="{Binding ALTEXT}" />
+                                                        Margin="20,0,0,0"
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        Text="{Binding ALTEXT}" />
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
@@ -140,10 +154,10 @@
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <TextBlock
-                                        Margin="35,0,0,0"
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"
-                                        Text="{Binding ALST}" />
+                                                        Margin="35,0,0,0"
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        Text="{Binding ALST}" />
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
@@ -151,10 +165,10 @@
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <TextBlock
-                                        Margin="35,0,0,0"
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"
-                                        Text="{Binding ALID}" />
+                                                        Margin="35,0,0,0"
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        Text="{Binding ALID}" />
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
@@ -162,36 +176,26 @@
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <TextBlock
-Margin="35,0,0,0"
-HorizontalAlignment="Center"
-VerticalAlignment="Center"
-Text="{Binding ALCD}" />
+                                                        Margin="35,0,0,0"
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        Text="{Binding ALCD}" />
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
                                     </GridView>
                                 </ListView.View>
-
+                                <ListView.ItemContainerStyle>
+                                    <Style TargetType="ListViewItem">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ALST}" Value="1">
+                                                <Setter Property="Foreground" Value="Red" />
+                                                <Setter Property="FontWeight" Value="Bold" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ListView.ItemContainerStyle>
                             </ListView>
-
-                            <!--<ListBox
-                x:Name="lstErr"
-                Grid.Row="1"
-                Grid.Column="0"
-                Grid.ColumnSpan="2"
-                Height="200">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Margin="5" Text="{Binding ALID}" />
-                            <TextBlock Margin="5" Text="{Binding ALST}" />
-                            <TextBlock Margin="5" Text="{Binding EQPID}" />
-                            <TextBlock Margin="5" Text="{Binding TIME}" />
-                        </StackPanel>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>-->
-
                         </Grid>
                         <Grid Grid.Row="1">
                             <Grid.RowDefinitions>
@@ -202,42 +206,42 @@ Text="{Binding ALCD}" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
                             <Border
-                Grid.ColumnSpan="2"
-                Margin="3"
-                VerticalAlignment="Center"
-                Background="White"
-                BorderBrush="Black"
-                BorderThickness="1"
-                CornerRadius="5">
+                                Grid.ColumnSpan="2"
+                                Margin="3"
+                                VerticalAlignment="Center"
+                                Background="White"
+                                BorderBrush="Black"
+                                BorderThickness="1"
+                                CornerRadius="5">
                                 <Border.Effect>
                                     <DropShadowEffect
-                        BlurRadius="5"
-                        ShadowDepth="2"
-                        Color="Black" />
+                                        BlurRadius="5"
+                                        ShadowDepth="2"
+                                        Color="Black" />
                                 </Border.Effect>
                                 <Border
-                    Margin="0,2,0,2"
-                    VerticalAlignment="Center"
-                    Background="White">
+                                    Margin="0,2,0,2"
+                                    VerticalAlignment="Center"
+                                    Background="White">
                                     <TextBlock
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Top"
-                        FontSize="25"
-                        Style="{StaticResource HeaderTextBlockStyle}"
-                        Text="MESSAGE" />
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Top"
+                                        FontSize="25"
+                                        Style="{StaticResource HeaderTextBlockStyle}"
+                                        Text="MESSAGE" />
                                 </Border>
                             </Border>
                             <Grid Grid.Row="1">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="2" />
+                                    <ColumnDefinition Width="5" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
 
                                 <Grid
-                    Grid.Row="1"
-                    Grid.Column="0"
-                    Margin="2,0,0,2">
+                                    Grid.Row="1"
+                                    Grid.Column="0"
+                                    Margin="2,0,0,2">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="35" />
                                         <RowDefinition Height="*" />
@@ -246,35 +250,35 @@ Text="{Binding ALCD}" />
                                         <Border>
                                             <Border.Effect>
                                                 <DropShadowEffect
-                                    BlurRadius="5"
-                                    ShadowDepth="2"
-                                    Color="Black" />
+                                                    BlurRadius="5"
+                                                    ShadowDepth="2"
+                                                    Color="Black" />
                                             </Border.Effect>
                                             <Border Background="CornflowerBlue">
                                                 <TextBlock
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Top"
-                                    FontSize="20"
-                                    Text="CIM - HOST" />
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Top"
+                                                    FontSize="20"
+                                                    Text="CIM - HOST" />
                                             </Border>
                                         </Border>
                                     </Grid>
 
                                     <Grid Grid.Row="1">
                                         <Border
-                            Grid.Row="1"
-                            BorderBrush="Black"
-                            BorderThickness="1">
+                                            Grid.Row="1"
+                                            BorderBrush="Black"
+                                            BorderThickness="1">
                                             <RichTextBox x:Name="txtCimHost" />
                                         </Border>
                                     </Grid>
 
                                 </Grid>
-                                <Grid Grid.Column="1" Background="Black" />
+                                <Grid Grid.Column="1" Background="White" />
                                 <Grid
-                    Grid.Row="1"
-                    Grid.Column="2"
-                    Margin="0,0,2,2">
+                                    Grid.Row="1"
+                                    Grid.Column="2"
+                                    Margin="0,0,2,2">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="35" />
                                         <RowDefinition Height="*" />
@@ -282,24 +286,24 @@ Text="{Binding ALCD}" />
                                     <Border Grid.ColumnSpan="2" Margin="0,0,0,0">
                                         <Border.Effect>
                                             <DropShadowEffect
-                                BlurRadius="5"
-                                ShadowDepth="2"
-                                Color="Black" />
+                                                BlurRadius="5"
+                                                ShadowDepth="2"
+                                                Color="Black" />
                                         </Border.Effect>
                                         <Border Background="CornflowerBlue">
                                             <TextBlock
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Top"
-                                FontSize="20"
-                                Text="CIM - EQP" />
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Top"
+                                                FontSize="20"
+                                                Text="CIM - EQP" />
                                         </Border>
 
                                     </Border>
                                     <Grid Grid.Row="1">
                                         <Border
-                            Grid.Row="1"
-                            BorderBrush="Black"
-                            BorderThickness="1">
+                                            Grid.Row="1"
+                                            BorderBrush="Black"
+                                            BorderThickness="1">
                                             <RichTextBox x:Name="txtCimEqp" />
                                         </Border>
                                     </Grid>
@@ -311,17 +315,17 @@ Text="{Binding ALCD}" />
                     </Grid>
                 </Border>
                 <Border
-                Grid.Column="1"
-                Margin="1,5,10,5"
-                Background="White"
-                BorderBrush="Black"
-                BorderThickness="0.5"
-                CornerRadius="5">
+                    Grid.Column="1"
+                    Margin="1,5,10,5"
+                    Background="White"
+                    BorderBrush="Black"
+                    BorderThickness="0.5"
+                    CornerRadius="5">
                     <Border.Effect>
                         <DropShadowEffect
-                        BlurRadius="5"
-                        ShadowDepth="2"
-                        Color="Black" />
+                            BlurRadius="5"
+                            ShadowDepth="2"
+                            Color="Black" />
                     </Border.Effect>
                     <ScrollViewer Margin="0,5,0,5">
                         <Grid>
@@ -334,12 +338,12 @@ Text="{Binding ALCD}" />
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
                             <Border
-                            Grid.Column="1"
-                            Margin="5,5"
-                            Background="#FFD9E4FF"
-                            BorderBrush="{StaticResource gradientLayout5}"
-                            BorderThickness="1.5"
-                            CornerRadius="5">
+                                Grid.Column="1"
+                                Margin="5,5"
+                                Background="#FFD9E4FF"
+                                BorderBrush="{StaticResource gradientLayout5}"
+                                BorderThickness="1.5"
+                                CornerRadius="5">
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="*" />
@@ -352,89 +356,92 @@ Text="{Binding ALCD}" />
                                         <RowDefinition Height="*" />
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="2*" />
-                                        <ColumnDefinition Width="150" />
+                                        <ColumnDefinition Width="1.5*" />
+                                        <ColumnDefinition Width="180" />
                                     </Grid.ColumnDefinitions>
                                     <Border
-                                    Grid.ColumnSpan="2"
-                                    Margin="3"
-                                    VerticalAlignment="Center"
-                                    Background="CornflowerBlue"
-                                    CornerRadius="5">
+                                        Grid.ColumnSpan="2"
+                                        Margin="3"
+                                        VerticalAlignment="Center"
+                                        Background="CornflowerBlue"
+                                        CornerRadius="5">
                                         <TextBlock
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Top"
-                                        Style="{StaticResource HeaderTextBlockStyle}"
-                                        Text="EQUIPMENT" />
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Top"
+                                            Style="{StaticResource HeaderTextBlockStyle}"
+                                            Text="EQUIPMENT" />
                                     </Border>
                                     <!--  header  -->
                                     <TextBlock
-
-                                    Grid.Row="1"
-                                    Grid.Column="0"
-                                    Margin="10,5,0,5"
-                                    FontSize="15"
-                                    Style="{StaticResource HeaderTextBlockStyle}"
-                                    Text="EQP ID:" />
+                                        Grid.Row="1"
+                                        Grid.Column="0"
+                                        Margin="10,5,0,5"
+                                        FontSize="15"
+                                        Text="EQP ID" />
                                     <TextBlock
-                                    Grid.Row="2"
-                                    Grid.Column="0"
-                                    Margin="10,5,0,5"
-                                    FontSize="15"
-                                    Style="{StaticResource HeaderTextBlockStyle}"
-                                    Text="EQP NAME :" />
+                                        Grid.Row="2"
+                                        Grid.Column="0"
+                                        Margin="10,5,0,5"
+                                        FontSize="15"
+                                        Text="EQP NAME " />
 
                                     <TextBlock
-                                    Grid.Row="4"
-                                    Grid.Column="0"
-                                    Margin="10,5,0,5"
-                                    FontSize="15"
-                                    Style="{StaticResource HeaderTextBlockStyle}"
-                                    Text="PPID :" />
+                                        Grid.Row="4"
+                                        Grid.Column="0"
+                                        Margin="10,5,0,5"
+                                        FontSize="15"
+                                        Text="PPID " />
 
                                     <TextBlock
-                                    Grid.Row="7"
-                                    Grid.Column="0"
-                                    Margin="10,5,0,5"
-                                    FontSize="15"
-                                    Style="{StaticResource HeaderTextBlockStyle}"
-                                    Text="CONNECTSTATE " />
+                                        Grid.Row="7"
+                                        Grid.Column="0"
+                                        Margin="10,5,0,5"
+                                        FontSize="15"
+                                        Text="CONNECTSTATE " />
                                     <!--  commend  -->
                                     <TextBlock
-                                    x:Name="txtEQPID"
-                                    Grid.Row="1"
-                                    Grid.Column="1"
-                                    Margin="10,5,0,5"
-                                    Text="EQP ID:" />
+                                        x:Name="txtEQPID"
+                                        Grid.Row="1"
+                                        Grid.Column="1"
+                                        Margin="10,5,0,5"
+                                        FontSize="15"
+                                        Style="{StaticResource HeaderTextBlockStyle}"
+                                        Text="EQP ID:" />
                                     <TextBlock
-                                    x:Name="txtEQPName"
-                                    Grid.Row="2"
-                                    Grid.Column="1"
-                                    Margin="10,5,0,5"
-                                    Text="EQP NAME :" />
+                                        x:Name="txtEQPName"
+                                        Grid.Row="2"
+                                        Grid.Column="1"
+                                        Margin="10,5,0,5"
+                                        FontSize="15"
+                                        Style="{StaticResource HeaderTextBlockStyle}"
+                                        Text="EQP NAME :" />
                                     <TextBlock
-                                    x:Name="txtRecipy"
-                                    Grid.Row="4"
-                                    Grid.Column="1"
-                                    Margin="10,5,0,5"
-                                    Text="PPID :" />
+                                        x:Name="txtRecipy"
+                                        Grid.Row="4"
+                                        Grid.Column="1"
+                                        Margin="10,5,0,5"
+                                        FontSize="15"
+                                        Style="{StaticResource HeaderTextBlockStyle}"
+                                        Text="PPID :" />
                                     <TextBlock
-                                    x:Name="txtPlcConnect"
-                                    Grid.Row="7"
-                                    Grid.Column="1"
-                                    Margin="10,5,0,5"
-                                    Text="PLC CONNECT" />
+                                        x:Name="txtPlcConnect"
+                                        Grid.Row="7"
+                                        Grid.Column="1"
+                                        Margin="10,5,0,5"
+                                        FontSize="15"
+                                        Style="{StaticResource HeaderTextBlockStyle}"
+                                        Text="Plc Disconnected" />
 
                                 </Grid>
                             </Border>
                             <Border
-                            Grid.Row="1"
-                            Grid.Column="1"
-                            Margin="5,5"
-                            Background="#FFD9E4FF"
-                            BorderBrush="{StaticResource gradientLayout5}"
-                            BorderThickness="1.5"
-                            CornerRadius="5">
+                                Grid.Row="1"
+                                Grid.Column="1"
+                                Margin="5,5"
+                                Background="#FFD9E4FF"
+                                BorderBrush="{StaticResource gradientLayout5}"
+                                BorderThickness="1.5"
+                                CornerRadius="5">
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="*" />
@@ -446,88 +453,91 @@ Text="{Binding ALCD}" />
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="2*" />
-                                        <ColumnDefinition Width="150" />
+                                        <ColumnDefinition Width="180" />
                                     </Grid.ColumnDefinitions>
                                     <Border
-                                    Grid.ColumnSpan="2"
-                                    Margin="3"
-                                    VerticalAlignment="Center"
-                                    Background="CornflowerBlue"
-                                    CornerRadius="5">
+                                        Grid.ColumnSpan="2"
+                                        Margin="3"
+                                        VerticalAlignment="Center"
+                                        Background="CornflowerBlue"
+                                        CornerRadius="5">
                                         <TextBlock
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Top"
-                                        Style="{StaticResource HeaderTextBlockStyle}"
-                                        Text="HOST" />
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Top"
+                                            Style="{StaticResource HeaderTextBlockStyle}"
+                                            Text="HOST" />
                                     </Border>
 
                                     <TextBlock
-
-                                    Grid.Row="1"
-                                    Grid.Column="0"
-                                    Margin="10,5,0,5"
-                                    FontSize="15"
-                                    Style="{StaticResource HeaderTextBlockStyle}"
-                                    Text="IP " />
+                                        Grid.Row="1"
+                                        Grid.Column="0"
+                                        Margin="10,5,0,5"
+                                        FontSize="15"
+                                        Text="IP " />
                                     <TextBlock
-                                    Grid.Row="2"
-                                    Grid.Column="0"
-                                    Margin="10,5,0,5"
-                                    FontSize="15"
-                                    Style="{StaticResource HeaderTextBlockStyle}"
-                                    Text="PORT  " />
+                                        Grid.Row="2"
+                                        Grid.Column="0"
+                                        Margin="10,5,0,5"
+                                        FontSize="15"
+                                        Text="PORT  " />
                                     <TextBlock
-                                    Grid.Row="3"
-                                    Grid.Column="0"
-                                    Margin="10,5,0,5"
-                                    FontSize="15"
-                                    Style="{StaticResource HeaderTextBlockStyle}"
-                                    Text="MODE  " />
+                                        Grid.Row="3"
+                                        Grid.Column="0"
+                                        Margin="10,5,0,5"
+                                        FontSize="15"
+                                        Text="MODE  " />
                                     <TextBlock
-                                    Grid.Row="4"
-                                    Grid.Column="0"
-                                    Margin="10,5,0,5"
-                                    FontSize="15"
-                                    Style="{StaticResource HeaderTextBlockStyle}"
-                                    Text="CONNECTSTATE" />
+                                        Grid.Row="4"
+                                        Grid.Column="0"
+                                        Margin="10,5,0,5"
+                                        FontSize="15"
+                                        Text="CONNECTSTATE" />
                                     <!--  commend  -->
                                     <TextBlock
-                                    x:Name="txtIp"
-                                    Grid.Row="1"
-                                    Grid.Column="1"
-                                    Margin="10,5,0,5"
-                                    Text="Ip" />
+                                        x:Name="txtIp"
+                                        Grid.Row="1"
+                                        Grid.Column="1"
+                                        Margin="10,5,0,5"
+                                        FontSize="15"
+                                        Style="{StaticResource HeaderTextBlockStyle}"
+                                        Text="Ip" />
                                     <TextBlock
-                                    x:Name="txtPort"
-                                    Grid.Row="2"
-                                    Grid.Column="1"
-                                    Margin="10,5,0,5"
-                                    Text=": Port" />
+                                        x:Name="txtPort"
+                                        Grid.Row="2"
+                                        Grid.Column="1"
+                                        Margin="10,5,0,5"
+                                        FontSize="15"
+                                        Style="{StaticResource HeaderTextBlockStyle}"
+                                        Text=": Port" />
                                     <TextBlock
-                                    x:Name="txtState"
-                                    Grid.Row="3"
-                                    Grid.Column="1"
-                                    Margin="10,5,0,5"
-                                    Text=": State" />
+                                        x:Name="txtState"
+                                        Grid.Row="3"
+                                        Grid.Column="1"
+                                        Margin="10,5,0,5"
+                                        FontSize="15"
+                                        Style="{StaticResource HeaderTextBlockStyle}"
+                                        Text=": State" />
                                     <TextBlock
-                                    x:Name="txtCimConnect"
-                                    Grid.Row="4"
-                                    Grid.Column="1"
-                                    Margin="10,5,0,5"
-                                    Text=": Cim Connect" />
+                                        x:Name="txtCimConnect"
+                                        Grid.Row="4"
+                                        Grid.Column="1"
+                                        Margin="10,5,0,5"
+                                        FontSize="15"
+                                        Style="{StaticResource HeaderTextBlockStyle}"
+                                        Text=":  Cim Disconnect" />
 
 
 
                                 </Grid>
                             </Border>
                             <Border
-                            Grid.Row="2"
-                            Grid.Column="1"
-                            Margin="5,5"
-                            Background="#FFD9E4FF"
-                            BorderBrush="{StaticResource gradientLayout5}"
-                            BorderThickness="1.5"
-                            CornerRadius="5">
+                                Grid.Row="2"
+                                Grid.Column="1"
+                                Margin="5,5"
+                                Background="#FFD9E4FF"
+                                BorderBrush="{StaticResource gradientLayout5}"
+                                BorderThickness="1.5"
+                                CornerRadius="5">
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="*" />
@@ -540,107 +550,114 @@ Text="{Binding ALCD}" />
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="3*" />
-                                        <ColumnDefinition Width="150" />
+                                        <ColumnDefinition Width="180" />
                                     </Grid.ColumnDefinitions>
                                     <Border
-                                    Grid.ColumnSpan="2"
-                                    Margin="3"
-                                    VerticalAlignment="Center"
-                                    Background="CornflowerBlue"
-                                    CornerRadius="5">
+                                        Grid.ColumnSpan="2"
+                                        Margin="3"
+                                        VerticalAlignment="Center"
+                                        Background="CornflowerBlue"
+                                        CornerRadius="5">
                                         <TextBlock
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Top"
-                                        Style="{StaticResource HeaderTextBlockStyle}"
-                                        Text="EQP STATE" />
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Top"
+                                            Style="{StaticResource HeaderTextBlockStyle}"
+                                            Text="EQP STATE" />
                                     </Border>
 
                                     <TextBlock
-                                    Grid.Row="1"
-                                    Grid.Column="0"
-                                    Margin="10,5,0,5"
-                                    FontSize="15"
-                                    Style="{StaticResource HeaderTextBlockStyle}"
-                                    Text="AVAILABILITYSTATE :" />
+                                        Grid.Row="1"
+                                        Grid.Column="0"
+                                        Margin="10,5,0,5"
+                                        FontSize="15"
+                                        Text="AVAILABILITYSTATE" />
                                     <TextBlock
-                                    Grid.Row="2"
-                                    Grid.Column="0"
-                                    Margin="10,5,0,5"
-                                    FontSize="15"
-                                    Style="{StaticResource HeaderTextBlockStyle}"
-                                    Text="INTERLOCKSTATE :" />
+                                        Grid.Row="2"
+                                        Grid.Column="0"
+                                        Margin="10,5,0,5"
+                                        FontSize="15"
+                                        Text="INTERLOCKSTATE" />
                                     <TextBlock
-                                    Grid.Row="3"
-                                    Grid.Column="0"
-                                    Margin="10,5,0,5"
-                                    FontSize="15"
-                                    Style="{StaticResource HeaderTextBlockStyle}"
-                                    Text="RUNSTATE :" />
+                                        Grid.Row="3"
+                                        Grid.Column="0"
+                                        Margin="10,5,0,5"
+                                        FontSize="15"
+                                        Text="RUNSTATE" />
                                     <TextBlock
-                                    Grid.Row="4"
-                                    Grid.Column="0"
-                                    Margin="10,5,0,5"
-                                    FontSize="15"
-                                    Style="{StaticResource HeaderTextBlockStyle}"
-                                    Text="FRONSTATE :" />
+                                        Grid.Row="4"
+                                        Grid.Column="0"
+                                        Margin="10,5,0,5"
+                                        FontSize="15"
+                                        Text="FRONSTATE" />
                                     <TextBlock
-                                    Grid.Row="5"
-                                    Grid.Column="0"
-                                    Margin="10,5,0,5"
-                                    FontSize="15"
-                                    Style="{StaticResource HeaderTextBlockStyle}"
-                                    Text="REARSTATE :" />
+                                        Grid.Row="5"
+                                        Grid.Column="0"
+                                        Margin="10,5,0,5"
+                                        FontSize="15"
+                                        Text="REARSTATE" />
                                     <TextBlock
-                                    Grid.Row="6"
-                                    Grid.Column="0"
-                                    Margin="10,5,0,5"
-                                    FontSize="15"
-                                    Style="{StaticResource HeaderTextBlockStyle}"
-                                    Text="MOVESTATE :" />
+                                        Grid.Row="6"
+                                        Grid.Column="0"
+                                        Margin="10,5,0,5"
+                                        FontSize="15"
+                                        Text="MOVESTATE" />
                                     <!--  commend  -->
                                     <TextBlock
-                                    x:Name="txtAvailabilityState"
-                                    Grid.Row="1"
-                                    Grid.Column="1"
-                                    Margin="10,5,0,5"
-                                    Text="Ip" />
+                                        x:Name="txtAvailabilityState"
+                                        Grid.Row="1"
+                                        Grid.Column="1"
+                                        Margin="10,5,0,5"
+                                        FontSize="15"
+                                        Style="{StaticResource HeaderTextBlockStyle}"
+                                        Text="Ip" />
                                     <TextBlock
-                                    x:Name="txtInterLockState"
-                                    Grid.Row="2"
-                                    Grid.Column="1"
-                                    Margin="10,5,0,5"
-                                    Text=": Port" />
+                                        x:Name="txtInterLockState"
+                                        Grid.Row="2"
+                                        Grid.Column="1"
+                                        Margin="10,5,0,5"
+                                        FontSize="15"
+                                        Style="{StaticResource HeaderTextBlockStyle}"
+                                        Text=": Port" />
                                     <TextBlock
-                                    x:Name="txtRunState"
-                                    Grid.Row="3"
-                                    Grid.Column="1"
-                                    Margin="10,5,0,5"
-                                    Text=": State" />
+                                        x:Name="txtRunState"
+                                        Grid.Row="3"
+                                        Grid.Column="1"
+                                        Margin="10,5,0,5"
+                                        FontSize="15"
+                                        Style="{StaticResource HeaderTextBlockStyle}"
+                                        Text=": State" />
                                     <TextBlock
-                                    x:Name="txtFronState"
-                                    Grid.Row="4"
-                                    Grid.Column="1"
-                                    Margin="10,5,0,5"
-                                    Text=": State" />
+                                        x:Name="txtFronState"
+                                        Grid.Row="4"
+                                        Grid.Column="1"
+                                        Margin="10,5,0,5"
+                                        FontSize="15"
+                                        Style="{StaticResource HeaderTextBlockStyle}"
+                                        Text=": State" />
                                     <TextBlock
-                                    x:Name="txtRearState"
-                                    Grid.Row="5"
-                                    Grid.Column="1"
-                                    Margin="10,5,0,5"
-                                    Text=": State" />
+                                        x:Name="txtRearState"
+                                        Grid.Row="5"
+                                        Grid.Column="1"
+                                        Margin="10,5,0,5"
+                                        FontSize="15"
+                                        Style="{StaticResource HeaderTextBlockStyle}"
+                                        Text=": State" />
                                     <TextBlock
-                                    x:Name="txtMoveState"
-                                    Grid.Row="6"
-                                    Grid.Column="1"
-                                    Margin="10,5,0,5"
-                                    Text=": State" />
+                                        x:Name="txtMoveState"
+                                        Grid.Row="6"
+                                        Grid.Column="1"
+                                        Margin="10,5,0,5"
+                                        FontSize="15"
+                                        Style="{StaticResource HeaderTextBlockStyle}"
+                                        Text=": State" />
 
                                 </Grid>
                             </Border>
                             <Border Grid.Row="3" Margin="3,3,3,2">
-                                <Grid x:Name="grdCpu" Grid.Column="0" 
-
-                                  Height="150"/>
+                                <Grid
+                                    x:Name="grdCpu"
+                                    Grid.Column="0"
+                                    Height="150" />
 
 
                             </Border>

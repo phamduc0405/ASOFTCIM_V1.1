@@ -74,6 +74,25 @@ namespace ASOFTCIM.Message.PLC2Cim.Recv
         {
             await Task.Run(() =>
             {
+
+                lock (acim.EqpData.AlarmHistory)
+                {
+                    var alarmh = new Alarm
+                    {
+                        ALST = alarm.ALST,
+                        ALID = alarm.ALID,
+                        ALCD = alarm.ALCD,
+                        EQPID = alarm.EQPID,
+                        TIME = alarm.TIME,
+                        ALTEXT = alarm.ALTEXT
+                    };
+                    acim.EqpData.AlarmHistory.Add(alarmh);
+                    if (acim.EqpData.AlarmHistory.Count > 100)
+                    {
+                        acim.EqpData.AlarmHistory.RemoveAt(0);
+                    }
+                }
+
                 lock (acim.EqpData.ALS) 
                 {
                     acim.EqpData.ALS.RemoveAll(x => x.ALID == alarm.ALID);
