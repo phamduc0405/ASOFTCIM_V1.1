@@ -24,10 +24,11 @@ namespace ASOFTCIM.MVVM.View.Popup
         public LogInDisplay()
         {
             InitializeComponent();
-            cbb.ItemsSource = new List<string>() { "Admin","Enginer","Operator" };
-            CreaterEvents();
+            cbb.ItemsSource = new List<string>() { "Admin","Engineer","Operator" };
+            cbb.SelectedIndex = 0;
+            CreateEvents();
         }
-        private void CreaterEvents()
+        private void CreateEvents()
         {
             Loaded += (sender, args) =>
             {

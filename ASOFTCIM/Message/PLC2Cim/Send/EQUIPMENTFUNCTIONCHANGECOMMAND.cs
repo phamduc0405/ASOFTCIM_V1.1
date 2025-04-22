@@ -26,7 +26,6 @@ namespace ASOFTCIM.Message.PLC2Cim.Send
 
                 BitModel bit = plcdata.Bits.First(x => x.Comment == this.GetType().Name);
                 bit.SetPCValue = true;
-                Console.WriteLine($"{DateTime.Now.Second}kk" + $"{DateTime.Now.Millisecond}" );
             }
             catch (Exception ex)
             {

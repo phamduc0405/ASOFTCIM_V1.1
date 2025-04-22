@@ -15,15 +15,9 @@ namespace ASOFTCIM
         {
             try
             {
-                EqpData.TransactionSys = _cim.SysPacket.SystemByte;
-                if (_cim.SysPacket.Items[1].Value.ToString().Trim() == _cim.EQPID)
-                {
-                    SendS2F17(_cim.SysPacket);
-                }
-                else
-                {
-                    SendS9F1(_cim.SysPacket);
-                }
+               // EqpData.TransactionSys = _cim.SysPacket.SystemByte;
+                SendS2F17(_cim.SysPacket);
+               
             }
             catch (Exception ex)
             {

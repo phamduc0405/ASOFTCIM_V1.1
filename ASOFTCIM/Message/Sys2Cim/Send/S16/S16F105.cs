@@ -23,7 +23,7 @@ namespace ASOFTCIM
                 packet.Function = 105;
                 packet.Command = Command.UserData;
                 packet.DeviceId = EqpData.DeviceId;
-                packet.SystemByte = EqpData.TransactionSys;
+                packet.SystemByte = EqpData.TransactionSys++;
                 packet.addItem(DataType.List, 4);
                 {
                     packet.addItem(DataType.Ascii, process.EQPID);

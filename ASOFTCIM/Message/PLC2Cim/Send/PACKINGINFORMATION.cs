@@ -20,15 +20,11 @@ namespace ASOFTCIM.Message.PLC2Cim.Send
 
             try
             {
-                Console.WriteLine($"{DateTime.Now.Second}kk" + $"{DateTime.Now.Millisecond}ff");
                
-                Stopwatch stopWatch = new Stopwatch();
-                // BitModel bit = plcdata.Bits.First(x => x.Item == this.GetType().Name);
-                //List<IWordModel> word = bit.LstWord;
+
                 List<WordModel> word = plcdata.Words.Where(x => x.Area == this.GetType().Name).ToList();
                 
                 word.FirstOrDefault(x => x.Item == "PackingInformationErrorMessage").SetValue = "1";
-                stopWatch.Start();
                 word.FirstOrDefault(x => x.Item == "PackingInformationSBPID").SetValue = paking.SBPID;
                 
                 word.FirstOrDefault(x => x.Item == "PackingInformationCHECKERNAME").SetValue = paking.CHECKERNAME;
@@ -36,11 +32,7 @@ namespace ASOFTCIM.Message.PLC2Cim.Send
                 word.FirstOrDefault(x => x.Item == "PackingInformationCUSTOMERID").SetValue = paking.CUSTOMERID;
                 
                 word.FirstOrDefault(x => x.Item == "PackingInformationETCLABELURL").SetValue = paking.CELLSIZE;
-                stopWatch.Stop();
-                Console.WriteLine($"{stopWatch.ElapsedMilliseconds}");
-                Console.WriteLine($"{DateTime.Now.Second}kk" + $"{DateTime.Now.Millisecond}qq");
                 BitModel bit = plcdata.Bits.First(x => x.Item == this.GetType().Name);
-                Console.WriteLine($"{DateTime.Now.Second}kk" + $"{DateTime.Now.Millisecond}gg");
                 
 
                 bit.SetPCValue = true;

@@ -26,8 +26,8 @@ namespace ASOFTCIM
                 packet.Command = Command.UserData;
                 packet.DeviceId = EqpData.DeviceId;
                 packet.SystemByte = EqpData.TransactionSys;
-                packet.WaitBit = true;
-				            AddTrans(EqpData.TransactionSys);
+                packet.WaitBit = false;
+				            
                 List<SV> svid = EqpData.SVID;
                 
                 

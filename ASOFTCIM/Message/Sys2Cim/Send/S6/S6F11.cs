@@ -25,7 +25,7 @@ namespace ASOFTCIM
                 packet.Function = 11;
                 packet.Command = Command.UserData;
                 packet.DeviceId = EqpData.DeviceId;
-                packet.SystemByte = EqpData.TransactionSys;
+                packet.SystemByte = EqpData.TransactionSys++;
                 packet.addItem(DataType.List, 2);
                 packet.addItem(DataType.Ascii, "abc");
                 packet.addItem(DataType.Ascii, "def");
@@ -51,8 +51,8 @@ namespace ASOFTCIM
                 packet.Stream = 6;
                 packet.Function = 11;
                 packet.Command = Command.UserData;
-                packet.DeviceId = EqpData.DeviceId;
-                packet.SystemByte = EqpData.TransactionSys;
+                packet.DeviceId = EqpData.DeviceId; 
+                packet.SystemByte = EqpData.TransactionSys++;
                 packet.addItem(DataType.List, 3);
                 packet.addItem(DataType.Ascii, "0");          //DATA ID ?
                 packet.addItem(DataType.Ascii, "101");
@@ -139,7 +139,7 @@ namespace ASOFTCIM
                 packet.Function = 11;
                 packet.Command = Command.UserData;
                 packet.DeviceId = EqpData.DeviceId;
-                packet.SystemByte = EqpData.TransactionSys;
+                packet.SystemByte = EqpData.TransactionSys++;
                 packet.addItem(DataType.List, 3);
                 packet.addItem(DataType.Ascii, "0");          //DATA ID ?
                 packet.addItem(DataType.Ascii, "102");
@@ -243,7 +243,7 @@ namespace ASOFTCIM
                 packet.Function = 11;
                 packet.Command = Command.UserData;
                 packet.DeviceId = EqpData.DeviceId;
-                packet.SystemByte = EqpData.TransactionSys;
+                packet.SystemByte = EqpData.TransactionSys++;
                 packet.addItem(DataType.List, 3);
                 packet.addItem(DataType.Ascii, "0");          //DATA ID ?
                 packet.addItem(DataType.Ascii, Ceid);
@@ -299,7 +299,7 @@ namespace ASOFTCIM
                 packet.Function = 11;
                 packet.Command = Command.UserData;
                 packet.DeviceId = EqpData.DeviceId;
-                packet.SystemByte = EqpData.TransactionSys;
+                packet.SystemByte = EqpData.TransactionSys++;
                 packet.addItem(DataType.List, 3);
                 packet.addItem(DataType.Ascii, "0");
                 packet.addItem(DataType.Ascii, "107");
@@ -351,7 +351,7 @@ namespace ASOFTCIM
                 packet.Function = 11;
                 packet.Command = Command.UserData;
                 packet.DeviceId = EqpData.DeviceId;
-                packet.SystemByte = EqpData.TransactionSys;
+                packet.SystemByte = EqpData.TransactionSys++;
                 packet.addItem(DataType.List, 3);
                 packet.addItem(DataType.Ascii, "0");
                 packet.addItem(DataType.Ascii, "108");
@@ -433,7 +433,7 @@ namespace ASOFTCIM
                 packet.Function = 11;
                 packet.Command = Command.UserData;
                 packet.DeviceId = EqpData.DeviceId;
-                packet.SystemByte = EqpData.TransactionSys;
+                packet.SystemByte = EqpData.TransactionSys++;
                 packet.addItem(DataType.List, 3);
                 packet.addItem(DataType.Ascii, "0");
                 packet.addItem(DataType.Ascii, "109");
@@ -497,7 +497,7 @@ namespace ASOFTCIM
                 packet.Function = 11;
                 packet.Command = Command.UserData;
                 packet.DeviceId = EqpData.DeviceId;
-                packet.SystemByte = EqpData.TransactionSys;
+                packet.SystemByte = EqpData.TransactionSys++;
                 packet.addItem(DataType.List, 3);
                 packet.addItem(DataType.Ascii, "0");
                 packet.addItem(DataType.Ascii, "111");
@@ -554,7 +554,7 @@ namespace ASOFTCIM
                 packet.Function = 11;
                 packet.Command = Command.UserData;
                 packet.DeviceId = EqpData.DeviceId;
-                packet.SystemByte = EqpData.TransactionSys;
+                packet.SystemByte = EqpData.TransactionSys++;
                 packet.addItem(DataType.List, 3);
                 packet.addItem(DataType.Ascii, "0");
                 packet.addItem(DataType.Ascii, "117");
@@ -607,7 +607,7 @@ namespace ASOFTCIM
                 packet.Function = 11;
                 packet.Command = Command.UserData;
                 packet.DeviceId = EqpData.DeviceId;
-                packet.SystemByte = EqpData.TransactionSys;
+                packet.SystemByte = EqpData.TransactionSys++;
                 packet.addItem(DataType.List, 3);
                 packet.addItem(DataType.Ascii, "0");
                 packet.addItem(DataType.Ascii, ceid);
@@ -680,7 +680,7 @@ namespace ASOFTCIM
                 packet.Function = 11;
                 packet.Command = Command.UserData;
                 packet.DeviceId = EqpData.DeviceId;
-                packet.SystemByte = EqpData.TransactionSys;
+                packet.SystemByte = EqpData.TransactionSys++;
                 packet.addItem(DataType.List, 3);
                 packet.addItem(DataType.Ascii, "0");
                 packet.addItem(DataType.Ascii, ceid);
@@ -778,7 +778,7 @@ namespace ASOFTCIM
                 packet.Function = 11;
                 packet.Command = Command.UserData;
                 packet.DeviceId = EqpData.DeviceId;
-                packet.SystemByte = EqpData.TransactionSys;
+                packet.SystemByte = EqpData.TransactionSys++;
                 packet.addItem(DataType.List, 3);
                 packet.addItem(DataType.Ascii, "0");
                 packet.addItem(DataType.Ascii, ceid);
@@ -856,7 +856,7 @@ namespace ASOFTCIM
                 packet.Function = 11;
                 packet.Command = Command.UserData;
                 packet.DeviceId = EqpData.DeviceId;
-                packet.SystemByte = EqpData.TransactionSys;
+                packet.SystemByte = EqpData.TransactionSys++;
                 packet.addItem(DataType.List, 3);
                 packet.addItem(DataType.Ascii, "0");
                 packet.addItem(DataType.Ascii, ceid);
@@ -909,7 +909,7 @@ namespace ASOFTCIM
                 packet.Function = 11;
                 packet.Command = Command.UserData;
                 packet.DeviceId = EqpData.DeviceId;
-                packet.SystemByte = EqpData.TransactionSys;
+                packet.SystemByte = EqpData.TransactionSys++;
                 packet.addItem(DataType.List, 3);
                 packet.addItem(DataType.Ascii, "0");
                 packet.addItem(DataType.Ascii, ceid);
@@ -990,7 +990,7 @@ namespace ASOFTCIM
                 packet.Function = 11;
                 packet.Command = Command.UserData;
                 packet.DeviceId = EqpData.DeviceId;
-                packet.SystemByte = EqpData.TransactionSys;
+                packet.SystemByte = EqpData.TransactionSys++;
                 packet.addItem(DataType.List, 3);
                 packet.addItem(DataType.Ascii, "0");
                 packet.addItem(DataType.Ascii, ceid);
@@ -1089,7 +1089,7 @@ namespace ASOFTCIM
                 packet.Function = 11;
                 packet.Command = Command.UserData;
                 packet.DeviceId = EqpData.DeviceId;
-                packet.SystemByte = EqpData.TransactionSys;
+                packet.SystemByte = EqpData.TransactionSys++;
                 packet.addItem(DataType.List, 3);
                 packet.addItem(DataType.Ascii, "0");
                 packet.addItem(DataType.Ascii, ceid);
@@ -1147,7 +1147,7 @@ namespace ASOFTCIM
                 packet.Function = 11;
                 packet.Command = Command.UserData;
                 packet.DeviceId = EqpData.DeviceId;
-                packet.SystemByte = EqpData.TransactionSys;
+                packet.SystemByte = EqpData.TransactionSys++;
                 packet.addItem(DataType.List, 3);
                 packet.addItem(DataType.Ascii, "0");
                 packet.addItem(DataType.Ascii, ceid);
@@ -1209,7 +1209,7 @@ namespace ASOFTCIM
                 packet.Function = 11;
                 packet.Command = Command.UserData;
                 packet.DeviceId = EqpData.DeviceId;
-                packet.SystemByte = EqpData.TransactionSys;
+                packet.SystemByte = EqpData.TransactionSys++;
                 packet.addItem(DataType.List, 3);
                 packet.addItem(DataType.Ascii, "0");
                 packet.addItem(DataType.Ascii, ceid);
@@ -1273,7 +1273,7 @@ namespace ASOFTCIM
                 packet.Function = 11;
                 packet.Command = Command.UserData;
                 packet.DeviceId = EqpData.DeviceId;
-                packet.SystemByte = EqpData.TransactionSys;
+                packet.SystemByte = EqpData.TransactionSys++;
                 packet.addItem(DataType.List, 3);
                 packet.addItem(DataType.Ascii, "0");
                 packet.addItem(DataType.Ascii, ceid);
@@ -1360,7 +1360,7 @@ namespace ASOFTCIM
                 packet.Function = 11;
                 packet.Command = Command.UserData;
                 packet.DeviceId = EqpData.DeviceId;
-                packet.SystemByte = EqpData.TransactionSys;
+                packet.SystemByte = EqpData.TransactionSys++;
                 packet.addItem(DataType.List, 3);
                 packet.addItem(DataType.Ascii, "0");
                 packet.addItem(DataType.Ascii, ceid);
@@ -1486,7 +1486,7 @@ namespace ASOFTCIM
                 packet.Function = 11;
                 packet.Command = Command.UserData;
                 packet.DeviceId = EqpData.DeviceId;
-                packet.SystemByte = EqpData.TransactionSys;
+                packet.SystemByte = EqpData.TransactionSys++;
                 packet.addItem(DataType.List, 3);
                 packet.addItem(DataType.Ascii, "0");
                 packet.addItem(DataType.Ascii, ceid);
@@ -1551,7 +1551,7 @@ namespace ASOFTCIM
                 packet.Function = 11;
                 packet.Command = Command.UserData;
                 packet.DeviceId = EqpData.DeviceId;
-                packet.SystemByte = EqpData.TransactionSys;
+                packet.SystemByte = EqpData.TransactionSys++;
                 packet.addItem(DataType.List, 3);
                 packet.addItem(DataType.Ascii, "0");
                 packet.addItem(DataType.Ascii, ceid);
@@ -1623,7 +1623,7 @@ namespace ASOFTCIM
             packet.Function = 11;
             packet.Command = Command.UserData;
             packet.DeviceId = EqpData.DeviceId;
-            packet.SystemByte = EqpData.TransactionSys;
+            packet.SystemByte = EqpData.TransactionSys++;
             packet.addItem(DataType.List, 3);
             packet.addItem(DataType.Ascii, "0");
             packet.addItem(DataType.Ascii, ceid);
@@ -1681,7 +1681,7 @@ namespace ASOFTCIM
             packet.Function = 11;
             packet.Command = Command.UserData;
             packet.DeviceId = EqpData.DeviceId;
-            packet.SystemByte = EqpData.TransactionSys;
+            packet.SystemByte = EqpData.TransactionSys++;
             packet.addItem(DataType.List, 3);
             packet.addItem(DataType.Ascii, "0");
             packet.addItem(DataType.Ascii, ceid);
@@ -1826,7 +1826,7 @@ namespace ASOFTCIM
             packet.Function = 11;
             packet.Command = Command.UserData;
             packet.DeviceId = EqpData.DeviceId;
-            packet.SystemByte = EqpData.TransactionSys;
+            packet.SystemByte = EqpData.TransactionSys++;
             packet.addItem(DataType.List, 3);
             packet.addItem(DataType.Ascii, "0");
             packet.addItem(DataType.Ascii, ceid);
@@ -1887,7 +1887,7 @@ namespace ASOFTCIM
             packet.Function = 11;
             packet.Command = Command.UserData;
             packet.DeviceId = EqpData.DeviceId;
-            packet.SystemByte = EqpData.TransactionSys;
+            packet.SystemByte = EqpData.TransactionSys++;
             packet.addItem(DataType.List, 3);
             packet.addItem(DataType.Ascii, "0");
             packet.addItem(DataType.Ascii, ceid);
@@ -1973,7 +1973,7 @@ namespace ASOFTCIM
             packet.Function = 11;
             packet.Command = Command.UserData;
             packet.DeviceId = EqpData.DeviceId;
-            packet.SystemByte = EqpData.TransactionSys;
+            packet.SystemByte = EqpData.TransactionSys++      ;
             packet.addItem(DataType.List, 3);
             packet.addItem(DataType.Ascii, "0");
             packet.addItem(DataType.Ascii, ceid);
@@ -2065,7 +2065,7 @@ namespace ASOFTCIM
             packet.Function = 11;
             packet.Command = Command.UserData;
             packet.DeviceId = EqpData.DeviceId;
-            packet.SystemByte = EqpData.TransactionSys;
+            packet.SystemByte = EqpData.TransactionSys++;
             packet.addItem(DataType.List, 3);
             packet.addItem(DataType.Ascii, "0");
             packet.addItem(DataType.Ascii, ceid);
@@ -2148,7 +2148,7 @@ namespace ASOFTCIM
             packet.Function = 11;
             packet.Command = Command.UserData;
             packet.DeviceId = EqpData.DeviceId;
-            packet.SystemByte = EqpData.TransactionSys;
+            packet.SystemByte = EqpData.TransactionSys++;
             packet.addItem(DataType.List, 3);
             packet.addItem(DataType.Ascii, "0");
             packet.addItem(DataType.Ascii, ceid);
@@ -2235,7 +2235,7 @@ namespace ASOFTCIM
             packet.Function = 11;
             packet.Command = Command.UserData;
             packet.DeviceId = EqpData.DeviceId;
-            packet.SystemByte = EqpData.TransactionSys;
+            packet.SystemByte = EqpData.TransactionSys++;
             packet.addItem(DataType.List, 3);
             packet.addItem(DataType.Ascii, "0");
             packet.addItem(DataType.Ascii, ceid);
@@ -2323,7 +2323,7 @@ namespace ASOFTCIM
             packet.Function = 11;
             packet.Command = Command.UserData;
             packet.DeviceId = EqpData.DeviceId;
-            packet.SystemByte = EqpData.TransactionSys;
+            packet.SystemByte = EqpData.TransactionSys++;
             packet.addItem(DataType.List, 3);
             packet.addItem(DataType.Ascii, "0");
             packet.addItem(DataType.Ascii, ceid);
@@ -2412,7 +2412,7 @@ namespace ASOFTCIM
             packet.Function = 11;
             packet.Command = Command.UserData;
             packet.DeviceId = EqpData.DeviceId;
-            packet.SystemByte = EqpData.TransactionSys;
+            packet.SystemByte = EqpData.TransactionSys++;
             packet.addItem(DataType.List, 3);
             packet.addItem(DataType.Ascii, "0");
             packet.addItem(DataType.Ascii, "601");
@@ -2450,7 +2450,7 @@ namespace ASOFTCIM
             packet.Function = 11;
             packet.Command = Command.UserData;
             packet.DeviceId = EqpData.DeviceId;
-            packet.SystemByte = EqpData.TransactionSys;
+            packet.SystemByte = EqpData.TransactionSys++;
             packet.addItem(DataType.List, 3);
             packet.addItem(DataType.Ascii, "0");
             packet.addItem(DataType.Ascii, "602");
@@ -2496,7 +2496,7 @@ namespace ASOFTCIM
             packet.Function = 11;
             packet.Command = Command.UserData;
             packet.DeviceId = EqpData.DeviceId;
-            packet.SystemByte = EqpData.TransactionSys;
+            packet.SystemByte = EqpData.TransactionSys++;
             packet.addItem(DataType.List, 3);
             packet.addItem(DataType.Ascii, "0");
             packet.addItem(DataType.Ascii, "603");
@@ -2553,7 +2553,7 @@ namespace ASOFTCIM
             packet.Function = 11;
             packet.Command = Command.UserData;
             packet.DeviceId = EqpData.DeviceId;
-            packet.SystemByte = EqpData.TransactionSys;
+            packet.SystemByte = EqpData.TransactionSys++;
             packet.addItem(DataType.List, 3);
             packet.addItem(DataType.Ascii, "0");
             packet.addItem(DataType.Ascii, "604");
@@ -2591,7 +2591,7 @@ namespace ASOFTCIM
             packet.Function = 11;
             packet.Command = Command.UserData;
             packet.DeviceId = EqpData.DeviceId;
-            packet.SystemByte = EqpData.TransactionSys;
+            packet.SystemByte = EqpData.TransactionSys++;
             packet.addItem(DataType.List, 3);
             packet.addItem(DataType.Ascii, "0");
             packet.addItem(DataType.Ascii, "605");
@@ -2629,7 +2629,7 @@ namespace ASOFTCIM
             packet.Function = 11;
             packet.Command = Command.UserData;
             packet.DeviceId = EqpData.DeviceId;
-            packet.SystemByte = EqpData.TransactionSys;
+            packet.SystemByte = EqpData.TransactionSys++;
             packet.addItem(DataType.List, 3);
             packet.addItem(DataType.Ascii, "0");
             packet.addItem(DataType.Ascii, "606");
@@ -2694,7 +2694,7 @@ namespace ASOFTCIM
             packet.Function = 11;
             packet.Command = Command.UserData;
             packet.DeviceId = EqpData.DeviceId;
-            packet.SystemByte = EqpData.TransactionSys;
+            packet.SystemByte = EqpData.TransactionSys++;
             packet.addItem(DataType.List, 3);
             packet.addItem(DataType.Ascii, "0");
             packet.addItem(DataType.Ascii, "607");
@@ -2743,7 +2743,7 @@ namespace ASOFTCIM
             packet.Function = 11;
             packet.Command = Command.UserData;
             packet.DeviceId = EqpData.DeviceId;
-            packet.SystemByte = EqpData.TransactionSys;
+            packet.SystemByte = EqpData.TransactionSys++;
             packet.addItem(DataType.List, 3);
             packet.addItem(DataType.Ascii, "0");
             packet.addItem(DataType.Ascii, "608");
@@ -2795,7 +2795,7 @@ namespace ASOFTCIM
             packet.Function = 11;
             packet.Command = Command.UserData;
             packet.DeviceId = EqpData.DeviceId;
-            packet.SystemByte = EqpData.TransactionSys;
+            packet.SystemByte = EqpData.TransactionSys++;
             packet.addItem(DataType.List, 3);
             packet.addItem(DataType.Ascii, "0");
             packet.addItem(DataType.Ascii, "609");
@@ -2850,7 +2850,7 @@ namespace ASOFTCIM
             packet.Function = 11;
             packet.Command = Command.UserData;
             packet.DeviceId = EqpData.DeviceId;
-            packet.SystemByte = EqpData.TransactionSys;
+            packet.SystemByte = EqpData.TransactionSys++;
             packet.addItem(DataType.List, 3);
             packet.addItem(DataType.Ascii, "0");
             packet.addItem(DataType.Ascii, "604");
@@ -2888,7 +2888,7 @@ namespace ASOFTCIM
             packet.Function = 11;
             packet.Command = Command.UserData;
             packet.DeviceId = EqpData.DeviceId;
-            packet.SystemByte = EqpData.TransactionSys;
+            packet.SystemByte = EqpData.TransactionSys++;
             packet.addItem(DataType.List, 3);
             packet.addItem(DataType.Ascii, "0");
             packet.addItem(DataType.Ascii, "604");
@@ -2957,7 +2957,7 @@ namespace ASOFTCIM
             packet.Function = 11;
             packet.Command = Command.UserData;
             packet.DeviceId = EqpData.DeviceId;
-            packet.SystemByte = EqpData.TransactionSys;
+            packet.SystemByte = EqpData.TransactionSys++;
             packet.addItem(DataType.List, 3);
             packet.addItem(DataType.Ascii, "0");
             packet.addItem(DataType.Ascii, ceid);
@@ -3047,7 +3047,7 @@ namespace ASOFTCIM
             packet.Function = 11;
             packet.Command = Command.UserData;
             packet.DeviceId = EqpData.DeviceId;
-            packet.SystemByte = EqpData.TransactionSys;
+            packet.SystemByte = EqpData.TransactionSys++;
             packet.addItem(DataType.List, 3);
             packet.addItem(DataType.Ascii, "0");
             packet.addItem(DataType.Ascii, ceid);
@@ -3099,7 +3099,7 @@ namespace ASOFTCIM
             packet.Function = 11;
             packet.Command = Command.UserData;
             packet.DeviceId = EqpData.DeviceId;
-            packet.SystemByte = EqpData.TransactionSys;
+            packet.SystemByte = EqpData.TransactionSys++;
             packet.addItem(DataType.List, 3);
             packet.addItem(DataType.Ascii, "0");
             packet.addItem(DataType.Ascii, ceid);
@@ -3185,7 +3185,7 @@ namespace ASOFTCIM
             packet.Function = 11;
             packet.Command = Command.UserData;
             packet.DeviceId = EqpData.DeviceId;
-            packet.SystemByte = EqpData.TransactionSys;
+            packet.SystemByte = EqpData.TransactionSys++;
             packet.addItem(DataType.List, 3);
             packet.addItem(DataType.Ascii, "0");
             packet.addItem(DataType.Ascii, ceid);
@@ -3256,7 +3256,7 @@ namespace ASOFTCIM
             packet.Function = 11;
             packet.Command = Command.UserData;
             packet.DeviceId = EqpData.DeviceId;
-            packet.SystemByte = EqpData.TransactionSys;
+            packet.SystemByte = EqpData.TransactionSys++;
             packet.addItem(DataType.List, 3);
             packet.addItem(DataType.Ascii, "0");
             packet.addItem(DataType.Ascii, ceid);
@@ -3357,7 +3357,7 @@ namespace ASOFTCIM
             packet.Function = 11;
             packet.Command = Command.UserData;
             packet.DeviceId = EqpData.DeviceId;
-            packet.SystemByte = EqpData.TransactionSys;
+            packet.SystemByte = EqpData.TransactionSys++;
             packet.addItem(DataType.List, 3);
             packet.addItem(DataType.Ascii, "0");
             packet.addItem(DataType.Ascii, ceid);

@@ -177,7 +177,7 @@
                                     VerticalAlignment="Bottom"
                                     HorizontalContentAlignment="Center"
                                     Style="{StaticResource TextBoxHintStyleNoBorder}"
-                                    Tag="pass" />
+                                    Tag="Password" />
                             </StackPanel>
                         </Border>
                     </Grid>
