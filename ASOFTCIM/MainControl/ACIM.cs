@@ -83,6 +83,8 @@ namespace ASOFTCIM
         }
         #endregion
 
+        #region Constructor
+
         public ACIM(EquipmentConfig equipmentConfig)
         {
             Initial();
@@ -96,20 +98,12 @@ namespace ASOFTCIM
             _cim.TransTimeOutEvent += _cim_TransTimeOutEvent;
             _plc = new PlcComm();
             _eqpConfig = equipmentConfig;
-            //LoadExcelConfig(@"D:\Project_New\ACIM\SDCCIM_ASOFT_Portal_Online_Map_SDC_Basic_V1.21_v0.1.xlsx");
             InitialPlc();
-            
+
         }
-        public void Stop()
-        {
-            SysPacket sysPacket = new SysPacket(_cim.Conn);
-            sysPacket.DeviceId = 1;
-            sysPacket.SystemByte = EqpData.TransactionSys+1 ;
-            sysPacket.Command = Command.SeparateReq;
-            sysPacket.Send2Sys();
-            Thread.Sleep(1000);
-            _cim.Close();
-        }
+        #endregion
+
+        #region Private
         private void Initial()
         {
             EqpData = new EQPDATA();
@@ -120,7 +114,7 @@ namespace ASOFTCIM
             sysPacket.DeviceId = 1;
             sysPacket.SystemByte = trans.TransactionSys;
             SendS9F9(sysPacket);
-           
+
         }
         private void _cim_SysPacketEvent(SysPacket sysPacket)
         {
@@ -159,9 +153,23 @@ namespace ASOFTCIM
                 LogTxt.Add(LogTxt.Type.Exception, debug);
                 ex.Data.Clear();
             }
-            
+
 
         }
+        #endregion
+
+        #region Public
+        public void Stop()
+        {
+            SysPacket sysPacket = new SysPacket(_cim.Conn);
+            sysPacket.DeviceId = 1;
+            sysPacket.SystemByte = EqpData.TransactionSys + 1;
+            sysPacket.Command = Command.SeparateReq;
+            sysPacket.Send2Sys();
+            Thread.Sleep(1000);
+            _cim.Close();
+        }
+
 
         public Type[] GetTypesInNamespace(Assembly assembly, string nameSpace)
         {
@@ -175,7 +183,7 @@ namespace ASOFTCIM
         {
             _cim.AddTrans(trans);
         }
-        public void SendMessage2PLC(string classname,object obj)
+        public void SendMessage2PLC(string classname, object obj)
         {
             string namespaces = "ASOFTCIM.Message.PLC2Cim.Send";
             Type[] typelist = GetTypesInNamespace(Assembly.GetExecutingAssembly(), namespaces);
@@ -211,7 +219,7 @@ namespace ASOFTCIM
             {
                 try
                 {
-                    object instance = Activator.CreateInstance(t, new object[] { _plcH, _plc, obj});
+                    object instance = Activator.CreateInstance(t, new object[] { _plcH, _plc, obj });
 
                     if (instance != null)
                     {
@@ -227,7 +235,7 @@ namespace ASOFTCIM
                 }
             }
         }
-        public void SendMessage2PLC(string classname, object obj,string Unitid)
+        public void SendMessage2PLC(string classname, object obj, string Unitid)
         {
             string namespaces = "ASOFTCIM.Message.PLC2Cim.Send";
             Type[] typelist = GetTypesInNamespace(Assembly.GetExecutingAssembly(), namespaces);
@@ -253,7 +261,9 @@ namespace ASOFTCIM
                 }
             }
         }
-        
+        #endregion
+
+        #region Eventhandle
         private void Plc2CimEventHandle(string bit)
         {
             var handle = Plc2CimChangeEvent;
@@ -286,5 +296,7 @@ namespace ASOFTCIM
                 handle(SnFm);
             }
         }
+        #endregion
+
     }
 }
