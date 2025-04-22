@@ -34,7 +34,10 @@ namespace ASOFTCIM.MVVM.View.Monitor
         private async void Initial()
         {
             var wordViewModels = new List<(WordModel Word, string Address, string Comment, string Length, string Value, bool IsInput)>();
-
+            if (_controller.CIM.PLCH == null)
+            {
+                return;
+            }
             // 1. Xử lý dữ liệu ở background thread
             await Task.Run(() =>
             {

@@ -108,8 +108,12 @@ namespace ASOFTCIM.Helper
         #region Public Method
         public void LoadExcel(string ExcelPath)
         {
-            _plc.BitChangedEvent -= PlcComm_BitChangedEvent;
-            _plc.WordChangedEvent -= PlcComm_WordChangedEvent;
+            if (_plc!=null)
+            {
+                _plc.BitChangedEvent -= PlcComm_BitChangedEvent;
+                _plc.WordChangedEvent -= PlcComm_WordChangedEvent;
+            }
+            
 
             Task.Run( async () =>
             {
