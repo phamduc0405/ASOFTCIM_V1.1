@@ -145,7 +145,6 @@ namespace ASOFTCIM
                         EqpData.TransactionSys = sysPacket.SystemByte;
                     }
                     Host2CimEventHandle($"HOST -> CIM :RecvS{sysPacket.Stream}F{sysPacket.Function}");
-
                     object result = method.Invoke(this, null);
 
                     return;
