@@ -98,9 +98,9 @@ namespace ASOFTCIM.MainControl
         }
         private async void SendWhenStart() 
         {
-            await Task.Delay(500);
+            await Task.Delay(1000);
             _cim.SendS1F1(_cim.Cim.Conn);
-            await Task.Delay(10);
+            await Task.Delay(1000);
             _cim.EqpData.EQINFORMATION.CRST = "1";
             WordModel crst = _cim.PLCH.Words.FirstOrDefault(x => x.Item == "CRST");
             if (crst.GetValue() != _cim.EqpData.EQINFORMATION.CRST)

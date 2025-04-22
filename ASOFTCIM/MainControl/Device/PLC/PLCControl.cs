@@ -40,7 +40,7 @@ namespace ASOFTCIM
                     {
                         // Khởi tạo đối tượng PLC
                         _plc = new PlcComm();
-                        _eqpConfig.PLCConfig.PlcConnectType = PlcConnectType.Component;
+                        //_eqpConfig.PLCConfig.PlcConnectType = PlcConnectType.CCLinkIe;
                         //_eqpConfig.PLCConfig.StationNo = ;
                         _plc.ConfigComm(_eqpConfig.PLCConfig);
                         _plc.Start();

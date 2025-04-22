@@ -21,6 +21,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO;
 using System.Diagnostics;
+using System.Threading;
 
 namespace ASOFTCIM.MVVM.View.Config
 {
@@ -113,7 +114,8 @@ namespace ASOFTCIM.MVVM.View.Config
             {
                 try
                 {
-                    // LoadingPlcImage.Visibility = Visibility.Visible;
+
+                    LoadingPlcImage.Visibility = Visibility.Visible;
 
                     _equipmentConfig.PLCConfig = new PLCConfig()
                     {
@@ -154,7 +156,9 @@ namespace ASOFTCIM.MVVM.View.Config
                     var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.", MethodBase.GetCurrentMethod().DeclaringType.Name.ToString(), MethodBase.GetCurrentMethod().Name, ex.Message);
                     LogTxt.Add(LogTxt.Type.Exception, debug);
                 }
-                //LoadingPlcImage.Visibility = Visibility.Hidden;
+                
+                LoadingPlcImage.Visibility = Visibility.Hidden;
+                
             };
             btnSaveCimConfig.Click += async (s, e) =>
             {

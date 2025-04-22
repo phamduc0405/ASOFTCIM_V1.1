@@ -21,14 +21,24 @@
             BorderThickness="2"
             CornerRadius="10">
             <Border.Background>
-                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                    <GradientStop Offset="0" Color="#FFB4E2FF" />
-                    <GradientStop Offset="1" Color="#FFB9D2E2" />
+                <!--<LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Offset="0" Color="#FFE3F2FD"/>
+
+                    <GradientStop Offset="0.5" Color="#FFBBDEFB"/>
+
+                    <GradientStop Offset="1" Color="#FF90CAF9"/>
+
+
+                </LinearGradientBrush>-->
+                <RadialGradientBrush Center="0.5,0.5" GradientOrigin="0.5,0.5" RadiusX="0.8" RadiusY="0.8">
                     <GradientStop Offset="0" Color="#FFE3F2FD" />
+                    <!--  Gần trắng ở giữa  -->
                     <GradientStop Offset="1" Color="#FFBBDEFB" />
-
-
-                </LinearGradientBrush>
+                    <GradientStop Offset="1" Color="#FF90CAF9" />
+                    <!--  Xanh nhạt  -->
+                    <GradientStop Offset="0.5" Color="#FF90CAF9" />
+                    <!--  Xanh dương chuẩn  -->
+                </RadialGradientBrush>
             </Border.Background>
             <Border.Effect>
                 <DropShadowEffect
@@ -36,7 +46,8 @@
                     ShadowDepth="2"
                     Color="Black" />
             </Border.Effect>
-            <Grid >
+
+            <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*" />
                     <RowDefinition Height="10*" />
@@ -65,6 +76,40 @@
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
+                    <Ellipse
+                        Grid.RowSpan="10"
+                        Grid.ColumnSpan="10"
+                        Width="300"
+                        Height="300"
+                        Margin="0,0,0,50"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center">
+                        <Ellipse.Fill>
+                            <RadialGradientBrush Center="0.5,0.5" GradientOrigin="0.5,0.5" RadiusX="0.5" RadiusY="0.5">
+                                <GradientStop Offset="0" Color="#40FFFFFF" />
+
+                                <GradientStop Offset="1" Color="#00FFFFFF" />
+                            </RadialGradientBrush>
+                        </Ellipse.Fill>
+                    </Ellipse>
+                    <TextBlock
+                        Grid.RowSpan="10"
+                        Grid.ColumnSpan="10"
+                        Margin="0,0,0,50"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        FontSize="300"
+                        FontWeight="Bold"
+                        Foreground="#FFE3F2FD"
+                        Text="AS">
+                        <TextBlock.OpacityMask>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                <GradientStop Offset="0.0" Color="Transparent" />
+                                <GradientStop Offset="0.5" Color="Black" />
+                                <GradientStop Offset="1.0" Color="Transparent" />
+                            </LinearGradientBrush>
+                        </TextBlock.OpacityMask>
+                    </TextBlock>
                     <Grid
                         Grid.Row="0"
                         Grid.RowSpan="2"
@@ -83,7 +128,7 @@
                         <Border
                             Margin="10"
                             Background="White"
-                            BorderBrush="White"
+                            BorderBrush="Black"
                             BorderThickness="1"
                             CornerRadius="10">
                             <StackPanel Orientation="Horizontal">
@@ -111,7 +156,7 @@
                         <Border
                             Margin="10"
                             Background="White"
-                            BorderBrush="White"
+                            BorderBrush="Black"
                             BorderThickness="1"
                             CornerRadius="10">
                             <StackPanel Orientation="Horizontal">
