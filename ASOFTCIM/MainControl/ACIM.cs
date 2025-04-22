@@ -107,13 +107,14 @@ namespace ASOFTCIM
         private void Initial()
         {
             EqpData = new EQPDATA();
+            EqpData.EQINFORMATION.EQPVER = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
         }
         private void _cim_TransTimeOutEvent(TransactionWait trans)
         {
             SysPacket sysPacket = new SysPacket(_cim.Conn);
             sysPacket.DeviceId = 1;
             sysPacket.SystemByte = trans.TransactionSys;
-            SendS9F9(sysPacket);
+          //  SendS9F9(sysPacket);
 
         }
         private void _cim_SysPacketEvent(SysPacket sysPacket)

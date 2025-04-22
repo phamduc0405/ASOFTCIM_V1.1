@@ -109,7 +109,7 @@ namespace ASOFTCIM
                         func.EFID = _cim.SysPacket.GetItemString();
                         func.EFST = _cim.SysPacket.GetItemString(); 
                         func.MESSAGE = _cim.SysPacket.GetItemString();
-                        if(EqpData.EQINFORMATION.EQPID != _cim.SysPacket.GetItemString(2))
+                        if(EqpData.EQINFORMATION.EQPID != _cim.SysPacket.GetItemString(2).Trim())
                         {
                             HACK = "1";
                             SendS2F42(RCMD, HACK);

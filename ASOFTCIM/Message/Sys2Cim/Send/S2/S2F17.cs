@@ -24,9 +24,9 @@ namespace ASOFTCIM
                 packet.SystemByte = EqpData.TransactionSys;
                 packet.WaitBit = true;
                 AddTrans(EqpData.TransactionSys);
-                packet.addItem(DataType.List, 2);
-                packet.addItem(DataType.Ascii, "abc");
-                packet.addItem(DataType.Ascii, "def");
+                packet.addItem(DataType.List, 0);
+                //packet.addItem(DataType.Ascii, "abc");
+                //packet.addItem(DataType.Ascii, "def");
                 packet.Send2Sys();
             }
             catch (Exception ex)

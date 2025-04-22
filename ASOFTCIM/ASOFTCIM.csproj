@@ -39,7 +39,13 @@
   <PropertyGroup>
     <ApplicationIcon>Amonitor.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AsoftLicense">
+      <HintPath>C:\Users\PC CIM\Desktop\bin\Debug\AsoftLicense.dll</HintPath>
+    </Reference>
     <Reference Include="A_SOFT.CMM, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>E:\MrDuc\ASOFTLIB\AsoftCommon\Bin\Debug\ASOFTLIB\A_SOFT.CMM.dll</HintPath>
@@ -47,9 +53,6 @@
     <Reference Include="A_SOFT.CMM.UI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>E:\MrDuc\ASOFTLIB\AsoftCommon\Bin\Debug\ASOFTLIB\A_SOFT.CMM.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="A_SOFT.Ctl.Mcr">
-      <HintPath>E:\MrDuc\ASOFTLIB\AsoftCommon\Bin\Debug\ASOFTLIB\A_SOFT.Ctl.Mcr.dll</HintPath>
     </Reference>
     <Reference Include="A_SOFT.Ctl.Mitsu, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -79,7 +82,7 @@
       <HintPath>..\packages\HPSocket.Net.5.9.3.1\lib\net40\HPSocket.Net.dll</HintPath>
     </Reference>
     <Reference Include="Interop.ActUtlTypeLib">
-      <HintPath>..\..\A_SOFT\Bin\Debug\Interop.ActUtlTypeLib.dll</HintPath>
+      <HintPath>C:\Users\PC CIM\Desktop\bin\Debug\Interop.ActUtlTypeLib.dll</HintPath>
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
     <Reference Include="LiveCharts, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
@@ -93,6 +96,9 @@
     </Reference>
     <Reference Include="Microsoft.Xaml.Behaviors, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Xaml.Behaviors.Wpf.1.1.135\lib\net462\Microsoft.Xaml.Behaviors.dll</HintPath>
+    </Reference>
+    <Reference Include="Mitsu3E">
+      <HintPath>C:\Users\PC CIM\Desktop\bin\Debug\Mitsu3E.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -563,6 +569,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="app.manifest" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -607,4 +614,7 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\HPSocket.Net.5.9.3.1\build\HPSocket.Net.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\HPSocket.Net.5.9.3.1\build\HPSocket.Net.targets'))" />
   </Target>
+  <PropertyGroup>
+    <PreBuildEvent>powershell -ExecutionPolicy Bypass -File "$(ProjectDir)\Update-Version.ps1"</PreBuildEvent>
+  </PropertyGroup>
 </Project>

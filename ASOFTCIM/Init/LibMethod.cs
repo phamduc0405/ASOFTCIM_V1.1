@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -85,6 +87,12 @@ namespace ASOFTCIM.Init
             {
                 setter(value);
             }
+        }
+        public static string GetBuildTime()
+        {
+            var exePath = Assembly.GetExecutingAssembly().Location;
+            var fileInfo = new FileInfo(exePath);
+            return fileInfo.LastWriteTime.ToString("yyyy-MM-dd HH:mm:ss");
         }
     }
 }

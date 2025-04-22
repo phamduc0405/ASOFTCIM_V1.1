@@ -107,7 +107,9 @@ namespace ASOFTCIM.MVVM.View.Config
             };
             btnSaveEqpConfig.Click += async (s, e) =>
             {
-               
+                _controller.EquipmentConfig.EQPID = _controller.CIM.EQPID= _controller.CIM.EqpData.EQINFORMATION.EQPID = txtEqpId.Text;
+                await SaveConfig();
+                await LoadConfig();
             };
 
             btnSavePlcConfig.Click += async (s, e) =>

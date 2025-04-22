@@ -1,6 +1,7 @@
 ﻿using A_SOFT.CMM.HELPER;
 using A_SOFT.CMM.INIT;
 using ASOFTCIM.Data;
+using ASOFTCIM.Init;
 using ASOFTCIM.MainControl;
 using ASOFTCIM.MVVM.Model;
 using ASOFTCIM.MVVM.View.Alarm;
@@ -75,7 +76,7 @@ namespace ASOFTCIM
                 IsBackground = true,
             };
             _updateTime.Start();
-            txtVersion.Text = "Version: 250421";
+            txtVersion.Text =$"Version : {System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString()}       {LibMethod.GetBuildTime()}" ;
         }
         private void Initial()
         {
@@ -120,19 +121,6 @@ namespace ASOFTCIM
                 DragMove();
             };
 
-            grdPanel.MouseEnter += (sender, e) =>
-            {
-                //if (tgMenu.IsChecked == true)
-                //{
-                //    ttT5s.Visibility = Visibility.Collapsed;
-                //    ttConfig.Visibility = Visibility.Collapsed;
-                //}
-                //else
-                //{
-                //    ttT5s.Visibility = Visibility.Visible;
-                //    ttConfig.Visibility = Visibility.Visible;
-                //}
-            };
             btnHome.Click += (sender, e) =>
             {
                 maincontent.Content = new HomeView();
