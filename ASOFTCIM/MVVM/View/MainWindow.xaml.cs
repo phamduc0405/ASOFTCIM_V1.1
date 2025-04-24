@@ -145,6 +145,8 @@ namespace ASOFTCIM
             };
             btnEcm.Click += (sender, e) =>
             {
+                var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name,e.Source);
+                LogTxt.Add(LogTxt.Type.UI, debug);
                 maincontent.Content = new MVVM.View.ECM.ECMView();
             };
             btnAlarm.Click += (sender, e) =>

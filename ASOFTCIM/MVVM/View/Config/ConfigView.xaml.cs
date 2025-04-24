@@ -102,14 +102,44 @@ namespace ASOFTCIM.MVVM.View.Config
                 {
                     string folderPath = folderBrowser.SelectedPath;
                     // Sử dụng đường dẫn thư mục ở đây
-                    txtPathLog.Text = folderPath;
+                    txtLogFoldler.Text = folderPath;
+                }
+            };
+            btnDirLogFDC.Click += (s, e) =>
+            {
+                FolderBrowserDialog folderBrowser = new FolderBrowserDialog();
+                folderBrowser.Description = "Chọn thư mục";
+
+                // Hiển thị cửa sổ dialog và lấy đường dẫn thư mục nếu người dùng chọn
+                DialogResult result = folderBrowser.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    string folderPath = folderBrowser.SelectedPath;
+                    // Sử dụng đường dẫn thư mục ở đây
+                    txtPathLogFDC.Text = folderPath;
                 }
             };
             btnSaveEqpConfig.Click += async (s, e) =>
             {
-                _controller.EquipmentConfig.EQPID = _controller.CIM.EQPID= _controller.CIM.EqpData.EQINFORMATION.EQPID = txtEqpId.Text;
-                await SaveConfig();
-                await LoadConfig();
+                try
+                {
+                    _equipmentConfig.EQPID = txtEqpId.Text;
+                    _equipmentConfig.LogFolder = txtLogFoldler.Text;
+                    _equipmentConfig.AliveTime = txtAliveTime.Text;
+                    _equipmentConfig.UseLogFDC = tglogFDC.IsChecked.Value;
+                    _equipmentConfig.LogFDC = txtPathLogFDC.Text;
+
+                    var debug = string.Format("Class:{0} Method:{1} Event:{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ((System.Windows.Controls.Control)s).Name);
+                    LogTxt.Add(LogTxt.Type.UI, debug);
+                    await SaveConfig();
+                    await LoadConfig();
+                }
+                catch (Exception ex)
+                {
+                    var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.", MethodBase.GetCurrentMethod().DeclaringType.Name.ToString(), MethodBase.GetCurrentMethod().Name, ex.Message);
+                    LogTxt.Add(LogTxt.Type.Exception, debug);
+                    LogTxt.ChangePathLog();
+                }
             };
 
             btnSavePlcConfig.Click += async (s, e) =>
@@ -140,7 +170,7 @@ namespace ASOFTCIM.MVVM.View.Config
                         PlcConnectType = (PlcConnectType)cbbplcConnectType.SelectedItem,
 
                         //PortPlc = int.Parse(txtPLCPort.Text),
-                        
+
                     };
                     if (File.Exists(txtPathPlcExcel.Text))
                     {
@@ -158,9 +188,9 @@ namespace ASOFTCIM.MVVM.View.Config
                     var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.", MethodBase.GetCurrentMethod().DeclaringType.Name.ToString(), MethodBase.GetCurrentMethod().Name, ex.Message);
                     LogTxt.Add(LogTxt.Type.Exception, debug);
                 }
-                
+
                 LoadingPlcImage.Visibility = Visibility.Hidden;
-                
+
             };
             btnSaveCimConfig.Click += async (s, e) =>
             {
@@ -205,6 +235,11 @@ namespace ASOFTCIM.MVVM.View.Config
                         //EqpConfig
                         {
                             txtEqpId.Text = _equipmentConfig.EQPID;
+                            txtLogFoldler.Text = _equipmentConfig.LogFolder;
+                            txtAliveTime.Text = _equipmentConfig.AliveTime;
+                            txtPathLogFDC.Text = _equipmentConfig.LogFDC;
+                            tglogFDC.IsChecked = _equipmentConfig.UseLogFDC;
+
                         }
 
                         //PlcConfig
@@ -228,7 +263,7 @@ namespace ASOFTCIM.MVVM.View.Config
 
                             cbbplcConnectType.SelectedItem = _equipmentConfig.PLCConfig.PlcConnectType;
                             var ipPlcSegments = _equipmentConfig.PLCConfig.IpPlc.Split('.');
-                           
+
                         }
                         //cimConfig
                         {

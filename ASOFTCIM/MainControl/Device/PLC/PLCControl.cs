@@ -18,6 +18,7 @@ using Type = System.Type;
 using System.Xml.Linq;
 using ASOFTCIM.Message.PLC2Cim.Send;
 using HPSocket.Sdk;
+using System.Diagnostics;
 
 namespace ASOFTCIM
 {
@@ -469,7 +470,8 @@ namespace ASOFTCIM
             int plcCount = 0;
             bool mcrConnect = false;
             bool isOn = false;
-
+            Stopwatch aliveWatch = new Stopwatch();
+            aliveWatch.Start();
             while (true)
             {
                 if (_plc != null)
@@ -478,17 +480,19 @@ namespace ASOFTCIM
                     {
                         try
                         {
-                            isOn = !isOn;
                             if (_plcH.Bits.Any(x => x.Item.ToUpper() == "ALIVE"))
                             {
-                                BitModel bitAlive = _plcH.Bits.FirstOrDefault(x => x.Item.ToUpper() == "ALIVE");
-                                bitAlive.SetPCValue = isOn;
-                                //DateTime dateTime = DateTime.ParseExact(DateTime.Now, "yyyyMMddHHmmss", null);
-
+                                if (aliveWatch.Elapsed.TotalMilliseconds >= int.Parse(_eqpConfig.AliveTime))
+                                {
+                                    isOn = !isOn;
+                                    BitModel bitAlive = _plcH.Bits.FirstOrDefault(x => x.Item.ToUpper() == "ALIVE");
+                                    bitAlive.SetPCValue = isOn;
+                                    aliveWatch.Restart();
+                                }
                                 WordModel word = _plcH.Words.FirstOrDefault(x => x.Area == "DATETIMESET");
                                 word.SetValue = DateTime.Now.ToString("yyyyMMddHHmmss");
 
-                               
+
                             }
                         }
                         catch (Exception ex)
@@ -516,6 +520,7 @@ namespace ASOFTCIM
                     }
                     else PlcConnectChangeEventHandle(false);
                 }
+
                 Thread.Sleep(500);
             }
         }

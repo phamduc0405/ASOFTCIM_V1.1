@@ -38,7 +38,9 @@ namespace ASOFTCIM.MainControl
 
         public Controller()
         {
+            DefaultData.AppPath = @"C:\TESTCIM";
             ReadControllerConfig();
+            DefaultData.LogPath = $"{_equipmentConfig.LogFolder}";
             _cim = new ACIM(_equipmentConfig);
             _cim.PlcConnectChangeEvent += PlcConnectEvent;
             _cim.Cim.Conn.OnConnectEvent += OnConnectEvent;

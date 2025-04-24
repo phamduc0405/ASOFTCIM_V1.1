@@ -201,6 +201,7 @@
     <Compile Include="Init\LibMethod.cs" />
     <Compile Include="Init\ObservableObject.cs" />
     <Compile Include="Init\RelayCommand.cs" />
+    <Compile Include="Init\WpfSingleInstance.cs" />
     <Compile Include="MainControl\ACIM.cs" />
     <Compile Include="MainControl\Controller.cs" />
     <Compile Include="MainControl\Device\PC\PCControl.cs" />

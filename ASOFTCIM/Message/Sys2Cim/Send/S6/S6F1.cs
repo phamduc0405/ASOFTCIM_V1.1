@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using AComm.TCPIP;
 using A_SOFT.Ctl.SecGem;
 using ASOFTCIM.MainControl;
+using A_SOFT.CMM.HELPER;
+using ASOFTCIM.Config;
 
 namespace ASOFTCIM
 {
@@ -40,6 +42,11 @@ namespace ASOFTCIM
                     }
                 }
                 packet.Send2Sys();
+                if(_eqpConfig.UseLogFDC)
+                {
+                    var sb = packet.GetCimLog(true);
+                    LogTxt.Add(LogTxt.Type.UI, sb.ToString());
+                }
             }
             catch (Exception ex)
             {
