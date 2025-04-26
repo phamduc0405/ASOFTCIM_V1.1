@@ -107,7 +107,7 @@ namespace ASOFTCIM.MVVM.View.Home
 
             _controller.CIM.Cim2PlcChangeEvent -= UpdatePlccimMessage;
             _controller.CIM.Cim2PlcChangeEvent += UpdatePlccimMessage;
-
+            _running = true;
             _updateData = new Thread(UpdateData)
             {
                 IsBackground = true,
@@ -126,7 +126,7 @@ namespace ASOFTCIM.MVVM.View.Home
                     {
                         _equipmentConfig = new EquipmentConfig();
                     }
-
+                    
                     await LoadConfig();
                     UpdateAlarm();
                 }
@@ -140,7 +140,8 @@ namespace ASOFTCIM.MVVM.View.Home
 
             Unloaded += (s, e) =>
             {
-                _updateData?.Abort();
+                _running = false;
+                _updateData.Join();
             };
         }
 

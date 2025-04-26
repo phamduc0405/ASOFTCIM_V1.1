@@ -22,6 +22,7 @@ using System.Windows.Shapes;
 using System.IO;
 using System.Diagnostics;
 using System.Threading;
+using ASOFTCIM.MVVM.View.Popup;
 
 namespace ASOFTCIM.MVVM.View.Config
 {
@@ -174,8 +175,10 @@ namespace ASOFTCIM.MVVM.View.Config
                     };
                     if (File.Exists(txtPathPlcExcel.Text))
                     {
-                        //_controller.CIM.LoadExcelConfig(txtPathPlcExcel.Text);
-                        _controller.EquipmentConfig.PLCHelper.LoadExcel(txtPathPlcExcel.Text);
+
+                        //_controller.EquipmentConfig.PLCHelper.LoadExcel(txtPathPlcExcel.Text);
+                        SavePLCConfigDisplay display = new SavePLCConfigDisplay(txtPathPlcExcel.Text);
+                        display.ShowDialog();
                     }
                     var debug = string.Format("Class:{0} Method:{1} Event:{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ((System.Windows.Controls.Control)s).Name);
                     LogTxt.Add(LogTxt.Type.UI, debug);

@@ -103,7 +103,7 @@ namespace ASOFTCIM
                 }
                 if (File.Exists(path))
                 {
-                    _eqpConfig.PLCHelper.LoadExcel(path);
+                    //_eqpConfig.PLCHelper.LoadExcel(path);
                 }
                 //if (_eqpConfig.PLCHelper.PlcMemms?.Count > 0)
                 //{

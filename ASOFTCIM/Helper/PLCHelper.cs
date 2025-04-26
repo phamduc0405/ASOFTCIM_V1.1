@@ -106,38 +106,85 @@ namespace ASOFTCIM.Helper
         #endregion
 
         #region Public Method
-        public void LoadExcel(string ExcelPath)
+        public async Task LoadExcel(string ExcelPath, List<string> sheets)
         {
             if (_plc!=null)
             {
                 _plc.BitChangedEvent -= PlcComm_BitChangedEvent;
                 _plc.WordChangedEvent -= PlcComm_WordChangedEvent;
             }
-            
-
             Task.Run( async () =>
             {
-                _bit = await ExcelHelper.ReadExcel<BitModel>(ExcelPath, "Local PLC Bit");
-                _words = await ExcelHelper.ReadExcel<WordModel>(ExcelPath, "CIM->PLC Word(V1.21)");
-                var wplc = await ExcelHelper.ReadExcel<WordModel>(ExcelPath, "PLC->CIM Word(V1.21)");
-                _alarms = await ExcelHelper.ReadExcel<Alarm>(ExcelPath, "ALARM");
-                _svids = await ExcelHelper.ReadExcel<FDCModel>(ExcelPath, "FDC");
-                _ppidParams = await ExcelHelper.ReadExcel<PPIDModel>(ExcelPath, "RMS");
-                _lstPPID = await ExcelHelper.ReadExcel<PPIDModel>(ExcelPath, "PPID");
-                _ecms = await ExcelHelper.ReadExcel<ECMModel>(ExcelPath, "ECM");
-                _words.AddRange(wplc);
-                _plcMemms =await ExcelHelper.ReadExcel<PlcMemmory>(ExcelPath, "MemoryConfig");
-                _materials = await ExcelHelper.ReadExcel<MaterialModel>(ExcelPath, "Material");
-                _apc = await ExcelHelper.ReadExcel<APCModel>(ExcelPath, "APC");
-                _carrial = await ExcelHelper.ReadExcel<CarialModel>(ExcelPath, "Cassette Batch");
-                foreach (var b in _bit)
+                if(sheets.Any(x => x == "Bits"))
                 {
-                    List<WordModel> wm= _words.Where(x=>x.BitEvent.Contains($"{b.PLCDevice}{b.PLCHexAdd}")).ToList();
-                    b.LstWord.AddRange(wm);
-                    List<MaterialModel> material = _materials.Where(x => x.BitEvent.Contains($"{b.PLCDevice}{b.PLCHexAdd}")).ToList();
-                    b.LstWord.AddRange(material);
-                  
+                    _bit = await ExcelHelper.ReadExcel<BitModel>(ExcelPath, "Local PLC Bit");
                 }
+                if (sheets.Any(x => x == "Words"))
+                {
+                    _bit = await ExcelHelper.ReadExcel<BitModel>(ExcelPath, "Local PLC Bit");
+                    _words = await ExcelHelper.ReadExcel<WordModel>(ExcelPath, "CIM->PLC Word(V1.21)");
+                    var wplc = await ExcelHelper.ReadExcel<WordModel>(ExcelPath, "PLC->CIM Word(V1.21)");
+                    _words.AddRange(wplc);
+                    foreach (var b in _bit)
+                    {
+                        List<WordModel> wm = _words.Where(x => x.BitEvent.Contains($"{b.PLCDevice}{b.PLCHexAdd}")).ToList();
+                        b.LstWord.AddRange(wm);
+                    }
+                }
+                if (sheets.Any(x => x == "PlcMemms"))
+                {
+                    _plcMemms = await ExcelHelper.ReadExcel<PlcMemmory>(ExcelPath, "MemoryConfig");
+                }
+                if (sheets.Any(x => x == "Alarms"))
+                {
+                    _alarms = await ExcelHelper.ReadExcel<Alarm>(ExcelPath, "ALARM");
+                }
+                if (sheets.Any(x => x == "ListPPID"))
+                {
+                    _lstPPID = await ExcelHelper.ReadExcel<PPIDModel>(ExcelPath, "PPID");
+                }
+                if (sheets.Any(x => x == "PPIDParams"))
+                {
+                    _ppidParams = await ExcelHelper.ReadExcel<PPIDModel>(ExcelPath, "RMS");
+                }
+                if (sheets.Any(x => x == "Materrials"))
+                {
+                    _bit = await ExcelHelper.ReadExcel<BitModel>(ExcelPath, "Local PLC Bit");
+                    _materials = await ExcelHelper.ReadExcel<MaterialModel>(ExcelPath, "Material");
+                    foreach (var b in _bit)
+                    {
+                        List<MaterialModel> material = _materials.Where(x => x.BitEvent.Contains($"{b.PLCDevice}{b.PLCHexAdd}")).ToList();
+                        b.LstWord.AddRange(material);
+                    }
+                }
+                if (sheets.Any(x => x == "ECMS"))
+                {
+                    _ecms = await ExcelHelper.ReadExcel<ECMModel>(ExcelPath, "ECM");
+                }
+                if (sheets.Any(x => x == "SVIDS"))
+                {
+                    _svids = await ExcelHelper.ReadExcel<FDCModel>(ExcelPath, "FDC");
+                }
+                if (sheets.Any(x => x == "APCS"))
+                {
+                    _apc = await ExcelHelper.ReadExcel<APCModel>(ExcelPath, "APC");
+                }
+                if (sheets.Any(x => x == "Carial"))
+                {
+                    _carrial = await ExcelHelper.ReadExcel<CarialModel>(ExcelPath, "Cassette Batch");
+                }
+                
+                //var wplc = await ExcelHelper.ReadExcel<WordModel>(ExcelPath, "PLC->CIM Word(V1.21)");
+                //_alarms = await ExcelHelper.ReadExcel<Alarm>(ExcelPath, "ALARM");
+                //_svids = await ExcelHelper.ReadExcel<FDCModel>(ExcelPath, "FDC");
+                //_ppidParams = await ExcelHelper.ReadExcel<PPIDModel>(ExcelPath, "RMS");
+                //_lstPPID = await ExcelHelper.ReadExcel<PPIDModel>(ExcelPath, "PPID");
+                //_ecms = await ExcelHelper.ReadExcel<ECMModel>(ExcelPath, "ECM");
+                //_words.AddRange(wplc);
+                //_plcMemms =await ExcelHelper.ReadExcel<PlcMemmory>(ExcelPath, "MemoryConfig");
+                //_materials = await ExcelHelper.ReadExcel<MaterialModel>(ExcelPath, "Material");
+                //_apc = await ExcelHelper.ReadExcel<APCModel>(ExcelPath, "APC");
+                //_carrial = await ExcelHelper.ReadExcel<CarialModel>(ExcelPath, "Cassette Batch");
             }).GetAwaiter().GetResult();
            
         }

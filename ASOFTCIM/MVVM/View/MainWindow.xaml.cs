@@ -93,7 +93,9 @@ namespace ASOFTCIM
             };
             btnClose.Click += async (sender, e) =>
             {
-                if(await PopupMessage("DO YOU WANT EXIT ?"))
+                var debug = string.Format("Class:{0} Method:{1} Event:{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ((System.Windows.Controls.Control)sender).Name);
+                LogTxt.Add(LogTxt.Type.UI, debug);
+                if (await PopupMessage("DO YOU WANT EXIT ?"))
                 {
                     Thread.Sleep(1000);
                     this.Close();
@@ -113,7 +115,8 @@ namespace ASOFTCIM
             btnHideMenu.Click += (sender, e) =>
             {
                 this.WindowState = (WindowState)FormWindowState.Minimized;
-
+                var debug = string.Format("Class:{0} Method:{1} Event:{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ((System.Windows.Controls.Control)sender).Name);
+                LogTxt.Add(LogTxt.Type.UI, debug);
             };
             grdTopMain.MouseDown += (sender, e) =>
             {
@@ -123,42 +126,58 @@ namespace ASOFTCIM
 
             btnHome.Click += (sender, e) =>
             {
+                var debug = string.Format("Class:{0} Method:{1} Event:{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ((System.Windows.Controls.Control)sender).Name);
+                LogTxt.Add(LogTxt.Type.UI, debug);
                 maincontent.Content = new HomeView();
             };
             btnMonitor.Click += (sender, e) =>
             {
+                var debug = string.Format("Class:{0} Method:{1} Event:{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ((System.Windows.Controls.Control)sender).Name);
+                LogTxt.Add(LogTxt.Type.UI, debug);
                 if (LeveLogin != 3)
                     maincontent.Content = new MonitorIOView();
             };
             btnConfig.Click += (sender, e) =>
             {
+                var debug = string.Format("Class:{0} Method:{1} Event:{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ((System.Windows.Controls.Control)sender).Name);
+                LogTxt.Add(LogTxt.Type.UI, debug);
                 if (LeveLogin == 1)
                     maincontent.Content = new ConfigMainView();
             };
             btnSvid.Click += (sender, e) =>
             {
+                var debug = string.Format("Class:{0} Method:{1} Event:{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ((System.Windows.Controls.Control)sender).Name);
+                LogTxt.Add(LogTxt.Type.UI, debug);
                 maincontent.Content = new MVVM.View.FDC.FDCView();
             };
             btnRecipes.Click += (sender, e) =>
             {
+                var debug = string.Format("Class:{0} Method:{1} Event:{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ((System.Windows.Controls.Control)sender).Name);
+                LogTxt.Add(LogTxt.Type.UI, debug);
                 maincontent.Content = new MVVM.View.RMS.RMSView();
             };
             btnEcm.Click += (sender, e) =>
             {
-                var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name,e.Source);
+                var debug = string.Format("Class:{0} Method:{1} Event:{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ((System.Windows.Controls.Control)sender).Name);
                 LogTxt.Add(LogTxt.Type.UI, debug);
                 maincontent.Content = new MVVM.View.ECM.ECMView();
             };
             btnAlarm.Click += (sender, e) =>
             {
+                var debug = string.Format("Class:{0} Method:{1} Event:{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ((System.Windows.Controls.Control)sender).Name);
+                LogTxt.Add(LogTxt.Type.UI, debug);
                 maincontent.Content = new MVVM.View.Alarm.AlarmView();
             };
             btnMaterial.Click += (sender, e) =>
             {
+                var debug = string.Format("Class:{0} Method:{1} Event:{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ((System.Windows.Controls.Control)sender).Name);
+                LogTxt.Add(LogTxt.Type.UI, debug);
                 maincontent.Content = new MaterialView();
             };
             btnLogIn.Click += (sender, e) =>
             {
+                var debug = string.Format("Class:{0} Method:{1} Event:{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ((System.Windows.Controls.Control)sender).Name);
+                LogTxt.Add(LogTxt.Type.UI, debug);
                 PopupLogIn();
             };
         }

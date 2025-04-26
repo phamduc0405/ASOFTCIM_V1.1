@@ -292,6 +292,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="MVVM\View\Popup\SavePLCConfigDisplay.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MVVM\View\RMS\RMSView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -549,6 +553,9 @@
     </Compile>
     <Compile Include="MVVM\View\Popup\PopupIOWord.xaml.cs">
       <DependentUpon>PopupIOWord.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\Popup\SavePLCConfigDisplay.xaml.cs">
+      <DependentUpon>SavePLCConfigDisplay.xaml</DependentUpon>
     </Compile>
     <Compile Include="MVVM\View\RMS\RMSView.xaml.cs">
       <DependentUpon>RMSView.xaml</DependentUpon>

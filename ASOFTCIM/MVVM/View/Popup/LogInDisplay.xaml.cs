@@ -1,7 +1,9 @@
-﻿using ASOFTCIM.MainControl;
+﻿using A_SOFT.CMM.INIT;
+using ASOFTCIM.MainControl;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -36,6 +38,8 @@ namespace ASOFTCIM.MVVM.View.Popup
             };
             btnLogIn.Click += (sender, args) =>
             {
+                var debug = string.Format("Class:{0} Method:{1} Event:{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ((System.Windows.Controls.Control)sender).Name);
+                LogTxt.Add(LogTxt.Type.UI, debug);
                 MainWindow.User = cbb.Text;
                 MainWindow.Pass = txtPass.Text;
                 CloseView();            
