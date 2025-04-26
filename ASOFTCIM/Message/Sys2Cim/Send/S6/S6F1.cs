@@ -12,6 +12,8 @@ using A_SOFT.Ctl.SecGem;
 using ASOFTCIM.MainControl;
 using A_SOFT.CMM.HELPER;
 using ASOFTCIM.Config;
+using ASOFTCIM.Init;
+using System.Diagnostics;
 
 namespace ASOFTCIM
 {
@@ -45,7 +47,8 @@ namespace ASOFTCIM
                 if(_eqpConfig.UseLogFDC)
                 {
                     var sb = packet.GetCimLog(true);
-                    LogTxt.Add(LogTxt.Type.UI, sb.ToString());
+                    LogFDC.SetBasePath(_eqpConfig.LogFDC);
+                    LogFDC.Log(sb);
                 }
             }
             catch (Exception ex)

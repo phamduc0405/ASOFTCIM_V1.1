@@ -199,6 +199,7 @@
     <Compile Include="Helper\CimHelper.cs" />
     <Compile Include="Helper\PLCHelper.cs" />
     <Compile Include="Init\LibMethod.cs" />
+    <Compile Include="Init\LogFDC.cs" />
     <Compile Include="Init\ObservableObject.cs" />
     <Compile Include="Init\RelayCommand.cs" />
     <Compile Include="Init\WpfSingleInstance.cs" />
