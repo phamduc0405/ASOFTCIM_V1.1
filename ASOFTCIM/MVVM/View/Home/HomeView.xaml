@@ -265,12 +265,31 @@
                                     </Grid>
 
                                     <Grid Grid.Row="1">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="6*" />
+                                            <ColumnDefinition Width="60" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="6*" />
+                                            <RowDefinition Height="40" />
+                                        </Grid.RowDefinitions>
                                         <Border
-                                            Grid.Row="1"
+                                            Grid.Row="0"
+                                            Grid.RowSpan="2"
+                                            Grid.Column="0"
+                                            Grid.ColumnSpan="2"
                                             BorderBrush="Black"
                                             BorderThickness="1">
                                             <RichTextBox x:Name="txtCimHost" />
+
                                         </Border>
+                                        <Button
+                                            x:Name="btnClearMessageCim2Host"
+                                            Grid.Row="1"
+                                            Grid.Column="1"
+                                            Margin="3"
+                                            Content="Clear"
+                                            Style="{StaticResource ButtonTransparent}"/>
                                     </Grid>
 
                                 </Grid>
@@ -300,12 +319,30 @@
 
                                     </Border>
                                     <Grid Grid.Row="1">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="6*" />
+                                            <ColumnDefinition Width="60" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="6*" />
+                                            <RowDefinition Height="40" />
+                                        </Grid.RowDefinitions>
                                         <Border
-                                            Grid.Row="1"
+                                            Grid.Row="0"
+                                            Grid.RowSpan="2"
+                                            Grid.Column="0"
+                                            Grid.ColumnSpan="2"
                                             BorderBrush="Black"
                                             BorderThickness="1">
                                             <RichTextBox x:Name="txtCimEqp" />
                                         </Border>
+                                        <Button
+                                            x:Name="btnClearMessageCim2EQP"
+                                            Grid.Row="1"
+                                            Margin="3"
+                                            Grid.Column="1"
+                                            Content="Clear"
+                                            Style="{StaticResource ButtonTransparent}" />
                                     </Grid>
                                 </Grid>
                             </Grid>

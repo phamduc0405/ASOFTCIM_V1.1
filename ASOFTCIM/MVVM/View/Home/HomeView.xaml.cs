@@ -31,6 +31,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.ComponentModel;
+using System.Xml.Linq;
 
 namespace ASOFTCIM.MVVM.View.Home
 {
@@ -142,6 +143,22 @@ namespace ASOFTCIM.MVVM.View.Home
             {
                 _running = false;
                 _updateData.Join();
+            };
+            btnClearMessageCim2Host.Click += (s, e) =>
+            {
+                if(txtCimHost.Document != null)
+                {
+                    txtCimHost.Document.Blocks.Clear();
+                }
+                
+            };
+            btnClearMessageCim2EQP.Click += (s, e) =>
+            {
+                if (txtCimEqp.Document != null)
+                {
+                    txtCimEqp.Document.Blocks.Clear();
+
+                }
             };
         }
 
@@ -264,7 +281,7 @@ namespace ASOFTCIM.MVVM.View.Home
         }
         private void LimitRichTextBoxLines(RichTextBox richTextBox)
         {
-            int maxLines = 20;
+            int maxLines = 100;
             var textRange = new TextRange(richTextBox.Document.ContentStart, richTextBox.Document.ContentEnd);
             string[] lines = textRange.Text.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
             if (lines.Length > maxLines)

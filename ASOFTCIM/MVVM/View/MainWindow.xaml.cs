@@ -1,6 +1,7 @@
 ﻿using A_SOFT.CMM.HELPER;
 using A_SOFT.CMM.INIT;
 using ASOFTCIM.Data;
+using ASOFTCIM.Helper;
 using ASOFTCIM.Init;
 using ASOFTCIM.MainControl;
 using ASOFTCIM.MVVM.Model;
@@ -48,7 +49,9 @@ namespace ASOFTCIM
         private PerformanceCounter memoryCounter;
         private Thread memoryUsageThread;
         private bool isMonitoringMemory = true;
-        
+        private CancellationTokenSource _cancellationTokenSource;
+        private CancellationToken _cancellationToken;
+
         private MainViewModel viewModel;
         private Thread _updateTime;
        
@@ -64,6 +67,9 @@ namespace ASOFTCIM
         public MainWindow()
         {
             InitializeComponent();
+
+            _cancellationTokenSource = new CancellationTokenSource();
+            _cancellationToken = _cancellationTokenSource.Token;
 
             DataContext = new MainViewModel();
             Initial();
@@ -87,7 +93,7 @@ namespace ASOFTCIM
             this.Closing += (s, e) =>
             {
                 Controller.Stop();
-                _updateTime.Abort();
+                _running = false;
                 LogTxt.Stop();
 
             };
@@ -98,8 +104,10 @@ namespace ASOFTCIM
                 if (await PopupMessage("DO YOU WANT EXIT ?"))
                 {
                     Thread.Sleep(1000);
+                    _cancellationTokenSource.Cancel();
                     this.Close();
                     LogTxt.Stop();
+                    
                 }    
             };
             btnResize.Click += (sender, e) =>
@@ -270,11 +278,11 @@ namespace ASOFTCIM
         }
         private void UpdateTime()
         {
-            while (_running)
+            while (!_cancellationToken.IsCancellationRequested)
             {
                 Dispatcher.Invoke(new Action(() =>
                 {
-                    tblDateTime.Text = "DateTime: "+ DateTime.Now.ToString();
+                    tblDateTime.Text = "DateTime: " + DateTime.Now.ToString();
                 }));
                 Thread.Sleep(100);
             }

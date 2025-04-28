@@ -197,6 +197,7 @@
     <Compile Include="Data\TrackingModel.cs" />
     <Compile Include="Data\ValidationModel.cs" />
     <Compile Include="Helper\CimHelper.cs" />
+    <Compile Include="Helper\LogHelper.cs" />
     <Compile Include="Helper\PLCHelper.cs" />
     <Compile Include="Init\LibMethod.cs" />
     <Compile Include="Init\LogFDC.cs" />

@@ -68,19 +68,19 @@ namespace ASOFTCIM
                         _plcH.WordChangedEvent += _plcH_WordChangedEvent;
 
                         // Kiểm tra trạng thái các từ đầu vào của PLC
-                        foreach (var item in _plc.InputWordStatuses)
-                        {
-                            WordStatus w = item;
-                            WordModel word = _plcH.Words.FirstOrDefault(x => x.Item.ToUpper() == "ALARM" && x.IsPlc);
+                        //foreach (var item in _plc.InputWordStatuses)
+                        //{
+                        //    WordStatus w = item;
+                        //    WordModel word = _plcH.Words.FirstOrDefault(x => x.Item.ToUpper() == "ALARM" && x.IsPlc);
 
-                            if (word != null && w.Address >= word.Address && w.Address < word.Address + word.Length)
-                            {
-                                if (!w.IsOn)
-                                {
-                                    var alid = w.Index - word.Address * 16 + 2;
-                                }
-                            }
-                        }
+                        //    if (word != null && w.Address >= word.Address && w.Address < word.Address + word.Length)
+                        //    {
+                        //        if (!w.IsOn)
+                        //        {
+                        //            var alid = w.Index - word.Address * 16 + 2;
+                        //        }
+                        //    }
+                        //}
 
                         // Gán danh sách báo động
                         this.EqpData.ALS = _eqpConfig.PLCHelper.Alarms;
