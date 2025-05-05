@@ -26,7 +26,7 @@ namespace ASOFTCIM
                 packet.addItem(DataType.List, 2);
                 packet.addItem(DataType.Ascii, rcmd);
                 packet.addItem(DataType.Ascii, ack);
-                packet.Send2Sys();
+                packet.Send2Sys();Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
             }
             catch (Exception ex)
             {

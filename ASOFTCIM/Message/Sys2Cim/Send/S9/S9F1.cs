@@ -21,7 +21,7 @@ namespace ASOFTCIM
                 packet.Command = Command.UserData;
                 packet.DeviceId = mes.DeviceId;
                 packet.SystemByte = mes.SystemByte;
-                packet.Send2Sys();
+                packet.Send2Sys();Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
             }
             catch (Exception ex)
             {

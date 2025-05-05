@@ -19,6 +19,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using A_SOFT.CMM.INIT;
 using System.Reflection;
+using ASOFTCIM.Helper;
 
 namespace ASOFTCIM.MVVM.View.Home
 {
@@ -60,7 +61,7 @@ namespace ASOFTCIM.MVVM.View.Home
                 var r = new Random();
                 while (!cancellationToken.IsCancellationRequested && MainWindow.Running)
                 {
-                    Thread.Sleep(500);
+                    Thread.Sleep(1000);
                     float cpuUsage = cpuCounter.NextValue() / Environment.ProcessorCount;
                     try
                     {
@@ -70,6 +71,10 @@ namespace ASOFTCIM.MVVM.View.Home
                             if (LastHourSeries[0].Values.Count > 60)
                                 LastHourSeries[0].Values.RemoveAt(0);
                             txtTarget.Text = $"CPU Usage: {cpuUsage:F2}%";
+                            if(cpuUsage >20)
+                            {
+                                LogHelper.Warn(txtTarget.Text);
+                            }
                         });
                     }
                     catch (Exception ex )

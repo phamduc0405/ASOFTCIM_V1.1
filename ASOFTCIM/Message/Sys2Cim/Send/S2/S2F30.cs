@@ -28,7 +28,7 @@ namespace ASOFTCIM
                     if (!EqpData.ECS.Any(x => x.ECID == item))
                     {
                         packet.addItem(DataType.List, 0);
-                        packet.Send2Sys();
+                        packet.Send2Sys();Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
                         return;
                     }
 
@@ -41,7 +41,7 @@ namespace ASOFTCIM
                     if (lstEc[0] == "EQPID")
                     {
                         packet.addItem(DataType.List, 0);
-                        packet.Send2Sys();
+                        packet.Send2Sys();Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
                         return;
                     }
                     foreach (var item in lstEc)
@@ -80,7 +80,7 @@ namespace ASOFTCIM
                     }
                 }    
                 
-                packet.Send2Sys();
+                packet.Send2Sys();Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
             }
             catch (Exception ex)
             {

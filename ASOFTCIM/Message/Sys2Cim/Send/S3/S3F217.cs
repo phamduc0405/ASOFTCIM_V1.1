@@ -28,7 +28,7 @@ namespace ASOFTCIM
                 packet.addItem(DataType.Ascii, packinginfor.SBPID);
                 packet.addItem(DataType.Ascii, packinginfor.CHECKERNAME);
                 packet.addItem(DataType.Ascii, packinginfor.SHIPMENTTYPE);
-                packet.Send2Sys();
+                packet.Send2Sys();Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
             }
             catch (Exception ex)
             {

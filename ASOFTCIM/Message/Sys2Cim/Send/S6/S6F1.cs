@@ -43,7 +43,7 @@ namespace ASOFTCIM
                         packet.addItem(DataType.Ascii, item.SVVALUE);
                     }
                 }
-                packet.Send2Sys();
+                packet.Send2Sys();Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
                 if(_eqpConfig.UseLogFDC)
                 {
                     var sb = packet.GetCimLog(true);

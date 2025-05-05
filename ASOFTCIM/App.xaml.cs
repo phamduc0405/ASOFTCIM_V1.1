@@ -53,7 +53,7 @@ namespace ASOFTCIM
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            LogHelper.SetBaseFolder(@"D:\LogCim");
+            LogHelper.SetBaseFolder(@"C:\LOGCIM");
 
             LogHelper.StatStop("Start App");
         }
