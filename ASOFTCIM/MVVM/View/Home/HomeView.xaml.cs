@@ -130,6 +130,7 @@ namespace ASOFTCIM.MVVM.View.Home
                     
                     await LoadConfig();
                     UpdateAlarm();
+                    Controller_CimConnectChangeEvent(_controller.CimConnect);
                 }
                 catch (Exception ex)
                 {
