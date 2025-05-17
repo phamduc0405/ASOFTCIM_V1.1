@@ -162,7 +162,7 @@ namespace ASOFTCIM
             {
                 var debug = string.Format("Class:{0} Method:{1} Event:{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ((System.Windows.Controls.Control)sender).Name);
                 LogTxt.Add(LogTxt.Type.UI, debug);
-                if (LeveLogin == 3)
+                if (LeveLogin == 1)
                     maincontent.Content = new MVVM.View.RMS.RMSView();
             };
             btnEcm.Click += (sender, e) =>
@@ -181,7 +181,7 @@ namespace ASOFTCIM
             {
                 var debug = string.Format("Class:{0} Method:{1} Event:{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ((System.Windows.Controls.Control)sender).Name);
                 LogTxt.Add(LogTxt.Type.UI, debug);
-                if (LeveLogin == 3)
+                if (LeveLogin == 1)
                     maincontent.Content = new MaterialView();
             };
             btnLogIn.Click += (sender, e) =>

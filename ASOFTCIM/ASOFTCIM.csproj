@@ -240,12 +240,14 @@
     <Compile Include="MVVM\Model\ECMModel.cs" />
     <Compile Include="MVVM\Model\FDCModel.cs" />
     <Compile Include="MVVM\Model\HomeModel.cs" />
+    <Compile Include="MVVM\Model\MaterialModel.cs" />
     <Compile Include="MVVM\ViewModel\AlarmViewModel.cs" />
     <Compile Include="MVVM\ViewModel\ConfigViewModel.cs" />
     <Compile Include="MVVM\ViewModel\ECMViewModel.cs" />
     <Compile Include="MVVM\ViewModel\FDCViewModel.cs" />
     <Compile Include="MVVM\ViewModel\HomeViewModel.cs" />
     <Compile Include="MVVM\ViewModel\MainViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\MaterialViewModel.cs" />
     <Compile Include="MVVM\View\Alarm\AlarmView.xaml.cs">
       <DependentUpon>AlarmView.xaml</DependentUpon>
     </Compile>

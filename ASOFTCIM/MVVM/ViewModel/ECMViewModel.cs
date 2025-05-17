@@ -14,6 +14,7 @@ namespace ASOFTCIM.MVVM.ViewModel
 {
     public class ECMViewModel : INotifyPropertyChanged, IDisposable
     {
+        #region Fields
         private Controller _controller;
         private ASOFTCIM.MVVM.Model.ECMModel _eCMMOdel;
         private Thread _updateData;
@@ -22,6 +23,7 @@ namespace ASOFTCIM.MVVM.ViewModel
         private int _index = 0;
         private int _totalecm = 0;
         private DispatcherTimer _timer;
+        #endregion
         #region Properties
         public ASOFTCIM.MVVM.Model.ECMModel ECMModel
         {
