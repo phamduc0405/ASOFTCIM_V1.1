@@ -32,7 +32,7 @@ namespace ASOFTCIM
                 packet.addItem(DataType.Ascii, alarm.ALCD);
                 packet.addItem(DataType.Ascii, alarm.ALID);
                 packet.addItem(DataType.Ascii, alarm.ALTEXT);
-                packet.Send2Sys();
+                packet.Send2Sys();Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
                
             }
             catch (Exception ex)

@@ -6,9 +6,43 @@
     xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
     xmlns:local="clr-namespace:ASOFTCIM.MVVM.View.Config"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="clr-namespace:ASOFTCIM.MVVM.ViewModel"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
+    <UserControl.Triggers>
+        <EventTrigger RoutedEvent="ToggleButton.Checked" SourceName="tglogFDC">
+            <BeginStoryboard>
+                <Storyboard>
+                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="grlogFDC" Storyboard.TargetProperty="Visibility">
+                        <DiscreteObjectKeyFrame KeyTime="0:0:0">
+                            <DiscreteObjectKeyFrame.Value>
+                                <Visibility>Visible</Visibility>
+                            </DiscreteObjectKeyFrame.Value>
+                        </DiscreteObjectKeyFrame>
+                    </ObjectAnimationUsingKeyFrames>
+
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="ToggleButton.Unchecked" SourceName="tglogFDC">
+            <BeginStoryboard>
+                <Storyboard>
+                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="grlogFDC" Storyboard.TargetProperty="Visibility">
+                        <DiscreteObjectKeyFrame KeyTime="0:0:0">
+                            <DiscreteObjectKeyFrame.Value>
+                                <Visibility>Collapsed</Visibility>
+                            </DiscreteObjectKeyFrame.Value>
+                        </DiscreteObjectKeyFrame>
+                    </ObjectAnimationUsingKeyFrames>
+
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+    </UserControl.Triggers>
+    <UserControl.DataContext>
+        <vm:ConfigViewModel />
+    </UserControl.DataContext>
     <Border>
         <Grid>
             <Grid.ColumnDefinitions>
@@ -18,351 +52,355 @@
 
             <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto">
                 <Border
-                    Margin="0,3,0,3"
-                    Background="White"
-                    BorderBrush="Black"
-                    BorderThickness="0.5"
-                    CornerRadius="3">
+                Margin="0,3,0,3"
+                Background="White"
+                BorderBrush="Black"
+                BorderThickness="0.5"
+                CornerRadius="3">
                     <DockPanel LastChildFill="True">
                         <!--  =============        PLC CONFIG        ===============  -->
                         <Border
-                            Margin="3"
-                            Background="#FF7FA6EF"
-                            CornerRadius="3"
-                            DockPanel.Dock="Top">
+                        Margin="3"
+                        Background="#FF7FA6EF"
+                        CornerRadius="3"
+                        DockPanel.Dock="Top">
                             <TextBlock
-                                Grid.Column="0"
-                                Margin="10,0,0,0"
-                                HorizontalAlignment="Left"
-                                Foreground="Black"
-                                Style="{StaticResource HeaderTextBlockStyle}"
-                                Text="PLC CONFIG" />
+                            Grid.Column="0"
+                            Margin="10,0,0,0"
+                            HorizontalAlignment="Left"
+                            Foreground="Black"
+                            Style="{StaticResource HeaderTextBlockStyle}"
+                            Text="PLC CONFIG" />
                         </Border>
                         <Border
-                            Margin="3"
-                            BorderBrush="Gray"
-                            BorderThickness="1"
-                            CornerRadius="3"
-                            DockPanel.Dock="Top">
+                        Margin="3"
+                        BorderBrush="Gray"
+                        BorderThickness="1"
+                        CornerRadius="3"
+                        DockPanel.Dock="Top">
                             <StackPanel Orientation="Vertical">
                                 <!--  ============================  -->
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock
-                                        Margin="10,0,0,0"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Center"
-                                        Style="{StaticResource HeaderTextBlockStyle}"
-                                        Text="USE CC-LINK IE : " />
+                                    Margin="10,0,0,0"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    Style="{StaticResource HeaderTextBlockStyle}"
+                                    Text="USE CC-LINK IE : " />
                                     <ToggleButton
-                                        x:Name="tglPlcUseCCLinkIe"
-                                        HorizontalAlignment="Right"
-                                        Background="LawnGreen"
-                                        IsChecked="False"
-                                        Style="{StaticResource ToggleFlipFlop}"
-                                        Tag="GreenYellow" />
+                                    x:Name="tglPlcUseCCLinkIe"
+                                    HorizontalAlignment="Right"
+                                    Background="LawnGreen"
+                                    IsChecked="{Binding Configs.UserCCLinkIE}"
+                                    Style="{StaticResource ToggleFlipFlop}"
+                                    Tag="GreenYellow" />
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock
-                                        Margin="10,0,0,0"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Center"
-                                        Style="{StaticResource HeaderTextBlockStyle}"
-                                        Text="PLC Connect Type : " />
-                                    <ComboBox x:Name="cbbplcConnectType" Style="{StaticResource ComboBoxFlatStyle}" />
+                                    Margin="10,0,0,0"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    Style="{StaticResource HeaderTextBlockStyle}"
+                                    Text="PLC Connect Type : " />
+                                    <ComboBox
+                                    x:Name="cbbplcConnectType"
+                                    ItemsSource="{Binding Configs.PlcConnectTypes}"
+                                    SelectedItem="{Binding Configs.PlcConnectType}"
+                                    Style="{StaticResource ComboBoxFlatStyle}" />
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock
-                                        Margin="10,0,0,0"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Center"
-                                        DockPanel.Dock="Left"
-                                        Style="{StaticResource HeaderTextBlockStyle}"
-                                        Text="PLC IP : " />
+                                    Margin="10,0,0,0"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    DockPanel.Dock="Left"
+                                    Style="{StaticResource HeaderTextBlockStyle}"
+                                    Text="PLC IP : " />
                                     <Grid
-                                        x:Name="grdPLCIP"
-                                        Width="150"
-                                        Height="20" />
+                                    x:Name="grdPLCIP"
+                                    Width="150"
+                                    Height="20" />
 
                                     <TextBlock
-                                        Margin="5,0,0,0"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Center"
-                                        DockPanel.Dock="Left"
-                                        Style="{StaticResource HeaderTextBlockStyle}"
-                                        Text="PLC PORT : " />
+                                    Margin="5,0,0,0"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    DockPanel.Dock="Left"
+                                    Style="{StaticResource HeaderTextBlockStyle}"
+                                    Text="PLC PORT : " />
 
                                     <TextBox
-                                        x:Name="txtPLCPort"
-                                        Width="50"
-                                        Height="20"
-                                        Margin="5,5,5,5"
-                                        HorizontalAlignment="Stretch"
-                                        VerticalAlignment="Center"
-                                        HorizontalContentAlignment="Left"
-                                        DockPanel.Dock="Left"
-                                        Style="{StaticResource TextBoxStandard}"
-                                        Text="" />
+                                    x:Name="txtPLCPort"
+                                    Width="50"
+                                    Height="20"
+                                    Margin="5,5,5,5"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Center"
+                                    HorizontalContentAlignment="Left"
+                                    DockPanel.Dock="Left"
+                                    Style="{StaticResource TextBoxStandard}"
+                                    Text="" />
                                     <TextBlock
-                                        Margin="0,0,0,0"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Center"
-                                        DockPanel.Dock="Left"
-                                        Style="{StaticResource HeaderTextBlockStyle}"
-                                        Text="PC IP : " />
+                                    Margin="0,0,0,0"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    DockPanel.Dock="Left"
+                                    Style="{StaticResource HeaderTextBlockStyle}"
+                                    Text="PC IP : " />
                                     <Grid
-                                        x:Name="grdPCIP"
-                                        Width="150"
-                                        Height="20" />
+                                    x:Name="grdPCIP"
+                                    Width="150"
+                                    Height="20" />
                                 </StackPanel>
                                 <DockPanel LastChildFill="True">
                                     <TextBlock
-                                        Margin="10,0,0,0"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Center"
-                                        DockPanel.Dock="Left"
-                                        Style="{StaticResource HeaderTextBlockStyle}"
-                                        Text="PLC STATION  : " />
+                                    Margin="10,0,0,0"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    DockPanel.Dock="Left"
+                                    Style="{StaticResource HeaderTextBlockStyle}"
+                                    Text="PLC STATION  : " />
 
                                     <TextBox
-                                        x:Name="txtPLCStation"
-                                        Margin="10,5,10,5"
-                                        HorizontalAlignment="Stretch"
-                                        VerticalAlignment="Center"
-                                        HorizontalContentAlignment="Left"
-                                        Style="{StaticResource TextBoxStandard}"
-                                        Tag="Folder"
-                                        Text="" />
+                                    x:Name="txtPLCStation"
+                                    Margin="10,5,10,5"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Center"
+                                    HorizontalContentAlignment="Left"
+                                    Style="{StaticResource TextBoxStandard}"
+                                    Tag="Folder"
+                                    Text="{Binding Configs.PlcStation}" />
                                 </DockPanel>
                                 <StackPanel x:Name="stkCCLinkIe">
                                     <DockPanel LastChildFill="True">
                                         <TextBlock
-                                            Margin="10,0,0,0"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Center"
-                                            DockPanel.Dock="Left"
-                                            Style="{StaticResource HeaderTextBlockStyle}"
-                                            Text="PLC PATH  : " />
-
-                                        <TextBox
-                                            x:Name="txtPLCPath"
-                                            Margin="10,5,10,5"
-                                            HorizontalAlignment="Stretch"
-                                            VerticalAlignment="Center"
-                                            HorizontalContentAlignment="Left"
-                                            Style="{StaticResource TextBoxStandard}"
-                                            Tag="Folder"
-                                            Text="" />
-                                    </DockPanel>
-                                    <DockPanel LastChildFill="True">
-                                        <TextBlock
-                                            Margin="10,0,0,0"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Center"
-                                            DockPanel.Dock="Left"
-                                            Style="{StaticResource HeaderTextBlockStyle}"
-                                            Text="PLC NETWORK  : " />
-
-                                        <TextBox
-                                            x:Name="txtPLCNetWork"
-                                            Margin="10,5,10,5"
-                                            HorizontalAlignment="Stretch"
-                                            VerticalAlignment="Center"
-                                            HorizontalContentAlignment="Left"
-                                            Style="{StaticResource TextBoxStandard}"
-                                            Tag="Folder"
-                                            Text="" />
-                                    </DockPanel>
-                                    <DockPanel LastChildFill="True">
-                                        <TextBlock
-                                            Margin="10,0,0,0"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Center"
-                                            DockPanel.Dock="Left"
-                                            Style="{StaticResource HeaderTextBlockStyle}"
-                                            Text="PLC CHANNEL  : " />
-
-                                        <TextBox
-                                            x:Name="txtPLCChannel"
-                                            Margin="10,5,10,5"
-                                            HorizontalAlignment="Stretch"
-                                            VerticalAlignment="Center"
-                                            HorizontalContentAlignment="Left"
-                                            Style="{StaticResource TextBoxStandard}"
-                                            Tag="Folder"
-                                            Text="" />
-                                    </DockPanel>
-                                </StackPanel>
-
-                                <DockPanel LastChildFill="True">
-                                    <TextBlock
                                         Margin="10,0,0,0"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Center"
                                         DockPanel.Dock="Left"
                                         Style="{StaticResource HeaderTextBlockStyle}"
-                                        Text="TIME ALIVE  : " />
+                                        Text="PLC PATH  : " />
 
-                                    <TextBox
-                                        x:Name="txtPlcAlive"
+                                        <TextBox
+                                        x:Name="txtPLCPath"
                                         Margin="10,5,10,5"
                                         HorizontalAlignment="Stretch"
                                         VerticalAlignment="Center"
                                         HorizontalContentAlignment="Left"
                                         Style="{StaticResource TextBoxStandard}"
                                         Tag="Folder"
-                                        Text="" />
-                                </DockPanel>
-                                <DockPanel LastChildFill="True">
-                                    <TextBlock
+                                        Text="{Binding Configs.plcPath}" />
+                                    </DockPanel>
+                                    <DockPanel LastChildFill="True">
+                                        <TextBlock
                                         Margin="10,0,0,0"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Center"
                                         DockPanel.Dock="Left"
                                         Style="{StaticResource HeaderTextBlockStyle}"
-                                        Text="START INPUT BIT : " />
+                                        Text="PLC NETWORK  : " />
 
-                                    <TextBox
-                                        x:Name="txtPLCStartInBAdd"
+                                        <TextBox
+                                        x:Name="txtPLCNetWork"
                                         Margin="10,5,10,5"
                                         HorizontalAlignment="Stretch"
                                         VerticalAlignment="Center"
                                         HorizontalContentAlignment="Left"
-                                        DockPanel.Dock="Left"
                                         Style="{StaticResource TextBoxStandard}"
-                                        Tag="0"
-                                        Text="" />
-                                    <TextBlock
-                                        Margin="5,0,0,0"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Center"
-                                        DockPanel.Dock="Left"
-                                        Style="{StaticResource HeaderTextBlockStyle}"
-                                        Text="LENGTH : " />
-
-                                    <TextBox
-                                        x:Name="txtPLCLengthInB"
-                                        Margin="10,5,10,5"
-                                        HorizontalAlignment="Stretch"
-                                        VerticalAlignment="Center"
-                                        HorizontalContentAlignment="Left"
-                                        DockPanel.Dock="Left"
-                                        Style="{StaticResource TextBoxStandard}"
-                                        Tag="4096"
-                                        Text="" />
-                                </DockPanel>
-                                <DockPanel LastChildFill="True">
-                                    <TextBlock
+                                        Tag="Folder"
+                                        Text="{Binding Configs.PlcNetWork}" />
+                                    </DockPanel>
+                                    <DockPanel LastChildFill="True">
+                                        <TextBlock
                                         Margin="10,0,0,0"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Center"
                                         DockPanel.Dock="Left"
                                         Style="{StaticResource HeaderTextBlockStyle}"
-                                        Text="START INPUT WORD : " />
+                                        Text="PLC CHANNEL  : " />
 
-                                    <TextBox
-                                        x:Name="txtPLCStartInWAdd"
+                                        <TextBox
+                                        x:Name="txtPLCChannel"
                                         Margin="10,5,10,5"
                                         HorizontalAlignment="Stretch"
                                         VerticalAlignment="Center"
                                         HorizontalContentAlignment="Left"
-                                        DockPanel.Dock="Left"
                                         Style="{StaticResource TextBoxStandard}"
-                                        Tag="0"
-                                        Text="" />
+                                        Tag="Folder"
+                                        Text="{Binding Configs.PlcChannel}" />
+                                    </DockPanel>
+                                </StackPanel>
+
+                                <DockPanel LastChildFill="True">
                                     <TextBlock
-                                        Margin="5,0,0,0"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Center"
-                                        DockPanel.Dock="Left"
-                                        Style="{StaticResource HeaderTextBlockStyle}"
-                                        Text="LENGTH : " />
+                                    Margin="10,0,0,0"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    DockPanel.Dock="Left"
+                                    Style="{StaticResource HeaderTextBlockStyle}"
+                                    Text="TIME ALIVE  : " />
 
                                     <TextBox
-                                        x:Name="txtPLCLengthInW"
-                                        Margin="10,5,10,5"
-                                        HorizontalAlignment="Stretch"
-                                        VerticalAlignment="Center"
-                                        HorizontalContentAlignment="Left"
-                                        DockPanel.Dock="Left"
-                                        Style="{StaticResource TextBoxStandard}"
-                                        Tag="4096"
-                                        Text="" />
+                                    x:Name="txtPlcAlive"
+                                    Margin="10,5,10,5"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Center"
+                                    HorizontalContentAlignment="Left"
+                                    Style="{StaticResource TextBoxStandard}"
+                                    Tag="Folder"
+                                    Text="{Binding Configs.PlcTimeAlive}" />
                                 </DockPanel>
                                 <DockPanel LastChildFill="True">
                                     <TextBlock
-                                        Margin="10,0,0,0"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Center"
-                                        DockPanel.Dock="Left"
-                                        Style="{StaticResource HeaderTextBlockStyle}"
-                                        Text="START OUTPUT BIT : " />
+                                    Margin="10,0,0,0"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    DockPanel.Dock="Left"
+                                    Style="{StaticResource HeaderTextBlockStyle}"
+                                    Text="START INPUT BIT : " />
 
                                     <TextBox
-                                        x:Name="txtPLCStartOutB"
-                                        Margin="10,5,10,5"
-                                        HorizontalAlignment="Stretch"
-                                        VerticalAlignment="Center"
-                                        HorizontalContentAlignment="Left"
-                                        DockPanel.Dock="Left"
-                                        Style="{StaticResource TextBoxStandard}"
-                                        Tag="0"
-                                        Text="" />
+                                    x:Name="txtPLCStartInBAdd"
+                                    Margin="10,5,10,5"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Center"
+                                    HorizontalContentAlignment="Left"
+                                    DockPanel.Dock="Left"
+                                    Style="{StaticResource TextBoxStandard}"
+                                    Tag="0"
+                                    Text="{Binding Configs.PlcStartInputBit}" />
                                     <TextBlock
-                                        Margin="5,0,0,0"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Center"
-                                        DockPanel.Dock="Left"
-                                        Style="{StaticResource HeaderTextBlockStyle}"
-                                        Text="LENGTH : " />
+                                    Margin="5,0,0,0"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    DockPanel.Dock="Left"
+                                    Style="{StaticResource HeaderTextBlockStyle}"
+                                    Text="LENGTH : " />
 
                                     <TextBox
-                                        x:Name="txtPLCLengthOutB"
-                                        Margin="10,5,10,5"
-                                        HorizontalAlignment="Stretch"
-                                        VerticalAlignment="Center"
-                                        HorizontalContentAlignment="Left"
-                                        DockPanel.Dock="Left"
-                                        Style="{StaticResource TextBoxStandard}"
-                                        Tag="4096"
-                                        Text="" />
+                                    x:Name="txtPLCLengthInB"
+                                    Margin="10,5,10,5"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Center"
+                                    HorizontalContentAlignment="Left"
+                                    DockPanel.Dock="Left"
+                                    Style="{StaticResource TextBoxStandard}"
+                                    Tag="4096"
+                                    Text="{Binding Configs.PlcStartInputBitLength}" />
                                 </DockPanel>
                                 <DockPanel LastChildFill="True">
                                     <TextBlock
-                                        Margin="10,0,0,0"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Center"
-                                        DockPanel.Dock="Left"
-                                        Style="{StaticResource HeaderTextBlockStyle}"
-                                        Text="START OUTPUT WORD : " />
+                                    Margin="10,0,0,0"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    DockPanel.Dock="Left"
+                                    Style="{StaticResource HeaderTextBlockStyle}"
+                                    Text="START INPUT WORD : " />
 
                                     <TextBox
-                                        x:Name="txtPLCStartOutW"
-                                        Margin="10,5,10,5"
-                                        HorizontalAlignment="Stretch"
-                                        VerticalAlignment="Center"
-                                        HorizontalContentAlignment="Left"
-                                        DockPanel.Dock="Left"
-                                        Style="{StaticResource TextBoxStandard}"
-                                        Tag="0"
-                                        Text="" />
+                                    x:Name="txtPLCStartInWAdd"
+                                    Margin="10,5,10,5"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Center"
+                                    HorizontalContentAlignment="Left"
+                                    DockPanel.Dock="Left"
+                                    Style="{StaticResource TextBoxStandard}"
+                                    Tag="0"
+                                    Text="{Binding Configs.PlcStartInputWord}" />
                                     <TextBlock
-                                        Margin="5,0,0,0"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Center"
-                                        DockPanel.Dock="Left"
-                                        Style="{StaticResource HeaderTextBlockStyle}"
-                                        Text="LENGTH : " />
+                                    Margin="5,0,0,0"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    DockPanel.Dock="Left"
+                                    Style="{StaticResource HeaderTextBlockStyle}"
+                                    Text="LENGTH : " />
 
                                     <TextBox
-                                        x:Name="txtPLCLengthOutW"
-                                        Margin="10,5,10,5"
-                                        HorizontalAlignment="Stretch"
-                                        VerticalAlignment="Center"
-                                        HorizontalContentAlignment="Left"
-                                        DockPanel.Dock="Left"
-                                        Style="{StaticResource TextBoxStandard}"
-                                        Tag="4096"
-                                        Text="" />
+                                    x:Name="txtPLCLengthInW"
+                                    Margin="10,5,10,5"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Center"
+                                    HorizontalContentAlignment="Left"
+                                    DockPanel.Dock="Left"
+                                    Style="{StaticResource TextBoxStandard}"
+                                    Tag="4096"
+                                    Text="{Binding Configs.PlcStartInputWordLength}" />
+                                </DockPanel>
+                                <DockPanel LastChildFill="True">
+                                    <TextBlock
+                                    Margin="10,0,0,0"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    DockPanel.Dock="Left"
+                                    Style="{StaticResource HeaderTextBlockStyle}"
+                                    Text="START OUTPUT BIT : " />
+
+                                    <TextBox
+                                    x:Name="txtPLCStartOutB"
+                                    Margin="10,5,10,5"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Center"
+                                    HorizontalContentAlignment="Left"
+                                    DockPanel.Dock="Left"
+                                    Style="{StaticResource TextBoxStandard}"
+                                    Tag="0"
+                                    Text="{Binding Configs.PlcStartOutputBit}" />
+                                    <TextBlock
+                                    Margin="5,0,0,0"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    DockPanel.Dock="Left"
+                                    Style="{StaticResource HeaderTextBlockStyle}"
+                                    Text="LENGTH : " />
+
+                                    <TextBox
+                                    x:Name="txtPLCLengthOutB"
+                                    Margin="10,5,10,5"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Center"
+                                    HorizontalContentAlignment="Left"
+                                    DockPanel.Dock="Left"
+                                    Style="{StaticResource TextBoxStandard}"
+                                    Tag="4096"
+                                    Text="{Binding Configs.PlcStartOutputBitLength}" />
+                                </DockPanel>
+                                <DockPanel LastChildFill="True">
+                                    <TextBlock
+                                    Margin="10,0,0,0"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    DockPanel.Dock="Left"
+                                    Style="{StaticResource HeaderTextBlockStyle}"
+                                    Text="START OUTPUT WORD : " />
+
+                                    <TextBox
+                                    x:Name="txtPLCStartOutW"
+                                    Margin="10,5,10,5"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Center"
+                                    HorizontalContentAlignment="Left"
+                                    DockPanel.Dock="Left"
+                                    Style="{StaticResource TextBoxStandard}"
+                                    Tag="0"
+                                    Text="{Binding Configs.PlcStartOutputWord}" />
+                                    <TextBlock
+                                    Margin="5,0,0,0"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    DockPanel.Dock="Left"
+                                    Style="{StaticResource HeaderTextBlockStyle}"
+                                    Text="LENGTH : " />
+
+                                    <TextBox
+                                    x:Name="txtPLCLengthOutW"
+                                    Margin="10,5,10,5"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Center"
+                                    HorizontalContentAlignment="Left"
+                                    DockPanel.Dock="Left"
+                                    Style="{StaticResource TextBoxStandard}"
+                                    Tag="4096"
+                                    Text="{Binding Configs.PlcStartOutputWordLength}" />
                                 </DockPanel>
                                 <Grid>
                                     <Grid.ColumnDefinitions>
@@ -370,59 +408,61 @@
                                         <ColumnDefinition Width="2*" />
                                     </Grid.ColumnDefinitions>
                                     <TextBlock
-                                        Margin="10,0,0,0"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Center"
-                                        DockPanel.Dock="Left"
-                                        Style="{StaticResource HeaderTextBlockStyle}"
-                                        Text="PLC Device Map : " />
+                                    Margin="10,0,0,0"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    DockPanel.Dock="Left"
+                                    Style="{StaticResource HeaderTextBlockStyle}"
+                                    Text="PLC Device Map : " />
                                     <DockPanel Grid.Column="1" LastChildFill="True">
                                         <Button
-                                            x:Name="btnDirPLCExcel"
-                                            Width="35"
-                                            Height="35"
-                                            Margin="5,0,10,0"
-                                            HorizontalAlignment="Left"
-                                            Content=". . ."
-                                            DockPanel.Dock="Right"
-                                            Style="{StaticResource ButtonCircle}" />
+                                        x:Name="btnDirPLCExcel"
+                                        Width="35"
+                                        Height="35"
+                                        Margin="5,0,10,0"
+                                        HorizontalAlignment="Left"
+                                        Command="{Binding btnDirPLCExcel}"
+                                        Content=". . ."
+                                        DockPanel.Dock="Right"
+                                        Style="{StaticResource ButtonCircle}" />
                                         <TextBox
-                                            x:Name="txtPathPlcExcel"
-                                            Margin="10,0,0,0"
-                                            HorizontalAlignment="Stretch"
-                                            VerticalAlignment="Center"
-                                            HorizontalContentAlignment="Stretch"
-                                            Style="{StaticResource TextBoxStandard}"
-                                            Tag="Folder"
-                                            Text="" />
+                                        x:Name="txtPathPlcExcel"
+                                        Margin="10,0,0,0"
+                                        HorizontalAlignment="Stretch"
+                                        VerticalAlignment="Center"
+                                        HorizontalContentAlignment="Stretch"
+                                        Style="{StaticResource TextBoxStandard}"
+                                        Tag="Folder"
+                                        Text="{Binding Configs.PathMapInterface}" />
                                     </DockPanel>
 
 
                                 </Grid>
 
                                 <Button
-                                    x:Name="btnSavePlcConfig"
-                                    Width="200"
-                                    Height="50"
-                                    Margin="50,20"
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Bottom"
-                                    Style="{StaticResource ButtonSave}">
+                                x:Name="btnSavePlcConfig"
+                                Width="200"
+                                Height="50"
+                                Margin="50,20"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Bottom"
+                                Command="{Binding btnSavePLCConfig}"
+                                Style="{StaticResource ButtonSave}">
                                     <StackPanel Width="200" Orientation="Horizontal">
                                         <fa:IconImage
-                                            x:Name="LoadingPlcImage"
-                                            Width="25"
-                                            Margin="10,0,0,0"
-                                            HorizontalAlignment="Left"
-                                            fa:Awesome.Spin="true"
-                                            Icon="Spinner"
-                                            Visibility="Hidden" />
+                                        x:Name="LoadingPlcImage"
+                                        Width="25"
+                                        Margin="10,0,0,0"
+                                        HorizontalAlignment="Left"
+                                        fa:Awesome.Spin="true"
+                                        Icon="Spinner"
+                                        Visibility="Hidden" />
                                         <TextBlock
-                                            Height="30"
-                                            Margin="40,10,5,0"
-                                            HorizontalAlignment="Center"
-                                            Style="{StaticResource HeaderTextBlockStyle}"
-                                            Text="Save" />
+                                        Height="30"
+                                        Margin="40,10,5,0"
+                                        HorizontalAlignment="Center"
+                                        Style="{StaticResource HeaderTextBlockStyle}"
+                                        Text="Save" />
                                     </StackPanel>
                                 </Button>
                             </StackPanel>
@@ -438,23 +478,23 @@
                 <Border Grid.Column="1">
                     <StackPanel>
                         <Border
-                            Margin="3"
-                            Background="#FF7FA6EF"
-                            CornerRadius="3"
-                            DockPanel.Dock="Top">
+                        Margin="3"
+                        Background="#FF7FA6EF"
+                        CornerRadius="3"
+                        DockPanel.Dock="Top">
                             <TextBlock
-                                Margin="10,0,0,0"
-                                HorizontalAlignment="Left"
-                                Foreground="Black"
-                                Style="{StaticResource HeaderTextBlockStyle}"
-                                Text="EQUIPMENT CONFIG" />
+                            Margin="10,0,0,0"
+                            HorizontalAlignment="Left"
+                            Foreground="Black"
+                            Style="{StaticResource HeaderTextBlockStyle}"
+                            Text="EQUIPMENT CONFIG" />
                         </Border>
                         <Border
-                            Margin="3"
-                            Padding="5"
-                            BorderBrush="Black"
-                            BorderThickness="0.5"
-                            CornerRadius="3">
+                        Margin="3"
+                        Padding="5"
+                        BorderBrush="Black"
+                        BorderThickness="0.5"
+                        CornerRadius="3">
                             <StackPanel Grid.Row="1" Orientation="Vertical">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
@@ -462,21 +502,21 @@
                                         <ColumnDefinition Width="2*" />
                                     </Grid.ColumnDefinitions>
                                     <TextBlock
-                                        Grid.Column="0"
-                                        Margin="10,10,0,0"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Center"
-                                        Style="{StaticResource HeaderTextBlockStyle}"
-                                        Text="EQUIPMENT ID : " />
+                                    Grid.Column="0"
+                                    Margin="10,10,0,0"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    Style="{StaticResource HeaderTextBlockStyle}"
+                                    Text="EQUIPMENT ID : " />
                                     <TextBox
-                                        x:Name="txtEqpId"
-                                        Grid.Column="1"
-                                        Margin="10,10,10,0"
-                                        HorizontalAlignment="Stretch"
-                                        VerticalAlignment="Center"
-                                        HorizontalContentAlignment="Center"
-                                        Style="{StaticResource TextBoxStandard}"
-                                        Text="23" />
+                                    x:Name="txtEqpId"
+                                    Grid.Column="1"
+                                    Margin="10,10,10,0"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Center"
+                                    HorizontalContentAlignment="Center"
+                                    Style="{StaticResource TextBoxStandard}"
+                                    Text="{Binding Configs.EquipMent}" />
                                 </Grid>
 
                                 <Grid>
@@ -485,81 +525,176 @@
                                         <ColumnDefinition Width="2*" />
                                     </Grid.ColumnDefinitions>
                                     <TextBlock
-                                        Grid.Column="0"
-                                        Margin="10,0,0,0"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Center"
-                                        Style="{StaticResource HeaderTextBlockStyle}"
-                                        Text="LOG FOLDER  : " />
+                                    Grid.Column="0"
+                                    Margin="10,0,0,0"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    Style="{StaticResource HeaderTextBlockStyle}"
+                                    Text="LOG FOLDER  : " />
                                     <DockPanel Grid.Column="1">
                                         <Button
-                                            x:Name="btnDirLog"
-                                            Width="35"
-                                            Height="35"
-                                            Margin="0,0,10,0"
-                                            HorizontalAlignment="Left"
-                                            Content=". . ."
-                                            DockPanel.Dock="Right"
-                                            Style="{StaticResource ButtonCircle}" />
+                                        x:Name="btnDirLog"
+                                        Width="35"
+                                        Height="35"
+                                        Margin="0,0,10,0"
+                                        HorizontalAlignment="Left"
+                                        Command="{Binding btnDirLog}"
+                                        Content=". . ."
+                                        DockPanel.Dock="Right"
+                                        Style="{StaticResource ButtonCircle}" />
                                         <TextBox
-                                            x:Name="txtPathLog"
-                                            Margin="10,0,0,0"
-                                            HorizontalAlignment="Stretch"
-                                            VerticalAlignment="Center"
-                                            HorizontalContentAlignment="Stretch"
-                                            Style="{StaticResource TextBoxStandard}"
-                                            Tag="Folder"
-                                            Text="" />
+                                        x:Name="txtLogFoldler"
+                                        Margin="10,0,0,0"
+                                        HorizontalAlignment="Stretch"
+                                        VerticalAlignment="Center"
+                                        HorizontalContentAlignment="Stretch"
+                                        Style="{StaticResource TextBoxStandard}"
+                                        Tag="Folder"
+                                        Text="{Binding Configs.LogFolder}" />
                                     </DockPanel>
                                 </Grid>
-                                <DockPanel Grid.Row="1" LastChildFill="True">
+                                <Grid Grid.Row="1">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1*" />
+                                        <ColumnDefinition Width="2*" />
+                                    </Grid.ColumnDefinitions>
                                     <TextBlock
-                                        Margin="10,0,0,0"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Center"
-                                        DockPanel.Dock="Left"
-                                        Style="{StaticResource HeaderTextBlockStyle}"
-                                        Text="AUTO DELETE THE LOG AFTER  : " />
-                                    <TextBlock
+                                    Grid.Column="0"
+                                    Margin="10,0,0,0"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    DockPanel.Dock="Left"
+                                    Style="{StaticResource HeaderTextBlockStyle}"
+                                    Text="AUTO DELETE THE LOG AFTER  : " />
+                                    <Grid Grid.Column="1">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="2*" />
+                                            <ColumnDefinition Width="1*" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock
+                                        Grid.Column="1"
                                         Margin="5"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Center"
                                         DockPanel.Dock="Right"
                                         Style="{StaticResource HeaderTextBlockStyle}"
                                         Text="(Days)" />
-                                    <TextBox
+                                        <TextBox
                                         x:Name="txtTimeDelLog"
+                                        Grid.Column="0"
                                         Margin="10,0,0,0"
                                         HorizontalAlignment="Stretch"
                                         VerticalAlignment="Center"
                                         HorizontalContentAlignment="Stretch"
                                         Style="{StaticResource TextBoxStandard}"
                                         Tag="30"
-                                        Text="" />
+                                        Text="{Binding Configs.AutoDeleteLog}" />
+                                    </Grid>
 
-                                </DockPanel>
+                                </Grid>
+
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1*" />
+                                        <ColumnDefinition Width="2*" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock
+                                    Grid.Column="0"
+                                    Margin="10,10,0,0"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    Style="{StaticResource HeaderTextBlockStyle}"
+                                    Text="AliveTime " />
+                                    <TextBox
+                                    x:Name="txtAliveTime"
+                                    Grid.Column="1"
+                                    Margin="10,10,10,0"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Center"
+                                    HorizontalContentAlignment="Center"
+                                    Style="{StaticResource TextBoxStandard}"
+                                    Text="{Binding Configs.AliveTime}" />
+                                </Grid>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1*" />
+                                        <ColumnDefinition Width="2*" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock
+                                    Grid.Column="0"
+                                    Margin="10,0,0,0"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    Style="{StaticResource HeaderTextBlockStyle}"
+                                    Text="USE LOG FDC " />
+                                    <ToggleButton
+                                    x:Name="tglogFDC"
+                                    Grid.Column="1"
+                                    HorizontalAlignment="Left"
+                                    Background="LawnGreen"
+                                    IsChecked="{Binding Configs.UseLogFDC}"
+                                    Style="{StaticResource ToggleFlipFlop}"
+                                    Tag="GreenYellow" />
+                                </Grid>
+                                <Grid x:Name="grlogFDC">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1*" />
+                                        <ColumnDefinition Width="2*" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock
+                                    Grid.Column="0"
+                                    Margin="10,0,0,0"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    Style="{StaticResource HeaderTextBlockStyle}"
+                                    Text="LOG FOLDER FDC  : " />
+                                    <DockPanel Grid.Column="1">
+                                        <Button
+                                        x:Name="btnDirLogFDC"
+                                        Width="35"
+                                        Height="35"
+                                        Margin="0,0,10,0"
+                                        HorizontalAlignment="Left"
+                                        Command="{Binding btnDirLogFDC}"
+                                        Content=". . ."
+                                        DockPanel.Dock="Right"
+                                        Style="{StaticResource ButtonCircle}" />
+                                        <TextBox
+                                        x:Name="txtPathLogFDC"
+                                        Margin="10,0,0,0"
+                                        HorizontalAlignment="Stretch"
+                                        VerticalAlignment="Center"
+                                        HorizontalContentAlignment="Stretch"
+                                        Style="{StaticResource TextBoxStandard}"
+                                        Tag="Folder"
+                                        Text="{Binding Configs.LogFodlerFDC}" />
+                                    </DockPanel>
+
+                                </Grid>
+
                                 <Button
-                                    x:Name="btnSaveEqpConfig"
-                                    Width="200"
-                                    Height="50"
-                                    Margin="50,20"
-                                    HorizontalAlignment="Center"
-                                    Style="{StaticResource ButtonSave}">
+                                x:Name="btnSaveEqpConfig"
+                                Width="200"
+                                Height="50"
+                                Margin="50,20"
+                                HorizontalAlignment="Center"
+                                Command="{Binding btnSaveEQPConfig}"
+                                Style="{StaticResource ButtonSave}">
                                     <StackPanel Width="200" Orientation="Horizontal">
                                         <fa:IconImage
-                                            x:Name="LoadingEqpImage"
-                                            Width="25"
-                                            Margin="10,0,0,0"
-                                            HorizontalAlignment="Left"
-                                            fa:Awesome.Spin="true"
-                                            Icon="Spinner"
-                                            Visibility="Hidden" />
+                                        x:Name="LoadingEqpImage"
+                                        Width="25"
+                                        Margin="10,0,0,0"
+                                        HorizontalAlignment="Left"
+                                        fa:Awesome.Spin="true"
+                                        Icon="Spinner"
+                                        Visibility="Hidden" />
                                         <TextBlock
-                                            Height="30"
-                                            Margin="40,10,5,0"
-                                            HorizontalAlignment="Center"
-                                            Style="{StaticResource HeaderTextBlockStyle}"
-                                            Text="Save" />
+                                        Height="30"
+                                        Margin="40,10,5,0"
+                                        HorizontalAlignment="Center"
+                                        Style="{StaticResource HeaderTextBlockStyle}"
+                                        Text="Save" />
 
                                     </StackPanel>
 
@@ -570,23 +705,23 @@
 
                         </Border>
                         <Border
-                            Margin="3"
-                            Background="#FF7FA6EF"
-                            CornerRadius="3"
-                            DockPanel.Dock="Top">
+                        Margin="3"
+                        Background="#FF7FA6EF"
+                        CornerRadius="3"
+                        DockPanel.Dock="Top">
                             <TextBlock
-                                Margin="10,0,0,0"
-                                HorizontalAlignment="Left"
-                                Foreground="Black"
-                                Style="{StaticResource HeaderTextBlockStyle}"
-                                Text="CIM CONFIG" />
+                            Margin="10,0,0,0"
+                            HorizontalAlignment="Left"
+                            Foreground="Black"
+                            Style="{StaticResource HeaderTextBlockStyle}"
+                            Text="CIM CONFIG" />
                         </Border>
                         <Border
-                            Margin="3"
-                            Padding="5"
-                            BorderBrush="Black"
-                            BorderThickness="0.5"
-                            CornerRadius="3">
+                        Margin="3"
+                        Padding="5"
+                        BorderBrush="Black"
+                        BorderThickness="0.5"
+                        CornerRadius="3">
                             <StackPanel Grid.Row="1" Orientation="Vertical">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
@@ -594,21 +729,21 @@
                                         <ColumnDefinition Width="2*" />
                                     </Grid.ColumnDefinitions>
                                     <TextBlock
-                                        Grid.Column="0"
-                                        Margin="10,10,0,0"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Center"
-                                        Style="{StaticResource HeaderTextBlockStyle}"
-                                        Text="IP :" />
+                                    Grid.Column="0"
+                                    Margin="10,10,0,0"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    Style="{StaticResource HeaderTextBlockStyle}"
+                                    Text="IP :" />
                                     <TextBox
-                                        x:Name="txtIp"
-                                        Grid.Column="1"
-                                        Margin="10,10,10,0"
-                                        HorizontalAlignment="Stretch"
-                                        VerticalAlignment="Center"
-                                        HorizontalContentAlignment="Center"
-                                        Style="{StaticResource TextBoxStandard}"
-                                        Text="127.0.0.1" />
+                                    x:Name="txtIp"
+                                    Grid.Column="1"
+                                    Margin="10,10,10,0"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Center"
+                                    HorizontalContentAlignment="Center"
+                                    Style="{StaticResource TextBoxStandard}"
+                                    Text="{Binding Configs.Ip}" />
                                 </Grid>
                                 <Grid>
                                     <Grid.ColumnDefinitions>
@@ -616,21 +751,21 @@
                                         <ColumnDefinition Width="2*" />
                                     </Grid.ColumnDefinitions>
                                     <TextBlock
-                                        Grid.Column="0"
-                                        Margin="10,10,0,0"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Center"
-                                        Style="{StaticResource HeaderTextBlockStyle}"
-                                        Text="ConectMode :" />
+                                    Grid.Column="0"
+                                    Margin="10,10,0,0"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    Style="{StaticResource HeaderTextBlockStyle}"
+                                    Text="ConectMode :" />
                                     <TextBox
-                                        x:Name="txtConectMode"
-                                        Grid.Column="1"
-                                        Margin="10,10,10,0"
-                                        HorizontalAlignment="Stretch"
-                                        VerticalAlignment="Center"
-                                        HorizontalContentAlignment="Center"
-                                        Style="{StaticResource TextBoxStandard}"
-                                        Text="0" />
+                                    x:Name="txtConectMode"
+                                    Grid.Column="1"
+                                    Margin="10,10,10,0"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Center"
+                                    HorizontalContentAlignment="Center"
+                                    Style="{StaticResource TextBoxStandard}"
+                                    Text="{Binding Configs.ConnectMode}" />
                                 </Grid>
                                 <Grid>
                                     <Grid.ColumnDefinitions>
@@ -638,45 +773,46 @@
                                         <ColumnDefinition Width="2*" />
                                     </Grid.ColumnDefinitions>
                                     <TextBlock
-                                        Grid.Column="0"
-                                        Margin="10,10,0,0"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Center"
-                                        Style="{StaticResource HeaderTextBlockStyle}"
-                                        Text="Port:" />
+                                    Grid.Column="0"
+                                    Margin="10,10,0,0"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    Style="{StaticResource HeaderTextBlockStyle}"
+                                    Text="Port:" />
                                     <TextBox
-                                        x:Name="txtPort"
-                                        Grid.Column="1"
-                                        Margin="10,10,10,0"
-                                        HorizontalAlignment="Stretch"
-                                        VerticalAlignment="Center"
-                                        HorizontalContentAlignment="Center"
-                                        Style="{StaticResource TextBoxStandard}"
-                                        Text="8000" />
+                                    x:Name="txtPort"
+                                    Grid.Column="1"
+                                    Margin="10,10,10,0"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Center"
+                                    HorizontalContentAlignment="Center"
+                                    Style="{StaticResource TextBoxStandard}"
+                                    Text="{Binding Configs.Port}" />
                                 </Grid>
 
                                 <Button
-                                    x:Name="btnSaveCimConfig"
-                                    Width="200"
-                                    Height="50"
-                                    Margin="50,20"
-                                    HorizontalAlignment="Center"
-                                    Style="{StaticResource ButtonSave}">
+                                x:Name="btnSaveCimConfig"
+                                Width="200"
+                                Height="50"
+                                Margin="50,20"
+                                HorizontalAlignment="Center"
+                                Command="{Binding btnSaveCimConfig}"
+                                Style="{StaticResource ButtonSave}">
                                     <StackPanel Width="200" Orientation="Horizontal">
                                         <fa:IconImage
-                                            x:Name="LoadingCimImage"
-                                            Width="25"
-                                            Margin="10,0,0,0"
-                                            HorizontalAlignment="Left"
-                                            fa:Awesome.Spin="true"
-                                            Icon="Spinner"
-                                            Visibility="Hidden" />
+                                        x:Name="LoadingCimImage"
+                                        Width="25"
+                                        Margin="10,0,0,0"
+                                        HorizontalAlignment="Left"
+                                        fa:Awesome.Spin="true"
+                                        Icon="Spinner"
+                                        Visibility="Hidden" />
                                         <TextBlock
-                                            Height="30"
-                                            Margin="40,10,5,0"
-                                            HorizontalAlignment="Center"
-                                            Style="{StaticResource HeaderTextBlockStyle}"
-                                            Text="Save" />
+                                        Height="30"
+                                        Margin="40,10,5,0"
+                                        HorizontalAlignment="Center"
+                                        Style="{StaticResource HeaderTextBlockStyle}"
+                                        Text="Save" />
 
                                     </StackPanel>
 

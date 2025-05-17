@@ -25,7 +25,7 @@ namespace ASOFTCIM
                 packet.addItem(DataType.Ascii, "abc");
                 packet.addItem(DataType.Ascii, "def");
                 //TRS ALARM là gì ?
-                packet.Send2Sys();
+                packet.Send2Sys();Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
             }
             catch (Exception ex)
             {

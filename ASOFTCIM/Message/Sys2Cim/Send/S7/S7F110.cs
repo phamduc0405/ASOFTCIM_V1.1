@@ -28,7 +28,7 @@ namespace ASOFTCIM
                 if(ACK != "0")
                 {
                     packet.addItem(DataType.List, 0);
-                    packet.Send2Sys();
+                    packet.Send2Sys();Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
                     return;
                 }
                 packet.addItem(DataType.List, 3);
@@ -39,7 +39,7 @@ namespace ASOFTCIM
                 }
 
 
-                packet.Send2Sys();
+                packet.Send2Sys();Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
             }
             catch (Exception ex)
             {

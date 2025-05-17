@@ -1,7 +1,9 @@
 ﻿using A_SOFT.CMM.INIT;
+using ASOFTCIM.Data;
 using ASOFTCIM.MainControl;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -76,6 +78,53 @@ namespace ASOFTCIM.MVVM.View.Config
             {
                 _controller.CIM.SendS1F1(_controller.CIM.Cim.Conn);
 
+            };
+            btnS6F1Start.Click += (s, e) =>
+            {
+                List<SV> svs = new List<SV>();
+                svs = _controller.CIM.EqpData.SVID;
+                TRACESV tRACESV = new TRACESV();
+                List<string> lstSvid = new List<string>();
+                foreach( var Item in svs)
+                {
+                    lstSvid.Add(Item.SVID);
+                }
+                var trid = txtTrid.Text;
+                var dsper = int.Parse(txtDsper.Text);
+                var totsmp = int.Parse(txtTotsmp.Text);
+                var repgsz = txtRepgsz.Text;
+                tRACESV.Init(lstSvid, trid, dsper, totsmp, repgsz);
+                tRACESV.SMPLN = int.Parse(txtTotsmp.Text);
+                tRACESV.Start();
+                _controller.CIM.SendS6F1(svs, tRACESV);
+            };
+            btnS6F1Stop.Click += (s, e) =>
+            {
+                List<SV> svs = new List<SV>();
+                svs = _controller.CIM.EqpData.SVID;
+                TRACESV tRACESV = new TRACESV();
+                List<string> lstSvid = new List<string>();
+                foreach (var Item in svs)
+                {
+                    lstSvid.Add(Item.SVID);
+                }
+                var trid = txtTrid.Text;
+                var dsper = int.Parse(txtDsper.Text);
+                var totsmp = int.Parse(txtTotsmp.Text);
+                var repgsz = txtRepgsz.Text;
+                tRACESV.Init(lstSvid, trid, dsper, totsmp, repgsz);
+                tRACESV.SMPLN = int.Parse(txtTotsmp.Text);
+                tRACESV.Stop();
+                tRACESV.TraceSvEvent += (lstSv, isEnd) =>
+                {
+                    _controller.CIM.SendS6F1(svs, tRACESV);
+                    if (tRACESV.SMPLN == tRACESV.TOTSMP)
+                    {
+                        //tRACESV.Remove(tRACESV.First(x => x.TRID == tRACESV.TRID));
+                        tRACESV.Stop();
+                    }
+                };
+                
             };
         }
         public Type[] GetTypesInNamespace(Assembly assembly, string nameSpace)

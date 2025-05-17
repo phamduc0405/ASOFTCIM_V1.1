@@ -56,7 +56,7 @@
     </Reference>
     <Reference Include="A_SOFT.Ctl.Mitsu, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>E:\MrDuc\ASOFTLIB\AsoftCommon\Bin\Debug\ASOFTLIB\A_SOFT.Ctl.Mitsu.dll</HintPath>
+      <HintPath>bin\Debug\A_SOFT.Ctl.Mitsu.dll</HintPath>
     </Reference>
     <Reference Include="A_SOFT.Ctl.SecGem, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -197,10 +197,14 @@
     <Compile Include="Data\TrackingModel.cs" />
     <Compile Include="Data\ValidationModel.cs" />
     <Compile Include="Helper\CimHelper.cs" />
+    <Compile Include="Helper\LogHelper.cs" />
     <Compile Include="Helper\PLCHelper.cs" />
+    <Compile Include="Init\AsyncRelayCommand.cs" />
     <Compile Include="Init\LibMethod.cs" />
+    <Compile Include="Init\LogFDC.cs" />
     <Compile Include="Init\ObservableObject.cs" />
     <Compile Include="Init\RelayCommand.cs" />
+    <Compile Include="Init\WpfSingleInstance.cs" />
     <Compile Include="MainControl\ACIM.cs" />
     <Compile Include="MainControl\Controller.cs" />
     <Compile Include="MainControl\Device\PC\PCControl.cs" />
@@ -231,9 +235,15 @@
     <Compile Include="Message\PLC2Cim\Send\PACKINGINFORMATION.cs" />
     <Compile Include="Message\Sys2Cim\Send\S1\S1F1.cs" />
     <Compile Include="Message\Sys2Cim\Send\S3\S3F217.cs" />
-    <Compile Include="MVVM\Model\AlarmView.cs" />
+    <Compile Include="MVVM\Model\AlarmModel.cs" />
+    <Compile Include="MVVM\Model\ConfigModel.cs" />
     <Compile Include="MVVM\Model\ECMView.cs" />
-    <Compile Include="MVVM\Model\FDCView.cs" />
+    <Compile Include="MVVM\Model\FDCModel.cs" />
+    <Compile Include="MVVM\Model\HomeModel.cs" />
+    <Compile Include="MVVM\ViewModel\AlarmViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\ConfigViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\FDCViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\HomeViewModel.cs" />
     <Compile Include="MVVM\ViewModel\MainViewModel.cs" />
     <Compile Include="MVVM\View\Alarm\AlarmView.xaml.cs">
       <DependentUpon>AlarmView.xaml</DependentUpon>
@@ -288,6 +298,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MVVM\View\Popup\PopupIOWord.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\Popup\SavePLCConfigDisplay.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -548,6 +562,9 @@
     </Compile>
     <Compile Include="MVVM\View\Popup\PopupIOWord.xaml.cs">
       <DependentUpon>PopupIOWord.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\Popup\SavePLCConfigDisplay.xaml.cs">
+      <DependentUpon>SavePLCConfigDisplay.xaml</DependentUpon>
     </Compile>
     <Compile Include="MVVM\View\RMS\RMSView.xaml.cs">
       <DependentUpon>RMSView.xaml</DependentUpon>

@@ -1,6 +1,7 @@
 ﻿using A_SOFT.CMM.HELPER;
 using A_SOFT.CMM.INIT;
 using ASOFTCIM.Data;
+using ASOFTCIM.Helper;
 using ASOFTCIM.Init;
 using ASOFTCIM.MainControl;
 using ASOFTCIM.MVVM.Model;
@@ -48,7 +49,9 @@ namespace ASOFTCIM
         private PerformanceCounter memoryCounter;
         private Thread memoryUsageThread;
         private bool isMonitoringMemory = true;
-        
+        private CancellationTokenSource _cancellationTokenSource;
+        private CancellationToken _cancellationToken;
+
         private MainViewModel viewModel;
         private Thread _updateTime;
        
@@ -64,6 +67,9 @@ namespace ASOFTCIM
         public MainWindow()
         {
             InitializeComponent();
+
+            _cancellationTokenSource = new CancellationTokenSource();
+            _cancellationToken = _cancellationTokenSource.Token;
 
             DataContext = new MainViewModel();
             Initial();
@@ -87,17 +93,21 @@ namespace ASOFTCIM
             this.Closing += (s, e) =>
             {
                 Controller.Stop();
-                _updateTime.Abort();
+                _running = false;
                 LogTxt.Stop();
 
             };
             btnClose.Click += async (sender, e) =>
             {
-                if(await PopupMessage("DO YOU WANT EXIT ?"))
+                var debug = string.Format("Class:{0} Method:{1} Event:{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ((System.Windows.Controls.Control)sender).Name);
+                LogTxt.Add(LogTxt.Type.UI, debug);
+                if (await PopupMessage("DO YOU WANT EXIT ?"))
                 {
                     Thread.Sleep(1000);
+                    _cancellationTokenSource.Cancel();
                     this.Close();
                     LogTxt.Stop();
+                    
                 }    
             };
             btnResize.Click += (sender, e) =>
@@ -113,7 +123,8 @@ namespace ASOFTCIM
             btnHideMenu.Click += (sender, e) =>
             {
                 this.WindowState = (WindowState)FormWindowState.Minimized;
-
+                var debug = string.Format("Class:{0} Method:{1} Event:{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ((System.Windows.Controls.Control)sender).Name);
+                LogTxt.Add(LogTxt.Type.UI, debug);
             };
             grdTopMain.MouseDown += (sender, e) =>
             {
@@ -123,40 +134,60 @@ namespace ASOFTCIM
 
             btnHome.Click += (sender, e) =>
             {
+                var debug = string.Format("Class:{0} Method:{1} Event:{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ((System.Windows.Controls.Control)sender).Name);
+                LogTxt.Add(LogTxt.Type.UI, debug);
                 maincontent.Content = new HomeView();
             };
             btnMonitor.Click += (sender, e) =>
             {
-                if (LeveLogin != 3)
+                var debug = string.Format("Class:{0} Method:{1} Event:{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ((System.Windows.Controls.Control)sender).Name);
+                LogTxt.Add(LogTxt.Type.UI, debug);
+                if (LeveLogin == 1)
                     maincontent.Content = new MonitorIOView();
             };
             btnConfig.Click += (sender, e) =>
             {
+                var debug = string.Format("Class:{0} Method:{1} Event:{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ((System.Windows.Controls.Control)sender).Name);
+                LogTxt.Add(LogTxt.Type.UI, debug);
                 if (LeveLogin == 1)
                     maincontent.Content = new ConfigMainView();
             };
             btnSvid.Click += (sender, e) =>
             {
+                var debug = string.Format("Class:{0} Method:{1} Event:{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ((System.Windows.Controls.Control)sender).Name);
+                LogTxt.Add(LogTxt.Type.UI, debug);
                 maincontent.Content = new MVVM.View.FDC.FDCView();
             };
             btnRecipes.Click += (sender, e) =>
             {
-                maincontent.Content = new MVVM.View.RMS.RMSView();
+                var debug = string.Format("Class:{0} Method:{1} Event:{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ((System.Windows.Controls.Control)sender).Name);
+                LogTxt.Add(LogTxt.Type.UI, debug);
+                if (LeveLogin == 3)
+                    maincontent.Content = new MVVM.View.RMS.RMSView();
             };
             btnEcm.Click += (sender, e) =>
             {
+                var debug = string.Format("Class:{0} Method:{1} Event:{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ((System.Windows.Controls.Control)sender).Name);
+                LogTxt.Add(LogTxt.Type.UI, debug);
                 maincontent.Content = new MVVM.View.ECM.ECMView();
             };
             btnAlarm.Click += (sender, e) =>
             {
+                var debug = string.Format("Class:{0} Method:{1} Event:{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ((System.Windows.Controls.Control)sender).Name);
+                LogTxt.Add(LogTxt.Type.UI, debug);
                 maincontent.Content = new MVVM.View.Alarm.AlarmView();
             };
             btnMaterial.Click += (sender, e) =>
             {
-                maincontent.Content = new MaterialView();
+                var debug = string.Format("Class:{0} Method:{1} Event:{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ((System.Windows.Controls.Control)sender).Name);
+                LogTxt.Add(LogTxt.Type.UI, debug);
+                if (LeveLogin == 3)
+                    maincontent.Content = new MaterialView();
             };
             btnLogIn.Click += (sender, e) =>
             {
+                var debug = string.Format("Class:{0} Method:{1} Event:{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ((System.Windows.Controls.Control)sender).Name);
+                LogTxt.Add(LogTxt.Type.UI, debug);
                 PopupLogIn();
             };
         }
@@ -249,11 +280,11 @@ namespace ASOFTCIM
         }
         private void UpdateTime()
         {
-            while (_running)
+            while (!_cancellationToken.IsCancellationRequested)
             {
                 Dispatcher.Invoke(new Action(() =>
                 {
-                    tblDateTime.Text = "DateTime: "+ DateTime.Now.ToString();
+                    tblDateTime.Text = "DateTime: " + DateTime.Now.ToString();
                 }));
                 Thread.Sleep(100);
             }

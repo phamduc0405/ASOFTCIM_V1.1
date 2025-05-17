@@ -2,6 +2,7 @@
 using ASOFTCIM.Config;
 using ASOFTCIM.MainControl;
 using ASOFTCIM.MVVM.View.Home;
+using ASOFTCIM.MVVM.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -26,85 +27,22 @@ namespace ASOFTCIM.MVVM.View.Alarm
     /// <summary>
     /// Interaction logic for AlarmView.xaml
     /// </summary>
-    public partial class AlarmView : UserControl, INotifyPropertyChanged
+    public partial class AlarmView : UserControl
     {
-        private Controller _controller;
-        private ObservableCollection<Data.Alarm> _alarmList = new ObservableCollection<Data.Alarm>();
-        public ObservableCollection<Data.Alarm> AlarmList
-        {
-            get => _alarmList;
-            set
-            {
-                _alarmList = value;
-                OnPropertyChanged(nameof(AlarmList));
-            }
-        }
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
         public AlarmView()
         {
             InitializeComponent();
-            this.DataContext = this;
-            _controller = MainWindow.Controller;
             CreaterEvent();
-            _controller.CIM.ResetEvent -= UpdateAlarm;
-            _controller.CIM.ResetEvent += UpdateAlarm;
         }
         private void CreaterEvent()
         {
-            Loaded += async (s, e) =>
-            {
-                try
-                {
-                    UpdateAlarm();
-                }
-                catch (Exception ex)
-                {
-                    var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.",
-                        MethodBase.GetCurrentMethod().DeclaringType.Name.ToString(), MethodBase.GetCurrentMethod().Name, ex.Message);
-                    LogTxt.Add(LogTxt.Type.Exception, debug);
-                }
-            };
-
             Unloaded += (s, e) =>
             {
-                _controller.CIM.ResetEvent -= UpdateAlarm;
-            };
-        }
-        private void UpdateAlarm()
-        {
-            try
-            {
-                Dispatcher.Invoke(new Action(() =>
+                if (DataContext is AlarmViewModel vm)
                 {
-                    try
-                    {
-                        AlarmList.Clear(); 
-                        var tempList = _controller.CIM.EqpData.AlarmHistory.ToList();
-                        foreach (var item in tempList)
-                        {
-                            AlarmList.Add(item); 
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.",
-                        MethodBase.GetCurrentMethod().DeclaringType.Name.ToString(), MethodBase.GetCurrentMethod().Name, ex.Message);
-                        LogTxt.Add(LogTxt.Type.Exception, debug);
-                    }
-                }));
-            }
-            catch (Exception ex)
-            {
-
-                var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message);
-                LogTxt.Add(LogTxt.Type.Exception, debug);
-
-            }
+                    vm.Dispose();
+                }
+            };
         }
     }
 }

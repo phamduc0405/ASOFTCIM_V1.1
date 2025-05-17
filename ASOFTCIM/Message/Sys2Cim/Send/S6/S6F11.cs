@@ -29,7 +29,7 @@ namespace ASOFTCIM
                 packet.addItem(DataType.List, 2);
                 packet.addItem(DataType.Ascii, "abc");
                 packet.addItem(DataType.Ascii, "def");
-                packet.Send2Sys();
+                packet.Send2Sys();Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
             }
             catch (Exception ex)
             {
@@ -116,7 +116,7 @@ namespace ASOFTCIM
 
                     }
                 }
-                packet.Send2Sys();
+                packet.Send2Sys();Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
             }
             catch (Exception ex)
             {
@@ -217,7 +217,7 @@ namespace ASOFTCIM
 
                     }
                 }
-                packet.Send2Sys();
+                packet.Send2Sys();Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
             }
             catch (Exception ex)
             {
@@ -275,7 +275,7 @@ namespace ASOFTCIM
                         }
                     }
                 }
-                packet.Send2Sys();
+                packet.Send2Sys();Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
             }
             catch (Exception ex)
             {
@@ -327,7 +327,7 @@ namespace ASOFTCIM
                     }
                 }
 
-                packet.Send2Sys();
+                packet.Send2Sys();Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
             }
             catch (Exception ex)
             {
@@ -407,7 +407,7 @@ namespace ASOFTCIM
                     }
                 }
 
-                packet.Send2Sys();
+                packet.Send2Sys();Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
             }
             catch (Exception ex)
             {
@@ -474,7 +474,7 @@ namespace ASOFTCIM
                 }
 
 
-                packet.Send2Sys();
+                packet.Send2Sys();Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
             }
             catch (Exception ex)
             {
@@ -530,7 +530,7 @@ namespace ASOFTCIM
 
                     }
                 }
-                packet.Send2Sys();
+                packet.Send2Sys();Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
             }
             catch (Exception ex)
             {
@@ -584,7 +584,7 @@ namespace ASOFTCIM
                         }
                     }
                 }
-                packet.Send2Sys();
+                packet.Send2Sys();Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
             }
             catch (Exception ex)
             {
@@ -657,7 +657,7 @@ namespace ASOFTCIM
                         }
                     }
                 }
-                packet.Send2Sys();
+                packet.Send2Sys();Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
             }
             catch (Exception ex)
             {
@@ -755,7 +755,7 @@ namespace ASOFTCIM
 
                     }
                 }
-                packet.Send2Sys();
+                packet.Send2Sys();Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
             }
             catch (Exception ex)
             {
@@ -833,7 +833,7 @@ namespace ASOFTCIM
                         }
                     }
                 }
-                packet.Send2Sys();
+                packet.Send2Sys();Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
             }
             catch (Exception ex)
             {
@@ -885,7 +885,7 @@ namespace ASOFTCIM
                     }
 
                 }
-                packet.Send2Sys();
+                packet.Send2Sys();Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
             }
             catch (Exception ex)
             {
@@ -965,7 +965,7 @@ namespace ASOFTCIM
                         }
                     }
                 }
-                packet.Send2Sys();
+                packet.Send2Sys();Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
             }
             catch (Exception ex)
             {
@@ -1063,7 +1063,7 @@ namespace ASOFTCIM
                         }
                     }
                 }
-                packet.Send2Sys();
+                packet.Send2Sys();Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
             }
             catch (Exception ex)
             {
@@ -1122,7 +1122,7 @@ namespace ASOFTCIM
                     }
 
                 }
-                packet.Send2Sys();
+                packet.Send2Sys();Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
             }
             catch (Exception ex)
             {
@@ -1185,7 +1185,7 @@ namespace ASOFTCIM
                         }
                     }
                 }
-                packet.Send2Sys();
+                packet.Send2Sys();Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
             }
             catch (Exception ex)
             {
@@ -1249,7 +1249,7 @@ namespace ASOFTCIM
                         }
                     }
                 }
-                packet.Send2Sys();
+                packet.Send2Sys();Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
             }
             catch (Exception ex)
             {
@@ -1335,7 +1335,7 @@ namespace ASOFTCIM
                         }
                     }
                 }
-                packet.Send2Sys();
+                packet.Send2Sys();Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
             }
             catch (Exception ex)
             {
@@ -1462,7 +1462,7 @@ namespace ASOFTCIM
                         }
                     }
                 }
-                packet.Send2Sys();
+                packet.Send2Sys();Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
             }
             catch (Exception ex)
             {
@@ -1527,7 +1527,7 @@ namespace ASOFTCIM
                     }
 
                 }
-                packet.Send2Sys();
+                packet.Send2Sys();Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
             }
             catch (Exception ex)
             {
@@ -1598,7 +1598,7 @@ namespace ASOFTCIM
                         }
                     }
                 }
-                packet.Send2Sys();
+                packet.Send2Sys();Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
             }
             catch (Exception ex)
             {
@@ -1657,7 +1657,7 @@ namespace ASOFTCIM
                     }
                 }
             }
-            packet.Send2Sys();
+            packet.Send2Sys();Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
         }
         catch (Exception ex)
         {
@@ -1802,7 +1802,7 @@ namespace ASOFTCIM
                     }
                 }
             }
-            packet.Send2Sys();
+            packet.Send2Sys();Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
         }
         catch (Exception ex)
         {
@@ -1863,7 +1863,7 @@ namespace ASOFTCIM
                     }
                 }
             }
-            packet.Send2Sys();
+            packet.Send2Sys();Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
         }
         catch (Exception ex)
         {
@@ -1949,7 +1949,7 @@ namespace ASOFTCIM
                     }
                 }
             }
-            packet.Send2Sys();
+            packet.Send2Sys();Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
         }
         catch (Exception ex)
         {
@@ -2041,7 +2041,7 @@ namespace ASOFTCIM
 
                 }
             }
-            packet.Send2Sys();
+            packet.Send2Sys();Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
         }
         catch (Exception ex)
         {
@@ -2125,7 +2125,7 @@ namespace ASOFTCIM
             }
 
 
-            packet.Send2Sys();
+            packet.Send2Sys();Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
         }
         catch (Exception ex)
         {
@@ -2212,7 +2212,7 @@ namespace ASOFTCIM
             }
 
 
-            packet.Send2Sys();
+            packet.Send2Sys();Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
         }
         catch (Exception ex)
         {
@@ -2300,7 +2300,7 @@ namespace ASOFTCIM
             }
 
 
-            packet.Send2Sys();
+            packet.Send2Sys();Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
         }
         catch (Exception ex)
         {
@@ -2388,7 +2388,7 @@ namespace ASOFTCIM
             }
 
 
-            packet.Send2Sys();
+            packet.Send2Sys();Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
         }
         catch (Exception ex)
         {
@@ -2427,7 +2427,7 @@ namespace ASOFTCIM
                     packet.addItem(DataType.Ascii, reader.READERRESULTCODE);
                 }
             }
-            packet.Send2Sys();
+            packet.Send2Sys();Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
         }
         catch (Exception ex)
         {
@@ -2473,7 +2473,7 @@ namespace ASOFTCIM
                     }
                 }
             }
-            packet.Send2Sys();
+            packet.Send2Sys();Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
         }
         catch (Exception ex)
         {
@@ -2530,7 +2530,7 @@ namespace ASOFTCIM
                     }
                 }
             }
-            packet.Send2Sys();
+            packet.Send2Sys();Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
         }
         catch (Exception ex)
         {
@@ -2568,7 +2568,7 @@ namespace ASOFTCIM
                     packet.addItem(DataType.Ascii, reader.READERRESULTCODE);
                 }
             }
-            packet.Send2Sys();
+            packet.Send2Sys();Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
         }
         catch (Exception ex)
         {
@@ -2605,7 +2605,7 @@ namespace ASOFTCIM
                     packet.addItem(DataType.Ascii, material.MATERIALPORTID);
                 }
             }
-            packet.Send2Sys();
+            packet.Send2Sys();Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
         }
         catch (Exception ex)
         {
@@ -2671,7 +2671,7 @@ namespace ASOFTCIM
                     }
                 }
             }
-            packet.Send2Sys();
+            packet.Send2Sys();Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
         }
         catch (Exception ex)
         {
@@ -2720,7 +2720,7 @@ namespace ASOFTCIM
                     }
                 }
             }
-            packet.Send2Sys();
+            packet.Send2Sys();Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
         }
         catch (Exception ex)
         {
@@ -2772,7 +2772,7 @@ namespace ASOFTCIM
                     }
                 }
             }
-            packet.Send2Sys();
+            packet.Send2Sys();Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
         }
         catch (Exception ex)
         {
@@ -2826,7 +2826,7 @@ namespace ASOFTCIM
                         }
                 }
             }
-            packet.Send2Sys();
+            packet.Send2Sys();Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
         }
         catch (Exception ex)
         {
@@ -2865,7 +2865,7 @@ namespace ASOFTCIM
                     packet.addItem(DataType.Ascii, material.MATERIALPORTID);
                 }
             }
-            packet.Send2Sys();
+            packet.Send2Sys();Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
         }
         catch (Exception ex)
         {
@@ -2934,7 +2934,7 @@ namespace ASOFTCIM
                     }
                 }
             }
-            packet.Send2Sys();
+            packet.Send2Sys();Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
         }
         catch (Exception ex)
         {
@@ -3024,7 +3024,7 @@ namespace ASOFTCIM
                 }
             }
 
-            packet.Send2Sys();
+            packet.Send2Sys();Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
         }
         catch (Exception ex)
         {
@@ -3076,7 +3076,7 @@ namespace ASOFTCIM
                     }
                 }
             }
-            packet.Send2Sys();
+            packet.Send2Sys();Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
         }
         catch (Exception ex)
         {
@@ -3162,7 +3162,7 @@ namespace ASOFTCIM
                     }
                 }
             }
-            packet.Send2Sys();
+            packet.Send2Sys();Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
         }
         catch (Exception ex)
         {
@@ -3233,7 +3233,7 @@ namespace ASOFTCIM
                     }
                 }
             }
-            packet.Send2Sys();
+            packet.Send2Sys();Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
         }
         catch (Exception ex)
         {
@@ -3333,7 +3333,7 @@ namespace ASOFTCIM
                     }
                 }
             }
-            packet.Send2Sys();
+            packet.Send2Sys();Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
         }
         catch (Exception ex)
         {
@@ -3389,7 +3389,7 @@ namespace ASOFTCIM
                     }
                 }
             }
-            packet.Send2Sys();
+            packet.Send2Sys();Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
         }
         catch (Exception ex)
         {

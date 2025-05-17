@@ -34,11 +34,17 @@ namespace ASOFTCIM.MainControl
             get { return _cim; }
             set { _cim = value;}
         }
-
+        public bool CimConnect
+        {
+            get { return _cimConnect; }
+            set { _cimConnect = value; }
+        }
 
         public Controller()
         {
+            DefaultData.AppPath = @"C:\TESTCIM";
             ReadControllerConfig();
+            DefaultData.LogPath = $"{_equipmentConfig.LogFolder}";
             _cim = new ACIM(_equipmentConfig);
             _cim.PlcConnectChangeEvent += PlcConnectEvent;
             _cim.Cim.Conn.OnConnectEvent += OnConnectEvent;
@@ -114,15 +120,17 @@ namespace ASOFTCIM.MainControl
         }
         private async void OnConnectEvent(bool isConnect)
         {
-            if(isConnect)
+            if (isConnect)
             {
                 _cimConnect = true;
-                if(_plcConnect)
+                if (_plcConnect)
                 {
                     SendWhenStart();
-                }    
+                    _countconnectPLC++;
+                }
                 return;
-            } 
+            }
+            _countconnectPLC = 0;
             _cimConnect = false;
         }
         private async void PlcConnectEvent(bool isConnect)

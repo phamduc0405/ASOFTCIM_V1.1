@@ -1,7 +1,9 @@
 ﻿
+using A_SOFT.CMM.INIT;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -30,11 +32,15 @@ namespace ASOFTCIM.MVVM.View.Config
         {
             btnEquipSetting.Click += (s, e) =>
             {
+                var debug = string.Format("Class:{0} Method:{1} Event:{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ((System.Windows.Controls.Control)s).Name);
+                LogTxt.Add(LogTxt.Type.UI, debug);
                 this.Content = new ConfigView();
             };
 
             btnTest.Click += (s, e) =>
             {
+                var debug = string.Format("Class:{0} Method:{1} Event:{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ((System.Windows.Controls.Control)s).Name);
+                LogTxt.Add(LogTxt.Type.UI, debug);
                 this.Content = new Test();
             };
         }

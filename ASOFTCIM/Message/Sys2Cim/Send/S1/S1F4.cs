@@ -45,6 +45,7 @@ namespace ASOFTCIM
                     {
                         packet.addItem(DataType.List, 0);
                         packet.Send2Sys();
+                        Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
                         return;
                     }
                     foreach (var item in lstSv)
@@ -53,6 +54,7 @@ namespace ASOFTCIM
                         {
                             packet.addItem(DataType.List, 0);
                             packet.Send2Sys();
+                            Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
                             return;
                         }
 
@@ -70,6 +72,7 @@ namespace ASOFTCIM
                 }
 
                 packet.Send2Sys();
+                Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
             }
             catch (Exception ex)
             {

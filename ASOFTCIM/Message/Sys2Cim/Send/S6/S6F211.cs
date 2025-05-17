@@ -27,7 +27,7 @@ namespace ASOFTCIM
                 packet.addItem(DataType.Ascii, EqpData.EQINFORMATION.EQPID);
                 packet.addItem(DataType.Ascii, batchLot);
 
-                packet.Send2Sys();
+                packet.Send2Sys();Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
             }
             catch (Exception ex)
             {

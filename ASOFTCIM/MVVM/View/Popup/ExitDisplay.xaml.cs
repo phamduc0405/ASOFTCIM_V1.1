@@ -43,14 +43,14 @@ namespace ASOFTCIM.MVVM.View.Popup
             {
 
                 this.DialogResult = true;
-                var debug = string.Format("Class:{0} Method:{1} Event:{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ((Control)sender).Name);
+                var debug = string.Format("Class:{0} Method:{1} Event:{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ((System.Windows.Controls.Control)sender).Name);
                 LogTxt.Add(LogTxt.Type.UI, debug);
             };
             btnNo.Click += (sender, args) =>
             {
 
                 this.DialogResult = false;
-                var debug = string.Format("Class:{0} Method:{1} Event:{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ((Control)sender).Name);
+                var debug = string.Format("Class:{0} Method:{1} Event:{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ((System.Windows.Controls.Control)sender).Name);
                 LogTxt.Add(LogTxt.Type.UI, debug);
             };
 

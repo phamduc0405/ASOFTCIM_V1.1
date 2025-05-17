@@ -10,6 +10,10 @@ using System.Threading.Tasks;
 using AComm.TCPIP;
 using A_SOFT.Ctl.SecGem;
 using ASOFTCIM.MainControl;
+using A_SOFT.CMM.HELPER;
+using ASOFTCIM.Config;
+using ASOFTCIM.Init;
+using System.Diagnostics;
 
 namespace ASOFTCIM
 {
@@ -39,7 +43,13 @@ namespace ASOFTCIM
                         packet.addItem(DataType.Ascii, item.SVVALUE);
                     }
                 }
-                packet.Send2Sys();
+                packet.Send2Sys();Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
+                if(_eqpConfig.UseLogFDC)
+                {
+                    var sb = packet.GetCimLog(true);
+                    LogFDC.SetBasePath(_eqpConfig.LogFDC);
+                    LogFDC.Log(sb);
+                }
             }
             catch (Exception ex)
             {
