@@ -63,7 +63,40 @@ namespace ASOFTCIM.Init
                 txt.Text = filename;
             }
         }
+        public static string SelectFile(extension exten)
+        {
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
 
+            switch (exten)
+            {
+                case extension.excel:
+                    dlg.DefaultExt = ".xlsx";
+                    dlg.Filter = "Excel Files|*.xls;*.xlsx;*.xlsm|All Files (*.*)|*.*";
+                    break;
+                case extension.txt:
+                    dlg.DefaultExt = ".txt";
+                    dlg.Filter = "Text Files|*.txt|All Files (*.*)|*.*";
+                    break;
+                case extension.doc:
+                    dlg.DefaultExt = ".docx";
+                    dlg.Filter = "Word Documents (.docx)|*.docx|Word Template (.dotx)|*.dotx|All Files (*.*)|*.*";
+                    break;
+                case extension.image:
+                    dlg.Filter = "Images (*.BMP;*.JPG;*.GIF;*.PNG;*.TIFF)|*.BMP;*.JPG;*.GIF;*.PNG;*.TIFF|All files (*.*)|*.*";
+                    break;
+                default:
+                    break;
+            }
+
+            bool? result = dlg.ShowDialog();
+
+            if (result == true)
+            {
+                return dlg.FileName;
+            }
+
+            return string.Empty;
+        }
         /// <summary>
         /// Check Window is Opened
         /// </summary>
