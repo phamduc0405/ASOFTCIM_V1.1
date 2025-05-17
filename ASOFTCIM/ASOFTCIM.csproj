@@ -236,8 +236,9 @@
     <Compile Include="Message\Sys2Cim\Send\S3\S3F217.cs" />
     <Compile Include="MVVM\Model\AlarmView.cs" />
     <Compile Include="MVVM\Model\ECMView.cs" />
-    <Compile Include="MVVM\Model\FDCView.cs" />
+    <Compile Include="MVVM\Model\FDCModel.cs" />
     <Compile Include="MVVM\Model\HomeModel.cs" />
+    <Compile Include="MVVM\ViewModel\FDCViewModel.cs" />
     <Compile Include="MVVM\ViewModel\HomeViewModel.cs" />
     <Compile Include="MVVM\ViewModel\MainViewModel.cs" />
     <Compile Include="MVVM\View\Alarm\AlarmView.xaml.cs">
