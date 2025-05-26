@@ -66,23 +66,6 @@ namespace ASOFTCIM
                         };
 
                         _plcH.WordChangedEvent += _plcH_WordChangedEvent;
-
-                        // Kiểm tra trạng thái các từ đầu vào của PLC
-                        //foreach (var item in _plc.InputWordStatuses)
-                        //{
-                        //    WordStatus w = item;
-                        //    WordModel word = _plcH.Words.FirstOrDefault(x => x.Item.ToUpper() == "ALARM" && x.IsPlc);
-
-                        //    if (word != null && w.Address >= word.Address && w.Address < word.Address + word.Length)
-                        //    {
-                        //        if (!w.IsOn)
-                        //        {
-                        //            var alid = w.Index - word.Address * 16 + 2;
-                        //        }
-                        //    }
-                        //}
-
-                        // Gán danh sách báo động
                         this.EqpData.ALS = _eqpConfig.PLCHelper.Alarms;
                     }
                     catch (Exception ex)
@@ -93,49 +76,7 @@ namespace ASOFTCIM
                 });
             }
         }
-        public void LoadExcelConfig(string path)
-        {
-            try
-            {
-                if (_eqpConfig == null)
-                {
-                    _eqpConfig = new Config.EquipmentConfig();
-                }
-                if (File.Exists(path))
-                {
-                    //_eqpConfig.PLCHelper.LoadExcel(path);
-                }
-                //if (_eqpConfig.PLCHelper.PlcMemms?.Count > 0)
-                //{
-                //    if (_eqpConfig.PLCHelper.Bits.Any(x => x.Item.ToUpper().Contains("ALIVE")))
-                //    {
-                //        BitModel bAlive = _eqpConfig.PLCHelper.Bits.FirstOrDefault(x => x.Item.ToUpper().Contains("ALIVE"));
-                //        if (_eqpConfig.PLCHelper.PlcMemms.Any(x => x.BPLCStart == bAlive.PLCHexAdd))
-                //        {
-                //            PlcMemmory plcmem = _eqpConfig.PLCHelper.PlcMemms.FirstOrDefault(x => x.BPLCStart == bAlive.PLCHexAdd);
-
-                //            _eqpConfig.PLCConfig.ReadStartBitAddress = plcmem.BPLCStart;
-                //            _eqpConfig.PLCConfig.SizeReadBit = int.Parse(plcmem.BPLCPoints);
-                //            _eqpConfig.PLCConfig.ReadStartWordAddress = plcmem.WPLCStart;
-                //            _eqpConfig.PLCConfig.SizeReadWord = int.Parse(plcmem.WPLCPoints);
-
-                //            _eqpConfig.PLCConfig.WriteStartBitAddress = plcmem.BPCStart;
-                //            _eqpConfig.PLCConfig.SizeWriteBit = int.Parse(plcmem.BPCPoints);
-                //            _eqpConfig.PLCConfig.WriteStartWordAddress = plcmem.WPCStart;
-                //            _eqpConfig.PLCConfig.SizeWriteWord = int.Parse(plcmem.WPCPoints);
-
-                //            _eqpConfig.PLCConfig.BitDevice = plcmem.BitDevice;
-                //            _eqpConfig.PLCConfig.WordDevice = plcmem.WordDevice;
-                //        }
-                //    }
-                //}
-            }
-            catch (Exception ex)
-            {
-                var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.", MethodBase.GetCurrentMethod().DeclaringType.Name.ToString(), MethodBase.GetCurrentMethod().Name, ex.Message);
-                LogTxt.Add(LogTxt.Type.Exception, debug);
-            }
-        }
+        
         private void _plcH_WordChangedEvent(string Method, object data)
         {
             if (Method.Contains("EQPSTATUS"))

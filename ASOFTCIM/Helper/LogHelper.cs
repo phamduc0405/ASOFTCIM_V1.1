@@ -221,11 +221,11 @@ namespace ASOFTCIM.Helper
                 var now = DateTime.Now;
                 var baseDir = new DirectoryInfo(_baseFolder);
 
-                foreach (var levelDir in baseDir.GetDirectories()) // INFO, WARN, ERROR, STARTSTOP, ...
+                foreach (var levelDir in baseDir.GetDirectories()) 
                 {
-                    foreach (var yearDir in levelDir.GetDirectories()) // 2024, 2025, ...
+                    foreach (var yearDir in levelDir.GetDirectories()) 
                     {
-                        foreach (var monthDir in yearDir.GetDirectories()) // 01, 02, ..., 12
+                        foreach (var monthDir in yearDir.GetDirectories()) 
                         {
                             if (int.TryParse(yearDir.Name, out int year) && int.TryParse(monthDir.Name, out int month))
                             {
@@ -236,10 +236,10 @@ namespace ASOFTCIM.Helper
                                 }
                                 catch
                                 {
-                                    continue; // bỏ qua folder sai định dạng
+                                    continue; 
                                 }
 
-                                if (folderDate < now.AddMonths(-monthsToKeep )) // Giữ lại tháng hiện tại + tháng trước
+                                if (folderDate < now.AddMonths(-monthsToKeep )) 
                                 {
                                     try
                                     {
