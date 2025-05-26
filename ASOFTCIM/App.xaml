@@ -2,7 +2,16 @@
     x:Class="ASOFTCIM.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:alarmview="clr-namespace:ASOFTCIM.MVVM.Views.Alarm"
+    xmlns:configview="clr-namespace:ASOFTCIM.MVVM.Views.Config"
+    xmlns:ecmview="clr-namespace:ASOFTCIM.MVVM.Views.ECM"
+    xmlns:fdcview="clr-namespace:ASOFTCIM.MVVM.Views.FDC"
+    xmlns:homeview="clr-namespace:ASOFTCIM.MVVM.Views.Home"
     xmlns:local="clr-namespace:ASOFTCIM"
+    xmlns:materialview="clr-namespace:ASOFTCIM.MVVM.Views.Material"
+    xmlns:monitorview="clr-namespace:ASOFTCIM.MVVM.Views.Monitor"
+    xmlns:rmsview="clr-namespace:ASOFTCIM.MVVM.Views.RMS"
+    xmlns:vm="clr-namespace:ASOFTCIM.MVVM.ViewModels"
     Startup="ApplicationStart">
     <Application.Resources>
         <ResourceDictionary>
@@ -19,6 +28,24 @@
                 <ResourceDictionary Source="/A_SOFT.CMM.UI;component/STYLE/ToggleButtonStyle.xaml" />
                 <ResourceDictionary Source="/A_SOFT.CMM.UI;component/STYLE/ListViewStyle.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <DataTemplate DataType="{x:Type vm:HomeViewModel}">
+                <homeview:HomeView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:FDCViewModel}">
+                <fdcview:FDCView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:ECMViewModel}">
+                <ecmview:ECMView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:AlarmViewModel}">
+                <alarmview:AlarmView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:ConfigViewModel}">
+                <configview:ConfigMainView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:MaterialViewModel}">
+                <materialview:MaterialView />
+            </DataTemplate>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

@@ -128,39 +128,39 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="MVVM\View\Alarm\AlarmView.xaml">
+    <Page Include="MVVM\Views\Alarm\AlarmView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MVVM\View\Config\ConfigMainView.xaml">
+    <Page Include="MVVM\Views\Config\ConfigMainView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MVVM\View\Config\ConfigView.xaml">
+    <Page Include="MVVM\Views\Config\ConfigView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MVVM\View\Config\Test.xaml">
+    <Page Include="MVVM\Views\Config\Test.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MVVM\View\ECM\ECMView.xaml">
+    <Page Include="MVVM\Views\ECM\ECMView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MVVM\View\FDC\FDCView.xaml">
+    <Page Include="MVVM\Views\FDC\FDCView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MVVM\View\Home\HomeView.xaml">
+    <Page Include="MVVM\Views\Home\HomeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MVVM\View\Home\PartialCpuChart.xaml">
+    <Page Include="MVVM\Views\Home\PartialCpuChart.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MVVM\View\MainWindow.xaml">
+    <Page Include="MVVM\Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -235,77 +235,87 @@
     <Compile Include="Message\PLC2Cim\Send\PACKINGINFORMATION.cs" />
     <Compile Include="Message\Sys2Cim\Send\S1\S1F1.cs" />
     <Compile Include="Message\Sys2Cim\Send\S3\S3F217.cs" />
-    <Compile Include="MVVM\Model\AlarmModel.cs" />
-    <Compile Include="MVVM\Model\ConfigModel.cs" />
-    <Compile Include="MVVM\Model\ECMView.cs" />
-    <Compile Include="MVVM\Model\FDCModel.cs" />
-    <Compile Include="MVVM\Model\HomeModel.cs" />
-    <Compile Include="MVVM\ViewModel\AlarmViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\ConfigViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\FDCViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\HomeViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\MainViewModel.cs" />
-    <Compile Include="MVVM\View\Alarm\AlarmView.xaml.cs">
+    <Compile Include="MVVM\Behaviors\InactivityMonitor.cs" />
+    <Compile Include="MVVM\Behaviors\WindowDragBehavior.cs" />
+    <Compile Include="MVVM\Models\AlarmModel.cs" />
+    <Compile Include="MVVM\Models\ConfigModel.cs" />
+    <Compile Include="MVVM\Models\ECMModel.cs" />
+    <Compile Include="MVVM\Models\FDCModel.cs" />
+    <Compile Include="MVVM\Models\HomeModel.cs" />
+    <Compile Include="MVVM\Models\MainWindowModel.cs" />
+    <Compile Include="MVVM\Models\MaterialModel.cs" />
+    <Compile Include="MVVM\NavigationService\INavigationService.cs" />
+    <Compile Include="MVVM\NavigationService\NavigationService.cs" />
+    <Compile Include="MVVM\ViewModels\AlarmViewModel.cs" />
+    <Compile Include="MVVM\ViewModels\BaseViewModels.cs" />
+    <Compile Include="MVVM\ViewModels\ConfigViewModel.cs" />
+    <Compile Include="MVVM\ViewModels\ECMViewModel.cs" />
+    <Compile Include="MVVM\ViewModels\FDCViewModel.cs" />
+    <Compile Include="MVVM\ViewModels\HomeViewModel.cs" />
+    <Compile Include="MVVM\ViewModels\MainViewModel.cs" />
+    <Compile Include="MVVM\ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="MVVM\ViewModels\MaterialViewModel.cs" />
+    <Compile Include="MVVM\Views\Alarm\AlarmView.xaml.cs">
       <DependentUpon>AlarmView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\View\Config\ConfigMainView.xaml.cs">
+    <Compile Include="MVVM\Views\Config\ConfigMainView.xaml.cs">
       <DependentUpon>ConfigMainView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\View\Config\ConfigView.xaml.cs">
+    <Compile Include="MVVM\Views\Config\ConfigView.xaml.cs">
       <DependentUpon>ConfigView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\View\Config\Test.xaml.cs">
+    <Compile Include="MVVM\Views\Config\Test.xaml.cs">
       <DependentUpon>Test.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\View\ECM\ECMView.xaml.cs">
+    <Compile Include="MVVM\Views\ECM\ECMView.xaml.cs">
       <DependentUpon>ECMView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\View\FDC\FDCView.xaml.cs">
+    <Compile Include="MVVM\Views\FDC\FDCView.xaml.cs">
       <DependentUpon>FDCView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\View\Home\HomeView.xaml.cs">
+    <Compile Include="MVVM\Views\Home\HomeView.xaml.cs">
       <DependentUpon>HomeView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\View\Home\PartialCpuChart.xaml.cs">
+    <Compile Include="MVVM\Views\Home\PartialCpuChart.xaml.cs">
       <DependentUpon>PartialCpuChart.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\View\MainWindow.xaml.cs">
+    <Compile Include="MVVM\Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="MVVM\View\Material\MaterialView.xaml">
+    <Page Include="MVVM\Views\Material\MaterialView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MVVM\View\Monitor\MonitorBits.xaml">
+    <Page Include="MVVM\Views\Monitor\MonitorBits.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MVVM\View\Monitor\MonitorIOView.xaml">
+    <Page Include="MVVM\Views\Monitor\MonitorIOView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MVVM\View\Monitor\MonitorWords.xaml">
+    <Page Include="MVVM\Views\Monitor\MonitorWords.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MVVM\View\Popup\ExitDisplay.xaml">
+    <Page Include="MVVM\Views\Popup\ExitDisplay.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MVVM\View\Popup\LogInDisplay.xaml">
+    <Page Include="MVVM\Views\Popup\LogInDisplay.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MVVM\View\Popup\PopupIOWord.xaml">
+    <Page Include="MVVM\Views\Popup\PopupIOWord.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MVVM\View\Popup\SavePLCConfigDisplay.xaml">
+    <Page Include="MVVM\Views\Popup\SavePLCConfigDisplay.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MVVM\View\RMS\RMSView.xaml">
+    <Page Include="MVVM\Views\RMS\RMSView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -542,31 +552,31 @@
     <Compile Include="Message\Sys2Cim\Send\S9\S9F5.cs" />
     <Compile Include="Message\Sys2Cim\Send\S9\S9F7.cs" />
     <Compile Include="Message\Sys2Cim\Send\S9\S9F9.cs" />
-    <Compile Include="MVVM\View\Material\MaterialView.xaml.cs">
+    <Compile Include="MVVM\Views\Material\MaterialView.xaml.cs">
       <DependentUpon>MaterialView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\View\Monitor\MonitorBits.xaml.cs">
+    <Compile Include="MVVM\Views\Monitor\MonitorBits.xaml.cs">
       <DependentUpon>MonitorBits.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\View\Monitor\MonitorIOView.xaml.cs">
+    <Compile Include="MVVM\Views\Monitor\MonitorIOView.xaml.cs">
       <DependentUpon>MonitorIOView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\View\Monitor\MonitorWords.xaml.cs">
+    <Compile Include="MVVM\Views\Monitor\MonitorWords.xaml.cs">
       <DependentUpon>MonitorWords.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\View\Popup\ExitDisplay.xaml.cs">
+    <Compile Include="MVVM\Views\Popup\ExitDisplay.xaml.cs">
       <DependentUpon>ExitDisplay.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\View\Popup\LogInDisplay.xaml.cs">
+    <Compile Include="MVVM\Views\Popup\LogInDisplay.xaml.cs">
       <DependentUpon>LogInDisplay.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\View\Popup\PopupIOWord.xaml.cs">
+    <Compile Include="MVVM\Views\Popup\PopupIOWord.xaml.cs">
       <DependentUpon>PopupIOWord.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\View\Popup\SavePLCConfigDisplay.xaml.cs">
+    <Compile Include="MVVM\Views\Popup\SavePLCConfigDisplay.xaml.cs">
       <DependentUpon>SavePLCConfigDisplay.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\View\RMS\RMSView.xaml.cs">
+    <Compile Include="MVVM\Views\RMS\RMSView.xaml.cs">
       <DependentUpon>RMSView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
