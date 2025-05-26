@@ -24,6 +24,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows;
 using System.Windows.Input;
+using ASOFTCIM.MVVM.Behaviors;
 using System.Windows.Threading;
 using ECMView = ASOFTCIM.MVVM.Views.ECM.ECMView;
 using ASOFTCIM.MVVM.NavigationService;
@@ -43,6 +44,7 @@ namespace ASOFTCIM.MVVM.ViewModels
         private DateTime _datetime;
         private Thread _updateTime;
         private readonly INavigationService _navigationService;
+        private InactivityMonitor _inactivityMonitor;
         #endregion
         #region Properties
         public ICommand HomeViewCommand { get; set; }
@@ -92,10 +94,27 @@ namespace ASOFTCIM.MVVM.ViewModels
             HomeViewCommand = new RelayCommand(o =>_navigationService.NavigateTo<HomeViewModel>());
             ALARMViewCommand = new RelayCommand(o =>_navigationService.NavigateTo<AlarmViewModel>());
             FDCViewCommand = new RelayCommand(o => _navigationService.NavigateTo<FDCViewModel>());
-            ConfigViewCommand = new RelayCommand(o => _navigationService.NavigateTo<ConfigViewModel>());
+            ConfigViewCommand = new RelayCommand(o => {
+                if (LeveLogin == 1)
+                {
+                    _navigationService.NavigateTo<ConfigViewModel>();
+                }
+            }
+            );
             ECMViewCommand = new RelayCommand(o => _navigationService.NavigateTo<ECMViewModel>());
-            MaterialViewCommand = new RelayCommand(o => _navigationService.NavigateTo<MaterialViewModel>());
-            MonitorIOViewCommand = new RelayCommand(o => MainWindowModel.Currentview = new MonitorIOView() );
+            MaterialViewCommand = new RelayCommand(o => { 
+            if(LeveLogin == 1)
+                {
+                    _navigationService.NavigateTo<MaterialViewModel>();
+                }
+            
+            });
+            MonitorIOViewCommand = new RelayCommand(o =>{
+                if (LeveLogin == 1)
+                {
+                    MainWindowModel.Currentview = new MonitorIOView();
+                }
+            });
             //monitor, RMS chua chuyen sang MVVM
             //MonitorIOViewCommand = new RelayCommand(o => _navigationService.NavigateTo<MonitorIOViewModel>());
             //RMSViewCommand = new RelayCommand(o => _navigationService.NavigateTo<RMSViewModel>());
@@ -203,6 +222,7 @@ namespace ASOFTCIM.MVVM.ViewModels
                 MainWindowViewModel.User = User;
                 _mainWindowModel.User = User;
                 LeveLogin = 1;
+                StartInactivityMonitor();
                 return;
             }
             if (User == "Engineer" && Pass == "2")
@@ -239,6 +259,31 @@ namespace ASOFTCIM.MVVM.ViewModels
                 Thread.Sleep(100);
             }
 
+        }
+        private void StartInactivityMonitor()
+        {
+            _inactivityMonitor?.Stop();
+            _inactivityMonitor = new InactivityMonitor(TimeSpan.FromMinutes(2));
+            //_inactivityMonitor = new InactivityMonitor(TimeSpan.FromSeconds(10));
+            _inactivityMonitor.TimeoutReached += () =>
+            {
+                System.Windows.Application.Current.Dispatcher.Invoke(() =>
+                {
+                    System.Windows.MessageBox.Show("Tài khoản Admin đã hết thời gian hoạt động. Tự động đăng xuất.");
+                    LogOut(); 
+                });
+            };
+            _inactivityMonitor.Start();
+
+        }
+        public void LogOut()
+        {
+            LeveLogin = 0;
+            User = "User";
+            Pass = "2";
+            _mainWindowModel.User = User;
+            _navigationService.NavigateTo<HomeViewModel>();
+            //MainWindowModel.Currentview = new HomeView(); //quay ve HOME
         }
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(string name) =>
