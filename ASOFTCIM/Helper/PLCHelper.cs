@@ -240,10 +240,11 @@ namespace ASOFTCIM.Helper
                 {
                     WordModel wAlam = _words.FirstOrDefault(x => x.Area.ToUpper().Contains("ALARM"));
                     MelsecIF.WordStatus[] als = _plc.InputWordStatuses.Where(x => x.Address >= wAlam.Address && x.Address <= (wAlam.Address + wAlam.Length - 1) && x.IsChanged).ToArray();
+                    //MelsecIF.WordStatus[] als = _plc.InputWordStatuses.Where(x => x.Address >= wAlam.Address && x.Address <= (wAlam.Address + wAlam.Length - 1) ).ToArray();
                     foreach (var al in als)
                     {
                         Al_BitChangedEvent(al);
-                        al.ReflectionCompleted();
+                        //al.ReflectionCompleted();
                     }
 
                     foreach (var w in _words)

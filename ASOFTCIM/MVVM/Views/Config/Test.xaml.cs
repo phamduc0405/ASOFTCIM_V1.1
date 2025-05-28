@@ -1,6 +1,8 @@
 ﻿using A_SOFT.CMM.INIT;
 using ASOFTCIM.Data;
 using ASOFTCIM.MainControl;
+using ASOFTCIM.MVVM.Models;
+using ASOFTCIM.MVVM.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -35,7 +37,7 @@ namespace ASOFTCIM.MVVM.Views.Config
         }
         private void Initial()
         {
-            _controller = MainWindow.Controller;
+            _controller = MainWindowViewModel.Controller;
         }
         private void CreaterEvent()
         {

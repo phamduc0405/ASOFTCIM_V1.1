@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ASOFTCIM.Helper
@@ -19,14 +20,19 @@ namespace ASOFTCIM.Helper
         public event SysPacketEventDelegate SysPacketEvent;
 
         #endregion
+        private static readonly object _transWaitsLock = new object();
         public CimHelper(string eqpid) : base(eqpid)
         {
             
         }
+        private static readonly SemaphoreSlim _transWaitsSemaphore = new SemaphoreSlim(1, 1);
+
         public override void SysData_SelectFunctionEvent(SysPacket sysPacket)
         {
             try
             {
+                _transWaitsSemaphore.Wait(); 
+
                 try
                 {
                     if (sysPacket.Function % 2 == 0)
@@ -40,43 +46,42 @@ namespace ASOFTCIM.Helper
                             SysDatas.TransWaits.RemoveAll(x => x.TransactionSys == sysPacket.SystemByte);
                         }
                     }
-                    SysPacket = sysPacket;
-                    SysDatas.TransactionSys = sysPacket.SystemByte;
-                    SysConfig.DeviceId = sysPacket.DeviceId;
-                    ReciveEventHandle(SysPacket);
-
-                    if (EQPID != "System")
-                    {
-                        Type[] typelist = GetTypesInNamespace(Assembly.GetExecutingAssembly(), "ASOFTCIM");
-                        Type t = Assembly.GetExecutingAssembly()
-                            .GetType("ASOFTCIM.ACIM");
-
-                        if (typelist.Contains(t))
-                        {
-                            SysPacketEventHandle(sysPacket);
-                            return;
-                        }
-                        if (t == null) return;
-                    }
-
-
                 }
-                catch (Exception ex)
+                finally
                 {
-                    
-                    var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message);
-                    LogTxt.Add(LogTxt.Type.Exception, debug);
-                    ex.Data.Clear();
+                    _transWaitsSemaphore.Release(); 
                 }
 
+                SysPacket = sysPacket;
+                SysDatas.TransactionSys = sysPacket.SystemByte;
+                SysConfig.DeviceId = sysPacket.DeviceId;
+                ReciveEventHandle(SysPacket);
+
+                if (EQPID != "System")
+                {
+                    Type[] typelist = GetTypesInNamespace(Assembly.GetExecutingAssembly(), "ASOFTCIM");
+                    Type t = Assembly.GetExecutingAssembly()
+                        .GetType("ASOFTCIM.ACIM");
+
+                    if (typelist.Contains(t))
+                    {
+                        SysPacketEventHandle(sysPacket);
+                        return;
+                    }
+                    if (t == null) return;
+                }
             }
             catch (Exception ex)
             {
-                var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message);
+                var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.",
+                                          this.GetType().Name,
+                                          MethodBase.GetCurrentMethod().Name,
+                                          ex.Message);
                 LogTxt.Add(LogTxt.Type.Exception, debug);
                 ex.Data.Clear();
             }
         }
+
 
 
         #region EventHandle
