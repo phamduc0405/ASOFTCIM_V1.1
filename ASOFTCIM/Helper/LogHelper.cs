@@ -43,12 +43,13 @@ namespace ASOFTCIM.Helper
                     {
                         StatStop("Alive");
                     }
-                    if (DateTime.Now.Hour == 15 && DateTime.Now.Minute == 23 && _countdelete == 0)
+                    if (DateTime.Now.Hour == 23 && DateTime.Now.Minute == 50 && _countdelete == 0)
                     {
-                        DeleteOldLogFolders(_timeToKeep);
+                        
+                        DeleteOldLogFolders();
                         _countdelete++;
                     }
-                    if(DateTime.Now.Hour == 15 && DateTime.Now.Minute == 1)
+                    if(DateTime.Now.Hour == 23 && DateTime.Now.Minute == 51 && _countdelete != 0)
                     {
                         _countdelete = 0;
                     }
@@ -239,7 +240,8 @@ namespace ASOFTCIM.Helper
                                     continue; 
                                 }
 
-                                if (folderDate < now.AddMonths(-monthsToKeep )) 
+                                var compareDate = new DateTime(now.Year, now.Month, 1).AddMonths(-monthsToKeep);
+                                if (folderDate < now.AddMonths(-monthsToKeep))
                                 {
                                     try
                                     {
