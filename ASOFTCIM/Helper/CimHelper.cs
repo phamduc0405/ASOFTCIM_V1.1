@@ -25,34 +25,22 @@ namespace ASOFTCIM.Helper
         {
             
         }
-        private static readonly SemaphoreSlim _transWaitsSemaphore = new SemaphoreSlim(1, 1);
+        
 
         public override void SysData_SelectFunctionEvent(SysPacket sysPacket)
         {
             try
             {
-                _transWaitsSemaphore.Wait(); 
-
-                try
+                if (!SysDatas.TransWaits.ContainsKey(sysPacket.SystemByte))
                 {
-                    if (sysPacket.Function % 2 == 0)
-                    {
-                        if (!SysDatas.TransWaits.Any(x => x.TransactionSys == sysPacket.SystemByte))
-                        {
-                            return;
-                        }
-                        else
-                        {
-                            SysDatas.TransWaits.RemoveAll(x => x.TransactionSys == sysPacket.SystemByte);
-                        }
-                    }
+                    return;
                 }
-                finally
+                else
                 {
-                    _transWaitsSemaphore.Release(); 
+                    SysDatas.TransWaits.TryRemove(sysPacket.SystemByte, out _);
                 }
-
                 SysPacket = sysPacket;
+                
                 SysDatas.TransactionSys = sysPacket.SystemByte;
                 SysConfig.DeviceId = sysPacket.DeviceId;
                 ReciveEventHandle(SysPacket);

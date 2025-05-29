@@ -137,7 +137,7 @@ namespace ASOFTCIM
                 {
                     if (sysPacket.Function%2 == 0)
                     {
-                        EqpData.TransactionSys = sysPacket.SystemByte + 1;
+                      //  EqpData.TransactionSys = sysPacket.SystemByte + 1;
                         RemoveTrans(sysPacket.SystemByte);
                     }
                     else
