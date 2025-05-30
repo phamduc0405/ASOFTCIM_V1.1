@@ -30,9 +30,10 @@ namespace ASOFTCIM
         public delegate void PlcConnectChangeEventDelegate(bool isConnected);
         public event PlcConnectChangeEventDelegate PlcConnectChangeEvent;
         public event Action ResetEvent;
-
+        public StopWatch stopWatch;
         public void InitialPlc()
         {
+            stopWatch = new StopWatch();
             if (_eqpConfig.PLCConfig != null)
             {
                 Task.Run(async () =>
@@ -94,7 +95,7 @@ namespace ASOFTCIM
             }
             if (Method.Contains("ALARMREPORT"))
             {
-               var resul = new ALARMREPORT().Excute(this, data);
+                var resul = new ALARMREPORT().Excute(this, data);
                 Task.WaitAll(resul); // Ducph sửa await để chờ update xong thì mới hiện UI
                 ResetEvent?.Invoke();
 

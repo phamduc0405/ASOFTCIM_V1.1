@@ -33,9 +33,16 @@ namespace ASOFTCIM
         /// </summary>
         private void App_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
         {
-            LogHelper.Error(e.Exception, "Unhandled exception in WPF UI thread");
-            MessageBox.Show("Ứng dụng gặp sự cố và sẽ thoát.");
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                LogHelper.Error(e.Exception, "Unhandled exception in WPF UI thread");
+                MessageBox.Show($"Ứng dụng gặp sự cố:\n\n{e.Exception.GetType().Name}: {e.Exception.Message}",
+                     "Lỗi chưa xử lý (UI Thread)",
+                     MessageBoxButton.OK,
+                     MessageBoxImage.Error
+                    );
             e.Handled = true; // Đánh dấu là đã xử lý, ứng dụng không crash
+            });
         }
 
         /// <summary>
@@ -43,17 +50,26 @@ namespace ASOFTCIM
         /// </summary>
         private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            Exception ex = e.ExceptionObject as Exception;
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                Exception ex = e.ExceptionObject as Exception;
             if (ex != null)
             {
                 LogHelper.Error(ex, "Unhandled exception in non-UI thread");
+                MessageBox.Show(
+                    $"Ứng dụng gặp sự cố:\n\n{ex.GetType().Name}: {ex.Message}",
+                    "Lỗi chưa xử lý (Thread nền)",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error
+                );
             }
             MessageBox.Show("Ứng dụng gặp sự cố và sẽ thoát.");
+            });
         }
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            LogHelper.SetBaseFolder(@"C:\LOGCIM");
+            LogHelper.SetBaseFolder(@"D:\LOGCIM");
 
             LogHelper.StatStop("Start App");
         }
