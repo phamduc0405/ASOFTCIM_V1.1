@@ -30,27 +30,27 @@ namespace ASOFTCIM.MVVM.ViewModels
         #region Fields
         private readonly Controller _controller;
         private HomeModel _home;
-        private Thread _updateData;
         private static bool _running = true;
-        private bool _disposed = false;
-        
+
         private PartialCpuChart _cpuChart;
 
-
+        // Biến tạm lưu message
+        private string _pendingHostMessage;
+        private string _pendingPlcMessage;
+        // DispatcherTimer for Alarm Update
+        private readonly DispatcherTimer _alarmUpdateTimer;
+        private bool _alarmUpdatePending = false;
         #endregion
+
         #region Properties
         public PartialCpuChart CpuChart
         {
             get => _cpuChart;
             set { _cpuChart = value; OnPropertyChanged(nameof(CpuChart)); }
         }
-        public static bool Running
-        {
-            get
-            {
-                return _running;
-            }
-        }
+
+        public static bool Running => _running;
+
         public HomeModel Home
         {
             get => _home;
@@ -61,7 +61,8 @@ namespace ASOFTCIM.MVVM.ViewModels
         public ICommand ClearMessageCim2Eqp { get; }
         public ICommand Unloaded { get; }
         #endregion
-        #region CONSTRUCTOR
+
+        #region Constructor
         public HomeViewModel()
         {
             _controller = MainWindowViewModel.Controller;
@@ -69,51 +70,145 @@ namespace ASOFTCIM.MVVM.ViewModels
             _home.EQPID = _controller.EquipmentConfig.EQPID;
             _running = true;
             CpuChart = new PartialCpuChart();
+
             LoadConfig();
             Controller_CimConnectChangeEvent(_controller.CimConnect);
-            UpdateAlarm();
+            
+
             ClearMessageCim2Host = new RelayCommand(_ =>
             {
-                if (_home.MessageCIM2HOST != null)
-                {
-                    _home.MessageCIM2HOST = null;
-                }
+                _home.MessageCIM2HOST = null;
+                _home._messageCim2Host = null;
             });
+
             ClearMessageCim2Eqp = new RelayCommand(_ =>
             {
-                if (_home.MessageCIM2EQP != null)
-                {
-                    _home.MessageCIM2EQP = null;
-                }
+                _home.MessageCIM2EQP = null;
+                _home._messageCim2EQP = null;
             });
+
             Unloaded = new RelayCommand(_ =>
             {
-                if (_home.MessageCIM2EQP != null)
-                {
-                    _home.MessageCIM2EQP = null;
-                }
+                _home.MessageCIM2EQP = null;
+                _home._messageCim2EQP = null;
             });
-            _controller.CIM.PlcConnectChangeEvent -= Controller_PlcConnectChangeEvent;
+
+            
+            //_controller.CIM.Cim2HostChangeEvent += Controller_Cim2HostChangeEvent;
+            //_controller.CIM.Plc2CimChangeEvent += Controller_Plc2CimChangeEvent;
+
+
+
+            _controller.CIM.Cim2HostChangeEvent -= Controller_Cim2HostChangeEvent;
+            _controller.CIM.Cim2HostChangeEvent += Controller_Cim2HostChangeEvent;
+
+            _controller.CIM.Host2CimChangeEvent -= Controller_Cim2HostChangeEvent;
+            _controller.CIM.Host2CimChangeEvent += Controller_Cim2HostChangeEvent;
+
+            
+            _controller.CIM.Plc2CimChangeEvent -= Controller_Plc2CimChangeEvent;
+            _controller.CIM.Plc2CimChangeEvent += Controller_Plc2CimChangeEvent;
+
+            _controller.CIM.Cim2PlcChangeEvent -= Controller_Plc2CimChangeEvent;
+            _controller.CIM.Cim2PlcChangeEvent += Controller_Plc2CimChangeEvent;
+
+
             _controller.CIM.PlcConnectChangeEvent += Controller_PlcConnectChangeEvent;
-            _controller.CIM.Cim.Conn.OnConnectEvent -= Controller_CimConnectChangeEvent;
             _controller.CIM.Cim.Conn.OnConnectEvent += Controller_CimConnectChangeEvent;
-            _controller.CIM.ResetEvent -= UpdateAlarm;
-            _controller.CIM.ResetEvent += UpdateAlarm;
+            
 
-            _controller.CIM.Cim2HostChangeEvent -= UpdateHostcimMessage;
-            _controller.CIM.Cim2HostChangeEvent += UpdateHostcimMessage;
-
-            _controller.CIM.Host2CimChangeEvent -= UpdateHostcimMessage;
-            _controller.CIM.Host2CimChangeEvent += UpdateHostcimMessage;
-
-            _controller.CIM.Plc2CimChangeEvent -= UpdatePlccimMessage;
-            _controller.CIM.Plc2CimChangeEvent += UpdatePlccimMessage;
-
-            _controller.CIM.Cim2PlcChangeEvent -= UpdatePlccimMessage;
-            _controller.CIM.Cim2PlcChangeEvent += UpdatePlccimMessage;
             StartDispatcherTimer(UpdateData, 1);
-
+            _alarmUpdateTimer = new DispatcherTimer
+            {
+                Interval = TimeSpan.FromMilliseconds(500)
+            };
+            _alarmUpdateTimer.Tick += (s, e) =>
+            {
+                _alarmUpdateTimer.Stop();
+                UpdateAlarmInternal();
+            };
+            UpdateAlarm();
+            _controller.CIM.ResetEvent += UpdateAlarm;
         }
+        #endregion
+
+        #region Event Handlers
+        private void Controller_Cim2HostChangeEvent(string SnFm)
+        {
+
+            _pendingHostMessage = SnFm;
+            string time = DateTime.Now.ToString("HH:mm:ss.fff");
+            AddMessage(ref _home._messageCim2Host, $"{time}: {_pendingHostMessage}");
+        }
+
+        private void Controller_Plc2CimChangeEvent(string bit)
+        {
+            _pendingPlcMessage = bit;
+            string time = DateTime.Now.ToString("HH:mm:ss.fff");
+            AddMessage(ref _home._messageCim2EQP, $"{time}: {_pendingPlcMessage}");
+        }
+
+        private void Controller_CimConnectChangeEvent(bool isConnected)
+        {
+            _home.CimConnect = isConnected ? ":   CimConnect" : ":   CimDisConnect";
+        }
+
+        private void Controller_PlcConnectChangeEvent(bool isConnected)
+        {
+            System.Windows.Application.Current.Dispatcher.Invoke(() =>
+            {
+                _home.PLCConnect = isConnected ? ":   Plc Connected" : ":   Plc Disconnected";
+            });
+        }
+        #endregion
+
+        #region Data Update
+        private void UpdateData()
+        {
+            try
+            {
+                System.Windows.Application.Current.Dispatcher.Invoke(() =>
+                {
+                    _home.AVAILABILITYSTATE = ":   " + (_controller.CIM.EqpData.EQPSTATE.AVAILABILITYSTATE == "2" ? "UP" : "DOWN");
+                    _home.INTERLOCKSTATE = ":   " + (_controller.CIM.EqpData.EQPSTATE.INTERLOCKSTATE == "2" ? "OFF" : "ON");
+                    _home.RUNSTATE = ":   " + (_controller.CIM.EqpData.EQPSTATE.RUNSTATE == "2" ? "RUN" : "IDLE");
+                    _home.FRONTSTATE = ":   " + (_controller.CIM.EqpData.EQPSTATE.FRONTSTATE == "2" ? "UP" : "DOWN");
+                    _home.REARSTATE = ":   " + (_controller.CIM.EqpData.EQPSTATE.REARSTATE == "2" ? "UP" : "DOWN");
+                    _home.MOVESTATE = ":   " + (_controller.CIM.EqpData.EQPSTATE.MOVESTATE == "2" ? "RUNNING" : "PAUSE");
+
+                    // Xử lý message tạm
+                    if (!string.IsNullOrWhiteSpace(_pendingHostMessage))
+                    {
+                        _home.MessageCIM2HOST = _home._messageCim2Host;
+                    }
+
+                    if (!string.IsNullOrWhiteSpace(_pendingPlcMessage))
+                    {
+                        _home.MessageCIM2EQP = _home._messageCim2EQP;
+                        
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+                var debug = $"Class:{GetType().Name} Method:{MethodBase.GetCurrentMethod().Name} exception occurred. Message is <{ex.Message}>.";
+                LogTxt.Add(LogTxt.Type.Exception, debug);
+            }
+            //UpdateAlarm();
+        }
+
+        private void AddMessage(ref string message, string msg)
+        {
+            message += msg + "\n";
+            var lines = message.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
+            if (lines.Length > 100)
+            {
+                message = string.Join("\n", lines.Skip(lines.Length - 100)) + "\n";
+            }
+        }
+        #endregion
+
+        #region Others
         private async Task LoadConfig()
         {
             await Task.Run(() =>
@@ -132,108 +227,38 @@ namespace ASOFTCIM.MVVM.ViewModels
                 }
                 catch (Exception ex)
                 {
-                    var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.",
-                        MethodBase.GetCurrentMethod().DeclaringType.Name.ToString(), MethodBase.GetCurrentMethod().Name, ex.Message);
+                    var debug = $"Class:{GetType().Name} Method:{MethodBase.GetCurrentMethod().Name} exception occurred. Message is <{ex.Message}>.";
                     LogTxt.Add(LogTxt.Type.Exception, debug);
                 }
             });
         }
-        #endregion
-        private void UpdateData()
-        {
-            try
-            {
-                System.Windows.Application.Current.Dispatcher.Invoke(() =>
-                {
-                    _home.AVAILABILITYSTATE = ":   " + (_controller.CIM.EqpData.EQPSTATE.AVAILABILITYSTATE == "2" ? "UP" : "DOWN");
-                    _home.INTERLOCKSTATE = ":   " + (_controller.CIM.EqpData.EQPSTATE.INTERLOCKSTATE == "2" ? "OFF" : "ON");
-                    _home.RUNSTATE = ":   " + (_controller.CIM.EqpData.EQPSTATE.RUNSTATE == "2" ? "RUN" : "IDLE");
-                    _home.FRONTSTATE = ":   " + (_controller.CIM.EqpData.EQPSTATE.FRONTSTATE == "2" ? "UP" : "DOWN");
-                    _home.REARSTATE = ":   " + (_controller.CIM.EqpData.EQPSTATE.REARSTATE == "2" ? "UP" : "DOWN");
-                    _home.MOVESTATE = ":   " + (_controller.CIM.EqpData.EQPSTATE.MOVESTATE == "2" ? "RUNNING" : "PAUSE");
-                });
-            }
-            catch (Exception ex)
-            {
-                var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.",
-                    MethodBase.GetCurrentMethod().DeclaringType.Name.ToString(), MethodBase.GetCurrentMethod().Name, ex.Message);
-                LogTxt.Add(LogTxt.Type.Exception, debug);
-            }
-        }
+
         private void UpdateAlarm()
         {
+            _alarmUpdatePending = true;
+            
+            _alarmUpdateTimer.Start();
+        }
+
+        private void UpdateAlarmInternal()
+        {
+            if (!_alarmUpdatePending) return;
+            _alarmUpdatePending = false;
+
             try
             {
-                System.Windows.Application.Current.Dispatcher.Invoke(new Action(() =>
-                {
-                    try
-                    {
-                        _home.AlarmList.Clear();  // Xóa dữ liệu cũ
-                        var tempList = _controller.CIM.EqpData.CurrAlarm.ToList();
-                        foreach (var item in tempList)
-                        {
-                            _home.AlarmList.Add(item);  // Cập nhật lại dữ liệu mới
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show($"Lỗi: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                        var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.",
-                        MethodBase.GetCurrentMethod().DeclaringType.Name.ToString(), MethodBase.GetCurrentMethod().Name, ex.Message);
-                        LogTxt.Add(LogTxt.Type.Exception, debug);
-                    }
-                }));
+                var tempList = _controller.CIM.EqpData.CurrAlarm.ToList();
+                _home.AlarmList = new ObservableCollection<Data.Alarm>(tempList);
             }
             catch (Exception ex)
             {
-
-                var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message);
+                var debug = $"Class:{GetType().Name} Method:{MethodBase.GetCurrentMethod().Name} exception occurred. Message is <{ex.Message}>.";
                 LogTxt.Add(LogTxt.Type.Exception, debug);
-
             }
         }
-        private void UpdateHostcimMessage(string SnFm)
-        {
-            System.Windows.Application.Current.Dispatcher.Invoke(new Action(() =>
-            {
+        #endregion
 
-                string time = DateTime.Now.ToString("HH:mm:ss.fff");
-                AddMessage(ref _home._messageCim2Host, $"{time}: {SnFm}");
-                _home.MessageCIM2HOST = _home._messageCim2Host; // Notify binding
-            }));
-        }
-        private void UpdatePlccimMessage(string bit)
-        {
-            System.Windows.Application.Current.Dispatcher.Invoke(new Action(() =>
-            {
-                string time = DateTime.Now.ToString("HH:mm:ss.fff");
-                AddMessage(ref _home._messageCim2EQP, $"{time}: {bit}");
-                _home.MessageCIM2EQP = _home._messageCim2EQP; // Notify binding
-            }));
-        }
-        private void AddMessage(ref string message, string msg)
-        {
-            message += msg + "\n";
-            var lines = message.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
-            if (lines.Length > 100)
-            {
-                message = string.Join("\n", lines.Skip(lines.Length - 100)) + "\n";
-            }
-        }
-        private void Controller_CimConnectChangeEvent(bool isConnected)
-        {
-            _home.CimConnect = isConnected ? ":   CimConnect" : ":   CimDisConnect";
-        }
-        private void Controller_PlcConnectChangeEvent(bool isConnected)
-        {
-            System.Windows.Application.Current.Dispatcher.Invoke(() =>
-            {
-                _home.PLCConnect = isConnected ? ":   Plc Connected" : ":   Plc Disconnected";
-
-            });
-        }
-        
-        
+        #region Dispose
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -241,21 +266,21 @@ namespace ASOFTCIM.MVVM.ViewModels
                 StopDispatcherTimer();
                 _running = false;
                 CpuChart.OnUnloaded();
+
+                _controller.CIM.Cim2HostChangeEvent -= Controller_Cim2HostChangeEvent;
+                _controller.CIM.Plc2CimChangeEvent -= Controller_Plc2CimChangeEvent;
                 _controller.CIM.PlcConnectChangeEvent -= Controller_PlcConnectChangeEvent;
                 _controller.CIM.Cim.Conn.OnConnectEvent -= Controller_CimConnectChangeEvent;
-                _controller.CIM.ResetEvent -= UpdateAlarm;
-                _controller.CIM.Cim2HostChangeEvent -= UpdateHostcimMessage;
-                _controller.CIM.Host2CimChangeEvent -= UpdateHostcimMessage;
-                _controller.CIM.Plc2CimChangeEvent -= UpdatePlccimMessage;
-                _controller.CIM.Cim2PlcChangeEvent -= UpdatePlccimMessage;
-
+                _controller.CIM.ResetEvent -=  UpdateAlarm;
             }
             base.Dispose(disposing);
         }
+
         ~HomeViewModel()
         {
             Dispose(false);
         }
-        
+        #endregion
+
     }
 }

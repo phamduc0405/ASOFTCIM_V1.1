@@ -42,7 +42,7 @@ namespace ASOFTCIM.MainControl
 
         public Controller()
         {
-            DefaultData.AppPath = @"C:\TESTCIM";
+            DefaultData.AppPath = @"C:\CimConfig";
             ReadControllerConfig();
             DefaultData.LogPath = $"{_equipmentConfig.LogFolder}";
             _cim = new ACIM(_equipmentConfig);

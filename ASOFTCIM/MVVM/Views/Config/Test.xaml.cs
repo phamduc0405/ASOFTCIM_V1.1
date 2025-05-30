@@ -8,7 +8,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -29,6 +31,8 @@ namespace ASOFTCIM.MVVM.Views.Config
     public partial class Test : UserControl
     {
         private Controller _controller;
+        private Thread _alarmReaderThread;
+        private bool _isReadingAlarm = false;
         public Test()
         {
             InitializeComponent();
@@ -128,6 +132,120 @@ namespace ASOFTCIM.MVVM.Views.Config
                 };
                 
             };
+            btnS5F1Set.Click += (s, e) =>
+            {
+
+                Data.Alarm alarm = new Data.Alarm();
+                //if (!int.TryParse(txtAlarmID.Text, out int al))
+                //{
+                //    return;
+                //}
+                alarm = _controller.CIM.EqpData.ALS[int.Parse(txtAlarmID.Text)];
+                alarm.ALST = "1";
+                _controller.CIM.SendS5F1(alarm);
+
+
+            };
+            btnS5F1Reset.Click += (s, e) =>
+            {
+                Data.Alarm alarm = new Data.Alarm();
+                if (!int.TryParse(txtAlarmID.Text, out int al))
+                {
+                    return;
+                }
+                alarm = _controller.CIM.EqpData.ALS[int.Parse(txtAlarmID.Text)];
+                alarm.ALST = "2";
+                _controller.CIM.SendS5F1(alarm);
+            };
+            btnS5F1Start.Click += (s, e) =>
+            {
+                StartAlarmReader();
+            };
+            btnS5F1Stop.Click += (s, e) =>
+            {
+                if (_alarmReaderThread != null && _alarmReaderThread.IsAlive)
+                {
+                    _isReadingAlarm = false;
+                    _alarmReaderThread.Join();
+                    _alarmReaderThread = null;
+                }
+            };
+        }
+        private void StartAlarmReader()
+        {
+            if (_alarmReaderThread != null && _alarmReaderThread.IsAlive)
+                return;
+
+            _isReadingAlarm = true;
+            _alarmReaderThread = new Thread(() => AlarmReader());
+            _alarmReaderThread.IsBackground = true;
+            _alarmReaderThread.Start();
+        }
+        private void AlarmReader()
+        {
+
+            while (_isReadingAlarm)
+            {
+                try
+                {
+                    Data.Alarm alarm = new Data.Alarm();
+                    alarm = _controller.CIM.EqpData.ALS[1];
+                    alarm.ALST = "2";
+                    _controller.CIM.SendS5F1(alarm);
+                    alarm = _controller.CIM.EqpData.ALS[2];
+                    alarm.ALST = "2";
+                    _controller.CIM.SendS5F1(alarm);
+                    alarm = _controller.CIM.EqpData.ALS[3];
+                    alarm.ALST = "2";
+                    _controller.CIM.SendS5F1(alarm);
+                    alarm = _controller.CIM.EqpData.ALS[4];
+                    alarm.ALST = "2";
+                    _controller.CIM.SendS5F1(alarm);
+                    alarm = _controller.CIM.EqpData.ALS[5];
+                    alarm.ALST = "2";
+                    _controller.CIM.SendS5F1(alarm);
+                    alarm = _controller.CIM.EqpData.ALS[6];
+                    alarm.ALST = "2";
+                    _controller.CIM.SendS5F1(alarm);
+                    alarm = _controller.CIM.EqpData.ALS[7];
+                    alarm.ALST = "2";
+                    _controller.CIM.SendS5F1(alarm);
+                    alarm = _controller.CIM.EqpData.ALS[8];
+                    alarm.ALST = "2";
+                    _controller.CIM.SendS5F1(alarm);
+                    alarm = _controller.CIM.EqpData.ALS[9];
+                    alarm.ALST = "2";
+                    _controller.CIM.SendS5F1(alarm);
+                    alarm = _controller.CIM.EqpData.ALS[10];
+                    alarm.ALST = "2";
+                    _controller.CIM.SendS5F1(alarm);
+                    alarm = _controller.CIM.EqpData.ALS[11];
+                    alarm.ALST = "2";
+                    _controller.CIM.SendS5F1(alarm);
+                    alarm = _controller.CIM.EqpData.ALS[12];
+                    alarm.ALST = "2";
+                    _controller.CIM.SendS5F1(alarm);
+                    alarm = _controller.CIM.EqpData.ALS[13];
+                    alarm.ALST = "2";
+                    _controller.CIM.SendS5F1(alarm);
+                    alarm = _controller.CIM.EqpData.ALS[14];
+                    alarm.ALST = "2";
+                    _controller.CIM.SendS5F1(alarm);
+                    alarm = _controller.CIM.EqpData.ALS[15];
+                    alarm.ALST = "2";
+                    _controller.CIM.SendS5F1(alarm);
+                    alarm = _controller.CIM.EqpData.ALS[16];
+                    alarm.ALST = "2";
+                    _controller.CIM.SendS5F1(alarm);
+
+                }
+                catch (Exception ex)
+                {
+                    LogTxt.Add(LogTxt.Type.Exception, $"Class:{this.GetType().Name} Method:{MethodBase.GetCurrentMethod().Name} exception: {ex.Message}");
+                }
+
+                Thread.Sleep(100);
+            }
         }
         public Type[] GetTypesInNamespace(Assembly assembly, string nameSpace)
         {

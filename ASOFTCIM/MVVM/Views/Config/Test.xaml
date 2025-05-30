@@ -31,7 +31,10 @@
         <TextBox x:Name="txtNameClass" Grid.Column="1" />
         <TextBox x:Name="txtNameObj" Grid.Column="2" />
         <TextBox x:Name="txtS6F1" Grid.Column="2" />
-        <TextBox x:Name="txt" Grid.Column="2" />
+        <TextBox
+            x:Name="txtAlarmID"
+            Grid.Row="5"
+            Grid.Column="2" />
         <Grid
             Grid.Row="3"
             Grid.RowSpan="2"
@@ -109,7 +112,9 @@
                 Style="{StaticResource TextBoxMultiLine}"
                 Text="repgsz" />
 
+
         </Grid>
+
         <!--  =  -->
         <Button
             x:Name="btnS2F17"
@@ -132,6 +137,25 @@
             Grid.Row="4"
             Grid.Column="0"
             Content="SendS6F1_Stop" />
-
+        <Button
+            x:Name="btnS5F1Set"
+            Grid.Row="5"
+            Grid.Column="0"
+            Content="SendS5F1SetAlarm" />
+        <Button
+            x:Name="btnS5F1Reset"
+            Grid.Row="6"
+            Grid.Column="0"
+            Content="SendS5F1ResertAlarm" />
+        <Button
+            x:Name="btnS5F1Start"
+            Grid.Row="6"
+            Grid.Column="1"
+            Content="SendS5F1Start" />
+        <Button
+            x:Name="btnS5F1Stop"
+            Grid.Row="6"
+            Grid.Column="2"
+            Content="SendS5F1Stop" />
     </Grid>
 </UserControl>

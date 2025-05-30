@@ -30,9 +30,10 @@ namespace ASOFTCIM
         public delegate void PlcConnectChangeEventDelegate(bool isConnected);
         public event PlcConnectChangeEventDelegate PlcConnectChangeEvent;
         public event Action ResetEvent;
-
+        public StopWatch stopWatch;
         public void InitialPlc()
         {
+            stopWatch = new StopWatch();
             if (_eqpConfig.PLCConfig != null)
             {
                 Task.Run(async () =>
@@ -79,7 +80,7 @@ namespace ASOFTCIM
         
         private void _plcH_WordChangedEvent(string Method, object data)
         {
-            
+
                 try
                 {
                     if (Method.Contains("EQPSTATUS"))
@@ -100,7 +101,6 @@ namespace ASOFTCIM
                         var resul = new ALARMREPORT().Excute(this, data);
                         Task.WaitAll(resul);
                         ResetEvent?.Invoke();
-
                     }
                     if (new[] { "UNITSTATUS", "MATERIALPORTSTATE", "PORTSTATUS" }.Any(Method.Contains))
                     {

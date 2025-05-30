@@ -5,6 +5,7 @@ using A_SOFT.PLC;
 using ASOFTCIM.Data;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -34,7 +35,10 @@ namespace ASOFTCIM.Helper
         private List<CarialModel> _carrial;
         private Thread _update;
         private Thread _wordReaderThread;
+        private Thread _alarmReaderThread;
         private bool _isReadingWord = false;
+        private bool _isReadingAlarm = false;
+        public MelsecIF.WordStatus[] als;
         #endregion
         #region Property
         public List<BitModel> Bits
@@ -104,10 +108,12 @@ namespace ASOFTCIM.Helper
         public event AlarmEventDelegate AlarmChangedEvent;
         #endregion
         #region Constructor
-
+        public StopWatch stopWatch;
+        public StopWatch stopWatch1;
         public PLCHelper()
         {
-
+            stopWatch = new StopWatch();
+            stopWatch1 = new StopWatch();
         }
         #endregion
 
@@ -214,10 +220,12 @@ namespace ASOFTCIM.Helper
 
             //_plc.WordChangedEvent -= PlcComm_WordChangedEvent;
             //_plc.WordChangedEvent += PlcComm_WordChangedEvent;
+
             Task.Run(() =>
             {
                Task.Delay(2000).Wait(); 
                 StartWordReader();
+               StartAlarmReader();
             });
            
 
@@ -237,6 +245,16 @@ namespace ASOFTCIM.Helper
             _wordReaderThread = new Thread(() => WordReader());
             _wordReaderThread.IsBackground = true;
             _wordReaderThread.Start();
+        }
+        private void StartAlarmReader()
+        {
+            if (_alarmReaderThread != null && _alarmReaderThread.IsAlive)
+                return;
+
+            _isReadingAlarm = true;
+            _alarmReaderThread = new Thread(() => AlarmReader());
+            _alarmReaderThread.IsBackground = true;
+            _alarmReaderThread.Start();
         }
         private void WordReader()
         {
@@ -272,37 +290,31 @@ namespace ASOFTCIM.Helper
                         }
                     }
 
-                    //foreach (var w in _words)
-                    //{
-                    //    //w.WordChangeFromPlc();
-                    //    switch (w.Area.ToUpper())
-                    //    {
-                    //        case string a when a.Contains("ALARM"):
-                    //            //WordChangedEventHandle("ALARMREPORT", _alarms.);
-                    //            //  AlarmChangedEventHandle("ALARMREPORT", w);
-                    //            break;
-                    //        case string a when a.Contains("EQPSTATUS"):
+                    
+                }
+                catch (Exception ex)
+                {
+                    LogTxt.Add(LogTxt.Type.Exception, $"Class:{this.GetType().Name} Method:{MethodBase.GetCurrentMethod().Name} exception: {ex.Message}");
+                }
 
-                    //            WordChangedEventHandle(w.Area.ToUpper(), _words.Where(x => x.Area == w.Area).ToList());
-                    //            break;
-                    //        case string a when a.Contains("FDC"):
-                    //            WordChangedEventHandle(w.Area.ToUpper(), _svids);
-                    //            break;
-                    //        case string a when a.Contains("UNITSTATUS"):
-                    //            //WordChangedEventHandle("UNITSTATUS", _words.Where(x => x.Area == w.Area).ToList());
-                    //            break;
-                    //        case string a when a.Contains("MATERIALPORTSTATE"):
-                    //            //WordChangedEventHandle("MATERIALPORTSTATE", _words.Where(x => x.Area == w.Area).ToList());
-                    //            break;
-                    //        case string a when a.Contains("PORTSTATUS"):
-                    //            //WordChangedEventHandle("PORTSTATUS", _words.Where(x => x.Area == w.Area).ToList());
-                    //            break;
+                Thread.Sleep(100);
+            }
+        }
+        private void AlarmReader()
+        {
+            
+            while (_isReadingAlarm)
+            {
+                try
+                {
+                    WordModel wAlam = _words.FirstOrDefault(x => x.Area.ToUpper().Contains("ALARM"));
+                    als = _plc.InputWordStatuses.Where(x => x.Address >= wAlam.Address && x.Address <= (wAlam.Address + wAlam.Length - 1) && x.IsChanged).ToArray();
+                    foreach (var al in als)
+                    {
+                        Al_BitChangedEvent(al);
+                        al.ReflectionCompleted();
+                    }
 
-                    //        default:
-                    //            break;
-                    //    }
-
-                    //}
                 }
                 catch (Exception ex)
                 {
