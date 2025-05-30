@@ -48,7 +48,7 @@
     </Reference>
     <Reference Include="A_SOFT.CMM, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>E:\MrDuc\ASOFTLIB\AsoftCommon\Bin\Debug\ASOFTLIB\A_SOFT.CMM.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\AsoftLib\A_SOFT\Bin\Debug\Confused\A_SOFT.CMM.dll</HintPath>
     </Reference>
     <Reference Include="A_SOFT.CMM.UI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -57,6 +57,10 @@
     <Reference Include="A_SOFT.Ctl.Mitsu, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\AsoftLib\A_SOFT\Bin\Debug\Confused\A_SOFT.Ctl.Mitsu.dll</HintPath>
+    </Reference>
+    <Reference Include="A_SOFT.Ctl.SecGem, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\AsoftLib\A_SOFT\Bin\Debug\Confused\A_SOFT.Ctl.SecGem.dll</HintPath>
     </Reference>
     <Reference Include="A_SOFT.Ctl.Tcp, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
