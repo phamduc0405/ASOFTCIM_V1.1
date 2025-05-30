@@ -1,4 +1,5 @@
-﻿using ASOFTCIM;
+﻿using A_SOFT.Ctl.SecGem;
+using ASOFTCIM;
 using ASOFTCIM.Helper;
 using System;
 using System.Collections.Generic;
@@ -10,11 +11,11 @@ namespace ASOFTCIM
 {
     public partial class ACIM
     {
-        public void RecvS1F1()
+        public void RecvS1F1(SysPacket sysPacket)
         {
-            if (_cim.SysPacket.Items.Count > 0)
+            if (sysPacket.Items.Count > 0)
             {
-                SendS9F7(_cim.SysPacket);
+                SendS9F7(sysPacket);
                 return;
                 
             }

@@ -1,4 +1,5 @@
 ﻿using A_SOFT.CMM.INIT;
+using A_SOFT.Ctl.SecGem;
 using ASOFTCIM.Helper;
 using System;
 using System.Collections.Generic;
@@ -11,19 +12,19 @@ namespace ASOFTCIM
 {
     public partial class ACIM
     {
-        public void RecvS5F13()
+        public void RecvS5F13(SysPacket sysPacket)
         {
             try
             {
                 string ACK = "0";
-                string aled = _cim.SysPacket.GetItemString(1);
-                string eqpId = _cim.SysPacket.GetItemString();
-                string unitId = _cim.SysPacket.GetItemString();
-                int count = int.Parse(_cim.SysPacket.GetItemString());
+                string aled = sysPacket.GetItemString(1);
+                string eqpId = sysPacket.GetItemString();
+                string unitId = sysPacket.GetItemString();
+                int count = int.Parse(sysPacket.GetItemString());
                 List<string> listAlid = new List<string>();
                 for (int i = 0; i < count; i++)
                 {
-                    listAlid.Add(_cim.SysPacket.GetItemString());
+                    listAlid.Add(sysPacket.GetItemString());
                 }
                 if (aled != "0" || aled != "1" || eqpId != _cim.EQPID)
                 {
@@ -38,7 +39,7 @@ namespace ASOFTCIM
             }
             catch (Exception ex)
             {
-                SendS9F7(_cim.SysPacket);
+                SendS9F7(sysPacket);
                 var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message);
                 LogTxt.Add(LogTxt.Type.Exception, debug);
             }

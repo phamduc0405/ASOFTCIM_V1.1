@@ -1,4 +1,5 @@
 ﻿using A_SOFT.CMM.INIT;
+using A_SOFT.Ctl.SecGem;
 using ASOFTCIM.Helper;
 using System;
 using System.Collections.Generic;
@@ -11,18 +12,18 @@ namespace ASOFTCIM
 {
     public partial class ACIM
     {
-        public void RecvS7F119()
+        public void RecvS7F119(SysPacket sysPacket)
         {
             try
             {
-                string eqpid = _cim.SysPacket.GetItemString(1);
-                string unitId = _cim.SysPacket.GetItemString();
-                string ppid_type = _cim.SysPacket.GetItemString();
+                string eqpid = sysPacket.GetItemString(1);
+                string unitId = sysPacket.GetItemString();
+                string ppid_type = sysPacket.GetItemString();
                 // new S7F110().SendMessage(mes);
             }
             catch (Exception ex)
             {
-                SendS9F7(_cim.SysPacket);
+                SendS9F7(sysPacket);
                 var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message);
                 LogTxt.Add(LogTxt.Type.Exception, debug);
             }

@@ -7,29 +7,30 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using A_SOFT.Ctl.SecGem;
 
 namespace ASOFTCIM
 {
     public partial class ACIM
     {
-        public void RecvS2F141()
+        public void RecvS2F141(SysPacket sysPacket)
         {
             try
             {
                 string HACK = "0";string unitId = "";
-                string RCMD = _cim.SysPacket.GetItemString(1);
+                string RCMD = sysPacket.GetItemString(1);
                 if (RCMD == "4" || RCMD == "5" || RCMD == "6" || RCMD == "7" || RCMD == "8")
                 {
                     JobProcess jobProcess = new JobProcess();
                     jobProcess.RCMD = RCMD;
-                    jobProcess.PARENTLOT = _cim.SysPacket.GetItemString(4);
-                    jobProcess.RFID = _cim.SysPacket.GetItemString();
-                    jobProcess.EQPID = _cim.SysPacket.GetItemString();
-                    jobProcess.UNITID = _cim.SysPacket.GetItemString();
-                    jobProcess.PORTNO = _cim.SysPacket.GetItemString();
-                    jobProcess.PPID = _cim.SysPacket.GetItemString();
-                    jobProcess.CELLCNT = _cim.SysPacket.GetItemString();
-                    jobProcess.MESSAGE = _cim.SysPacket.GetItemString();
+                    jobProcess.PARENTLOT = sysPacket.GetItemString(4);
+                    jobProcess.RFID = sysPacket.GetItemString();
+                    jobProcess.EQPID = sysPacket.GetItemString();
+                    jobProcess.UNITID = sysPacket.GetItemString();
+                    jobProcess.PORTNO = sysPacket.GetItemString();
+                    jobProcess.PPID = sysPacket.GetItemString();
+                    jobProcess.CELLCNT = sysPacket.GetItemString();
+                    jobProcess.MESSAGE = sysPacket.GetItemString();
 
                     unitId = jobProcess.UNITID;
                 }
@@ -37,32 +38,32 @@ namespace ASOFTCIM
                 {
                     case "1":   //Equipment Command (Eqp Op-call Send)
                         OPCALLMESS opcall = new OPCALLMESS();
-                        opcall.OPCALL = _cim.SysPacket.GetItemString(4);
-                        opcall.EQPID = _cim.SysPacket.GetItemString();
-                        opcall.UNITID = _cim.SysPacket.GetItemString();
-                        opcall.OPCALLID = _cim.SysPacket.GetItemString();
-                        opcall.MESSAGE = _cim.SysPacket.GetItemString();
+                        opcall.OPCALL = sysPacket.GetItemString(4);
+                        opcall.EQPID = sysPacket.GetItemString();
+                        opcall.UNITID = sysPacket.GetItemString();
+                        opcall.OPCALLID = sysPacket.GetItemString();
+                        opcall.MESSAGE = sysPacket.GetItemString();
 
                         unitId = opcall.UNITID;
                         break;
                     case "2":   //Equipment Command (Eqp Interlock Send)
                         INTERLOCKMESS interlock = new INTERLOCKMESS();
-                        interlock.INTERLOCK = _cim.SysPacket.GetItemString(4);
-                        interlock.EQPID = _cim.SysPacket.GetItemString();
-                        interlock.UNITID = _cim.SysPacket.GetItemString();
-                        interlock.INTERLOCKID = _cim.SysPacket.GetItemString();
-                        interlock.MESSAGE = _cim.SysPacket.GetItemString();
+                        interlock.INTERLOCK = sysPacket.GetItemString(4);
+                        interlock.EQPID = sysPacket.GetItemString();
+                        interlock.UNITID = sysPacket.GetItemString();
+                        interlock.INTERLOCKID = sysPacket.GetItemString();
+                        interlock.MESSAGE = sysPacket.GetItemString();
 
                         unitId = interlock.UNITID;
                         break;
                     case "3":   //Equipment Job Command (Job(=PPID) Select))
                         JobProcess jobSelect = new JobProcess();
                         jobSelect.RCMD = "3";
-                        jobSelect.PPID = _cim.SysPacket.GetItemString(4);
-                        jobSelect.EQPID = _cim.SysPacket.GetItemString();
-                        jobSelect.UNITID = _cim.SysPacket.GetItemString();
-                        jobSelect.PORTNO = _cim.SysPacket.GetItemString();
-                        jobSelect.MESSAGE = _cim.SysPacket.GetItemString();
+                        jobSelect.PPID = sysPacket.GetItemString(4);
+                        jobSelect.EQPID = sysPacket.GetItemString();
+                        jobSelect.UNITID = sysPacket.GetItemString();
+                        jobSelect.PORTNO = sysPacket.GetItemString();
+                        jobSelect.MESSAGE = sysPacket.GetItemString();
 
                         unitId = jobSelect.UNITID;
                         break;
@@ -86,7 +87,7 @@ namespace ASOFTCIM
             }
             catch (Exception ex)
             {
-                SendS9F7(_cim.SysPacket);
+                SendS9F7(sysPacket);
                 var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message);
                 LogTxt.Add(LogTxt.Type.Exception, debug);
             }

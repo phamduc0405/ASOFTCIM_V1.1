@@ -7,38 +7,39 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using A_SOFT.Ctl.SecGem;
 
 namespace ASOFTCIM
 {
     public partial class ACIM
     {
-        public void RecvS7F223()
+        public void RecvS7F223(SysPacket sysPacket)
         {
             try
             {
                 ReadRMS();
                 string ACK = "0";
                 PPIDINFOR ppid = new PPIDINFOR();
-                ppid.EQPID = _cim.SysPacket.GetItemString(1);
-                ppid.UNITID = _cim.SysPacket.GetItemString();
-                ppid.PPID = _cim.SysPacket.GetItemString();
-                ppid.PPID_TYPE = _cim.SysPacket.GetItemString();
-                ppid.PPID_NUMBER = _cim.SysPacket.GetItemString();
-                int count = int.Parse(_cim.SysPacket.GetItemString());
+                ppid.EQPID = sysPacket.GetItemString(1);
+                ppid.UNITID = sysPacket.GetItemString();
+                ppid.PPID = sysPacket.GetItemString();
+                ppid.PPID_TYPE = sysPacket.GetItemString();
+                ppid.PPID_NUMBER = sysPacket.GetItemString();
+                int count = int.Parse(sysPacket.GetItemString());
                 ppid.COMMANDCODEs = new List<COMMANDCODE>();
                 for (int i = 0; i < count; i++)
                 {
-                    string lst = _cim.SysPacket.GetItemString();
+                    string lst = sysPacket.GetItemString();
                     COMMANDCODE cmd = new COMMANDCODE();
                     cmd.PARAMs = new List<PARAM>();
-                    cmd.CCODE = _cim.SysPacket.GetItemString();
-                    int countParams = int.Parse(_cim.SysPacket.GetItemString());
+                    cmd.CCODE = sysPacket.GetItemString();
+                    int countParams = int.Parse(sysPacket.GetItemString());
                     for (int j = 0; j < countParams; j++)
                     {
-                        string lst2 = _cim.SysPacket.GetItemString();
+                        string lst2 = sysPacket.GetItemString();
                         PARAM param = new PARAM();
-                        param.PARAMNAME = _cim.SysPacket.GetItemString(); 
-                        param.PARAMVALUE = _cim.SysPacket.GetItemString();
+                        param.PARAMNAME = sysPacket.GetItemString(); 
+                        param.PARAMVALUE = sysPacket.GetItemString();
                         if(param.PARAMVALUE== null || param.PARAMNAME == null)
                         {
                             ACK = "2";
@@ -50,7 +51,7 @@ namespace ASOFTCIM
                     ppid.COMMANDCODEs.Add(cmd);
                 }
 
-                ppid.MODE = _cim.SysPacket.GetItemString(8);
+                ppid.MODE = sysPacket.GetItemString(8);
                 if (false) // Host không có quyền thay đổi
                 {
                     ACK = "1";
@@ -93,7 +94,7 @@ namespace ASOFTCIM
             }
             catch (Exception ex)
             {
-                SendS9F7(_cim.SysPacket);
+                SendS9F7(sysPacket);
                 var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message);
                 LogTxt.Add(LogTxt.Type.Exception,debug);
             }

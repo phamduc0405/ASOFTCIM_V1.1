@@ -31,14 +31,18 @@ namespace ASOFTCIM.Helper
         {
             try
             {
-                if (!SysDatas.TransWaits.ContainsKey(sysPacket.SystemByte))
+                if(IsUseTimeOut)
                 {
-                    return;
+                    if (!SysDatas.TransWaits.ContainsKey(sysPacket.SystemByte))
+                    {
+                        return;
+                    }
+                    else
+                    {
+                        SysDatas.TransWaits.TryRemove(sysPacket.SystemByte, out _);
+                    }
                 }
-                else
-                {
-                    SysDatas.TransWaits.TryRemove(sysPacket.SystemByte, out _);
-                }
+                
                 SysPacket = sysPacket;
                 
                 SysDatas.TransactionSys = sysPacket.SystemByte;

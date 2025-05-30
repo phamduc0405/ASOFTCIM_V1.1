@@ -150,12 +150,21 @@ namespace ASOFTCIM.MainControl
         }
         private void SendAlarmWhenStart()
         {
-            List<Alarm> Alarmlst = new List<Alarm>();
-            Alarmlst =  _cim.EqpData.CurrAlarm;
-            foreach( var item in Alarmlst)
+            try
             {
-                _cim.SendS5F1(item);
-            }    
+                List<Alarm> Alarmlst = new List<Alarm>();
+                Alarmlst = _cim.EqpData.CurrAlarm;
+                foreach (var item in Alarmlst)
+                {
+                    _cim.SendS5F1(item);
+                }
+            }
+            catch (Exception ex)
+            {
+                var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message);
+                LogTxt.Add(LogTxt.Type.Exception, debug);
+            }
+             
         }
     }
 }

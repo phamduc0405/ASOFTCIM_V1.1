@@ -8,29 +8,30 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using ASOFTCIM.Data;
+using A_SOFT.Ctl.SecGem;
 
 namespace ASOFTCIM
 {
     public partial class ACIM
     {
-        public void RecvS8F1()
+        public void RecvS8F1(SysPacket sysPacket)
         {
             try
             {
                 INQUIRY inquiry = new INQUIRY();
-                inquiry.EQPID = _cim.SysPacket.GetItemString(1);
-                inquiry.PRODUCTID = _cim.SysPacket.GetItemString();
-                inquiry.ACTIONFLAG = _cim.SysPacket.GetItemString();
-                int count = int.Parse(_cim.SysPacket.GetItemString());
+                inquiry.EQPID = sysPacket.GetItemString(1);
+                inquiry.PRODUCTID = sysPacket.GetItemString();
+                inquiry.ACTIONFLAG = sysPacket.GetItemString();
+                int count = int.Parse(sysPacket.GetItemString());
                 for (int i = 0; i < count; i++)
                 {
-                    string lst = _cim.SysPacket.GetItemString();
+                    string lst = sysPacket.GetItemString();
                     INQUIRYDATA data = new INQUIRYDATA();
-                    data.DATA_TYPE = _cim.SysPacket.GetItemString();
-                    data.ITEMNAME = _cim.SysPacket.GetItemString();
-                    data.ITEMVALUE = _cim.SysPacket.GetItemString();
-                    data.CHECKSUM = _cim.SysPacket.GetItemString();
-                    data.REFERENCE = _cim.SysPacket.GetItemString();
+                    data.DATA_TYPE = sysPacket.GetItemString();
+                    data.ITEMNAME = sysPacket.GetItemString();
+                    data.ITEMVALUE = sysPacket.GetItemString();
+                    data.CHECKSUM = sysPacket.GetItemString();
+                    data.REFERENCE = sysPacket.GetItemString();
                     inquiry.INQUIRYDATA.Add(data);
                 }
 
@@ -39,7 +40,7 @@ namespace ASOFTCIM
             }
             catch (Exception ex)
             {
-                SendS9F7(_cim.SysPacket);
+                SendS9F7(sysPacket);
                 var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message);
                 LogTxt.Add(LogTxt.Type.Exception, debug);
             }

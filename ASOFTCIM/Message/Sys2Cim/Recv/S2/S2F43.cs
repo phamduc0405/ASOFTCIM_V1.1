@@ -8,26 +8,27 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using ASOFTCIM.Message.PLC2Cim.Send;
+using A_SOFT.Ctl.SecGem;
 
 namespace ASOFTCIM
 {
     public partial class ACIM
     {
-        public void RecvS2F43()
+        public void RecvS2F43(SysPacket sysPacket)
         {
             try
             {
                 string HACK = "0";
-                string RCMD = _cim.SysPacket.GetItemString(1);
+                string RCMD = sysPacket.GetItemString(1);
                 if (RCMD == "21" || RCMD == "22" || RCMD == "23" || RCMD == "24")
                 {
                     CellJobProcess jobProcess = new CellJobProcess();
                     jobProcess.RCMD = RCMD;
-                    jobProcess.JOBID = _cim.SysPacket.GetItemString(5);
-                    jobProcess.CELLID = _cim.SysPacket.GetItemString(8);
-                    jobProcess.PRODUCTID = _cim.SysPacket.GetItemString(11);
-                    jobProcess.STEPID = _cim.SysPacket.GetItemString(14);
-                    jobProcess.ACTIONTYPE = _cim.SysPacket.GetItemString(17);
+                    jobProcess.JOBID = sysPacket.GetItemString(5);
+                    jobProcess.CELLID = sysPacket.GetItemString(8);
+                    jobProcess.PRODUCTID = sysPacket.GetItemString(11);
+                    jobProcess.STEPID = sysPacket.GetItemString(14);
+                    jobProcess.ACTIONTYPE = sysPacket.GetItemString(17);
                     jobProcess.EQPID = _cim.EQPID;
                     if(jobProcess.JOBID == "1")
                     {
@@ -45,11 +46,11 @@ namespace ASOFTCIM
                 {
                     ApproveProcess jobProcess = new ApproveProcess();
                     jobProcess.RCMD = RCMD;
-                    jobProcess.APPROVECODE = _cim.SysPacket.GetItemString(6);
-                    jobProcess.APPROVEINFO = _cim.SysPacket.GetItemString(9);
-                    jobProcess.APPROVEID = _cim.SysPacket.GetItemString(12);
-                    jobProcess.BYWHO = _cim.SysPacket.GetItemString(15);
-                    jobProcess.APPROVETEXT = _cim.SysPacket.GetItemString(18);
+                    jobProcess.APPROVECODE = sysPacket.GetItemString(6);
+                    jobProcess.APPROVEINFO = sysPacket.GetItemString(9);
+                    jobProcess.APPROVEID = sysPacket.GetItemString(12);
+                    jobProcess.BYWHO = sysPacket.GetItemString(15);
+                    jobProcess.APPROVETEXT = sysPacket.GetItemString(18);
                     SendMessage2PLC("EQUIPMENTAPPROVEPROCESS", jobProcess);
                 }
                 else
@@ -62,7 +63,7 @@ namespace ASOFTCIM
             }
             catch (Exception ex)
             {
-                SendS9F7(_cim.SysPacket);
+                SendS9F7(sysPacket);
                 var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message);
                 LogTxt.Add(LogTxt.Type.Exception, debug);
             }

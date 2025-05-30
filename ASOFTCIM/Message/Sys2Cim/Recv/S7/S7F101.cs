@@ -1,4 +1,5 @@
 ﻿using A_SOFT.CMM.INIT;
+using A_SOFT.Ctl.SecGem;
 using ASOFTCIM.Data;
 using ASOFTCIM.Helper;
 using System;
@@ -12,12 +13,12 @@ namespace ASOFTCIM
 {
     public partial class ACIM
     {
-        public void RecvS7F101()
+        public void RecvS7F101(SysPacket sysPacket)
         {
             try
             {
-                string eqpid = _cim.SysPacket.GetItemString(1);
-                string ppid_type = _cim.SysPacket.GetItemString();
+                string eqpid = sysPacket.GetItemString(1);
+                string ppid_type = sysPacket.GetItemString();
                 PPIDList ppidlist = new PPIDList();
                 if(eqpid != EqpData.EQINFORMATION.EQPID)
                 {
@@ -29,13 +30,13 @@ namespace ASOFTCIM
                     SendS7F102(null);
                     return;
                 }
-                //this.EqpData.PPIDList.PPID_TYPE = _cim.SysPacket.GetItemString(2);
+                //this.EqpData.PPIDList.PPID_TYPE = sysPacket.GetItemString(2);
                 ReadRMS();
                 SendS7F102(this.EqpData.PPIDList);
             }
             catch (Exception ex)
             {
-                SendS9F7(_cim.SysPacket);
+                SendS9F7(sysPacket);
                 var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message);
                 LogTxt.Add(LogTxt.Type.Exception, debug);
             }

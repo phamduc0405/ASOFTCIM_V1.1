@@ -93,6 +93,7 @@ namespace ASOFTCIM.Helper
             set { _carrial = value; }
         }
         public string EqpId { get; set; } = null;
+        public bool TestAlarm { get; set; } = false; 
         #endregion
         #region Event
         public delegate void BitChangedEventDelegate(BitModel bit);
@@ -213,7 +214,12 @@ namespace ASOFTCIM.Helper
 
             //_plc.WordChangedEvent -= PlcComm_WordChangedEvent;
             //_plc.WordChangedEvent += PlcComm_WordChangedEvent;
-            StartWordReader();
+            Task.Run(() =>
+            {
+               Task.Delay(2000).Wait(); 
+                StartWordReader();
+            });
+           
 
         }
 
@@ -234,49 +240,69 @@ namespace ASOFTCIM.Helper
         }
         private void WordReader()
         {
+            WordModel wAlam = _words.FirstOrDefault(x => x.Area.IndexOf("ALARM", StringComparison.OrdinalIgnoreCase) >= 0);
+            int startAddr = wAlam.Address;
+            int endAddr = wAlam.Address + wAlam.Length - 1;
+
+            var _wordStatusMap = _plc.InputWordStatuses
+                .Where(x => x.Address >= startAddr && x.Address <= endAddr)
+                .GroupBy(x => x.Address)
+                .ToDictionary(g => g.Key, g => g.ToList());
             while (_isReadingWord)
             {
                 try
                 {
-                    WordModel wAlam = _words.FirstOrDefault(x => x.Area.ToUpper().Contains("ALARM"));
-                    MelsecIF.WordStatus[] als = _plc.InputWordStatuses.Where(x => x.Address >= wAlam.Address && x.Address <= (wAlam.Address + wAlam.Length - 1) && x.IsChanged).ToArray();
-                    foreach (var al in als)
-                    {
-                        Al_BitChangedEvent(al);
-                        al.ReflectionCompleted();
-                    }
 
-                    foreach (var w in _words)
+                    for (int addr = startAddr; addr <= endAddr; addr++)
                     {
-                        //w.WordChangeFromPlc();
-                        switch (w.Area.ToUpper())
+                        if (_wordStatusMap.TryGetValue(addr, out var wordList))
                         {
-                            case string a when a.Contains("ALARM"):
-                                //WordChangedEventHandle("ALARMREPORT", _alarms.);
-                                //  AlarmChangedEventHandle("ALARMREPORT", w);
-                                break;
-                            case string a when a.Contains("EQPSTATUS"):
-
-                                WordChangedEventHandle(w.Area.ToUpper(), _words.Where(x => x.Area == w.Area).ToList());
-                                break;
-                            case string a when a.Contains("FDC"):
-                                WordChangedEventHandle(w.Area.ToUpper(), _svids);
-                                break;
-                            case string a when a.Contains("UNITSTATUS"):
-                                //WordChangedEventHandle("UNITSTATUS", _words.Where(x => x.Area == w.Area).ToList());
-                                break;
-                            case string a when a.Contains("MATERIALPORTSTATE"):
-                                //WordChangedEventHandle("MATERIALPORTSTATE", _words.Where(x => x.Area == w.Area).ToList());
-                                break;
-                            case string a when a.Contains("PORTSTATUS"):
-                                //WordChangedEventHandle("PORTSTATUS", _words.Where(x => x.Area == w.Area).ToList());
-                                break;
-
-                            default:
-                                break;
+                            foreach (var bit in wordList)
+                            {
+                                if (bit.IsChanged)
+                                {
+                                    Al_BitChangedEvent(bit);
+                                    if (!TestAlarm)
+                                    {
+                                        bit.ReflectionCompleted();
+                                    }
+                                    
+                                }
+                            }
                         }
-
                     }
+
+                    //foreach (var w in _words)
+                    //{
+                    //    //w.WordChangeFromPlc();
+                    //    switch (w.Area.ToUpper())
+                    //    {
+                    //        case string a when a.Contains("ALARM"):
+                    //            //WordChangedEventHandle("ALARMREPORT", _alarms.);
+                    //            //  AlarmChangedEventHandle("ALARMREPORT", w);
+                    //            break;
+                    //        case string a when a.Contains("EQPSTATUS"):
+
+                    //            WordChangedEventHandle(w.Area.ToUpper(), _words.Where(x => x.Area == w.Area).ToList());
+                    //            break;
+                    //        case string a when a.Contains("FDC"):
+                    //            WordChangedEventHandle(w.Area.ToUpper(), _svids);
+                    //            break;
+                    //        case string a when a.Contains("UNITSTATUS"):
+                    //            //WordChangedEventHandle("UNITSTATUS", _words.Where(x => x.Area == w.Area).ToList());
+                    //            break;
+                    //        case string a when a.Contains("MATERIALPORTSTATE"):
+                    //            //WordChangedEventHandle("MATERIALPORTSTATE", _words.Where(x => x.Area == w.Area).ToList());
+                    //            break;
+                    //        case string a when a.Contains("PORTSTATUS"):
+                    //            //WordChangedEventHandle("PORTSTATUS", _words.Where(x => x.Area == w.Area).ToList());
+                    //            break;
+
+                    //        default:
+                    //            break;
+                    //    }
+
+                    //}
                 }
                 catch (Exception ex)
                 {
