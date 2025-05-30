@@ -109,114 +109,31 @@
                                         Text="ALARM" />
                                 </Border>
                             </Border>
-                            <!--<ListView
-                             x:Name="lstErr"
+                            
+                            <DataGrid
+
                              Grid.Row="1"
                              Grid.Column="0"
                              Grid.ColumnSpan="2"
-                             Background="#D6DAF3"
-                             BorderBrush="#D7D3CB"
-                             BorderThickness="2"
-                             FontWeight="Light"
-                             Foreground="Black"
-                             ItemsSource="{Binding AlarmList}">
-                             <ListView.View>
-                                 <GridView>
-                                     <GridViewColumn Width="100" Header="TIME">
-                                         <GridViewColumn.CellTemplate>
-                                             <DataTemplate>
-                                                 <TextBlock
-                                                     Margin="15,0,0,0"
-                                                     HorizontalAlignment="Right"
-                                                     VerticalAlignment="Center"
-                                                     Text="{Binding TIME}" />
-                                             </DataTemplate>
-                                         </GridViewColumn.CellTemplate>
-                                     </GridViewColumn>
-                                     <GridViewColumn Width="100" Header="EQPID">
-                                         <GridViewColumn.CellTemplate>
-                                             <DataTemplate>
-                                                 <TextBlock
-                                                     Margin="20,0,0,0"
-                                                     HorizontalAlignment="Center"
-                                                     VerticalAlignment="Center"
-                                                     Text="{Binding EQPID}" />
-                                             </DataTemplate>
-                                         </GridViewColumn.CellTemplate>
-                                     </GridViewColumn>
-                                     <GridViewColumn Width="800" Header="ALTEXT">
-                                         <GridViewColumn.CellTemplate>
-                                             <DataTemplate>
-                                                 <TextBlock
-                                                     Margin="20,0,0,0"
-                                                     HorizontalAlignment="Center"
-                                                     VerticalAlignment="Center"
-                                                     Text="{Binding ALTEXT}" />
-                                             </DataTemplate>
-                                         </GridViewColumn.CellTemplate>
-                                     </GridViewColumn>
-                                     <GridViewColumn Width="100" Header="ALST">
-                                         <GridViewColumn.CellTemplate>
-                                             <DataTemplate>
-                                                 <TextBlock
-                                                     Margin="35,0,0,0"
-                                                     HorizontalAlignment="Center"
-                                                     VerticalAlignment="Center"
-                                                     Text="{Binding ALST}" />
-                                             </DataTemplate>
-                                         </GridViewColumn.CellTemplate>
-                                     </GridViewColumn>
-                                     <GridViewColumn Width="100" Header="ALID">
-                                         <GridViewColumn.CellTemplate>
-                                             <DataTemplate>
-                                                 <TextBlock
-                                                     Margin="35,0,0,0"
-                                                     HorizontalAlignment="Center"
-                                                     VerticalAlignment="Center"
-                                                     Text="{Binding ALID}" />
-                                             </DataTemplate>
-                                         </GridViewColumn.CellTemplate>
-                                     </GridViewColumn>
-                                     <GridViewColumn Width="100" Header="ALCD">
-                                         <GridViewColumn.CellTemplate>
-                                             <DataTemplate>
-                                                 <TextBlock
-                                                     Margin="35,0,0,0"
-                                                     HorizontalAlignment="Center"
-                                                     VerticalAlignment="Center"
-                                                     Text="{Binding ALCD}" />
-                                             </DataTemplate>
-                                         </GridViewColumn.CellTemplate>
-                                     </GridViewColumn>
-                                 </GridView>
-                             </ListView.View>
-                             <ListView.ItemContainerStyle>
-                                 <Style TargetType="ListViewItem">
-                                     <Style.Triggers>
-                                         <DataTrigger Binding="{Binding ALST}" Value="1">
-                                             <Setter Property="FontWeight" Value="Bold" />
-                                         </DataTrigger>
-                                     </Style.Triggers>
-                                 </Style>
-                             </ListView.ItemContainerStyle>
-                         </ListView>-->
-                            <DataGrid
-                                Grid.Row="1"
-                                Grid.Column="0"
-                                Grid.ColumnSpan="2"
-                                Margin="5,0,5,5"
-                                AutoGenerateColumns="False"
-                                BorderBrush="Gray"
-                                BorderThickness="1"
-                                CanUserAddRows="False"
-                                ColumnHeaderStyle="{StaticResource DarkHeaderStyle}"
-                                GridLinesVisibility="Horizontal"
-                                HeadersVisibility="Column"
-                                HorizontalGridLinesBrush="#FFCCCCCC"
-                                IsReadOnly="True"
-                                ItemsSource="{Binding AlarmView.AlarmList}"
-                                SelectionUnit="Cell"
-                                VerticalGridLinesBrush="#FFCCCCCC">
+                             Margin="5,0,5,5"
+                             AutoGenerateColumns="False"
+                             BorderBrush="Gray"
+                             BorderThickness="1"
+                             CanUserAddRows="False"
+                             ColumnHeaderStyle="{StaticResource DarkHeaderStyle}"
+                             GridLinesVisibility="Horizontal"
+                             HeadersVisibility="Column"
+                             HorizontalGridLinesBrush="#FFCCCCCC"
+                             IsReadOnly="True"
+                             ItemsSource="{Binding AlarmView.AlarmList}"
+                             SelectionUnit="Cell"
+                                EnableRowVirtualization="True"
+    EnableColumnVirtualization="True"
+    VirtualizingPanel.IsVirtualizing="True"
+    VirtualizingPanel.VirtualizationMode="Recycling"
+    ScrollViewer.IsDeferredScrollingEnabled="True"
+                             VerticalGridLinesBrush="#FFCCCCCC">
+
                                 <DataGrid.Columns>
                                     <DataGridTextColumn
                                         Width="150"

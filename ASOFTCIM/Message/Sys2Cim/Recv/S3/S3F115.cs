@@ -7,53 +7,54 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using ASOFTCIM.Data;
+using A_SOFT.Ctl.SecGem;
 
 namespace ASOFTCIM
 {
     public partial class ACIM
     {
-        public void RecvS3F115()
+        public void RecvS3F115(SysPacket sysPacket)
         {
             try
             {
                 string ACK = "0";
-                string eqp = _cim.SysPacket.GetItemString(1);
-                string lst = _cim.SysPacket.GetItemString();
+                string eqp = sysPacket.GetItemString(1);
+                string lst = sysPacket.GetItemString();
                 CARRIERINFODOWNLOAD carrierinfor = new CARRIERINFODOWNLOAD();
-                carrierinfor.CARRIERID = _cim.SysPacket.GetItemString();
-                carrierinfor.CARRIERTYPE = _cim.SysPacket.GetItemString();
-                carrierinfor.CARRIERPPID = _cim.SysPacket.GetItemString();
-                carrierinfor.CARRIERPRODUCT = _cim.SysPacket.GetItemString();
-                carrierinfor.CARRIERSTEPID = _cim.SysPacket.GetItemString();
-                carrierinfor.CARRIER_S_COUNT = _cim.SysPacket.GetItemString();
-                carrierinfor.CARRIER_C_COUNT = _cim.SysPacket.GetItemString();
-                carrierinfor.PORTNO = _cim.SysPacket.GetItemString();
-                int count1 = int.Parse(_cim.SysPacket.GetItemString());
+                carrierinfor.CARRIERID = sysPacket.GetItemString();
+                carrierinfor.CARRIERTYPE = sysPacket.GetItemString();
+                carrierinfor.CARRIERPPID = sysPacket.GetItemString();
+                carrierinfor.CARRIERPRODUCT = sysPacket.GetItemString();
+                carrierinfor.CARRIERSTEPID = sysPacket.GetItemString();
+                carrierinfor.CARRIER_S_COUNT = sysPacket.GetItemString();
+                carrierinfor.CARRIER_C_COUNT = sysPacket.GetItemString();
+                carrierinfor.PORTNO = sysPacket.GetItemString();
+                int count1 = int.Parse(sysPacket.GetItemString());
                 
                 for (int i = 0; i < count1; i++)
                 {
-                    string lst1 = _cim.SysPacket.GetItemString();
+                    string lst1 = sysPacket.GetItemString();
                     SUBCARRIER sub = new SUBCARRIER();
-                    sub.SUBCARRIERID = _cim.SysPacket.GetItemString();
-                    sub.CELLQTY = _cim.SysPacket.GetItemString();
-                    int count2 = int.Parse(_cim.SysPacket.GetItemString());
+                    sub.SUBCARRIERID = sysPacket.GetItemString();
+                    sub.CELLQTY = sysPacket.GetItemString();
+                    int count2 = int.Parse(sysPacket.GetItemString());
                     for (int j = 0; j < count2; j++)
                     {
-                        string lst2 = _cim.SysPacket.GetItemString();
+                        string lst2 = sysPacket.GetItemString();
                         CELLINFO cell = new CELLINFO();
-                        cell.CELLID = _cim.SysPacket.GetItemString();
-                        cell.LOCATIONNO = _cim.SysPacket.GetItemString();
-                        cell.JUDGE = _cim.SysPacket.GetItemString();
-                        cell.REASONCODE = _cim.SysPacket.GetItemString();
+                        cell.CELLID = sysPacket.GetItemString();
+                        cell.LOCATIONNO = sysPacket.GetItemString();
+                        cell.JUDGE = sysPacket.GetItemString();
+                        cell.REASONCODE = sysPacket.GetItemString();
                         sub.CELLSINFOR.Add(cell);
                     }
                     carrierinfor.SUBCARRIERS.Add(sub);
                 }
-                lst = _cim.SysPacket.GetItemString();
-                carrierinfor.REPLY.REPLYCODE = _cim.SysPacket.GetItemString();
-                carrierinfor.REPLY.REPLYTEXT = _cim.SysPacket.GetItemString();
+                lst = sysPacket.GetItemString();
+                carrierinfor.REPLY.REPLYCODE = sysPacket.GetItemString();
+                carrierinfor.REPLY.REPLYTEXT = sysPacket.GetItemString();
 
-                int cellpallet = int.Parse(_cim.SysPacket.GetItemString(15));
+                int cellpallet = int.Parse(sysPacket.GetItemString(15));
 
                 //loader
                 //if(carrierinfor.CARRIERTYPE == "11" && carrierinfor.PORTNO == "LS01")//262
@@ -108,7 +109,7 @@ namespace ASOFTCIM
             }
             catch (Exception ex)
             {
-                SendS9F7(_cim.SysPacket);
+                SendS9F7(sysPacket);
                 var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message);
                 LogTxt.Add(LogTxt.Type.Exception, debug);
             }

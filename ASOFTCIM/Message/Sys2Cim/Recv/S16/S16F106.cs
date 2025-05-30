@@ -1,4 +1,5 @@
 ﻿using A_SOFT.CMM.INIT;
+using A_SOFT.Ctl.SecGem;
 using ASOFTCIM.Helper;
 using System;
 using System.Collections.Generic;
@@ -11,16 +12,16 @@ namespace ASOFTCIM
 {
      public partial class ACIM 
     {
-        public void RecvS16F106()
+        public void RecvS16F106(SysPacket sysPacket)
         {
             try
             {
-                string ACK = _cim.SysPacket.GetItemString();
+                string ACK = sysPacket.GetItemString();
                // new S16F107().SendMessage(mes);
             }
             catch (Exception ex)
             {
-                SendS9F7(_cim.SysPacket);
+                SendS9F7(sysPacket);
                 var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message);
                 LogTxt.Add(LogTxt.Type.Exception, debug);
             }

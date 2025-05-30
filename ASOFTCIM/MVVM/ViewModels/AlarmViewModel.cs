@@ -11,6 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using ASOFTCIM.MVVM.Models;
 using ASOFTCIM.MVVM.ViewModels;
+using System.Collections.ObjectModel;
 
 namespace ASOFTCIM.MVVM.ViewModels
 {
@@ -33,35 +34,46 @@ namespace ASOFTCIM.MVVM.ViewModels
         }
         private void UpdateAlarm()
         {
-            try
+            Task.Run(() =>
             {
-                System.Windows.Application.Current.Dispatcher.Invoke(new Action(() =>
+                try
                 {
-                    try
+                    // Tạo danh sách mới ngoài UI thread
+                    var tempList = _controller.CIM.EqpData.AlarmHistory.ToList();
+                    var newCollection = new ObservableCollection<Data.Alarm>(tempList);
+
+                    // Gán vào AlarmList trên UI thread
+                    System.Windows.Application.Current.Dispatcher.Invoke(() =>
                     {
-                        _alarmView.AlarmList.Clear();
-                        var tempList = _controller.CIM.EqpData.AlarmHistory.ToList();
-                        foreach (var item in tempList)
+                        try
                         {
-                            _alarmView.AlarmList.Add(item);
+                            AlarmView.AlarmList = newCollection;
                         }
-                    }
-                    catch (Exception ex)
-                    {
-                        var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.",
-                        MethodBase.GetCurrentMethod().DeclaringType.Name.ToString(), MethodBase.GetCurrentMethod().Name, ex.Message);
-                        LogTxt.Add(LogTxt.Type.Exception, debug);
-                    }
-                }));
-            }
-            catch (Exception ex)
+                        catch (Exception ex)
+                        {
+                            var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.",
+                                MethodBase.GetCurrentMethod().DeclaringType.Name.ToString(), MethodBase.GetCurrentMethod().Name, ex.Message);
+                            LogTxt.Add(LogTxt.Type.Exception, debug);
+                        }
+                    });
+                }
+                catch (Exception ex)
+                {
+                    var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.",
+                        this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message);
+                    LogTxt.Add(LogTxt.Type.Exception, debug);
+                }
+            }).ContinueWith(t =>
             {
-
-                var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message);
-                LogTxt.Add(LogTxt.Type.Exception, debug);
-
-            }
+                if (t.IsFaulted)
+                {
+                    var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.",
+                        this.GetType().Name, MethodBase.GetCurrentMethod().Name, t.Exception?.Message);
+                    LogTxt.Add(LogTxt.Type.Exception, debug);
+                }
+            });
         }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

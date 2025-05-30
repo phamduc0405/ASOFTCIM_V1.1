@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using ASOFTCIM.Data;
+using A_SOFT.Ctl.SecGem;
 
 namespace ASOFTCIM
 {
@@ -16,32 +17,32 @@ namespace ASOFTCIM
         /// (HOST Command Send(TRS)
         /// </summary>
         /// <param name="mes"></param>
-        public void RecvS2F49()
+        public void RecvS2F49(SysPacket sysPacket)
         {
             try
             {
                 string HACK = "0";string jobid = "";
 
-                string RCMD = _cim.SysPacket.GetItemString(1);
+                string RCMD = sysPacket.GetItemString(1);
                 if (RCMD == "4" || RCMD == "5" || RCMD == "6" || RCMD == "7" || RCMD == "8" || RCMD == "9")
                 {
                     TrsProcess jobProcess = new TrsProcess();
                     jobProcess.RCMD = RCMD;
-                    jobProcess.PORTID = _cim.SysPacket.GetItemString(5);
-                    jobProcess.TRSNAME = _cim.SysPacket.GetItemString();
-                    jobProcess.JOBID = _cim.SysPacket.GetItemString();
-                    jobProcess.JOBTYPE = _cim.SysPacket.GetItemString();
-                    jobProcess.PRODUCTID = _cim.SysPacket.GetItemString();
-                    jobProcess.STEPID = _cim.SysPacket.GetItemString();
-                    jobProcess.SOURCELOC = _cim.SysPacket.GetItemString();
-                    jobProcess.SOURCEPORTID = _cim.SysPacket.GetItemString();
-                    jobProcess.FINALLOC = _cim.SysPacket.GetItemString();
-                    jobProcess.FINALPORTID = _cim.SysPacket.GetItemString();
-                    jobProcess.MIDLOC = _cim.SysPacket.GetItemString();
-                    jobProcess.MIDPORTID = _cim.SysPacket.GetItemString();
-                    jobProcess.ORIGINLOC = _cim.SysPacket.GetItemString();
-                    jobProcess.PRIORITY = _cim.SysPacket.GetItemString();
-                    jobProcess.DESCRIPTION = _cim.SysPacket.GetItemString();
+                    jobProcess.PORTID = sysPacket.GetItemString(5);
+                    jobProcess.TRSNAME = sysPacket.GetItemString();
+                    jobProcess.JOBID = sysPacket.GetItemString();
+                    jobProcess.JOBTYPE = sysPacket.GetItemString();
+                    jobProcess.PRODUCTID = sysPacket.GetItemString();
+                    jobProcess.STEPID = sysPacket.GetItemString();
+                    jobProcess.SOURCELOC = sysPacket.GetItemString();
+                    jobProcess.SOURCEPORTID = sysPacket.GetItemString();
+                    jobProcess.FINALLOC = sysPacket.GetItemString();
+                    jobProcess.FINALPORTID = sysPacket.GetItemString();
+                    jobProcess.MIDLOC = sysPacket.GetItemString();
+                    jobProcess.MIDPORTID = sysPacket.GetItemString();
+                    jobProcess.ORIGINLOC = sysPacket.GetItemString();
+                    jobProcess.PRIORITY = sysPacket.GetItemString();
+                    jobProcess.DESCRIPTION = sysPacket.GetItemString();
                 }
                 else if (RCMD == "1" || RCMD == "2" || RCMD == "3")
                 {
@@ -55,7 +56,7 @@ namespace ASOFTCIM
             }
             catch (Exception ex)
             {
-                SendS9F7(_cim.SysPacket);
+                SendS9F7(sysPacket);
                 var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message);
                 LogTxt.Add(LogTxt.Type.Exception, debug);
             }

@@ -10,47 +10,48 @@ using System.Reflection;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
+using A_SOFT.Ctl.SecGem;
 
 namespace ASOFTCIM
 {
     public partial class ACIM
     {
-        public void RecvS3F105()
+        public void RecvS3F105(SysPacket sysPacket)
         {
             try
             {
                 string ACK = "0";
-                string eqp = _cim.SysPacket.GetItemString(1);
+                string eqp = sysPacket.GetItemString(1);
                 MaterialEqp materialEq = new MaterialEqp();
-                materialEq.MATERIALEQPID = _cim.SysPacket.GetItemString(5);
-                materialEq.MATERIALBATCHID = _cim.SysPacket.GetItemString();
-                materialEq.MATERIALCODE = _cim.SysPacket.GetItemString();
-                materialEq.MATERIALUSEDATE = _cim.SysPacket.GetItemString();
-                materialEq.MATERIALDISEASEDATE = _cim.SysPacket.GetItemString();
-                materialEq.MATERIALMAKER = _cim.SysPacket.GetItemString();
-                materialEq.MATERIALVALIDATIONFLAGE = _cim.SysPacket.GetItemString();
-                materialEq.MATERIALCODE = _cim.SysPacket.GetItemString();
-                materialEq.COMMENT = _cim.SysPacket.GetItemString();
+                materialEq.MATERIALEQPID = sysPacket.GetItemString(5);
+                materialEq.MATERIALBATCHID = sysPacket.GetItemString();
+                materialEq.MATERIALCODE = sysPacket.GetItemString();
+                materialEq.MATERIALUSEDATE = sysPacket.GetItemString();
+                materialEq.MATERIALDISEASEDATE = sysPacket.GetItemString();
+                materialEq.MATERIALMAKER = sysPacket.GetItemString();
+                materialEq.MATERIALVALIDATIONFLAGE = sysPacket.GetItemString();
+                materialEq.MATERIALCODE = sysPacket.GetItemString();
+                materialEq.COMMENT = sysPacket.GetItemString();
 
-                string lst = _cim.SysPacket.GetItemString();
+                string lst = sysPacket.GetItemString();
                 MaterialInfor materialInfor = new MaterialInfor();
-                materialInfor.MATERIALID = _cim.SysPacket.GetItemString();
-                materialInfor.MATERIALTYPE = _cim.SysPacket.GetItemString();
-                materialInfor.MATERIALST = _cim.SysPacket.GetItemString();
-                materialInfor.MATERIALPORTID = _cim.SysPacket.GetItemString();
-                materialInfor.MATERIALSTATE = _cim.SysPacket.GetItemString();
-                materialInfor.MATERIALTOTALQTY = _cim.SysPacket.GetItemString();
-                materialInfor.MATERIALUSEQTY = _cim.SysPacket.GetItemString();
-                materialInfor.MATERIALASSEMQTY = _cim.SysPacket.GetItemString();
-                materialInfor.MATERIALNGQTY = _cim.SysPacket.GetItemString();
-                materialInfor.MATERIALREMAINQTY = _cim.SysPacket.GetItemString();
-                materialInfor.MATERIALPROCUSEQTY = _cim.SysPacket.GetItemString();
+                materialInfor.MATERIALID = sysPacket.GetItemString();
+                materialInfor.MATERIALTYPE = sysPacket.GetItemString();
+                materialInfor.MATERIALST = sysPacket.GetItemString();
+                materialInfor.MATERIALPORTID = sysPacket.GetItemString();
+                materialInfor.MATERIALSTATE = sysPacket.GetItemString();
+                materialInfor.MATERIALTOTALQTY = sysPacket.GetItemString();
+                materialInfor.MATERIALUSEQTY = sysPacket.GetItemString();
+                materialInfor.MATERIALASSEMQTY = sysPacket.GetItemString();
+                materialInfor.MATERIALNGQTY = sysPacket.GetItemString();
+                materialInfor.MATERIALREMAINQTY = sysPacket.GetItemString();
+                materialInfor.MATERIALPROCUSEQTY = sysPacket.GetItemString();
 
-                string lsts = _cim.SysPacket.GetItemString();
+                string lsts = sysPacket.GetItemString();
                 REPLY reply = new REPLY();
-                reply.REPLYSTATUS = _cim.SysPacket.GetItemString();
-                reply.REPLYCODE = _cim.SysPacket.GetItemString();
-                reply.REPLYTEXT = _cim.SysPacket.GetItemString();
+                reply.REPLYSTATUS = sysPacket.GetItemString();
+                reply.REPLYCODE = sysPacket.GetItemString();
+                reply.REPLYTEXT = sysPacket.GetItemString();
 
                 MATERIALINFOMATIONSEND materialInfomationSend = new MATERIALINFOMATIONSEND();
                 materialInfomationSend.MATERIALUSEINFO = materialInfor;
@@ -69,7 +70,7 @@ namespace ASOFTCIM
             }
             catch (Exception ex)
             {
-                SendS9F7(_cim.SysPacket);
+                SendS9F7(sysPacket);
                 var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message);
                 LogTxt.Add(LogTxt.Type.Exception, debug);
             }

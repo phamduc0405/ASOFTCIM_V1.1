@@ -19,6 +19,7 @@ using ASOFTCIM.Message.PLC2Cim.Recv;
 using ASOFTCIM.MainControl.Device.PC;
 using ASOFTCIM.MainControl;
 using A_SOFT.CMM.INIT;
+using System.Diagnostics;
 
 namespace ASOFTCIM
 {
@@ -125,7 +126,9 @@ namespace ASOFTCIM
             {
                 
                 EqpData.DeviceId = sysPacket.DeviceId;
-                sysPacket.MakeCimLog();
+               string a=  sysPacket.MakeCimLog();
+                LogTxt.Add(LogTxt.Type.PCCimMess, a);
+
                 if (sysPacket.DeviceId != 1)
                 {
                     SendS9F1(sysPacket);
@@ -145,7 +148,7 @@ namespace ASOFTCIM
                         EqpData.TransactionSys = sysPacket.SystemByte;
                     }
                     Host2CimEventHandle($"HOST -> CIM :RecvS{sysPacket.Stream}F{sysPacket.Function}");
-                    object result = method.Invoke(this, null);
+                    object result = method.Invoke(this, new object[] { sysPacket });
 
                     return;
                 }

@@ -1,4 +1,5 @@
 ﻿using A_SOFT.CMM.INIT;
+using A_SOFT.Ctl.SecGem;
 using ASOFTCIM.Helper;
 using System;
 using System.Collections.Generic;
@@ -11,15 +12,15 @@ namespace ASOFTCIM
 {
     public partial class ACIM
     {
-        public void RecvS9F3()
+        public void RecvS9F3(SysPacket sysPacket)
         {
             try
             {
-                SendS9F3(_cim.SysPacket);
+                SendS9F3(sysPacket);
             }
             catch (Exception ex)
             {
-                SendS9F7(_cim.SysPacket);
+                SendS9F7(sysPacket);
                 var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message);
                 LogTxt.Add(LogTxt.Type.Exception, debug);
             }

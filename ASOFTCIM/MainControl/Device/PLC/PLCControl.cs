@@ -80,31 +80,41 @@ namespace ASOFTCIM
         
         private void _plcH_WordChangedEvent(string Method, object data)
         {
-            if (Method.Contains("EQPSTATUS"))
-            {
-                if (_isEqStatusUpdate) return;
-                _isEqStatusUpdate = true;
-                UpdateStatus(data);
-            }
-            if (Method.Contains("FDC"))
-            {
-                if (_isSvidUpdate) return;
-                _isSvidUpdate = true;
-                UpdateSVID(data);
-                _isSvidUpdate = false;
-            }
-            if (Method.Contains("ALARMREPORT"))
-            {
-                var resul = new ALARMREPORT().Excute(this, data);
-                Task.WaitAll(resul); // Ducph sửa await để chờ update xong thì mới hiện UI
-                ResetEvent?.Invoke();
 
-            }
-            if (new[] { "UNITSTATUS", "MATERIALPORTSTATE", "PORTSTATUS" }.Any(Method.Contains))
-            {
-                PLCWordChange(Method, data);
-                
-            }
+                try
+                {
+                    if (Method.Contains("EQPSTATUS"))
+                    {
+                        if (_isEqStatusUpdate) return;
+                        _isEqStatusUpdate = true;
+                        UpdateStatus(data);
+                    }
+                    if (Method.Contains("FDC"))
+                    {
+                        if (_isSvidUpdate) return;
+                        _isSvidUpdate = true;
+                        UpdateSVID(data);
+                        _isSvidUpdate = false;
+                    }
+                    if (Method.Contains("ALARMREPORT"))
+                    {
+                        var resul = new ALARMREPORT().Excute(this, data);
+                        Task.WaitAll(resul);
+                        ResetEvent?.Invoke();
+                    }
+                    if (new[] { "UNITSTATUS", "MATERIALPORTSTATE", "PORTSTATUS" }.Any(Method.Contains))
+                    {
+                        PLCWordChange(Method, data);
+
+                    }
+                }
+                catch (Exception ex)
+                {
+                    var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message);
+                    LogTxt.Add(LogTxt.Type.Exception, debug);
+                }
+            
+           
         }
         private async void PLCWordChange(string name, object w)
         {

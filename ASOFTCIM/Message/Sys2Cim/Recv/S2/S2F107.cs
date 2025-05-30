@@ -8,23 +8,24 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using ASOFTCIM.Helper;
+using A_SOFT.Ctl.SecGem;
 
 namespace ASOFTCIM
 {
     public partial class ACIM
     {
-        public void RecvS2F107()
+        public void RecvS2F107(SysPacket sysPacket)
         {
             try
             {
                 string HACK = "0";
-                string eqpId = _cim.SysPacket.GetItemString(1);
+                string eqpId = sysPacket.GetItemString(1);
                 BATCHLOT batchlot = new BATCHLOT();
-                batchlot.PRODUCTID = _cim.SysPacket.GetItemString();
-                batchlot.BATCHLOTID = _cim.SysPacket.GetItemString();
-                batchlot.BATCHLOTQTY = _cim.SysPacket.GetItemString();
-                batchlot.REASONCODE = _cim.SysPacket.GetItemString();
-                batchlot.DESCRIPTION = _cim.SysPacket.GetItemString();
+                batchlot.PRODUCTID = sysPacket.GetItemString();
+                batchlot.BATCHLOTID = sysPacket.GetItemString();
+                batchlot.BATCHLOTQTY = sysPacket.GetItemString();
+                batchlot.REASONCODE = sysPacket.GetItemString();
+                batchlot.DESCRIPTION = sysPacket.GetItemString();
 
                 //if (_cim.EQHelper.IsPlc)
                //     new BATCHLOTINFORMATIONDOWNLOAD(_cim.EQHelper.PLCData, batchlot);
@@ -32,7 +33,7 @@ namespace ASOFTCIM
             }
             catch (Exception ex)
             {
-                SendS9F7(_cim.SysPacket);
+                SendS9F7(sysPacket);
                 var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message);
                 LogTxt.Add(LogTxt.Type.Exception, debug);
             }

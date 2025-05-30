@@ -13,12 +13,13 @@ using System.Threading.Tasks;
 using ASOFTCIM.Helper;
 using ASOFTCIM.MainControl;
 using HPSocket.Sdk;
+using A_SOFT.Ctl.SecGem;
 
 namespace ASOFTCIM
 {
     public partial class ACIM
     {
-        public void RecvS2F23()
+        public void RecvS2F23(SysPacket sysPacket)
         {
             try
             {
@@ -26,16 +27,16 @@ namespace ASOFTCIM
                 string TIAACK = "";
                 string trid, repgsz = "";
                 int dsper, totsmp = 0;
-                string eqpID = _cim.SysPacket.GetItemString(1);
-                trid = _cim.SysPacket.GetItemString(2);
-                dsper = int.Parse(_cim.SysPacket.GetItemString(3));
-                totsmp = int.Parse(_cim.SysPacket.GetItemString(4));
-                repgsz = _cim.SysPacket.GetItemString(5);
-                int countSvid = int.Parse(_cim.SysPacket.GetItemString(6));
+                string eqpID = sysPacket.GetItemString(1);
+                trid = sysPacket.GetItemString(2);
+                dsper = int.Parse(sysPacket.GetItemString(3));
+                totsmp = int.Parse(sysPacket.GetItemString(4));
+                repgsz = sysPacket.GetItemString(5);
+                int countSvid = int.Parse(sysPacket.GetItemString(6));
                 List<string> lstSvid = new List<string>();
                 for (int i = 0; i < countSvid; i++)
                 {
-                    lstSvid.Add(_cim.SysPacket.GetItemString());
+                    lstSvid.Add(sysPacket.GetItemString());
                 }
                 tracesv.SVs = lstSvid;
                 tracesv.Init(lstSvid, trid, dsper, totsmp, repgsz);
@@ -102,7 +103,7 @@ namespace ASOFTCIM
             }
             catch (Exception ex)
             {
-                SendS9F7(_cim.SysPacket);
+                SendS9F7(sysPacket);
                 var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message);
                 LogTxt.Add(LogTxt.Type.Exception, debug);
             }

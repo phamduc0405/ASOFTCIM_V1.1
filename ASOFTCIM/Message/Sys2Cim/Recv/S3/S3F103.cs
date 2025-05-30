@@ -1,5 +1,6 @@
 ﻿
 using A_SOFT.CMM.INIT;
+using A_SOFT.Ctl.SecGem;
 using ASOFTCIM.Data;
 using ASOFTCIM.Helper;
 using System;
@@ -13,40 +14,40 @@ namespace ASOFTCIM
 {
     public partial class ACIM
     {
-        public void RecvS3F103()
+        public void RecvS3F103(SysPacket sysPacket)
         {
             try
             {
                 string ACK = "0";
-                string eqpId = _cim.SysPacket.GetItemString(1);
+                string eqpId = sysPacket.GetItemString(1);
                 Validation validation = new Validation();
-                validation.CARRIERID = _cim.SysPacket.GetItemString();
-                validation.UNIQUEID = _cim.SysPacket.GetItemString(4);
-                validation.UNIQUETYPE = _cim.SysPacket.GetItemString();
-                validation.PRODUCTID = _cim.SysPacket.GetItemString();
-                validation.PRODUCTSPEC = _cim.SysPacket.GetItemString();
-                validation.PRODUCT_TYPE = _cim.SysPacket.GetItemString();
-                validation.PRODUCT_KIND = _cim.SysPacket.GetItemString();
-                validation.PPID = _cim.SysPacket.GetItemString();
-                validation.STEPID = _cim.SysPacket.GetItemString();
-                validation.CELL_SIZE = _cim.SysPacket.GetItemString();
-                validation.CELL_THICKNESS = _cim.SysPacket.GetItemString();
-                validation.CELLINFORESULT = _cim.SysPacket.GetItemString();
-                validation.INS_COUNT = _cim.SysPacket.GetItemString();
-                validation.COMMENT = _cim.SysPacket.GetItemString();
+                validation.CARRIERID = sysPacket.GetItemString();
+                validation.UNIQUEID = sysPacket.GetItemString(4);
+                validation.UNIQUETYPE = sysPacket.GetItemString();
+                validation.PRODUCTID = sysPacket.GetItemString();
+                validation.PRODUCTSPEC = sysPacket.GetItemString();
+                validation.PRODUCT_TYPE = sysPacket.GetItemString();
+                validation.PRODUCT_KIND = sysPacket.GetItemString();
+                validation.PPID = sysPacket.GetItemString();
+                validation.STEPID = sysPacket.GetItemString();
+                validation.CELL_SIZE = sysPacket.GetItemString();
+                validation.CELL_THICKNESS = sysPacket.GetItemString();
+                validation.CELLINFORESULT = sysPacket.GetItemString();
+                validation.INS_COUNT = sysPacket.GetItemString();
+                validation.COMMENT = sysPacket.GetItemString();
                 List<Tuple<string, string>> items = new List<Tuple<string, string>>();
-                int itemCount = int.Parse(_cim.SysPacket.GetItemString());
+                int itemCount = int.Parse(sysPacket.GetItemString());
                 for (int i = 0; i < itemCount; i++)
                 {
-                    string list = _cim.SysPacket.GetItemString();
-                    string itemName = _cim.SysPacket.GetItemString();
-                    string itemValue = _cim.SysPacket.GetItemString();
+                    string list = sysPacket.GetItemString();
+                    string itemName = sysPacket.GetItemString();
+                    string itemValue = sysPacket.GetItemString();
                     items.Add(Tuple.Create(itemName, itemValue));
                 }
                 validation.ITEMS = items;
-                string lst = _cim.SysPacket.GetItemString();
-                validation.REPLY.REPLYSTATUS = _cim.SysPacket.GetItemString();
-                validation.REPLY.REPLYTEXT = _cim.SysPacket.GetItemString(); 
+                string lst = sysPacket.GetItemString();
+                validation.REPLY.REPLYSTATUS = sysPacket.GetItemString();
+                validation.REPLY.REPLYTEXT = sysPacket.GetItemString(); 
                 //ETC
                 SendMessage2PLC("SPECIFICVALIDATIONDATASEND1", validation);
                 //ETC
@@ -57,7 +58,7 @@ namespace ASOFTCIM
             }
             catch (Exception ex)
             {
-                SendS9F7(_cim.SysPacket);
+                SendS9F7(sysPacket);
                 var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message);
                 LogTxt.Add(LogTxt.Type.Exception, debug);
             }

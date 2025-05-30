@@ -31,7 +31,9 @@ namespace ASOFTCIM.Helper
         {
             try
             {
-                if (sysPacket.Function % 2 == 0)
+
+                if(IsUseTimeOut)
+
                 {
                     if (!SysDatas.TransWaits.ContainsKey(sysPacket.SystemByte))
                     {
@@ -42,7 +44,6 @@ namespace ASOFTCIM.Helper
                         SysDatas.TransWaits.TryRemove(sysPacket.SystemByte, out _);
                     }
                 }
-
                 SysPacket = sysPacket;
                 
                 SysDatas.TransactionSys = sysPacket.SystemByte;

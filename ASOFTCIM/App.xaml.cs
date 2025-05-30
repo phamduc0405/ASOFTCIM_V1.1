@@ -33,6 +33,7 @@ namespace ASOFTCIM
         /// </summary>
         private void App_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
         {
+
             Application.Current.Dispatcher.Invoke(() =>
             {
                 LogHelper.Error(e.Exception, "Unhandled exception in WPF UI thread");
@@ -41,6 +42,7 @@ namespace ASOFTCIM
                      MessageBoxButton.OK,
                      MessageBoxImage.Error
                     );
+
             e.Handled = true; // Đánh dấu là đã xử lý, ứng dụng không crash
             });
         }
@@ -62,9 +64,15 @@ namespace ASOFTCIM
                     MessageBoxButton.OK,
                     MessageBoxImage.Error
                 );
+
             }
-            MessageBox.Show("Ứng dụng gặp sự cố và sẽ thoát.");
-            });
+
+            
+            else
+            {
+                MessageBox.Show("Ứng dụng gặp sự cố không xác định.");
+            }
+
         }
         protected override void OnStartup(StartupEventArgs e)
         {
