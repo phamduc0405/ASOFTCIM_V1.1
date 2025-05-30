@@ -52,27 +52,25 @@ namespace ASOFTCIM
         /// </summary>
         private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            Application.Current.Dispatcher.Invoke(() =>
-            {
+           
                 Exception ex = e.ExceptionObject as Exception;
-            if (ex != null)
-            {
-                LogHelper.Error(ex, "Unhandled exception in non-UI thread");
-                MessageBox.Show(
-                    $"Ứng dụng gặp sự cố:\n\n{ex.GetType().Name}: {ex.Message}",
-                    "Lỗi chưa xử lý (Thread nền)",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Error
-                );
+                if (ex != null)
+                {
+                    LogHelper.Error(ex, "Unhandled exception in non-UI thread");
+                    MessageBox.Show(
+                        $"Ứng dụng gặp sự cố:\n\n{ex.GetType().Name}: {ex.Message}",
+                        "Lỗi chưa xử lý (Thread nền)",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Error
+                    );
 
-            }
+                }
+                else
+                {
+                    MessageBox.Show("Ứng dụng gặp sự cố không xác định.");
+                }
 
             
-            else
-            {
-                MessageBox.Show("Ứng dụng gặp sự cố không xác định.");
-            }
-
         }
         protected override void OnStartup(StartupEventArgs e)
         {

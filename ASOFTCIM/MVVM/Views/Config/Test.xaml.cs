@@ -159,10 +159,12 @@ namespace ASOFTCIM.MVVM.Views.Config
             };
             btnS5F1Start.Click += (s, e) =>
             {
-                StartAlarmReader();
+                _controller.CIM.PLCH.TestAlarm = true;
+               // StartAlarmReader();
             };
             btnS5F1Stop.Click += (s, e) =>
             {
+                _controller.CIM.PLCH.TestAlarm = false;
                 if (_alarmReaderThread != null && _alarmReaderThread.IsAlive)
                 {
                     _isReadingAlarm = false;

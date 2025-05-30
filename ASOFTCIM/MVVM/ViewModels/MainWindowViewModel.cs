@@ -222,7 +222,7 @@ namespace ASOFTCIM.MVVM.ViewModels
                 MainWindowViewModel.User = User;
                 _mainWindowModel.User = User;
                 LeveLogin = 1;
-                Controller.CIM.PLCH.TestAlarm = true;
+                
                 StartInactivityMonitor();
                 return;
             }
@@ -238,8 +238,6 @@ namespace ASOFTCIM.MVVM.ViewModels
             {
                 MainWindowViewModel.User = User;
                 _mainWindowModel.User = User;
-                Controller.CIM.PLCH.TestAlarm = false;
-
                 LeveLogin = 3;
             }
             else

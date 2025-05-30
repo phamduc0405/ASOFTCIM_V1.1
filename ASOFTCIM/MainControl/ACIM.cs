@@ -126,9 +126,7 @@ namespace ASOFTCIM
             {
                 
                 EqpData.DeviceId = sysPacket.DeviceId;
-               string a=  sysPacket.MakeCimLog();
-                LogTxt.Add(LogTxt.Type.PCCimMess, a);
-
+               
                 if (sysPacket.DeviceId != 1)
                 {
                     SendS9F1(sysPacket);

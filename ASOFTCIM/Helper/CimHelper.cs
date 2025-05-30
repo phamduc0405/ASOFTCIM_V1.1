@@ -31,8 +31,9 @@ namespace ASOFTCIM.Helper
         {
             try
             {
-
-                if(IsUseTimeOut)
+                string a = sysPacket.MakeCimLog();
+                LogTxt.Add(LogTxt.Type.PCCimMess, a);
+                if (IsUseTimeOut)
 
                 {
                     if (!SysDatas.TransWaits.ContainsKey(sysPacket.SystemByte))

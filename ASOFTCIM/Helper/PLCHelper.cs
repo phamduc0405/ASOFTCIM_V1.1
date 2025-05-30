@@ -185,18 +185,6 @@ namespace ASOFTCIM.Helper
                 {
                     _carrial = await ExcelHelper.ReadExcel<CarialModel>(ExcelPath, "Cassette Batch");
                 }
-
-                //var wplc = await ExcelHelper.ReadExcel<WordModel>(ExcelPath, "PLC->CIM Word(V1.21)");
-                //_alarms = await ExcelHelper.ReadExcel<Alarm>(ExcelPath, "ALARM");
-                //_svids = await ExcelHelper.ReadExcel<FDCModel>(ExcelPath, "FDC");
-                //_ppidParams = await ExcelHelper.ReadExcel<PPIDModel>(ExcelPath, "RMS");
-                //_lstPPID = await ExcelHelper.ReadExcel<PPIDModel>(ExcelPath, "PPID");
-                //_ecms = await ExcelHelper.ReadExcel<ECMModel>(ExcelPath, "ECM");
-                //_words.AddRange(wplc);
-                //_plcMemms =await ExcelHelper.ReadExcel<PlcMemmory>(ExcelPath, "MemoryConfig");
-                //_materials = await ExcelHelper.ReadExcel<MaterialModel>(ExcelPath, "Material");
-                //_apc = await ExcelHelper.ReadExcel<APCModel>(ExcelPath, "APC");
-                //_carrial = await ExcelHelper.ReadExcel<CarialModel>(ExcelPath, "Cassette Batch");
             }).GetAwaiter().GetResult();
 
         }
@@ -218,8 +206,6 @@ namespace ASOFTCIM.Helper
             _plc.BitChangedEvent -= PlcComm_BitChangedEvent;
             _plc.BitChangedEvent += PlcComm_BitChangedEvent;
 
-            //_plc.WordChangedEvent -= PlcComm_WordChangedEvent;
-            //_plc.WordChangedEvent += PlcComm_WordChangedEvent;
 
             Task.Run(() =>
             {
@@ -258,19 +244,49 @@ namespace ASOFTCIM.Helper
         }
         private void WordReader()
         {
-            WordModel wAlam = _words.FirstOrDefault(x => x.Area.IndexOf("ALARM", StringComparison.OrdinalIgnoreCase) >= 0);
-            int startAddr = wAlam.Address;
-            int endAddr = wAlam.Address + wAlam.Length - 1;
-
-            var _wordStatusMap = _plc.InputWordStatuses
-                .Where(x => x.Address >= startAddr && x.Address <= endAddr)
-                .GroupBy(x => x.Address)
-                .ToDictionary(g => g.Key, g => g.ToList());
+           
             while (_isReadingWord)
             {
                 try
                 {
 
+                    var groups = _words.Where(w => w.Area.Equals("EQPSTATUS", StringComparison.OrdinalIgnoreCase)
+                         || w.Area.Equals("FDC", StringComparison.OrdinalIgnoreCase))
+                         .GroupBy(w => w.Area.ToUpper());
+                    foreach (var group in groups)
+                    {
+                        string area = group.Key;
+
+                        if (area == "EQPSTATUS")
+                        {
+                            WordChangedEventHandle(area, group.ToList());
+                        }
+                        else if (area == "FDC")
+                        {
+                            WordChangedEventHandle(area, _svids);
+                        }
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    LogTxt.Add(LogTxt.Type.Exception, $"Class:{this.GetType().Name} Method:{MethodBase.GetCurrentMethod().Name} exception: {ex.Message}");
+                }
+
+                Thread.Sleep(100);
+            }
+        }
+        private void AlarmReader()
+        {
+            WordModel wAlam = _words.FirstOrDefault(x => x.Area.IndexOf("ALARM", StringComparison.OrdinalIgnoreCase) >= 0);
+            int startAddr = wAlam.Address;
+            int endAddr = wAlam.Address + wAlam.Length - 1;
+
+            var _wordStatusMap = _plc.InputWordStatuses.Where(x => x.Address >= startAddr && x.Address <= endAddr).GroupBy(x => x.Address).ToDictionary(g => g.Key, g => g.ToList());
+            while (_isReadingAlarm)
+            {
+                try
+                {
                     for (int addr = startAddr; addr <= endAddr; addr++)
                     {
                         if (_wordStatusMap.TryGetValue(addr, out var wordList))
@@ -284,36 +300,12 @@ namespace ASOFTCIM.Helper
                                     {
                                         bit.ReflectionCompleted();
                                     }
-                                    
+
                                 }
                             }
                         }
                     }
 
-                    
-                }
-                catch (Exception ex)
-                {
-                    LogTxt.Add(LogTxt.Type.Exception, $"Class:{this.GetType().Name} Method:{MethodBase.GetCurrentMethod().Name} exception: {ex.Message}");
-                }
-
-                Thread.Sleep(100);
-            }
-        }
-        private void AlarmReader()
-        {
-            
-            while (_isReadingAlarm)
-            {
-                try
-                {
-                    WordModel wAlam = _words.FirstOrDefault(x => x.Area.ToUpper().Contains("ALARM"));
-                    als = _plc.InputWordStatuses.Where(x => x.Address >= wAlam.Address && x.Address <= (wAlam.Address + wAlam.Length - 1) && x.IsChanged).ToArray();
-                    foreach (var al in als)
-                    {
-                        Al_BitChangedEvent(al);
-                        al.ReflectionCompleted();
-                    }
 
                 }
                 catch (Exception ex)
@@ -324,63 +316,7 @@ namespace ASOFTCIM.Helper
                 Thread.Sleep(100);
             }
         }
-        private void PlcComm_WordChangedEvent(MelsecIF.WordStatus status)
-        {
-
-            try
-            {
-                if (_words.Any(x => x.IsPlc && status.Address >= x.Address && status.Address <= (x.Address + x.Length - 1)))
-                {
-                    WordModel w = _words.Where(x => x.IsPlc && status.Address >= x.Address && status.Address <= (x.Address + x.Length - 1)).FirstOrDefault();
-                    w.WordChangeFromPlc();
-                    if (w.Area.ToUpper() != "ALARM" && w.Area.ToUpper() != "EQPSTATUS")
-                    {
-                        return;
-                    }
-                    switch (w.Area.ToUpper())
-                    {
-                        case string a when a.Contains("ALARM"):
-                            Task.Run(() =>
-                            {
-                                WordChangedEventHandle("ALARMREPORT", status);
-                            });
-                            break;
-                        case string a when a.Contains("EQPSTATUS"):
-                            Task.Run(() =>
-                            {
-                                WordChangedEventHandle(w.Area.ToUpper(), _words.Where(x => x.Area == w.Area).ToList());
-                            });
-                            break;
-                        case string a when a.Contains("FDC"):
-                            //Task.Run(() =>
-                            //{
-                            //    WordChangedEventHandle(w.Area.ToUpper(), _svids);
-                            //});
-                            // WordChangedEventHandle(w.Area.ToUpper(), _svids);
-                            break;
-                        case string a when a.Contains("UNITSTATUS"):
-                            //  WordChangedEventHandle("UNITSTATUS", _words.Where(x => x.Area == w.Area).ToList());
-                            break;
-                        case string a when a.Contains("MATERIALPORTSTATE"):
-                            //  WordChangedEventHandle("MATERIALPORTSTATE", _words.Where(x => x.Area == w.Area).ToList());
-                            break;
-                        case string a when a.Contains("PORTSTATUS"):
-                            //   WordChangedEventHandle("PORTSTATUS", _words.Where(x => x.Area == w.Area).ToList());
-                            break;
-
-                        default:
-                            break;
-                    }
-                }
-
-
-            }
-            catch (Exception ex)
-            {
-                var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message);
-                LogTxt.Add(LogTxt.Type.Exception, debug);
-            }
-        }
+        
 
         public BitModel GetBitName(MelsecIF.BitStatus bitstatus)
         {
@@ -418,17 +354,7 @@ namespace ASOFTCIM.Helper
                         }
                         MakeLogBit(false, bit, status.IsOn);
                         BitChangedEventHandle(bit);
-                    }
-                    //if(bit.Type == "Reverse")
-                    //{
-                    //    if (status.IsOn)
-                    //    {
-                    //        bit.SetPCValue = false;
-                    //        return;
-                    //    }
-                    //    MakeLogBit(false, bit, status.IsOn);
-                    //    BitChangedEventHandle(bit);
-                    //}    
+                    } 
                     if (!status.IsOn) return;
                     if (bit.Type == "Command")
                     {
