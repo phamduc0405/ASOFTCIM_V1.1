@@ -47,6 +47,7 @@ namespace ASOFTCIM
 
                         _plcH = new PLCHelper();
                         _plcH = _eqpConfig.PLCHelper;
+                        _plcH.IsLogPLC = _eqpConfig.UseLogPLC;
                         _plcH.Start(_plc, _eqpConfig.EQPID);
                         _aliveBit = new Thread(Alive)
                         {

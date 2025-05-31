@@ -663,6 +663,26 @@
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Center"
                                         Style="{StaticResource HeaderTextBlockStyle}"
+                                        Text="USE LOG PLC " />
+                                    <ToggleButton
+                                        Grid.Column="1"
+                                        HorizontalAlignment="Left"
+                                        Background="LawnGreen"
+                                        IsChecked="{Binding Configs.UseLogPLC}"
+                                        Style="{StaticResource ToggleFlipFlop}"
+                                        Tag="GreenYellow" />
+                                </Grid>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1*" />
+                                        <ColumnDefinition Width="2*" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock
+                                        Grid.Column="0"
+                                        Margin="10,0,0,0"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        Style="{StaticResource HeaderTextBlockStyle}"
                                         Text="USE LOG FDC " />
                                     <ToggleButton
                                         x:Name="tglogFDC"
@@ -673,6 +693,7 @@
                                         Style="{StaticResource ToggleFlipFlop}"
                                         Tag="GreenYellow" />
                                 </Grid>
+
                                 <Grid x:Name="grlogFDC">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="1*" />

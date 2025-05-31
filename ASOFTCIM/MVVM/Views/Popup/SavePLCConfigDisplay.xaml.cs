@@ -26,6 +26,7 @@ namespace ASOFTCIM.MVVM.Views.Popup
     /// </summary>
     public partial class SavePLCConfigDisplay : Window
     {
+        
         private ResourceDictionary resBtn;
         private ResourceDictionary resTxt;
         private Controller _controller;

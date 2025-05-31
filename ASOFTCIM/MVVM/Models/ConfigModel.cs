@@ -40,6 +40,7 @@ namespace ASOFTCIM.MVVM.Models
         private string _aliveTime;
         private bool _useLogFDC;
         private string _logFodlerFDC;
+        private bool _useLogPLC;
         #endregion
         #region CIM
         private string _ip;
@@ -261,6 +262,16 @@ namespace ASOFTCIM.MVVM.Models
                 OnPropertyChanged(nameof(UseLogFDC));
             }
         }
+        public bool UseLogPLC
+        {
+            get { return _useLogPLC; }
+            set
+            {
+                _useLogPLC = value;
+                OnPropertyChanged(nameof(UseLogPLC));
+            }
+        }
+        
         public string LogFodlerFDC
         {
             get { return _logFodlerFDC; }
