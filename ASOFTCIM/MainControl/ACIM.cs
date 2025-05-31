@@ -186,6 +186,9 @@ namespace ASOFTCIM
         }
         private static readonly Dictionary<(string SnFm, int Ceid), string> _messageNameMap = new Dictionary<(string, int), string>
         {
+            { ("S1F1", 0), "Are You There?" },
+            { ("S1F2", 0), "CIM CONNECT" },
+            { ("S6F11", 106), "EQP STATE" },
             { ("S2F17", 0), "DATETIMEREQUEST" },
             { ("S2F18", 0), "DATETIME" },
             { ("S1F5", 1), "EQP STATE REQUEST" },
@@ -226,6 +229,9 @@ namespace ASOFTCIM
             { ("S5F2", 0), "ALARM ACK" },
 
             { ("S6F11", 606), "TPM" },
+            { ("S6F203", 257), "SPECIFIC VALIDATION REQUEST" },
+            { ("S3F103", 257), "SPECIFIC VALIDATION " },
+            { ("S6F11", 257), "CARRIER RELEASE COMPLETE" },
 
         };
 
