@@ -33,16 +33,19 @@ namespace ASOFTCIM.Helper
             {
                 string a = sysPacket.MakeCimLog();
                 LogTxt.Add(LogTxt.Type.PCCimMess, a);
-                if (IsUseTimeOut)
-
+                if (sysPacket.Function % 2 == 0)
                 {
-                    if (!SysDatas.TransWaits.ContainsKey(sysPacket.SystemByte))
+                    if (IsUseTimeOut)
+
                     {
-                        return;
-                    }
-                    else
-                    {
-                        SysDatas.TransWaits.TryRemove(sysPacket.SystemByte, out _);
+                        if (!SysDatas.TransWaits.ContainsKey(sysPacket.SystemByte))
+                        {
+                            return;
+                        }
+                        else
+                        {
+                            SysDatas.TransWaits.TryRemove(sysPacket.SystemByte, out _);
+                        }
                     }
                 }
                 SysPacket = sysPacket;

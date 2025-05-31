@@ -40,6 +40,9 @@
     <ApplicationIcon>Amonitor.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
+  <AssemblyVersion>1.0.0.0</AssemblyVersion>
+</PropertyGroup>
+  <PropertyGroup>
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>

@@ -221,6 +221,7 @@ namespace ASOFTCIM.MVVM.ViewModels
             {
                 MainWindowViewModel.User = User;
                 _mainWindowModel.User = User;
+                _mainWindowModel.LogInOut = "LogOut";
                 LeveLogin = 1;
                 
                 StartInactivityMonitor();
@@ -229,6 +230,7 @@ namespace ASOFTCIM.MVVM.ViewModels
             if (User == "Engineer" && Pass == "2")
             {
                 MainWindowViewModel.User = User;
+                _mainWindowModel.LogInOut = "LogOut";
                 _mainWindowModel.User = User;
 
                 LeveLogin = 2;
@@ -237,6 +239,7 @@ namespace ASOFTCIM.MVVM.ViewModels
             if (User == "Operator" && Pass == "3")
             {
                 MainWindowViewModel.User = User;
+                _mainWindowModel.LogInOut = "LogOut";
                 _mainWindowModel.User = User;
                 LeveLogin = 3;
             }
@@ -244,6 +247,7 @@ namespace ASOFTCIM.MVVM.ViewModels
             {
                 MainWindowViewModel.User = "User";
                 _mainWindowModel.User = User;
+                _mainWindowModel.LogInOut = "LogIn";
 
                 LeveLogin = 2;
             }
@@ -282,6 +286,7 @@ namespace ASOFTCIM.MVVM.ViewModels
             User = "User";
             Pass = "2";
             _mainWindowModel.User = User;
+            _mainWindowModel.LogInOut = "LogIn";
             _navigationService.NavigateTo<HomeViewModel>();
             //MainWindowModel.Currentview = new HomeView(); //quay ve HOME
         }

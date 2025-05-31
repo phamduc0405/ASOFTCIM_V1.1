@@ -159,18 +159,22 @@ namespace ASOFTCIM.MVVM.Views.Config
             };
             btnS5F1Start.Click += (s, e) =>
             {
-                _controller.CIM.PLCH.TestAlarm = true;
-               // StartAlarmReader();
+                //_controller.CIM.PLCH.TestAlarm = true;
+                // StartAlarmReader();
+                _controller.CIM.StartSiMulatorAlarm();
+
             };
             btnS5F1Stop.Click += (s, e) =>
             {
-                _controller.CIM.PLCH.TestAlarm = false;
-                if (_alarmReaderThread != null && _alarmReaderThread.IsAlive)
-                {
-                    _isReadingAlarm = false;
-                    _alarmReaderThread.Join();
-                    _alarmReaderThread = null;
-                }
+                //_controller.CIM.PLCH.TestAlarm = false;
+                //if (_alarmReaderThread != null && _alarmReaderThread.IsAlive)
+                //{
+                //    _isReadingAlarm = false;
+                //    _alarmReaderThread.Join();
+                //    _alarmReaderThread = null;
+                //}
+                _controller.CIM.StopSiMulatorAlarm();
+
             };
         }
         private void StartAlarmReader()

@@ -137,7 +137,7 @@ namespace ASOFTCIM.MVVM.ViewModels
                     _equipmentConfig.AliveTime = _config.AliveTime;
                     _equipmentConfig.UseLogFDC = _config.UseLogFDC;
                     _equipmentConfig.LogFDC = _config.LogFodlerFDC;
-
+                    _equipmentConfig.SizeFile = _config.SizeFile;
                     var debug = $"Class:{this.GetType().Name} Method:{MethodBase.GetCurrentMethod().Name} >.";
                     LogTxt.Add(LogTxt.Type.UI, debug);
                     await SaveConfig();
@@ -200,7 +200,7 @@ namespace ASOFTCIM.MVVM.ViewModels
                             _config.AliveTime = _equipmentConfig.AliveTime;
                             _config.LogFodlerFDC = _equipmentConfig.LogFDC;
                             _config.UseLogFDC = _equipmentConfig.UseLogFDC;
-
+                            _config.SizeFile = _equipmentConfig.SizeFile.ToString();
                         }
 
                         //PlcConfig

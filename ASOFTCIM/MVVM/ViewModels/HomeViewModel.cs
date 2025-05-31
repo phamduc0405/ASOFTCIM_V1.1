@@ -150,7 +150,7 @@ namespace ASOFTCIM.MVVM.ViewModels
 
         private void Controller_CimConnectChangeEvent(bool isConnected)
         {
-            _home.CimConnect = isConnected ? ":   CimConnect" : ":   CimDisConnect";
+            _home.CimConnect = isConnected ? ":   Host Connected" : ":   Host DisConnected";
         }
 
         private void Controller_PlcConnectChangeEvent(bool isConnected)

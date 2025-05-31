@@ -48,6 +48,7 @@ namespace ASOFTCIM.MainControl
             _cim = new ACIM(_equipmentConfig);
             _cim.PlcConnectChangeEvent += PlcConnectEvent;
             _cim.Cim.Conn.OnConnectEvent += OnConnectEvent;
+            LogTxt.FileSize = int.Parse(_equipmentConfig.SizeFile);
         }
         public void Stop()
         {

@@ -20,6 +20,7 @@ namespace ASOFTCIM.Config
         public string AliveTime { get; set; } = "1000";
         public bool UseLogFDC { get; set; } = false;
         public string LogFolder { get; set; } = string.Empty;
+        public string SizeFile { get; set; } = "10"; // MB
         public string LogFDC { get; set; } = string.Empty;
         public PLCHelper PLCHelper { get; set; } = new PLCHelper();
         public PLCConfig PLCConfig { get; set; } = new PLCConfig();
