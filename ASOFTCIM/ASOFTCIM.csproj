@@ -40,8 +40,8 @@
     <ApplicationIcon>Amonitor.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-  <AssemblyVersion>1.0.0.0</AssemblyVersion>
-</PropertyGroup>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </PropertyGroup>
   <PropertyGroup>
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
@@ -63,9 +63,7 @@
     </Reference>
     <Reference Include="A_SOFT.Ctl.SecGem, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-
       <HintPath>..\..\..\..\..\..\..\AsoftLib\A_SOFT\Bin\Debug\Confused\A_SOFT.Ctl.SecGem.dll</HintPath>
-
     </Reference>
     <Reference Include="A_SOFT.Ctl.Tcp, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -95,6 +93,9 @@
     </Reference>
     <Reference Include="LiveCharts.Wpf, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
       <HintPath>..\packages\LiveCharts.Wpf.0.9.7\lib\net45\LiveCharts.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Expression.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unnoficial.Microsoft.Expression.Drawing.1.0.0\lib\Microsoft.Expression.Drawing.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.IO.RecyclableMemoryStream, Version=1.4.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.IO.RecyclableMemoryStream.1.4.1\lib\net46\Microsoft.IO.RecyclableMemoryStream.dll</HintPath>
@@ -205,6 +206,7 @@
     <Compile Include="Helper\LogHelper.cs" />
     <Compile Include="Helper\PLCHelper.cs" />
     <Compile Include="Init\AsyncRelayCommand.cs" />
+    <Compile Include="Init\FileCheckerService.cs" />
     <Compile Include="Init\LibMethod.cs" />
     <Compile Include="Init\LogFDC.cs" />
     <Compile Include="Init\ObservableObject.cs" />
@@ -249,6 +251,7 @@
     <Compile Include="MVVM\Models\HomeModel.cs" />
     <Compile Include="MVVM\Models\MainWindowModel.cs" />
     <Compile Include="MVVM\Models\MaterialModel.cs" />
+    <Compile Include="MVVM\Models\WaittingDisplayModel.cs" />
     <Compile Include="MVVM\NavigationService\INavigationService.cs" />
     <Compile Include="MVVM\NavigationService\NavigationService.cs" />
     <Compile Include="MVVM\ViewModels\AlarmViewModel.cs" />
@@ -260,6 +263,7 @@
     <Compile Include="MVVM\ViewModels\MainViewModel.cs" />
     <Compile Include="MVVM\ViewModels\MainWindowViewModel.cs" />
     <Compile Include="MVVM\ViewModels\MaterialViewModel.cs" />
+    <Compile Include="MVVM\ViewModels\WaittingDisplayViewModel.cs" />
     <Compile Include="MVVM\Views\Alarm\AlarmView.xaml.cs">
       <DependentUpon>AlarmView.xaml</DependentUpon>
     </Compile>
@@ -317,6 +321,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MVVM\Views\Popup\SavePLCConfigDisplay.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\Views\Popup\WaittingDisplay.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -581,6 +589,9 @@
     <Compile Include="MVVM\Views\Popup\SavePLCConfigDisplay.xaml.cs">
       <DependentUpon>SavePLCConfigDisplay.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MVVM\Views\Popup\WaittingDisplay.xaml.cs">
+      <DependentUpon>WaittingDisplay.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MVVM\Views\RMS\RMSView.xaml.cs">
       <DependentUpon>RMSView.xaml</DependentUpon>
     </Compile>
@@ -628,6 +639,7 @@
     <Folder Include="Message\PLC2Cim\Recv\S7\" />
     <Folder Include="Message\PLC2Cim\Recv\S8\" />
     <Folder Include="Message\PLC2Cim\Recv\S9\" />
+    <Folder Include="MVVM\Services\" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />

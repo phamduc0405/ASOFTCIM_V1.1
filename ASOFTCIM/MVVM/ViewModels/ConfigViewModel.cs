@@ -43,7 +43,7 @@ namespace ASOFTCIM.MVVM.ViewModels
         }
         public ConfigViewModel()
         {
-            _controller = MainWindowViewModel.Controller;
+            _controller = Controller.Instange;
             _config = new ConfigModel();
             _equipmentConfig = _controller.EquipmentConfig;
 

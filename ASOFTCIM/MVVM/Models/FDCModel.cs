@@ -14,7 +14,7 @@ namespace ASOFTCIM.MVVM.Models
         private ObservableCollection<SV> _allSVIDs;
         private ObservableCollection<SV> _currentSVIDsL;
         private ObservableCollection<SV> _currentSVIDsR;
-
+        
         public ObservableCollection<SV> AllSVIDs
         {
             get => _allSVIDs;

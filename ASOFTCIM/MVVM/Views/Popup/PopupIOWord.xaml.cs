@@ -30,7 +30,7 @@ namespace ASOFTCIM.MVVM.Views.Popup
         public PopupIOWord(List<IWordModel> wordModels)
         {
             InitializeComponent();
-            _controller = MainWindowViewModel.Controller;
+            _controller = Controller.Instange;
             _wordModels = wordModels;
             Initial();
         }

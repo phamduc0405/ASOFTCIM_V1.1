@@ -38,7 +38,7 @@ namespace ASOFTCIM.MVVM.Views.FDC
         public FDCView()
         {
             InitializeComponent();
-            _controller = MainWindowViewModel.Controller;
+            _controller = Controller.Instange;
             res = Application.Current.Resources;
             _totalsvid = _controller.CIM.EqpData.SVID.Count();
             CreateEvent();

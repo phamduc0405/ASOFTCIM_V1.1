@@ -1,5 +1,8 @@
 ﻿using ASOFTCIM.Helper;
 using ASOFTCIM.Init;
+using ASOFTCIM.MainControl;
+using ASOFTCIM.MVVM.ViewModels;
+using ASOFTCIM.MVVM.Views.Popup;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -16,11 +19,10 @@ namespace ASOFTCIM
     /// </summary>
     public partial class App : Application
     {
+       
         protected void ApplicationStart(object sender, StartupEventArgs e)
         {
-            WpfSingleInstance.Make("ASOFTCIM");
-            var mainview = new MainWindow();
-            mainview.Show();
+            ShowMainWindowWithWaitingPopup();
         }
         public App()
         {
@@ -86,5 +88,58 @@ namespace ASOFTCIM
             LogHelper.Stop();
             base.OnExit(e);
         }
+        private async void ShowMainWindowWithWaitingPopup()
+        {
+            //cửa sổ chờ chạy chương trình
+            var waitingPopup = new WaittingDisplay();
+            await Dispatcher.InvokeAsync(() => waitingPopup.Show());
+            waitingPopup.Progress = 0 * 3.6;
+
+            //kiểm tra xem chương trình có đang chạy không
+            WpfSingleInstance.Make("ASOFTCIM");
+            await waitingPopup.SmoothProgressToAsync(10 * 3.6);
+
+            // Kiểm tra các file cần thiết trước khi khởi động 
+            var fileChecker = new FileCheckerService();
+            if (!fileChecker.CheckAllRequiredFiles(out string errorMessage))
+            {
+                MessageBox.Show(
+                    errorMessage,
+                    "Lỗi khởi động",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error
+                );
+                Shutdown();
+                return;
+            }
+            await waitingPopup.SmoothProgressToAsync(30 * 3.6);
+
+            // khởi tạo Controller trước 
+            var controller = Controller.Instange;
+            if (!controller.IsReadConfig)
+            {
+                MessageBox.Show($"Cần kiểm tra File Config",
+                    "Ứng dụng gặp sự cố : Lỗi file Config",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error
+                   );
+                Application.Current.Shutdown();
+                return;
+            }
+            await waitingPopup.SmoothProgressToAsync(50 * 3.6);
+
+            // sau khi có controller thì khởi tạo UI
+            var mainWindow = new MainWindow();
+            await waitingPopup.SmoothProgressToAsync(80 * 3.6);
+
+            mainWindow.Loaded += (s, a) =>
+            {
+                waitingPopup.Close();
+            };
+            mainWindow.DataContext = new MainWindowViewModel(mainWindow);
+            await waitingPopup.SmoothProgressToAsync(100 * 3.6);
+            mainWindow.Show();
+        }
+        
     }
 }

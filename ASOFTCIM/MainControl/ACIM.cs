@@ -189,6 +189,7 @@ namespace ASOFTCIM
             { ("S1F1", 0), "Are You There?" },
             { ("S1F2", 0), "CIM CONNECT" },
             { ("S6F11", 106), "EQP STATE" },
+            { ("S6F11", 101), "EQP STATE CHANGE" },
             { ("S2F17", 0), "DATETIMEREQUEST" },
             { ("S2F18", 0), "DATETIME" },
             { ("S1F5", 1), "EQP STATE REQUEST" },
@@ -239,6 +240,10 @@ namespace ASOFTCIM
         {
             if (_messageNameMap.TryGetValue((snfm, ceid), out string name))
             {
+                if(ceid != 0)
+                {
+                    return $"{ceid} " + name;
+                }
                 return name;
             }
             return "";
@@ -252,7 +257,7 @@ namespace ASOFTCIM
                 {
                     Data.Alarm alarm = new Data.Alarm();
 
-                    for(int i =1; i<=1;i++)
+                    for(int i =1; i<=5;i++)
                     {
                         alarm = EqpData.ALS[i];
                         alarm.ALST = "2";
@@ -399,6 +404,10 @@ namespace ASOFTCIM
             if (Items.Count > 1 && int.TryParse(Items[1]?.ToString(), out int tmp))
             {
                 ceid = tmp;
+            }
+            if(Items.Count > 1 && int.TryParse(Items[2]?.ToString(), out int tmpS6f11) && Stream == 6 && Function == 11)
+            {
+                ceid = tmpS6f11;
             }
             string messageName = GetMessageName(snfm, ceid);
             Host2CimEventHandle($"CIM -> HOST :SEND S{Stream}F{Function} {messageName}");

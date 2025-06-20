@@ -24,6 +24,13 @@ namespace ASOFTCIM.MainControl
         private bool _plcConnect = false;
         private int _countconnectPLC = 0;
         private bool _cimConnect = false;
+        private int _LoadProgram = 0;
+        private bool _isReadConfig = false;
+        private static Controller _instange;
+        // Lock object to ensure thread safety for the Controller instance
+        // controller is a singleton, we need to ensure that only one instance is created
+        private static readonly object _lock = new object();
+        
         public EquipmentConfig EquipmentConfig
         {
             get { return _equipmentConfig; }
@@ -39,11 +46,32 @@ namespace ASOFTCIM.MainControl
             get { return _cimConnect; }
             set { _cimConnect = value; }
         }
-
-        public Controller()
+        public int LoadProgram
+        {
+            get { return _LoadProgram; }
+            set { _LoadProgram = value; }
+        }
+        public bool IsReadConfig
+        {
+            get { return _isReadConfig; }
+            set { _isReadConfig = value; }
+        }
+        public static Controller Instange
+        {
+            get
+            {
+                lock (_lock)
+                {
+                    if (_instange == null)
+                        _instange = new Controller();
+                    return _instange;
+                }
+            }
+        }
+        private Controller()
         {
             DefaultData.AppPath = @"C:\CimConfig";
-            ReadControllerConfig();
+            _isReadConfig =  ReadControllerConfig();
             DefaultData.LogPath = $"{_equipmentConfig.LogFolder}";
             _cim = new ACIM(_equipmentConfig);
             _cim.PlcConnectChangeEvent += PlcConnectEvent;
@@ -54,7 +82,7 @@ namespace ASOFTCIM.MainControl
         {
             _cim.Stop();
         }
-        private void ReadControllerConfig()
+        public bool ReadControllerConfig()
         {
             try
             {
@@ -75,12 +103,16 @@ namespace ASOFTCIM.MainControl
                 {
                     //_equipmentConfig.PathLog = DefaultData.LogPath;
                     //_equipmentConfig.DelLog = 30;
+                    return false;
+
                 }
+                return true;
             }
             catch (Exception ex)
             {
                 var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.", MethodBase.GetCurrentMethod().DeclaringType.Name.ToString(), MethodBase.GetCurrentMethod().Name, ex.Message);
                 LogTxt.Add(LogTxt.Type.Exception, debug);
+                return false;
             }
         }
         public void SaveControllerConfig()

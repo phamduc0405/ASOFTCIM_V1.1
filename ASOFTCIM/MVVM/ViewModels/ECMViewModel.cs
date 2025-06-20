@@ -34,7 +34,7 @@ namespace ASOFTCIM.MVVM.ViewModels
         #endregion
         public ECMViewModel()
         {
-            _controller = MainWindowViewModel.Controller;
+            _controller = Controller.Instange;
             _eCMMOdel = new ASOFTCIM.MVVM.Models.ECMModel();
             _eCMMOdel.AllECs = new ObservableCollection<EC>(_controller.CIM.EqpData.ECS);
             _totalecm = _eCMMOdel.AllECs.Count;
@@ -47,7 +47,7 @@ namespace ASOFTCIM.MVVM.ViewModels
 
             //NextCommand = new RelayCommand(_ => OnNext(), _ => CanNext());
             //BackCommand = new RelayCommand(_ => OnBack(), _ => CanBack());
-            StartDispatcherTimer(UpdateECMData, 1);
+            StartDispatcherTimer(UpdateECMData, 100);
 
         }
         private void UpdateECMData()

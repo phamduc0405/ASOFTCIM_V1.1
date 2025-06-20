@@ -55,11 +55,23 @@ namespace ASOFTCIM.Data
         public string Transaction { get; set; }
     }
     //TODO: SVID
-    public class SV
+    public class SV: INotifyPropertyChanged
     {
         public string SVID { get; set; }
         public string SVNAME { get; set; }
-        public string SVVALUE { get; set; }
+        private string _svValue;
+        public string SVVALUE
+        {
+            get => _svValue;
+            set
+            {
+                if (_svValue != value)
+                {
+                    _svValue = value;
+                    OnPropertyChanged(nameof(SVVALUE));
+                }
+            }
+        }
         public string DefaultSV { get; set; }
         public string DESCRIPTION { get; set; }
         public string UNIT { get; set; }
@@ -68,6 +80,13 @@ namespace ASOFTCIM.Data
         public string MODULEID { get; set; }
         public string EQPID { get; set; }
         public int DOT { get; set; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 
 

@@ -25,7 +25,7 @@ namespace ASOFTCIM.MVVM.Views.Monitor
         public MonitorIOView()
         {
             InitializeComponent();
-            _controller = MainWindow.Controller;
+            _controller = Controller.Instange;
             Initial();
             CreateEvent();
         }

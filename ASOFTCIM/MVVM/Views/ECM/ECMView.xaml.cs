@@ -29,7 +29,7 @@ namespace ASOFTCIM.MVVM.Views.ECM
         public ECMView()
         {
             InitializeComponent();
-            _controller = MainWindow.Controller;
+            _controller = Controller.Instange;
             CreaterEvent();
         }
         private void CreaterEvent()

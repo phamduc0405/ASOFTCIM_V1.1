@@ -27,7 +27,7 @@ namespace ASOFTCIM.MVVM.Views.Monitor
         public MonitorWords()
         {
             InitializeComponent();
-            _controller = MainWindow.Controller;
+            _controller = Controller.Instange;
             Initial();
         }
         #region Private Method

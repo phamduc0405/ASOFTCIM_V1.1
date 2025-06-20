@@ -653,10 +653,10 @@
                                                 <Setter Property="Foreground" Value="Black" />
                                                 <!--  Mặc định màu đen  -->
                                                 <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding Home.AVAILABILITYSTATE}" Value="UP">
+                                                    <DataTrigger Binding="{Binding Home.AVAILABILITYSTATE}" Value=":   UP">
                                                         <Setter Property="Foreground" Value="Green" />
                                                     </DataTrigger>
-                                                    <DataTrigger Binding="{Binding Home.AVAILABILITYSTATE}" Value="DOWN">
+                                                    <DataTrigger Binding="{Binding Home.AVAILABILITYSTATE}" Value=":   DOWN">
                                                         <Setter Property="Foreground" Value="Red" />
                                                     </DataTrigger>
                                                 </Style.Triggers>
@@ -675,10 +675,10 @@
                                                 <Setter Property="Foreground" Value="Black" />
                                                 <!--  Mặc định màu đen  -->
                                                 <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding Home.INTERLOCKSTATE}" Value="OFF">
+                                                    <DataTrigger Binding="{Binding Home.INTERLOCKSTATE}" Value=":   OFF">
                                                         <Setter Property="Foreground" Value="Green" />
                                                     </DataTrigger>
-                                                    <DataTrigger Binding="{Binding Home.INTERLOCKSTATE}" Value="ON">
+                                                    <DataTrigger Binding="{Binding Home.INTERLOCKSTATE}" Value=":   ON">
                                                         <Setter Property="Foreground" Value="Red" />
                                                     </DataTrigger>
                                                 </Style.Triggers>
@@ -697,10 +697,10 @@
                                                 <Setter Property="Foreground" Value="Black" />
                                                 <!--  Mặc định màu đen  -->
                                                 <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding Home.RUNSTATE}" Value="RUN">
+                                                    <DataTrigger Binding="{Binding Home.RUNSTATE}" Value=":   RUN">
                                                         <Setter Property="Foreground" Value="Green" />
                                                     </DataTrigger>
-                                                    <DataTrigger Binding="{Binding Home.RUNSTATE}" Value="IDLE">
+                                                    <DataTrigger Binding="{Binding Home.RUNSTATE}" Value=":   IDLE">
                                                         <Setter Property="Foreground" Value="Red" />
                                                     </DataTrigger>
                                                 </Style.Triggers>
@@ -719,10 +719,10 @@
                                                 <Setter Property="Foreground" Value="Black" />
                                                 <!--  Mặc định màu đen  -->
                                                 <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding Home.FRONTSTATE}" Value="UP">
+                                                    <DataTrigger Binding="{Binding Home.FRONTSTATE}" Value=":   UP">
                                                         <Setter Property="Foreground" Value="Green" />
                                                     </DataTrigger>
-                                                    <DataTrigger Binding="{Binding Home.FRONTSTATE}" Value="DOWN">
+                                                    <DataTrigger Binding="{Binding Home.FRONTSTATE}" Value=":   DOWN">
                                                         <Setter Property="Foreground" Value="Red" />
                                                     </DataTrigger>
                                                 </Style.Triggers>
@@ -741,10 +741,10 @@
                                                 <Setter Property="Foreground" Value="Black" />
                                                 <!--  Mặc định màu đen  -->
                                                 <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding Home.REARSTATE}" Value="UP">
+                                                    <DataTrigger Binding="{Binding Home.REARSTATE}" Value=":   UP">
                                                         <Setter Property="Foreground" Value="Green" />
                                                     </DataTrigger>
-                                                    <DataTrigger Binding="{Binding Home.REARSTATE}" Value="DOWN">
+                                                    <DataTrigger Binding="{Binding Home.REARSTATE}" Value=":   DOWN">
                                                         <Setter Property="Foreground" Value="Red" />
                                                     </DataTrigger>
                                                 </Style.Triggers>
@@ -763,10 +763,10 @@
                                                 <Setter Property="Foreground" Value="Black" />
                                                 <!--  Mặc định màu đen  -->
                                                 <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding Home.MOVESTATE}" Value="RUNNING">
+                                                    <DataTrigger Binding="{Binding Home.MOVESTATE}" Value=":   RUNNING">
                                                         <Setter Property="Foreground" Value="Green" />
                                                     </DataTrigger>
-                                                    <DataTrigger Binding="{Binding Home.MOVESTATE}" Value="PAUSE">
+                                                    <DataTrigger Binding="{Binding Home.MOVESTATE}" Value=":   PAUSE">
                                                         <Setter Property="Foreground" Value="Red" />
                                                     </DataTrigger>
                                                 </Style.Triggers>

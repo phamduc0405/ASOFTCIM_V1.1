@@ -26,7 +26,7 @@ namespace ASOFTCIM.MVVM.ViewModels
         }
         public AlarmViewModel()
         {
-            _controller = MainWindowViewModel.Controller;
+            _controller = Controller.Instange;
             _alarmView = new AlarmModel();
             UpdateAlarm();
             _controller.CIM.ResetEvent -= UpdateAlarm;

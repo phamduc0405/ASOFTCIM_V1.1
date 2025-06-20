@@ -41,7 +41,7 @@ namespace ASOFTCIM.MVVM.Views.Config
         }
         private void Initial()
         {
-            _controller = MainWindowViewModel.Controller;
+            _controller = Controller.Instange;
         }
         private void CreaterEvent()
         {

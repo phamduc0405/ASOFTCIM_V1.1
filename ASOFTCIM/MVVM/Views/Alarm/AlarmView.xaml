@@ -109,30 +109,29 @@
                                         Text="ALARM" />
                                 </Border>
                             </Border>
-                            
-                            <DataGrid
 
-                             Grid.Row="1"
-                             Grid.Column="0"
-                             Grid.ColumnSpan="2"
-                             Margin="5,0,5,5"
-                             AutoGenerateColumns="False"
-                             BorderBrush="Gray"
-                             BorderThickness="1"
-                             CanUserAddRows="False"
-                             ColumnHeaderStyle="{StaticResource DarkHeaderStyle}"
-                             GridLinesVisibility="Horizontal"
-                             HeadersVisibility="Column"
-                             HorizontalGridLinesBrush="#FFCCCCCC"
-                             IsReadOnly="True"
-                             ItemsSource="{Binding AlarmView.AlarmList}"
-                             SelectionUnit="Cell"
+                            <DataGrid
+                                Grid.Row="1"
+                                Grid.Column="0"
+                                Grid.ColumnSpan="2"
+                                Margin="5,0,5,5"
+                                AutoGenerateColumns="False"
+                                BorderBrush="Gray"
+                                BorderThickness="1"
+                                CanUserAddRows="False"
+                                ColumnHeaderStyle="{StaticResource DarkHeaderStyle}"
+                                EnableColumnVirtualization="True"
                                 EnableRowVirtualization="True"
-    EnableColumnVirtualization="True"
-    VirtualizingPanel.IsVirtualizing="True"
-    VirtualizingPanel.VirtualizationMode="Recycling"
-    ScrollViewer.IsDeferredScrollingEnabled="True"
-                             VerticalGridLinesBrush="#FFCCCCCC">
+                                GridLinesVisibility="Horizontal"
+                                HeadersVisibility="Column"
+                                HorizontalGridLinesBrush="#FFCCCCCC"
+                                IsReadOnly="True"
+                                ItemsSource="{Binding AlarmView.AlarmList}"
+                                ScrollViewer.IsDeferredScrollingEnabled="True"
+                                SelectionUnit="Cell"
+                                VerticalGridLinesBrush="#FFCCCCCC"
+                                VirtualizingPanel.IsVirtualizing="True"
+                                VirtualizingPanel.VirtualizationMode="Recycling">
 
                                 <DataGrid.Columns>
                                     <DataGridTextColumn

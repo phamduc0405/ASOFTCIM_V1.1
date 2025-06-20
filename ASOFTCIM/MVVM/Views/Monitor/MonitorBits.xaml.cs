@@ -38,7 +38,7 @@ namespace ASOFTCIM.MVVM.Views.Monitor
         public MonitorBits()
         {
             
-            _controller = MainWindowViewModel.Controller;
+            _controller = Controller.Instange;
             _plc = _controller.CIM.PLC;
             _plcH = _controller.CIM.PLCH;
             

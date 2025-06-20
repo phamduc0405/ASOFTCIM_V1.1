@@ -65,7 +65,7 @@ namespace ASOFTCIM.MVVM.ViewModels
         #region Constructor
         public HomeViewModel()
         {
-            _controller = MainWindowViewModel.Controller;
+            _controller = Controller.Instange;
             _home = new HomeModel();
             _home.EQPID = _controller.EquipmentConfig.EQPID;
             _running = true;
@@ -117,7 +117,7 @@ namespace ASOFTCIM.MVVM.ViewModels
             _controller.CIM.Cim.Conn.OnConnectEvent += Controller_CimConnectChangeEvent;
             
 
-            StartDispatcherTimer(UpdateData, 1);
+            StartDispatcherTimer(UpdateData, 500);
             _alarmUpdateTimer = new DispatcherTimer
             {
                 Interval = TimeSpan.FromMilliseconds(500)

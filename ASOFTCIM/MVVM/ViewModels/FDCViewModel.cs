@@ -32,6 +32,8 @@ namespace ASOFTCIM.MVVM.ViewModels
         private int _index = 0;
         private int _totalsvid = 0;
         private DispatcherTimer _timer;
+
+        private bool _isUpdating = false;
         public ICommand NextCommand { get; }
         public ICommand BackCommand { get; }
 
@@ -49,7 +51,7 @@ namespace ASOFTCIM.MVVM.ViewModels
         #region Constructor
         public FDCViewModel()
         {
-            _controller = MainWindowViewModel.Controller;
+            _controller = Controller.Instange;
             _fDCModel = new ASOFTCIM.MVVM.Models.FDCModel();
             _fDCModel.AllSVIDs = new ObservableCollection<SV>(_controller.CIM.EqpData.SVID);
             _totalsvid = _fDCModel.AllSVIDs.Count;
@@ -62,7 +64,7 @@ namespace ASOFTCIM.MVVM.ViewModels
 
             NextCommand = new RelayCommand(_ => OnNext(), _ => CanNext());
             BackCommand = new RelayCommand(_ => OnBack(), _ => CanBack());
-            StartDispatcherTimer(UpdateSvidData,1);
+            StartDispatcherTimer(UpdateSvidData,500);
 
         }
         #endregion
@@ -114,11 +116,47 @@ namespace ASOFTCIM.MVVM.ViewModels
             }
         }
 
-       
+        private void ShowSvid1()
+        {
+            if (_isUpdating) return;
+            _isUpdating = true;
+            try
+            {
+                // Chỉ update SVVALUE, không clear/add:
+                var svidList = _controller.CIM.EqpData.SVID;
+                int baseIndex = _index * 50;
+
+                for (int i = 0; i < _fDCModel.CurrentSVIDsL.Count; i++)
+                {
+                    int index = baseIndex + i;
+                    if (index < svidList.Count)
+                    {
+                        var item = svidList[index];
+                        _fDCModel.CurrentSVIDsL[i].SVVALUE = FormatSVValue(item);
+                    }
+                }
+
+                for (int i = 0; i < _fDCModel.CurrentSVIDsR.Count; i++)
+                {
+                    int index = baseIndex + 25 + i;
+                    if (index < svidList.Count)
+                    {
+                        var item = svidList[index];
+                        _fDCModel.CurrentSVIDsR[i].SVVALUE = FormatSVValue(item);
+                    }
+                }
+            }
+            finally
+            {
+                _isUpdating = false;
+            }
+        }
+
 
         private void UpdateSvidData()
         {
-            ShowSvid(_index);
+            //ShowSvid(_index);
+            ShowSvid1();
             foreach (var sv in _fDCModel.CurrentSVIDsL)
             {
                 if (float.TryParse(sv.SVVALUE, out float currentValue))
@@ -127,6 +165,7 @@ namespace ASOFTCIM.MVVM.ViewModels
                 }
             }
             OnPropertyChanged(nameof(_fDCModel.CurrentSVIDsL));
+
             //foreach (var sv in CurrentSVIDsR)
             //{
             //    if (float.TryParse(sv.SVVALUE, out float currentValue))

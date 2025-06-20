@@ -39,7 +39,7 @@ namespace ASOFTCIM.MVVM.Views.Popup
             this.DataContext = this;
             resBtn = Application.Current.Resources;
             resTxt = Application.Current.Resources;
-            _controller = MainWindow.Controller;
+            _controller = Controller.Instange;
             Initial();
             CreateEvent();
         }

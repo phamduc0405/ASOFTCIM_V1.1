@@ -31,11 +31,18 @@ using ASOFTCIM.MVVM.NavigationService;
 
 namespace ASOFTCIM.MVVM.ViewModels
 {
-    public class MainWindowViewModel : INotifyPropertyChanged
+    public class MainWindowViewModel : BaseViewModel
     {
+        #region Events
+
+        #endregion
+
+        #region Costants
+        #endregion
+
         #region Fields
         private MainWindowModel _mainWindowModel;
-        public static Controller Controller;
+        private readonly Controller _controller;
         public static string User = "User";
         public static string Pass = "2";
         public static int LeveLogin = 0;
@@ -46,6 +53,7 @@ namespace ASOFTCIM.MVVM.ViewModels
         private readonly INavigationService _navigationService;
         private InactivityMonitor _inactivityMonitor;
         #endregion
+
         #region Properties
         public ICommand HomeViewCommand { get; set; }
         public ICommand ConfigViewCommand { get; set; }
@@ -62,14 +70,13 @@ namespace ASOFTCIM.MVVM.ViewModels
         public ICommand grdTopMain { get; set; }
 
         private readonly Window _window;
-        #endregion
+       
         public ASOFTCIM.MVVM.Models.MainWindowModel MainWindowModel
         {
             get => _mainWindowModel;
             set { _mainWindowModel = value; OnPropertyChanged(nameof(MainWindowModel)); }
         }
-
-
+        #endregion
 
         #region CONSTRUCTOR
         public MainWindowViewModel(Window window)
@@ -77,7 +84,6 @@ namespace ASOFTCIM.MVVM.ViewModels
             _mainWindowModel = new MainWindowModel();
             _mainWindowModel.CancellationTokenSource = new CancellationTokenSource();
             _mainWindowModel.CancellationToken = _mainWindowModel.CancellationTokenSource.Token;
-            Initial();
             _navigationService = new ASOFTCIM.MVVM.NavigationService.NavigationService(view =>
             {
                 MainWindowModel.Currentview = view;
@@ -94,27 +100,42 @@ namespace ASOFTCIM.MVVM.ViewModels
             HomeViewCommand = new RelayCommand(o =>_navigationService.NavigateTo<HomeViewModel>());
             ALARMViewCommand = new RelayCommand(o =>_navigationService.NavigateTo<AlarmViewModel>());
             FDCViewCommand = new RelayCommand(o => _navigationService.NavigateTo<FDCViewModel>());
-            ConfigViewCommand = new RelayCommand(o => {
-                if (LeveLogin == 1)
-                {
-                    _navigationService.NavigateTo<ConfigViewModel>();
-                }
+            ConfigViewCommand = new RelayCommand(excute => {
+                
+                _navigationService.NavigateTo<ConfigViewModel>();
+                
+            },
+            canExecute =>
+            {
+                if (LeveLogin == 1) 
+                    return false;
+                return true;
             }
             );
             ECMViewCommand = new RelayCommand(o => _navigationService.NavigateTo<ECMViewModel>());
             MaterialViewCommand = new RelayCommand(o => { 
-            if(LeveLogin == 1)
-                {
-                    _navigationService.NavigateTo<MaterialViewModel>();
-                }
             
-            });
-            MonitorIOViewCommand = new RelayCommand(o =>{
+                _navigationService.NavigateTo<MaterialViewModel>();
+            },
+            canExecute =>
+            {
                 if (LeveLogin == 1)
-                {
-                    MainWindowModel.Currentview = new MonitorIOView();
-                }
-            });
+                    return false;
+                return true;
+            }
+            );
+            MonitorIOViewCommand = new RelayCommand(o =>{
+                
+                MainWindowModel.Currentview = new MonitorIOView();
+                
+            },
+            canExecute =>
+            {
+                if (LeveLogin == 1)
+                    return false;
+                return true;
+            }
+            );
             //monitor, RMS chua chuyen sang MVVM
             //MonitorIOViewCommand = new RelayCommand(o => _navigationService.NavigateTo<MonitorIOViewModel>());
             //RMSViewCommand = new RelayCommand(o => _navigationService.NavigateTo<RMSViewModel>());
@@ -124,6 +145,14 @@ namespace ASOFTCIM.MVVM.ViewModels
                 {
                     Thread.Sleep(1000);
                     _mainWindowModel.CancellationTokenSource.Cancel();
+                    // Đợi thread updateTime kết thúc trước khi đóng cửa sổ
+                    if (_updateTime != null && _updateTime.IsAlive)
+                    {
+                        if (!_updateTime.Join(3000))
+                        {
+                            LogTxt.Add(LogTxt.Type.Exception, "Thread UpdateTime không kết thúc đúng hạn.");
+                        }
+                    }
                     _window.Close();
                     LogTxt.Stop();
 
@@ -148,10 +177,10 @@ namespace ASOFTCIM.MVVM.ViewModels
         }
         #endregion
 
-
+        #region private method
         private void Initial()
         {
-            Controller = new Controller();
+            //Controller = new Controller();
         }
         private async Task<bool> PopupMessage(string message)
         {
@@ -215,6 +244,41 @@ namespace ASOFTCIM.MVVM.ViewModels
                 return false;
             }
         }
+        private void UpdateTime()
+        {
+            while (!_mainWindowModel.CancellationToken.IsCancellationRequested)
+            {
+                System.Windows.Application.Current.Dispatcher.Invoke(new Action(() =>
+                {
+                    _mainWindowModel.DateTime = "DateTime: " + DateTime.Now.ToString();
+                }));
+                Thread.Sleep(100);
+            }
+
+        }
+        private void StartInactivityMonitor()
+        {
+            _inactivityMonitor?.Stop();
+            _inactivityMonitor = new InactivityMonitor(TimeSpan.FromMinutes(2));
+            //_inactivityMonitor = new InactivityMonitor(TimeSpan.FromSeconds(10));
+            _inactivityMonitor.TimeoutReached += () =>
+            {
+                System.Windows.Application.Current.Dispatcher.Invoke(() =>
+                {
+                    if(LeveLogin==1)
+                    {
+                        System.Windows.MessageBox.Show("Tài khoản Admin đã hết thời gian hoạt động. Tự động đăng xuất.");
+                        LogOut();
+                    }
+                });
+            };
+            _inactivityMonitor.Start();
+
+        }
+
+        #endregion
+
+        #region public method
         public void LogIn()
         {
             if (User == "Admin" && Pass == "1")
@@ -223,7 +287,7 @@ namespace ASOFTCIM.MVVM.ViewModels
                 _mainWindowModel.User = User;
                 _mainWindowModel.LogInOut = "LogOut";
                 LeveLogin = 1;
-                
+
                 StartInactivityMonitor();
                 return;
             }
@@ -252,34 +316,6 @@ namespace ASOFTCIM.MVVM.ViewModels
                 LeveLogin = 2;
             }
         }
-        private void UpdateTime()
-        {
-            while (!_mainWindowModel.CancellationToken.IsCancellationRequested)
-            {
-                System.Windows.Application.Current.Dispatcher.Invoke(new Action(() =>
-                {
-                    _mainWindowModel.DateTime = "DateTime: " + DateTime.Now.ToString();
-                }));
-                Thread.Sleep(100);
-            }
-
-        }
-        private void StartInactivityMonitor()
-        {
-            _inactivityMonitor?.Stop();
-            _inactivityMonitor = new InactivityMonitor(TimeSpan.FromMinutes(2));
-            //_inactivityMonitor = new InactivityMonitor(TimeSpan.FromSeconds(10));
-            _inactivityMonitor.TimeoutReached += () =>
-            {
-                System.Windows.Application.Current.Dispatcher.Invoke(() =>
-                {
-                    System.Windows.MessageBox.Show("Tài khoản Admin đã hết thời gian hoạt động. Tự động đăng xuất.");
-                    LogOut(); 
-                });
-            };
-            _inactivityMonitor.Start();
-
-        }
         public void LogOut()
         {
             LeveLogin = 0;
@@ -290,8 +326,7 @@ namespace ASOFTCIM.MVVM.ViewModels
             _navigationService.NavigateTo<HomeViewModel>();
             //MainWindowModel.Currentview = new HomeView(); //quay ve HOME
         }
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged(string name) =>
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        #endregion
+
     }
 }
