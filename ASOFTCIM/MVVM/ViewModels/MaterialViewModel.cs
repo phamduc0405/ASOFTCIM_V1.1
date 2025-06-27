@@ -26,10 +26,10 @@ namespace ASOFTCIM.MVVM.ViewModels
             set { _materialModel = value; OnPropertyChanged(nameof(MaterialModel)); }
         }
         #endregion
-        public MaterialViewModel()
+        public MaterialViewModel(Controller controller, ASOFTCIM.MVVM.Models.MaterialModel materialModel)
         {
-            _controller = Controller.Instange;
-            _materialModel = new ASOFTCIM.MVVM.Models.MaterialModel();
+            _controller = controller;
+            _materialModel = materialModel;
             StartDispatcherTimer(UpdateMaterialData, 1);
         }
         private void UpdateMaterialData()

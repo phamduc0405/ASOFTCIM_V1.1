@@ -40,12 +40,13 @@ namespace ASOFTCIM.MVVM.Views.Home
     /// </summary>
     public partial class HomeView : UserControl
     {
-
         public HomeView()
         {
             InitializeComponent();
+            
             CreaterEvent();
         }
+
         private void CreaterEvent()
         {
             Unloaded += (s, e) =>

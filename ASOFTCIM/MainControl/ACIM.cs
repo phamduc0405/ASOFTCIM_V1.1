@@ -94,11 +94,11 @@ namespace ASOFTCIM
 
         #region Constructor
 
-        public ACIM(EquipmentConfig equipmentConfig)
+        public ACIM(EquipmentConfig equipmentConfig,CimHelper cimHelper, PlcComm plcComm, PLCHelper pLCHelper)
         {
             Initial();
             EQPID = equipmentConfig.EQPID;  
-            _cim = new CimHelper(EQPID);
+            _cim = cimHelper;
             ATCPIP.ConnectMode connectMode = (ATCPIP.ConnectMode)Enum.Parse(typeof(ATCPIP.ConnectMode), equipmentConfig.CimConfig.ConnectMode);
             string Ip = equipmentConfig.CimConfig.IP;
             ushort Port = ushort.Parse(equipmentConfig.CimConfig.Port);
@@ -106,9 +106,8 @@ namespace ASOFTCIM
             _cim.Init(connectMode, Ip, Port);
             _cim.SysPacketEvent += _cim_SysPacketEvent;
             _cim.TransTimeOutEvent += _cim_TransTimeOutEvent;
-            _plc = new PlcComm();
             _eqpConfig = equipmentConfig;
-            InitialPlc();
+            InitialPlc(plcComm, pLCHelper);
         }
         #endregion
 

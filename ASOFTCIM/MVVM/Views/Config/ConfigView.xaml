@@ -40,9 +40,7 @@
             </BeginStoryboard>
         </EventTrigger>
     </UserControl.Triggers>
-    <UserControl.DataContext>
-        <vm:ConfigViewModel />
-    </UserControl.DataContext>
+
     <Border>
         <Grid>
             <Grid.ColumnDefinitions>

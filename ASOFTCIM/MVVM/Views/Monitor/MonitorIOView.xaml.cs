@@ -22,17 +22,17 @@ namespace ASOFTCIM.MVVM.Views.Monitor
     public partial class MonitorIOView : UserControl
     {
         private Controller _controller;
-        public MonitorIOView()
+        public MonitorIOView(Controller controller)
         {
             InitializeComponent();
-            _controller = Controller.Instange;
+            _controller = controller;
             Initial();
             CreateEvent();
         }
         private void Initial()
         {
             grdView.Children.Clear();
-            MonitorBits bits = new MonitorBits();
+            MonitorBits bits = new MonitorBits(_controller);
             grdView.Children.Add(bits);
             btnBits.IsChecked = true;
             btnWords.IsChecked = false;
@@ -43,14 +43,14 @@ namespace ASOFTCIM.MVVM.Views.Monitor
             btnBits.Checked += (s, e) =>
             {
                 grdView.Children.Clear();
-                MonitorBits bits = new MonitorBits();
+                MonitorBits bits = new MonitorBits(_controller);
                 grdView.Children.Add(bits);
                 //bits.Unloaded += (sender, events) => { grdView.Children.Clear(); };
             };
             btnWords.Checked += (s, e) =>
             {
                 grdView.Children.Clear();
-                MonitorWords words = new MonitorWords();
+                MonitorWords words = new MonitorWords(_controller);
                 grdView.Children.Add(words);
                 // words.Unloaded += (sender, events) => { grdView.Children.Clear(); };
             };

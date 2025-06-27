@@ -11,8 +11,7 @@
     xmlns:materialview="clr-namespace:ASOFTCIM.MVVM.Views.Material"
     xmlns:monitorview="clr-namespace:ASOFTCIM.MVVM.Views.Monitor"
     xmlns:rmsview="clr-namespace:ASOFTCIM.MVVM.Views.RMS"
-    xmlns:vm="clr-namespace:ASOFTCIM.MVVM.ViewModels"
-    Startup="ApplicationStart">
+    xmlns:vm="clr-namespace:ASOFTCIM.MVVM.ViewModels">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

@@ -5,6 +5,7 @@ using ASOFTCIM.Config;
 using ASOFTCIM.Data;
 using ASOFTCIM.Helper;
 using LiveCharts.Maps;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,6 +15,8 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Options;
+using System.Configuration;
 
 namespace ASOFTCIM.MainControl
 {
@@ -26,11 +29,7 @@ namespace ASOFTCIM.MainControl
         private bool _cimConnect = false;
         private int _LoadProgram = 0;
         private bool _isReadConfig = false;
-        private static Controller _instange;
-        // Lock object to ensure thread safety for the Controller instance
-        // controller is a singleton, we need to ensure that only one instance is created
         private static readonly object _lock = new object();
-        
         public EquipmentConfig EquipmentConfig
         {
             get { return _equipmentConfig; }
@@ -56,24 +55,13 @@ namespace ASOFTCIM.MainControl
             get { return _isReadConfig; }
             set { _isReadConfig = value; }
         }
-        public static Controller Instange
+        public Controller(EquipmentConfig equipmentConfig, ACIM aCIM)
         {
-            get
-            {
-                lock (_lock)
-                {
-                    if (_instange == null)
-                        _instange = new Controller();
-                    return _instange;
-                }
-            }
-        }
-        private Controller()
-        {
+            _equipmentConfig = equipmentConfig;
             DefaultData.AppPath = @"C:\CimConfig";
-            _isReadConfig =  ReadControllerConfig();
+            //_isReadConfig =  ReadControllerConfig();
             DefaultData.LogPath = $"{_equipmentConfig.LogFolder}";
-            _cim = new ACIM(_equipmentConfig);
+            _cim = aCIM;
             _cim.PlcConnectChangeEvent += PlcConnectEvent;
             _cim.Cim.Conn.OnConnectEvent += OnConnectEvent;
             LogTxt.FileSize = int.Parse(_equipmentConfig.SizeFile);
@@ -96,15 +84,11 @@ namespace ASOFTCIM.MainControl
                         b.LstWord.AddRange(wm);
                         List<MaterialModel> material = _equipmentConfig.PLCHelper.Materrials.Where(x => x.BitEvent.Contains($"{b.PLCDevice}{b.PLCHexAdd}")).ToList();
                         b.LstWord.AddRange(material);
-
                     }
                 }
                 else
                 {
-                    //_equipmentConfig.PathLog = DefaultData.LogPath;
-                    //_equipmentConfig.DelLog = 30;
                     return false;
-
                 }
                 return true;
             }

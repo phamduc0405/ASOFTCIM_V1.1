@@ -82,6 +82,7 @@
                                         Width="auto"
                                         Height="50"
                                         Margin="20,35,20,5"
+                                        Command="{Binding ConfigEqp}"
                                         Content="EQUIP SETTING"
                                         Style="{StaticResource ButtonControl}"
                                         Tag="Gear" />
@@ -91,6 +92,7 @@
                                         Width="auto"
                                         Height="50"
                                         Margin="20,20,20,5"
+                                        Command="{Binding Test}"
                                         Content="TEST"
                                         Style="{StaticResource ButtonControl}"
                                         Tag="TEST" />

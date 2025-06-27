@@ -32,10 +32,10 @@ namespace ASOFTCIM.MVVM.ViewModels
             set { _eCMMOdel = value; OnPropertyChanged(nameof(ECMModel)); }
         }
         #endregion
-        public ECMViewModel()
+        public ECMViewModel(Controller controller, ASOFTCIM.MVVM.Models.ECMModel eCMModel)
         {
-            _controller = Controller.Instange;
-            _eCMMOdel = new ASOFTCIM.MVVM.Models.ECMModel();
+            _controller = controller;
+            _eCMMOdel = eCMModel;
             _eCMMOdel.AllECs = new ObservableCollection<EC>(_controller.CIM.EqpData.ECS);
             _totalecm = _eCMMOdel.AllECs.Count;
             _index = 0;

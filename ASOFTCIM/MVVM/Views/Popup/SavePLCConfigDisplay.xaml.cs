@@ -32,14 +32,14 @@ namespace ASOFTCIM.MVVM.Views.Popup
         private Controller _controller;
         private EquipmentConfig _eqpConfig;
         private string _path;
-        public SavePLCConfigDisplay(string path)
+        public SavePLCConfigDisplay(string path,Controller controller)
         {
             InitializeComponent();
             _path = path;
             this.DataContext = this;
             resBtn = Application.Current.Resources;
             resTxt = Application.Current.Resources;
-            _controller = Controller.Instange;
+            _controller = controller;
             Initial();
             CreateEvent();
         }

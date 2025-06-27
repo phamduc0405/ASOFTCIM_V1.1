@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ASOFTCIM.MVVM.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,8 @@ namespace ASOFTCIM.MVVM.NavigationService
 {
     public interface INavigationService
     {
-        void NavigateTo<TViewModel>() where TViewModel : ViewModels.BaseViewModels, new();
+        //void NavigateTo1<TViewModel>() where TViewModel : ViewModels.BaseViewModels, new();
+        void NavigateTo<TViewModel>() where TViewModel : BaseViewModels;
     }
+    
 }

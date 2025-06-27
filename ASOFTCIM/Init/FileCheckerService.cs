@@ -14,12 +14,12 @@ namespace ASOFTCIM.Init
             errorMessage = "";
 
             // Check config file
-            //var configFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "App.config");
-            //if (!File.Exists(configFilePath))
-            //{
-            //    errorMessage = $"Không tìm thấy file cấu hình: {configFilePath}";
-            //    return false;
-            //}
+            var configFilePath = Path.Combine("C:\\CimConfig\\Setting", "SystemConfig.setting");
+            if (!File.Exists(configFilePath))
+            {
+                errorMessage = $"Không tìm thấy file cấu hình: {configFilePath}";
+                return false;
+            }
 
             // Check required DLLs
             var requiredFiles = new[]

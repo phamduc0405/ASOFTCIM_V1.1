@@ -49,10 +49,10 @@ namespace ASOFTCIM.MVVM.ViewModels
         #endregion
 
         #region Constructor
-        public FDCViewModel()
+        public FDCViewModel(Controller controller, ASOFTCIM.MVVM.Models.FDCModel fDCModel )
         {
-            _controller = Controller.Instange;
-            _fDCModel = new ASOFTCIM.MVVM.Models.FDCModel();
+            _controller = controller;
+            _fDCModel = fDCModel;
             _fDCModel.AllSVIDs = new ObservableCollection<SV>(_controller.CIM.EqpData.SVID);
             _totalsvid = _fDCModel.AllSVIDs.Count;
             _index = 0;

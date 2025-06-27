@@ -58,9 +58,9 @@
             <Setter Property="HorizontalContentAlignment" Value="Center" />
         </Style>
     </UserControl.Resources>
-    <UserControl.DataContext>
+    <!--<UserControl.DataContext>
         <vm:HomeViewModel />
-    </UserControl.DataContext>
+    </UserControl.DataContext>-->
     <Grid>
         <Border Background="Transparent" CornerRadius="5">
 
@@ -781,7 +781,7 @@
                                     x:Name="grdCpu"
                                     Grid.Column="0"
                                     Height="150">
-                                    <ContentPresenter Content="{Binding CpuChart}" />
+                                    <local:PartialCpuChart />
                                 </Grid>
 
 

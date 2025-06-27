@@ -41,10 +41,10 @@ namespace ASOFTCIM.MVVM.ViewModels
                 OnPropertyChanged(nameof(Configs));
             }
         }
-        public ConfigViewModel()
+        public ConfigViewModel(Controller controller, ConfigModel configModel)
         {
-            _controller = Controller.Instange;
-            _config = new ConfigModel();
+            _controller = controller;
+            _config = configModel;
             _equipmentConfig = _controller.EquipmentConfig;
 
             if (_equipmentConfig == null)
@@ -116,7 +116,7 @@ namespace ASOFTCIM.MVVM.ViewModels
                     };
                     if (File.Exists(_config.PathMapInterface))
                     {
-                        SavePLCConfigDisplay display = new SavePLCConfigDisplay(_config.PathMapInterface);
+                        SavePLCConfigDisplay display = new SavePLCConfigDisplay(_config.PathMapInterface,_controller);
                         display.ShowDialog();
                     }
                     await SaveConfig();

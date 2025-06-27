@@ -56,9 +56,7 @@
             <Setter Property="HorizontalContentAlignment" Value="Center" />
         </Style>
     </UserControl.Resources>
-    <UserControl.DataContext>
-        <vm:AlarmViewModel />
-    </UserControl.DataContext>
+
     <Grid>
         <Border Background="Transparent" CornerRadius="5">
 

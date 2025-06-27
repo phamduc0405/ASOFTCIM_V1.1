@@ -28,6 +28,7 @@ using ASOFTCIM.MVVM.Behaviors;
 using System.Windows.Threading;
 using ECMView = ASOFTCIM.MVVM.Views.ECM.ECMView;
 using ASOFTCIM.MVVM.NavigationService;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace ASOFTCIM.MVVM.ViewModels
 {
@@ -41,7 +42,7 @@ namespace ASOFTCIM.MVVM.ViewModels
         #endregion
 
         #region Fields
-        private MainWindowModel _mainWindowModel;
+        private static MainWindowModel _mainWindowModel;
         private readonly Controller _controller;
         public static string User = "User";
         public static string Pass = "2";
@@ -50,8 +51,8 @@ namespace ASOFTCIM.MVVM.ViewModels
         private LogInDisplay _displayPopupLogIn;
         private DateTime _datetime;
         private Thread _updateTime;
-        private readonly INavigationService _navigationService;
-        private InactivityMonitor _inactivityMonitor;
+        private static INavigationService _navigationService;
+        private static InactivityMonitor _inactivityMonitor;
         #endregion
 
         #region Properties
@@ -71,15 +72,17 @@ namespace ASOFTCIM.MVVM.ViewModels
 
         private readonly Window _window;
        
-        public ASOFTCIM.MVVM.Models.MainWindowModel MainWindowModel
+        public static ASOFTCIM.MVVM.Models.MainWindowModel MainWindowModel
         {
             get => _mainWindowModel;
-            set { _mainWindowModel = value; OnPropertyChanged(nameof(MainWindowModel)); }
+            set { _mainWindowModel = value;  }
         }
-        #endregion
-
-        #region CONSTRUCTOR
-        public MainWindowViewModel(Window window)
+        public static INavigationService NavigationService
+        {
+            get => _navigationService;
+            set { _navigationService = value; }
+        }
+        public MainWindowViewModel(Window window, IServiceProvider serviceProvider)
         {
             _mainWindowModel = new MainWindowModel();
             _mainWindowModel.CancellationTokenSource = new CancellationTokenSource();
@@ -87,9 +90,9 @@ namespace ASOFTCIM.MVVM.ViewModels
             _navigationService = new ASOFTCIM.MVVM.NavigationService.NavigationService(view =>
             {
                 MainWindowModel.Currentview = view;
-            });
+            }, serviceProvider); 
             _window = window;
-            MainWindowModel.Currentview = new HomeView();
+            
             _navigationService.NavigateTo<HomeViewModel>();
             _mainWindowModel.VersionInfo = $"Version : {System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString()}       {LibMethod.GetBuildTime()}";
             _updateTime = new Thread(UpdateTime)
@@ -97,55 +100,50 @@ namespace ASOFTCIM.MVVM.ViewModels
                 IsBackground = true,
             };
             _updateTime.Start();
-            HomeViewCommand = new RelayCommand(o =>_navigationService.NavigateTo<HomeViewModel>());
-            ALARMViewCommand = new RelayCommand(o =>_navigationService.NavigateTo<AlarmViewModel>());
+            HomeViewCommand = new RelayCommand(o => _navigationService.NavigateTo<HomeViewModel>());
+            ALARMViewCommand = new RelayCommand(o => _navigationService.NavigateTo<AlarmViewModel>());
             FDCViewCommand = new RelayCommand(o => _navigationService.NavigateTo<FDCViewModel>());
-            ConfigViewCommand = new RelayCommand(excute => {
-                
-                _navigationService.NavigateTo<ConfigViewModel>();
-                
+            ConfigViewCommand = new RelayCommand(excute =>
+            {
+                _navigationService.NavigateTo<ConfigMainViewModel>();
             },
             canExecute =>
             {
-                if (LeveLogin == 1) 
-                    return false;
-                return true;
+                if (LeveLogin == 1)
+                    return true;
+                return false;
             }
             );
             ECMViewCommand = new RelayCommand(o => _navigationService.NavigateTo<ECMViewModel>());
-            MaterialViewCommand = new RelayCommand(o => { 
-            
+            MaterialViewCommand = new RelayCommand(o =>
+            {
                 _navigationService.NavigateTo<MaterialViewModel>();
             },
             canExecute =>
             {
                 if (LeveLogin == 1)
-                    return false;
-                return true;
+                    return true;
+                return false;
             }
             );
-            MonitorIOViewCommand = new RelayCommand(o =>{
-                
-                MainWindowModel.Currentview = new MonitorIOView();
-                
+            MonitorIOViewCommand = new RelayCommand(o =>
+            {
+                var controller = serviceProvider.GetRequiredService<Controller>();
+                MainWindowModel.Currentview = new MonitorIOView(controller);
             },
             canExecute =>
             {
                 if (LeveLogin == 1)
-                    return false;
-                return true;
+                    return true;
+                return false;
             }
             );
-            //monitor, RMS chua chuyen sang MVVM
-            //MonitorIOViewCommand = new RelayCommand(o => _navigationService.NavigateTo<MonitorIOViewModel>());
-            //RMSViewCommand = new RelayCommand(o => _navigationService.NavigateTo<RMSViewModel>());
             CloseCommand = new AsyncRelayCommand(async () =>
             {
                 if (await PopupMessage("DO YOU WANT EXIT ?"))
                 {
                     Thread.Sleep(1000);
                     _mainWindowModel.CancellationTokenSource.Cancel();
-                    // Đợi thread updateTime kết thúc trước khi đóng cửa sổ
                     if (_updateTime != null && _updateTime.IsAlive)
                     {
                         if (!_updateTime.Join(3000))
@@ -155,7 +153,6 @@ namespace ASOFTCIM.MVVM.ViewModels
                     }
                     _window.Close();
                     LogTxt.Stop();
-
                 }
             });
             ResizeCommand = new RelayCommand(o =>
@@ -164,7 +161,10 @@ namespace ASOFTCIM.MVVM.ViewModels
                 {
                     _window.WindowState = (WindowState)FormWindowState.Maximized;
                 }
-                else { _window.WindowState = (WindowState)FormWindowState.Normal; }
+                else
+                {
+                    _window.WindowState = (WindowState)FormWindowState.Normal;
+                }
             });
             HideMenuCommand = new RelayCommand(o =>
             {
@@ -178,10 +178,6 @@ namespace ASOFTCIM.MVVM.ViewModels
         #endregion
 
         #region private method
-        private void Initial()
-        {
-            //Controller = new Controller();
-        }
         private async Task<bool> PopupMessage(string message)
         {
             bool result = false;

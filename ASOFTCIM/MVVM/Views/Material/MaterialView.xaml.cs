@@ -30,7 +30,7 @@ namespace ASOFTCIM.MVVM.Views.Material
         public MaterialView()
         {
             InitializeComponent();
-            _controller = Controller.Instange;
+            //_controller = Controller.Instange;
             CreaterEvent();
         }
         private void CreaterEvent()
