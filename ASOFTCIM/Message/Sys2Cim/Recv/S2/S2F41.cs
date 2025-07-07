@@ -77,7 +77,7 @@ namespace ASOFTCIM
                         interlock.EQPID = sysPacket.GetItemString();
                         interlock.INTERLOCKID = sysPacket.GetItemString();
                         interlock.MESSAGE = sysPacket.GetItemString();
-                        
+                        EqpData.INTERLOCKS.Add(interlock);
                         SendMessage2PLC("INTERLOCK", interlock);
                         break;
                     case "3":   //Equipment Job Command (Job(=PPID) Select))

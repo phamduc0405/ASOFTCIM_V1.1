@@ -82,6 +82,9 @@ namespace ASOFTCIM.MVVM.ViewModels
             get => _navigationService;
             set { _navigationService = value; }
         }
+        #endregion
+
+        #region Constructors
         public MainWindowViewModel(Window window, IServiceProvider serviceProvider)
         {
             _mainWindowModel = new MainWindowModel();

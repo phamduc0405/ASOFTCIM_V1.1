@@ -213,6 +213,10 @@ namespace ASOFTCIM
                     }
                 }
             }
+            if (PLCH.Bits.Find(x => x.Area == "TPMLOSSREADY").GetPLCValue)
+            {
+                isSend = false;
+            }    
             if (isSend)
                 SendS6F11_101( oldstate);
 

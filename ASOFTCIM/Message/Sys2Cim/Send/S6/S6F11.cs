@@ -100,21 +100,46 @@ namespace ASOFTCIM
                             packet.addItem(DataType.Ascii, oldState.DESCRIPTION);
                         }
                     }
+                    // Alarm List
                     packet.addItem(DataType.List, 2);
                     {
                         packet.addItem(DataType.Ascii, "104");      //* RPTID
-                        packet.addItem(DataType.List, EqpData.CurrAlarm.Count);   //* Alarm List
-                        foreach (var item in EqpData.CurrAlarm)
-                        {
-                            packet.addItem(DataType.List, 4);
-                            {
-                                packet.addItem(DataType.Ascii, item.ALST);
-                                packet.addItem(DataType.Ascii, item.ALCD);
-                                packet.addItem(DataType.Ascii, item.ALID);
-                                packet.addItem(DataType.Ascii, item.ALTEXT);
-                            }
-                        }
 
+                        if(EqpData.CurrAlarm.Count != 0 )
+                        {
+                            packet.addItem(DataType.List, EqpData.CurrAlarm.Count);   //* Alarm List
+                            foreach (var item in EqpData.CurrAlarm)
+                            {
+                                packet.addItem(DataType.List, 4);
+                                {
+                                    packet.addItem(DataType.Ascii, item.ALST);
+                                    packet.addItem(DataType.Ascii, item.ALCD);
+                                    packet.addItem(DataType.Ascii, item.ALID);
+                                    packet.addItem(DataType.Ascii, item.ALTEXT);
+                                }
+                            }
+                            packet.Send2Sys();
+                            GetNameofMessage(packet.Stream, packet.Function, packet.Items);
+                            return;
+                        }    
+                        if(EqpData.INTERLOCKS.Count != 0 )
+                        {
+                            packet.addItem(DataType.List, EqpData.INTERLOCKS.Count);
+                            foreach (var item in EqpData.INTERLOCKS)
+                            {
+                                packet.addItem(DataType.List, 4);
+                                {
+                                    packet.addItem(DataType.Ascii, "");
+                                    packet.addItem(DataType.Ascii, "");
+                                    packet.addItem(DataType.Ascii, item.INTERLOCKID);
+                                    packet.addItem(DataType.Ascii, item.MESSAGE);
+                                }
+                            }
+                            packet.Send2Sys();
+                            GetNameofMessage(packet.Stream, packet.Function, packet.Items);
+                            return;
+                        }
+                        packet.addItem(DataType.List, 0);
                     }
                 }
                 packet.Send2Sys();
