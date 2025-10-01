@@ -35,8 +35,19 @@ namespace ASOFTCIM.Data
             switch (Type.ToUpper())
             {
                 case "ASCII": val = plc.GetWord(PLCAddress, Length); break;
-                case "DEC": val = plc.InputWordBuffer[PLCAddress].ToString(); break;
+                case "DEC":
+                    if (Length == 1)
+                    {
+                        val = plc.InputWordBuffer[PLCAddress].ToString();
+                    }
+                    if (Length == 2)
+                    {
+                        val = plc.GetInt32(PLCAddress).ToString();
+                    }
+
+                    break;
                 default:
+               
                     break;
             }
             return val;
