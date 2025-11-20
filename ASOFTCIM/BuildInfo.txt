@@ -1,2 +1,2 @@
-Version=1.0.0.78
-BuildTime=2025-06-27 10:12:36
+Version=
+BuildTime=2025-10-29 15:12:34

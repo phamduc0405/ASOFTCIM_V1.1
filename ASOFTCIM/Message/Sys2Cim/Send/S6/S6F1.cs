@@ -19,7 +19,7 @@ namespace ASOFTCIM
 {
     public partial class ACIM
     {
-        public void SendS6F1(List<SV> svs,TRACESV tracesv)
+        public void SendS6F1(List<SV> svs, TRACESV tracesv)
         {
             try
             {
@@ -57,7 +57,47 @@ namespace ASOFTCIM
                 var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message);
                 LogTxt.Add(LogTxt.Type.Exception, debug);
             }
-            
+
+        }
+        public void SendS6F1(List<SV> svs, int SMPLN)
+        {
+            try
+            {
+                SysPacket packet = new SysPacket(_cim.Conn);
+                packet.Stream = 6;
+                packet.Function = 1;
+                packet.Command = Command.UserData;
+                packet.DeviceId = EqpData.DeviceId;
+                packet.SystemByte = (uint)SMPLN;
+                packet.addItem(DataType.List, 5);
+                packet.addItem(DataType.Ascii, EqpData.EQINFORMATION.EQPID);
+                packet.addItem(DataType.Ascii, 1);
+                packet.addItem(DataType.Ascii, SMPLN);
+                packet.addItem(DataType.Ascii, DateTime.Now.ToString("yyyyMMddHHmmss"));
+                packet.addItem(DataType.List, svs.Count);
+                foreach (var item in svs)
+                {
+                    packet.addItem(DataType.List, 2);
+                    {
+                        packet.addItem(DataType.Ascii, item.SVID);
+                        packet.addItem(DataType.Ascii, item.SVVALUE);
+                    }
+                }
+                packet.Send2Sys();
+                GetNameofMessage(packet.Stream, packet.Function, packet.Items);
+                if (_eqpConfig.UseLogFDC)
+                {
+                    var sb = packet.GetCimLog(true);
+                    LogFDC.SetBasePath(_eqpConfig.LogFDC);
+                    LogFDC.Log(sb);
+                }
+            }
+            catch (Exception ex)
+            {
+                var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message);
+                LogTxt.Add(LogTxt.Type.Exception, debug);
+            }
+
         }
     }
 }

@@ -25,6 +25,7 @@ namespace ASOFTCIM.Message.PLC2Cim.Send
                 word.FirstOrDefault(x => x.Item == "UNIQUETYPE").SetValue = val.UNIQUETYPE;
                 word.FirstOrDefault(x => x.Item == "PRODUCTID").SetValue = val.PRODUCTID;
                 word.FirstOrDefault(x => x.Item == "STEPID").SetValue = val.STEPID;
+                word.FirstOrDefault(x => x.Item == "COMMENT").SetValue = val.COMMENT;
                 word.FirstOrDefault(x => x.Item == "REPLYSTATUS").SetValue = val.REPLY.REPLYSTATUS;
                 word.FirstOrDefault(x => x.Item == "REPLYTEXT").SetValue = val.REPLY.REPLYTEXT;
 

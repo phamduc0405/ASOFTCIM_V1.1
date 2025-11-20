@@ -213,7 +213,7 @@ namespace ASOFTCIM
                     }
                 }
             }
-            if (PLCH.Bits.Find(x => x.Area == "TPMLOSSREADY").GetPLCValue)
+            if (PLCH.Bits.Find(x => x.Item == "TPMLOSSREADY").GetPLCValue)
             {
                 isSend = false;
             }    

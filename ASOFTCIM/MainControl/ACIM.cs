@@ -116,7 +116,8 @@ namespace ASOFTCIM
         {
             EqpData = new EQPDATA();
             
-            EqpData.EQINFORMATION.EQPVER = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            //EqpData.EQINFORMATION.EQPVER = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            EqpData.EQINFORMATION.EQPVER = "1.2";
         }
         private void _cim_TransTimeOutEvent(TransactionWait trans)
         {
