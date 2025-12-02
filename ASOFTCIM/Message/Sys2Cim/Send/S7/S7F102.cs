@@ -23,30 +23,43 @@ namespace ASOFTCIM
                 packet.Command = Command.UserData;
                 packet.DeviceId = EqpData.DeviceId;
                 packet.SystemByte = EqpData.TransactionSys;
-                if(ppids==null)
+                if (ppids == null)
                 {
                     packet.addItem(DataType.List, 0);
-                    packet.Send2Sys();Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
+                    packet.Send2Sys(); Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
                     return;
-                }    
+                }
                 packet.addItem(DataType.List, 3);
                 {
                     packet.addItem(DataType.Ascii, EqpData.EQINFORMATION.EQPID);
                     packet.addItem(DataType.Ascii, ppids.PPID_TYPE);
-                    packet.addItem(DataType.List, ppids.PPID.Count);
+                    int cout = 0;
                     foreach (var item in ppids.PPID)
                     {
-                        packet.addItem(DataType.Ascii, item);
+                        if (!string.IsNullOrEmpty(item))
+                        {
+                            cout++;
+
+                        }
+                    }
+                    packet.addItem(DataType.List, cout);
+                    foreach (var item in ppids.PPID)
+                    {
+                        if (!string.IsNullOrEmpty(item))
+                        {
+                            packet.addItem(DataType.Ascii, item);
+
+                        }
                     }
                 }
-                packet.Send2Sys();Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
+                packet.Send2Sys(); Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
             }
             catch (Exception ex)
             {
                 var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message);
                 LogTxt.Add(LogTxt.Type.Exception, debug);
             }
-            
+
         }
     }
 }

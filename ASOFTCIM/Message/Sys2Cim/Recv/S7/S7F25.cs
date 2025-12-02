@@ -9,6 +9,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using A_SOFT.Ctl.SecGem;
+using System.Threading;
 
 namespace ASOFTCIM
 {
@@ -18,6 +19,7 @@ namespace ASOFTCIM
         {
             try
             {
+                ReadRMS();
                 PPIDINFOR ppidInfor = new PPIDINFOR();
                 ppidInfor.EQPID = sysPacket.GetItemString(1);
                 ppidInfor.PPID = sysPacket.GetItemString();
@@ -32,7 +34,19 @@ namespace ASOFTCIM
                     SendS7F26(null);
                     return;
                 }
-                SendS7F26(EqpData.CurrPPID);
+                SendMessage2PLC("FORMATTEDPROCESSPROGRAMREQUEST", ppidInfor);
+                Thread.Sleep(500);
+                //var v = _plcH.PPIDParams.FirstOrDefault(x => x.Item == "PPID").GetValue(_plc);
+                var v2 = _plcH.PPIDParams.FirstOrDefault(x => x.Item == "TRAY_TYPE").GetValue(_plc);
+
+                PPIDINFOR ppidInfornew = new PPIDINFOR();
+                ppidInfornew = EqpData.CurrPPID;
+                ppidInfornew.COMMANDCODEs[0].PARAMs[2].PARAMNAME = "TRAY_TYPE";//đang fix cứng theo dự án. Cần sửa lại cho trường hợp tổng quát 
+                ppidInfornew.COMMANDCODEs[0].PARAMs[2].PARAMVALUE = v2;
+                ppidInfornew.PPID = ppidInfor.PPID;
+                ppidInfornew.PPID_TYPE = ppidInfor.PPID_TYPE;
+
+                SendS7F26(ppidInfornew);
             }
             catch (Exception ex)
             {

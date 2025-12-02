@@ -47,9 +47,17 @@ namespace ASOFTCIM
                 validation.ITEMS = items;
                 string lst = sysPacket.GetItemString();
                 validation.REPLY.REPLYSTATUS = sysPacket.GetItemString();
-                validation.REPLY.REPLYTEXT = sysPacket.GetItemString(); 
+                validation.REPLY.REPLYTEXT = sysPacket.GetItemString();
                 //ETC
-                SendMessage2PLC("SPECIFICVALIDATIONDATASEND1", validation);
+                if (validation.CARRIERID == "PRETRAY")
+                {
+                    SendMessage2PLC("SPECIFICVALIDATIONDATASEND3", validation);
+                }
+                if (validation.CARRIERID == "CELL")
+                {
+                    SendMessage2PLC("SPECIFICVALIDATIONDATASEND1", validation);
+                    SendMessage2PLC("SPECIFICVALIDATIONDATASEND2", validation);
+                }
                 //ETC
                 //unloader
                 //SendMessage2PLC("SPECIFICVALIDATIONDATASEND5", validation);

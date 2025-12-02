@@ -27,6 +27,12 @@ namespace ASOFTCIM
                 {
                     terminal.TEXT.Add(sysPacket.GetItemString());
                 }
+                if (terminal.EQPID != EQPID)
+                {
+                    ACK = "1";
+                    SendS10F6(ACK);
+                    return;
+                }
                 SendMessage2PLC("TERMINALTEXT", terminal);
                 SendS10F6( ACK);
             }

@@ -13,6 +13,58 @@ namespace ASOFTCIM
 {
     public partial class ACIM
     {
+        //public void SendS7F26(PPIDINFOR ppid)
+        //{
+        //    try
+        //    {
+        //        SysPacket packet = new SysPacket(_cim.Conn);
+        //        packet.Stream = 7;
+        //        packet.Function = 26;
+        //        packet.Command = Command.UserData;
+        //        packet.DeviceId = EqpData.DeviceId;
+        //        packet.SystemByte = EqpData.TransactionSys;
+        //        if (ppid == null)
+        //        {
+        //            packet.addItem(DataType.List, 0);
+        //            packet.Send2Sys();Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
+        //            return;
+        //        }
+        //        packet.addItem(DataType.List, 7);
+        //        {
+        //            packet.addItem(DataType.Ascii, EqpData.EQINFORMATION.EQPID);
+        //            packet.addItem(DataType.Ascii, ppid.PPID);
+        //            packet.addItem(DataType.Ascii, ppid.PPID_TYPE);
+        //            packet.addItem(DataType.Ascii, CIMINFOR.CIMVER);
+        //            packet.addItem(DataType.Ascii, EqpData.EQINFORMATION.EQPVER);
+        //            packet.addItem(DataType.Ascii, DateTime.Now.ToString());
+        //            packet.addItem(DataType.List, 1);
+
+        //            packet.addItem(DataType.List, 2);
+        //            {
+        //                packet.addItem(DataType.Ascii, ppid.COMMANDCODEs[0].CCODE);
+        //                packet.addItem(DataType.List, ppid.COMMANDCODEs.Count);
+        //                foreach (var param in ppid.COMMANDCODEs[0].PARAMs)
+        //                {
+        //                    packet.addItem(DataType.List, 2);
+        //                    {
+        //                        packet.addItem(DataType.Ascii, param.PARAMNAME);
+        //                        packet.addItem(DataType.Ascii, param.PARAMVALUE);
+        //                    }
+        //                }
+        //            }
+
+        //        }
+
+        //        packet.Send2Sys();Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message);
+        //        LogTxt.Add(LogTxt.Type.Exception, debug);
+        //    }
+
+        //}
+        //20251202 NamPham Update
         public void SendS7F26(PPIDINFOR ppid)
         {
             try
@@ -26,7 +78,7 @@ namespace ASOFTCIM
                 if (ppid == null)
                 {
                     packet.addItem(DataType.List, 0);
-                    packet.Send2Sys();Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
+                    packet.Send2Sys(); Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
                     return;
                 }
                 packet.addItem(DataType.List, 7);
@@ -36,33 +88,41 @@ namespace ASOFTCIM
                     packet.addItem(DataType.Ascii, ppid.PPID_TYPE);
                     packet.addItem(DataType.Ascii, CIMINFOR.CIMVER);
                     packet.addItem(DataType.Ascii, EqpData.EQINFORMATION.EQPVER);
-                    packet.addItem(DataType.Ascii, DateTime.Now.ToString());
+                    packet.addItem(DataType.Ascii, DateTime.Now.ToString("yyyyMMddHHmmss"));
                     packet.addItem(DataType.List, 1);
-
-                    packet.addItem(DataType.List, 2);
                     {
-                        packet.addItem(DataType.Ascii, ppid.COMMANDCODEs[0].CCODE);
-                        packet.addItem(DataType.List, ppid.COMMANDCODEs.Count);
-                        foreach (var param in ppid.COMMANDCODEs[0].PARAMs)
+                        packet.addItem(DataType.List, 2);
                         {
-                            packet.addItem(DataType.List, 2);
+                            packet.addItem(DataType.Ascii, ppid.COMMANDCODEs[0].CCODE);
+                            packet.addItem(DataType.List, ppid.COMMANDCODEs[0].PARAMs.Count - 2);
                             {
-                                packet.addItem(DataType.Ascii, param.PARAMNAME);
-                                packet.addItem(DataType.Ascii, param.PARAMVALUE);
+                                foreach (var param in ppid.COMMANDCODEs[0].PARAMs)
+                                {
+                                    if (ppid.COMMANDCODEs[0].PARAMs[0] != param && ppid.COMMANDCODEs[0].PARAMs[1] != param)
+                                    {
+                                        packet.addItem(DataType.List, 2);
+                                        {
+                                            packet.addItem(DataType.Ascii, param.PARAMNAME);
+                                            packet.addItem(DataType.Ascii, param.PARAMVALUE);
+                                        }
+                                    }
+
+                                }
                             }
                         }
                     }
 
+
                 }
 
-                packet.Send2Sys();Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
+                packet.Send2Sys(); Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
             }
             catch (Exception ex)
             {
                 var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message);
                 LogTxt.Add(LogTxt.Type.Exception, debug);
             }
-            
+
         }
     }
 }
