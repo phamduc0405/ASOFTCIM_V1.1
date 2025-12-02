@@ -26,6 +26,7 @@ namespace ASOFTCIM.MVVM.ViewModels
         protected Thread _backgroundThread;
         protected static bool _running = true;
         protected DispatcherTimer _timer;
+        private EventHandler _timerTickHandler;
         /// <summary>
         /// Bắt đầu một luồng nền chạy hành động liên tục nếu _running = true.
         /// </summary>
@@ -71,13 +72,20 @@ namespace ASOFTCIM.MVVM.ViewModels
 
             _timer = new DispatcherTimer();
             _timer.Interval = TimeSpan.FromMilliseconds(intervalMs);
-            _timer.Tick += (s, e) => action?.Invoke();
+            _timerTickHandler = (s, e) => action?.Invoke();
+            _timer.Tick += _timerTickHandler;
             _timer.Start();
         }
         protected void StopDispatcherTimer()
         {
             if (_timer != null)
             {
+                if (_timerTickHandler != null)
+                {
+                    _timer.Tick -= _timerTickHandler;
+                    _timerTickHandler = null;
+                }
+
                 _timer.Stop();
                 _timer = null;
             }

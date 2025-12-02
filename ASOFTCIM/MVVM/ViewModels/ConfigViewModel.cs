@@ -41,10 +41,10 @@ namespace ASOFTCIM.MVVM.ViewModels
                 OnPropertyChanged(nameof(Configs));
             }
         }
-        public ConfigViewModel()
+        public ConfigViewModel(Controller controller, ConfigModel configModel)
         {
-            _controller = MainWindowViewModel.Controller;
-            _config = new ConfigModel();
+            _controller = controller;
+            _config = configModel;
             _equipmentConfig = _controller.EquipmentConfig;
 
             if (_equipmentConfig == null)
@@ -116,7 +116,7 @@ namespace ASOFTCIM.MVVM.ViewModels
                     };
                     if (File.Exists(_config.PathMapInterface))
                     {
-                        SavePLCConfigDisplay display = new SavePLCConfigDisplay(_config.PathMapInterface);
+                        SavePLCConfigDisplay display = new SavePLCConfigDisplay(_config.PathMapInterface,_controller);
                         display.ShowDialog();
                     }
                     await SaveConfig();
@@ -136,8 +136,9 @@ namespace ASOFTCIM.MVVM.ViewModels
                     _equipmentConfig.LogFolder = _config.LogFolder;
                     _equipmentConfig.AliveTime = _config.AliveTime;
                     _equipmentConfig.UseLogFDC = _config.UseLogFDC;
+                    _equipmentConfig.UseLogPLC = _config.UseLogPLC;
                     _equipmentConfig.LogFDC = _config.LogFodlerFDC;
-
+                    _equipmentConfig.SizeFile = _config.SizeFile;
                     var debug = $"Class:{this.GetType().Name} Method:{MethodBase.GetCurrentMethod().Name} >.";
                     LogTxt.Add(LogTxt.Type.UI, debug);
                     await SaveConfig();
@@ -199,8 +200,9 @@ namespace ASOFTCIM.MVVM.ViewModels
                             _config.LogFolder = _equipmentConfig.LogFolder;
                             _config.AliveTime = _equipmentConfig.AliveTime;
                             _config.LogFodlerFDC = _equipmentConfig.LogFDC;
+                            _config.UseLogPLC = _equipmentConfig.UseLogPLC;
                             _config.UseLogFDC = _equipmentConfig.UseLogFDC;
-
+                            _config.SizeFile = _equipmentConfig.SizeFile.ToString();
                         }
 
                         //PlcConfig

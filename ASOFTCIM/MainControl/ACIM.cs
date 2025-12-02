@@ -20,6 +20,8 @@ using ASOFTCIM.MainControl.Device.PC;
 using ASOFTCIM.MainControl;
 using A_SOFT.CMM.INIT;
 using System.Diagnostics;
+using System.Xml.Linq;
+using System.Net.Sockets;
 
 namespace ASOFTCIM
 {
@@ -48,8 +50,9 @@ namespace ASOFTCIM
         public EQPDATA EqpData { get; set; }
         public string EQPID { get; set; } = "";
         public EquipmentConfig _eqpConfig;
-        
 
+        private Thread _simulatorAlarm;
+        private bool _issimulatorAlarm;
         private bool _isEqStatusUpdate = false;
         private bool _isSvidUpdate = false;
         #endregion
@@ -82,15 +85,20 @@ namespace ASOFTCIM
             get { return _tracesvs; }
             set { _tracesvs = value; }
         }
+        public bool IsSimulatorAlarm
+        {
+            get { return _issimulatorAlarm; }
+            set { _issimulatorAlarm = value; }
+        }
         #endregion
 
         #region Constructor
 
-        public ACIM(EquipmentConfig equipmentConfig)
+        public ACIM(EquipmentConfig equipmentConfig,CimHelper cimHelper, PlcComm plcComm, PLCHelper pLCHelper)
         {
             Initial();
             EQPID = equipmentConfig.EQPID;  
-            _cim = new CimHelper(EQPID);
+            _cim = cimHelper;
             ATCPIP.ConnectMode connectMode = (ATCPIP.ConnectMode)Enum.Parse(typeof(ATCPIP.ConnectMode), equipmentConfig.CimConfig.ConnectMode);
             string Ip = equipmentConfig.CimConfig.IP;
             ushort Port = ushort.Parse(equipmentConfig.CimConfig.Port);
@@ -98,10 +106,8 @@ namespace ASOFTCIM
             _cim.Init(connectMode, Ip, Port);
             _cim.SysPacketEvent += _cim_SysPacketEvent;
             _cim.TransTimeOutEvent += _cim_TransTimeOutEvent;
-            _plc = new PlcComm();
             _eqpConfig = equipmentConfig;
-            InitialPlc();
-
+            InitialPlc(plcComm, pLCHelper);
         }
         #endregion
 
@@ -110,7 +116,8 @@ namespace ASOFTCIM
         {
             EqpData = new EQPDATA();
             
-            EqpData.EQINFORMATION.EQPVER = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            //EqpData.EQINFORMATION.EQPVER = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            EqpData.EQINFORMATION.EQPVER = "1.2";
         }
         private void _cim_TransTimeOutEvent(TransactionWait trans)
         {
@@ -145,7 +152,15 @@ namespace ASOFTCIM
                     {
                         EqpData.TransactionSys = sysPacket.SystemByte;
                     }
-                    Host2CimEventHandle($"HOST -> CIM :RecvS{sysPacket.Stream}F{sysPacket.Function}");
+                    string snfm = $"S{sysPacket.Stream}F{sysPacket.Function}";
+
+                    int ceid = 0;
+                    if (sysPacket.Items.Count > 1 && int.TryParse(sysPacket.Items[1]?.ToString(), out int tmp))
+                    {
+                        ceid = tmp;
+                    }
+                    string messageName = GetMessageName(snfm, ceid);
+                    Host2CimEventHandle($"HOST -> CIM :Recv{snfm} {messageName}");
                     object result = method.Invoke(this, new object[] { sysPacket });
 
                     return;
@@ -168,6 +183,94 @@ namespace ASOFTCIM
             }
 
 
+        }
+        private static readonly Dictionary<(string SnFm, int Ceid), string> _messageNameMap = new Dictionary<(string, int), string>
+        {
+            { ("S1F1", 0), "Are You There?" },
+            { ("S1F2", 0), "CIM CONNECT" },
+            { ("S6F11", 106), "EQP STATE" },
+            { ("S6F11", 101), "EQP STATE CHANGE" },
+            { ("S2F17", 0), "DATETIMEREQUEST" },
+            { ("S2F18", 0), "DATETIME" },
+            { ("S1F5", 1), "EQP STATE REQUEST" },
+            { ("S1F6", 1), "EQP STATE" },
+            { ("S1F5", 2), "UNIT STATE REQUEST" },
+            { ("S1F6", 2), "UNIT STATE" },
+            { ("S1F5", 3), "MATERIAL STATE REQUEST" },
+            { ("S1F6", 3), "MATERIAL STATE" },
+            { ("S1F5", 4), "PORT STATE REQUEST" },
+            { ("S1F6", 4), "PORT STATE" },
+            { ("S1F5", 5), "FUNCTION STATE REQUEST" },
+            { ("S1F6", 5), "FUNCTION STATE" },
+
+            { ("S2F13", 0), "LIST ECM REQUEST" },
+            { ("S2F14", 0), "LIST ECM" },
+            { ("S2F29", 0), "CONSTANT NAME LIST ECM REQUEST" },
+            { ("S2F30", 0), "CONSTANT NAME LIST ECM" },
+
+            { ("S1F3", 0), "LIST NAME FDC REQUEST" },
+            { ("S1F4", 0), "LIST NAME FDC" },
+            { ("S1F11", 0), "VARIABLE NAME LIST FDC REQUEST" },
+            { ("S1F12", 0), "VARIABLE NAME LIST FDC" },
+            { ("S2F23", 0), "TRACE FDC REQUEST" },
+            { ("S2F24", 0), "TRACE FDC ACK" },
+            { ("S6F1", 0), "TRACE FDC" },
+
+            { ("S2F41", 1), "OPCALL REQUEST" },
+            { ("S2F42", 1), "OPCALL ACK" },
+            { ("S6F11", 501), "OPCALL COMFIRM" },
+            { ("S10F5", 0), "TERMINAL REQUEST" },
+            { ("S10F6", 0), "TERMINAL ACK" },
+
+            { ("S2F41", 2), "INTERLOCK REQUEST" },
+            { ("S2F42", 2), "INTERLOCK ACK" },
+            { ("S6F11", 502), "INTERLOCK COMFIRM" },
+
+            { ("S5F1", 0), "ALARM REPORT" },
+            { ("S5F2", 0), "ALARM ACK" },
+
+            { ("S6F11", 606), "TPM" },
+            { ("S6F203", 257), "SPECIFIC VALIDATION REQUEST" },
+            { ("S3F103", 257), "SPECIFIC VALIDATION " },
+            { ("S6F11", 257), "CARRIER RELEASE COMPLETE" },
+
+        };
+
+        private string GetMessageName(string snfm, int ceid)
+        {
+            if (_messageNameMap.TryGetValue((snfm, ceid), out string name))
+            {
+                if(ceid != 0)
+                {
+                    return $"{ceid} " + name;
+                }
+                return name;
+            }
+            return "";
+        }
+
+        private void AlarmReader()
+        {
+            while (_issimulatorAlarm)
+            {
+                try
+                {
+                    Data.Alarm alarm = new Data.Alarm();
+
+                    for(int i =1; i<=5;i++)
+                    {
+                        alarm = EqpData.ALS[i];
+                        alarm.ALST = "2";
+                        SendS5F1(alarm);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    LogTxt.Add(LogTxt.Type.Exception, $"Class:{this.GetType().Name} Method:{MethodBase.GetCurrentMethod().Name} exception: {ex.Message}");
+                }
+
+                Thread.Sleep(100);
+            }
         }
         #endregion
 
@@ -274,6 +377,40 @@ namespace ASOFTCIM
                     LogTxt.Add(LogTxt.Type.Exception, debug);
                 }
             }
+        }
+        public void StartSiMulatorAlarm()
+        {
+            if (_simulatorAlarm != null && _simulatorAlarm.IsAlive)
+                return;
+            _issimulatorAlarm = true;
+            _simulatorAlarm = new Thread(() => AlarmReader());
+            _simulatorAlarm.IsBackground = true;
+            _simulatorAlarm.Start();
+        }
+        public void StopSiMulatorAlarm()
+        {
+            //_controller.CIM.PLCH.TestAlarm = false;
+            if (_simulatorAlarm != null && _simulatorAlarm.IsAlive)
+            {
+                _issimulatorAlarm = false;
+                _simulatorAlarm.Join();
+                _simulatorAlarm = null;
+            }
+        }
+        public void GetNameofMessage( int Stream, int Function,List<Item> Items)
+        {
+            string snfm = $"S{Stream}F{Function}";
+            int ceid = 0;
+            if (Items.Count > 1 && int.TryParse(Items[1]?.ToString(), out int tmp))
+            {
+                ceid = tmp;
+            }
+            if(Items.Count > 1 && int.TryParse(Items[2]?.ToString(), out int tmpS6f11) && Stream == 6 && Function == 11)
+            {
+                ceid = tmpS6f11;
+            }
+            string messageName = GetMessageName(snfm, ceid);
+            Host2CimEventHandle($"CIM -> HOST :SEND S{Stream}F{Function} {messageName}");
         }
         #endregion
 

@@ -24,10 +24,10 @@ namespace ASOFTCIM.MVVM.Views.Monitor
     public partial class MonitorWords : UserControl
     {
         private Controller _controller;
-        public MonitorWords()
+        public MonitorWords(Controller controller)
         {
             InitializeComponent();
-            _controller = MainWindow.Controller;
+            _controller = controller;
             Initial();
         }
         #region Private Method

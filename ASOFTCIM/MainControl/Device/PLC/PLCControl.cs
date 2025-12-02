@@ -31,7 +31,7 @@ namespace ASOFTCIM
         public event PlcConnectChangeEventDelegate PlcConnectChangeEvent;
         public event Action ResetEvent;
         public StopWatch stopWatch;
-        public void InitialPlc()
+        public void InitialPlc(PlcComm plcComm, PLCHelper pLCHelper)
         {
             stopWatch = new StopWatch();
             if (_eqpConfig.PLCConfig != null)
@@ -41,12 +41,13 @@ namespace ASOFTCIM
                     try
                     {
                         // Khởi tạo đối tượng PLC
-                        _plc = new PlcComm();
+                        _plc = plcComm;
                         _plc.ConfigComm(_eqpConfig.PLCConfig);
                         _plc.Start();
 
-                        _plcH = new PLCHelper();
+                        _plcH = pLCHelper;
                         _plcH = _eqpConfig.PLCHelper;
+                        _plcH.IsLogPLC = _eqpConfig.UseLogPLC;
                         _plcH.Start(_plc, _eqpConfig.EQPID);
                         _aliveBit = new Thread(Alive)
                         {
@@ -212,6 +213,10 @@ namespace ASOFTCIM
                     }
                 }
             }
+            if (PLCH.Bits.Find(x => x.Item == "TPMLOSSREADY").GetPLCValue)
+            {
+                isSend = false;
+            }    
             if (isSend)
                 SendS6F11_101( oldstate);
 

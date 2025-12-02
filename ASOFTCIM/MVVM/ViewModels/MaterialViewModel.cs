@@ -26,10 +26,10 @@ namespace ASOFTCIM.MVVM.ViewModels
             set { _materialModel = value; OnPropertyChanged(nameof(MaterialModel)); }
         }
         #endregion
-        public MaterialViewModel()
+        public MaterialViewModel(Controller controller, ASOFTCIM.MVVM.Models.MaterialModel materialModel)
         {
-            _controller = MainWindowViewModel.Controller;
-            _materialModel = new ASOFTCIM.MVVM.Models.MaterialModel();
+            _controller = controller;
+            _materialModel = materialModel;
             StartDispatcherTimer(UpdateMaterialData, 1);
         }
         private void UpdateMaterialData()
@@ -86,8 +86,6 @@ namespace ASOFTCIM.MVVM.ViewModels
             _materialModel.TxtReplyCode_kitting_P3 = _controller.CIM.EqpData.CELLEVENTDATA.MATERIALs[2].EQPMATERIALSUPPLYREQUESTQTY;
             _materialModel.TxtReplyText_kitting_P3 = _controller.CIM.EqpData.CELLEVENTDATA.MATERIALs[2].EQPMATERIALSUPPLYREQUESTQTY;
         }
-        
-        
         protected override void Dispose(bool disposing)
         {
             if (disposing)

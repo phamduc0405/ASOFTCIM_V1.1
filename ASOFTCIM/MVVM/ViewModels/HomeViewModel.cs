@@ -63,14 +63,12 @@ namespace ASOFTCIM.MVVM.ViewModels
         #endregion
 
         #region Constructor
-        public HomeViewModel()
+        public HomeViewModel(Controller controller,HomeModel homeModel)
         {
-            _controller = MainWindowViewModel.Controller;
-            _home = new HomeModel();
+            _controller = controller;
+            _home = homeModel;
             _home.EQPID = _controller.EquipmentConfig.EQPID;
             _running = true;
-            CpuChart = new PartialCpuChart();
-
             LoadConfig();
             Controller_CimConnectChangeEvent(_controller.CimConnect);
             
@@ -117,7 +115,7 @@ namespace ASOFTCIM.MVVM.ViewModels
             _controller.CIM.Cim.Conn.OnConnectEvent += Controller_CimConnectChangeEvent;
             
 
-            StartDispatcherTimer(UpdateData, 1);
+            StartDispatcherTimer(UpdateData, 500);
             _alarmUpdateTimer = new DispatcherTimer
             {
                 Interval = TimeSpan.FromMilliseconds(500)
@@ -150,7 +148,7 @@ namespace ASOFTCIM.MVVM.ViewModels
 
         private void Controller_CimConnectChangeEvent(bool isConnected)
         {
-            _home.CimConnect = isConnected ? ":   CimConnect" : ":   CimDisConnect";
+            _home.CimConnect = isConnected ? ":   Host Connected" : ":   Host DisConnected";
         }
 
         private void Controller_PlcConnectChangeEvent(bool isConnected)
@@ -265,10 +263,11 @@ namespace ASOFTCIM.MVVM.ViewModels
             {
                 StopDispatcherTimer();
                 _running = false;
-                CpuChart.OnUnloaded();
 
                 _controller.CIM.Cim2HostChangeEvent -= Controller_Cim2HostChangeEvent;
+                _controller.CIM.Host2CimChangeEvent -= Controller_Cim2HostChangeEvent;
                 _controller.CIM.Plc2CimChangeEvent -= Controller_Plc2CimChangeEvent;
+                _controller.CIM.Cim2PlcChangeEvent -= Controller_Plc2CimChangeEvent;
                 _controller.CIM.PlcConnectChangeEvent -= Controller_PlcConnectChangeEvent;
                 _controller.CIM.Cim.Conn.OnConnectEvent -= Controller_CimConnectChangeEvent;
                 _controller.CIM.ResetEvent -=  UpdateAlarm;

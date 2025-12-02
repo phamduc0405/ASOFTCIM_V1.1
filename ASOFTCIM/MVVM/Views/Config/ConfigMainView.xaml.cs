@@ -30,18 +30,12 @@ namespace ASOFTCIM.MVVM.Views.Config
         }
         private void CreateEvent()
         {
-            btnEquipSetting.Click += (s, e) =>
-            {
-                var debug = string.Format("Class:{0} Method:{1} Event:{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ((System.Windows.Controls.Control)s).Name);
-                LogTxt.Add(LogTxt.Type.UI, debug);
-                this.Content = new ConfigView();
-            };
-
+            
             btnTest.Click += (s, e) =>
             {
                 var debug = string.Format("Class:{0} Method:{1} Event:{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ((System.Windows.Controls.Control)s).Name);
                 LogTxt.Add(LogTxt.Type.UI, debug);
-                this.Content = new Test();
+                //this.Content = new Test();
             };
         }
     }

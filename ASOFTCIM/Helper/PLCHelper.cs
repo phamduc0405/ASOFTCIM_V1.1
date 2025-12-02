@@ -2,12 +2,14 @@
 using A_SOFT.CMM.INIT;
 using A_SOFT.Ctl.Mitsu.Model;
 using A_SOFT.PLC;
+using ASOFTCIM.Config;
 using ASOFTCIM.Data;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -33,12 +35,15 @@ namespace ASOFTCIM.Helper
         private List<MaterialModel> _materials;
         private List<APCModel> _apc;
         private List<CarialModel> _carrial;
+        private List<AtributeModel> _attribute;
         private Thread _update;
         private Thread _wordReaderThread;
         private Thread _alarmReaderThread;
         private bool _isReadingWord = false;
         private bool _isReadingAlarm = false;
         public MelsecIF.WordStatus[] als;
+        private EquipmentConfig _equipmentConfig;
+        private bool _isLogPLC;
         #endregion
         #region Property
         public List<BitModel> Bits
@@ -95,6 +100,16 @@ namespace ASOFTCIM.Helper
         {
             get { return _carrial; }
             set { _carrial = value; }
+        }
+        public List<AtributeModel> Attribute
+        {
+            get { return _attribute; }
+            set { _attribute = value; }
+        }
+        public bool IsLogPLC
+        {
+            get { return _isLogPLC; }
+            set { _isLogPLC = value; }
         }
         public string EqpId { get; set; } = null;
         public bool TestAlarm { get; set; } = false; 
@@ -184,6 +199,10 @@ namespace ASOFTCIM.Helper
                 if (sheets.Any(x => x == "Carial"))
                 {
                     _carrial = await ExcelHelper.ReadExcel<CarialModel>(ExcelPath, "Cassette Batch");
+                }
+                if (sheets.Any(x => x == "ATTRIBUTE"))
+                {
+                    _attribute = await ExcelHelper.ReadExcel<AtributeModel>(ExcelPath, "ATTRIBUTE");
                 }
             }).GetAwaiter().GetResult();
 
@@ -352,14 +371,22 @@ namespace ASOFTCIM.Helper
                             bit.SetPCValue = false;
                             return;
                         }
-                        MakeLogBit(false, bit, status.IsOn);
+                        if (_isLogPLC)
+                        {
+                            MakeLogBit(false, bit, status.IsOn);
+                        }
+                        
                         BitChangedEventHandle(bit);
                     } 
                     if (!status.IsOn) return;
                     if (bit.Type == "Command")
                     {
                         string name = bit.Item.Trim() + "CONFIRM";
-                        MakeLogBit(true, bit, status.IsOn);
+                        if (_isLogPLC)
+                        {
+                            MakeLogBit(true, bit, status.IsOn);
+                        }
+                        
                         bit.SetPCValue = false;
                     }
                     else return;

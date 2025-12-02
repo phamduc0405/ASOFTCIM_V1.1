@@ -28,14 +28,22 @@ using ASOFTCIM.MVVM.Behaviors;
 using System.Windows.Threading;
 using ECMView = ASOFTCIM.MVVM.Views.ECM.ECMView;
 using ASOFTCIM.MVVM.NavigationService;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace ASOFTCIM.MVVM.ViewModels
 {
-    public class MainWindowViewModel : INotifyPropertyChanged
+    public class MainWindowViewModel : BaseViewModel
     {
+        #region Events
+
+        #endregion
+
+        #region Costants
+        #endregion
+
         #region Fields
-        private MainWindowModel _mainWindowModel;
-        public static Controller Controller;
+        private static MainWindowModel _mainWindowModel;
+        private readonly Controller _controller;
         public static string User = "User";
         public static string Pass = "2";
         public static int LeveLogin = 0;
@@ -43,9 +51,10 @@ namespace ASOFTCIM.MVVM.ViewModels
         private LogInDisplay _displayPopupLogIn;
         private DateTime _datetime;
         private Thread _updateTime;
-        private readonly INavigationService _navigationService;
-        private InactivityMonitor _inactivityMonitor;
+        private static INavigationService _navigationService;
+        private static InactivityMonitor _inactivityMonitor;
         #endregion
+
         #region Properties
         public ICommand HomeViewCommand { get; set; }
         public ICommand ConfigViewCommand { get; set; }
@@ -62,71 +71,93 @@ namespace ASOFTCIM.MVVM.ViewModels
         public ICommand grdTopMain { get; set; }
 
         private readonly Window _window;
-        #endregion
-        public ASOFTCIM.MVVM.Models.MainWindowModel MainWindowModel
+       
+        public static ASOFTCIM.MVVM.Models.MainWindowModel MainWindowModel
         {
             get => _mainWindowModel;
-            set { _mainWindowModel = value; OnPropertyChanged(nameof(MainWindowModel)); }
+            set { _mainWindowModel = value;  }
         }
+        public static INavigationService NavigationService
+        {
+            get => _navigationService;
+            set { _navigationService = value; }
+        }
+        #endregion
 
-
-
-        #region CONSTRUCTOR
-        public MainWindowViewModel(Window window)
+        #region Constructors
+        public MainWindowViewModel(Window window, IServiceProvider serviceProvider)
         {
             _mainWindowModel = new MainWindowModel();
             _mainWindowModel.CancellationTokenSource = new CancellationTokenSource();
             _mainWindowModel.CancellationToken = _mainWindowModel.CancellationTokenSource.Token;
-            Initial();
             _navigationService = new ASOFTCIM.MVVM.NavigationService.NavigationService(view =>
             {
                 MainWindowModel.Currentview = view;
-            });
+            }, serviceProvider); 
             _window = window;
-            MainWindowModel.Currentview = new HomeView();
+            
             _navigationService.NavigateTo<HomeViewModel>();
             _mainWindowModel.VersionInfo = $"Version : {System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString()}       {LibMethod.GetBuildTime()}";
+            
+            _mainWindowModel.NameEQP = serviceProvider.GetRequiredService<Controller>().EquipmentConfig.EqpName;
             _updateTime = new Thread(UpdateTime)
             {
                 IsBackground = true,
             };
             _updateTime.Start();
-            HomeViewCommand = new RelayCommand(o =>_navigationService.NavigateTo<HomeViewModel>());
-            ALARMViewCommand = new RelayCommand(o =>_navigationService.NavigateTo<AlarmViewModel>());
+            HomeViewCommand = new RelayCommand(o => _navigationService.NavigateTo<HomeViewModel>());
+            ALARMViewCommand = new RelayCommand(o => _navigationService.NavigateTo<AlarmViewModel>());
             FDCViewCommand = new RelayCommand(o => _navigationService.NavigateTo<FDCViewModel>());
-            ConfigViewCommand = new RelayCommand(o => {
+            ConfigViewCommand = new RelayCommand(excute =>
+            {
+                _navigationService.NavigateTo<ConfigMainViewModel>();
+            },
+            canExecute =>
+            {
                 if (LeveLogin == 1)
-                {
-                    _navigationService.NavigateTo<ConfigViewModel>();
-                }
+                    return true;
+                return false;
             }
             );
             ECMViewCommand = new RelayCommand(o => _navigationService.NavigateTo<ECMViewModel>());
-            MaterialViewCommand = new RelayCommand(o => { 
-            if(LeveLogin == 1)
-                {
-                    _navigationService.NavigateTo<MaterialViewModel>();
-                }
-            
-            });
-            MonitorIOViewCommand = new RelayCommand(o =>{
+            MaterialViewCommand = new RelayCommand(o =>
+            {
+                _navigationService.NavigateTo<MaterialViewModel>();
+            },
+            canExecute =>
+            {
                 if (LeveLogin == 1)
-                {
-                    MainWindowModel.Currentview = new MonitorIOView();
-                }
-            });
-            //monitor, RMS chua chuyen sang MVVM
-            //MonitorIOViewCommand = new RelayCommand(o => _navigationService.NavigateTo<MonitorIOViewModel>());
-            //RMSViewCommand = new RelayCommand(o => _navigationService.NavigateTo<RMSViewModel>());
+                    return true;
+                return false;
+            }
+            );
+            MonitorIOViewCommand = new RelayCommand(o =>
+            {
+                var controller = serviceProvider.GetRequiredService<Controller>();
+                MainWindowModel.Currentview = new MonitorIOView(controller);
+            },
+            canExecute =>
+            {
+                if (LeveLogin == 1)
+                    return true;
+                return false;
+            }
+            );
             CloseCommand = new AsyncRelayCommand(async () =>
             {
                 if (await PopupMessage("DO YOU WANT EXIT ?"))
                 {
                     Thread.Sleep(1000);
                     _mainWindowModel.CancellationTokenSource.Cancel();
+                    if (_updateTime != null && _updateTime.IsAlive)
+                    {
+                        if (!_updateTime.Join(3000))
+                        {
+                            LogTxt.Add(LogTxt.Type.Exception, "Thread UpdateTime không kết thúc đúng hạn.");
+                        }
+                    }
                     _window.Close();
                     LogTxt.Stop();
-
                 }
             });
             ResizeCommand = new RelayCommand(o =>
@@ -135,7 +166,10 @@ namespace ASOFTCIM.MVVM.ViewModels
                 {
                     _window.WindowState = (WindowState)FormWindowState.Maximized;
                 }
-                else { _window.WindowState = (WindowState)FormWindowState.Normal; }
+                else
+                {
+                    _window.WindowState = (WindowState)FormWindowState.Normal;
+                }
             });
             HideMenuCommand = new RelayCommand(o =>
             {
@@ -148,11 +182,7 @@ namespace ASOFTCIM.MVVM.ViewModels
         }
         #endregion
 
-
-        private void Initial()
-        {
-            Controller = new Controller();
-        }
+        #region private method
         private async Task<bool> PopupMessage(string message)
         {
             bool result = false;
@@ -215,39 +245,6 @@ namespace ASOFTCIM.MVVM.ViewModels
                 return false;
             }
         }
-        public void LogIn()
-        {
-            if (User == "Admin" && Pass == "1")
-            {
-                MainWindowViewModel.User = User;
-                _mainWindowModel.User = User;
-                LeveLogin = 1;
-                
-                StartInactivityMonitor();
-                return;
-            }
-            if (User == "Engineer" && Pass == "2")
-            {
-                MainWindowViewModel.User = User;
-                _mainWindowModel.User = User;
-
-                LeveLogin = 2;
-                return;
-            }
-            if (User == "Operator" && Pass == "3")
-            {
-                MainWindowViewModel.User = User;
-                _mainWindowModel.User = User;
-                LeveLogin = 3;
-            }
-            else
-            {
-                MainWindowViewModel.User = "User";
-                _mainWindowModel.User = User;
-
-                LeveLogin = 2;
-            }
-        }
         private void UpdateTime()
         {
             while (!_mainWindowModel.CancellationToken.IsCancellationRequested)
@@ -269,12 +266,56 @@ namespace ASOFTCIM.MVVM.ViewModels
             {
                 System.Windows.Application.Current.Dispatcher.Invoke(() =>
                 {
-                    System.Windows.MessageBox.Show("Tài khoản Admin đã hết thời gian hoạt động. Tự động đăng xuất.");
-                    LogOut(); 
+                    if(LeveLogin==1)
+                    {
+                        System.Windows.MessageBox.Show("Tài khoản Admin đã hết thời gian hoạt động. Tự động đăng xuất.");
+                        LogOut();
+                    }
                 });
             };
             _inactivityMonitor.Start();
 
+        }
+
+        #endregion
+
+        #region public method
+        public void LogIn()
+        {
+            if (User == "Admin" && Pass == "1")
+            {
+                MainWindowViewModel.User = User;
+                _mainWindowModel.User = User;
+                _mainWindowModel.LogInOut = "LogOut";
+                LeveLogin = 1;
+
+                StartInactivityMonitor();
+                return;
+            }
+            if (User == "Engineer" && Pass == "2")
+            {
+                MainWindowViewModel.User = User;
+                _mainWindowModel.LogInOut = "LogOut";
+                _mainWindowModel.User = User;
+
+                LeveLogin = 2;
+                return;
+            }
+            if (User == "Operator" && Pass == "3")
+            {
+                MainWindowViewModel.User = User;
+                _mainWindowModel.LogInOut = "LogOut";
+                _mainWindowModel.User = User;
+                LeveLogin = 3;
+            }
+            else
+            {
+                MainWindowViewModel.User = "User";
+                _mainWindowModel.User = User;
+                _mainWindowModel.LogInOut = "LogIn";
+
+                LeveLogin = 2;
+            }
         }
         public void LogOut()
         {
@@ -282,11 +323,11 @@ namespace ASOFTCIM.MVVM.ViewModels
             User = "User";
             Pass = "2";
             _mainWindowModel.User = User;
+            _mainWindowModel.LogInOut = "LogIn";
             _navigationService.NavigateTo<HomeViewModel>();
             //MainWindowModel.Currentview = new HomeView(); //quay ve HOME
         }
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged(string name) =>
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        #endregion
+
     }
 }

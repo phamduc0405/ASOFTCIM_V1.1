@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ASOFTCIM.Data;
 using A_SOFT.Ctl.SecGem;
+using A_SOFT.PLC;
 
 namespace ASOFTCIM
 {
@@ -30,7 +31,7 @@ namespace ASOFTCIM
                 carrierinfor.CARRIER_C_COUNT = sysPacket.GetItemString();
                 carrierinfor.PORTNO = sysPacket.GetItemString();
                 int count1 = int.Parse(sysPacket.GetItemString());
-                
+
                 for (int i = 0; i < count1; i++)
                 {
                     string lst1 = sysPacket.GetItemString();
@@ -53,59 +54,81 @@ namespace ASOFTCIM
                 lst = sysPacket.GetItemString();
                 carrierinfor.REPLY.REPLYCODE = sysPacket.GetItemString();
                 carrierinfor.REPLY.REPLYTEXT = sysPacket.GetItemString();
+                //// 20251125: NamPham
 
-                int cellpallet = int.Parse(sysPacket.GetItemString(15));
+                //WordModel Carrier = _plcH.Words.FirstOrDefault(x => x.Area == "CarrierProcessChangeUnloader1" && x.Item == "CARRIERID");
+                //if (carrierinfor.CARRIERID == Carrier.GetValue())
+                //{
+                //    ACK = "9";
+                //    SendS3F116(ACK);
+                //    return;
+                //}
+                //251126 NamPham sua ACK carrier cho  Unload
+                WordModel Carrier = _plcH.Words.FirstOrDefault(x => x.Area == "CarrierProcessChangeUnloader1" && x.Item == "CARRIERID");
+                WordModel CarrierSub = _plcH.Words.FirstOrDefault(x => x.Area == "CarrierProcessChangeUnloader1" && x.Item == "SUBCARRIERID1");
 
-                //loader
-                //if(carrierinfor.CARRIERTYPE == "11" && carrierinfor.PORTNO == "LS01")//262
+                var c = Carrier.GetValue();
+                var c1 = CarrierSub.GetValue();
+                if ((sysPacket.GetItemString(13) != CarrierSub.GetValue()) && !string.IsNullOrEmpty(CarrierSub.GetValue()) && carrierinfor.SUBCARRIERS.Count != 0)
+                {
+                    ACK = "9";
+                    SendS3F116(ACK);
+                    return;
+                }
+                if ((sysPacket.GetItemString(3) != Carrier.GetValue()) && !string.IsNullOrEmpty(Carrier.GetValue()))
+                {
+                    ACK = "9";
+                    SendS3F116(ACK);
+                    return;
+                }
+                //251126 NamPham sua ACK carrier cho load
+                //WordModel Carrier = _plcH.Words.FirstOrDefault(x => x.Area == "CarrierProcessChangeUnloader1" && x.Item == "CARRIERID");
+                //WordModel CarrierSub = _plcH.Words.FirstOrDefault(x => x.Area == "CarrierProcessChangeUnloader1" && x.Item == "SUBCARRIERID1");
+
+                //var c = Carrier.GetValue();
+                //var c1 = CarrierSub.GetValue();
+                //if ((sysPacket.GetItemString(13) != CarrierSub.GetValue()) && !string.IsNullOrEmpty(CarrierSub.GetValue()) && carrierinfor.SUBCARRIERS.Count != 0)
                 //{
-                //    SendMessage2PLC("CARRIERINFORMATIONSENDLOADER1", carrierinfor);
+                //    ACK = "9";
+                //    SendS3F116(ACK);
+                //    return;
                 //}
-                //if (cellpallet == 0 && carrierinfor.CARRIERTYPE == "21")//257
+                //if ((sysPacket.GetItemString(3) != Carrier.GetValue()) && !string.IsNullOrEmpty(Carrier.GetValue()))
                 //{
-                //    SendMessage2PLC("INSPECTIONCARRIERRELEASEINFOSEND1", carrierinfor);
+                //    ACK = "9";
+                //    SendS3F116(ACK);
+                //    return;
                 //}
-                //if (cellpallet != 0 && carrierinfor.CARRIERTYPE == "21")//261
-                //{
-                //    SendMessage2PLC("INSPECTIONCARRIERASSIGNINFOSEND1", carrierinfor);
-                //}
-                //if (carrierinfor.PORTNO == "LI01")
-                //{
-                //    SendMessage2PLC("CARRIERINOFRMATIONSENDCASSETTE1", carrierinfor);
-                //}
-                //if (carrierinfor.CARRIERTYPE == "1" || carrierinfor.CARRIERTYPE == "11" || carrierinfor.CARRIERTYPE == "13")//256 //260
-                //{
-                //    SendMessage2PLC("CARRIERINFORMATIONSENDLOADER1", carrierinfor);
-                //}
-                //loader
-                //unloader
-                if (carrierinfor.CARRIERTYPE == "11" && carrierinfor.PORTNO == "LS01")//262
+                int cellpallet = int.Parse(sysPacket.GetItemString(16));
+
+                if (carrierinfor.PORTNO == "LS01")//256 //260
                 {
                     SendMessage2PLC("CARRIERINFORMATIONSENDLOADER1", carrierinfor);
                 }
-                if (cellpallet == 0 && carrierinfor.CARRIERTYPE == "21")//257
+                if (carrierinfor.PORTNO == "LH01" || carrierinfor.PORTNO == "UH01")//260
                 {
-                    SendMessage2PLC("INSPECTIONCARRIERRELEASEINFOSEND1", carrierinfor);
+                    SendMessage2PLC("CARRIERINFORMATIONSENDLOADER1", carrierinfor);
                 }
-                if (cellpallet != 0 && carrierinfor.CARRIERTYPE == "21")//261
-                {
-                    SendMessage2PLC("INSPECTIONCARRIERASSIGNINFOSEND1", carrierinfor);
-                }
-                if (carrierinfor.PORTNO == "LI01")
+                if ((carrierinfor.CARRIERTYPE == "11" || carrierinfor.CARRIERTYPE == "13") && carrierinfor.PORTNO == "UL01")//354
                 {
                     SendMessage2PLC("CARRIERINOFRMATIONSENDCASSETTE1", carrierinfor);
                 }
-                if (carrierinfor.CARRIERTYPE == "1" || carrierinfor.CARRIERTYPE == "11" || carrierinfor.CARRIERTYPE == "13" || carrierinfor.CARRIERTYPE == "3")//256 //260
+                if ((carrierinfor.CARRIERTYPE == "11" || carrierinfor.CARRIERTYPE == "13") && carrierinfor.PORTNO == "LI01" && carrierinfor.PORTNO == "UI01")//354
+                {
+                    SendMessage2PLC("CARRIERINOFRMATIONSENDCASSETTE1", carrierinfor);
+                }
+                if (carrierinfor.PORTNO == "US01" || carrierinfor.PORTNO == "UH01")//256 //260
                 {
                     SendMessage2PLC("CARRIERINFORMATIONSENDUNLOADER1", carrierinfor);
                 }
+
                 //unloader
 
 
 
 
 
-                SendS3F116( ACK);
+                SendS3F116(ACK);
             }
             catch (Exception ex)
             {
@@ -113,6 +136,7 @@ namespace ASOFTCIM
                 var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message);
                 LogTxt.Add(LogTxt.Type.Exception, debug);
             }
+
         }
     }
 }

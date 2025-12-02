@@ -40,25 +40,10 @@ namespace ASOFTCIM
     /// </summary>
     public partial class MainWindow : Window
     {
-        public static Controller Controller;
-        public static string User = "User";
-        public static string Pass = "2";
-        public static int LeveLogin = 0;
-       
-
-        private static bool _running = true;
-        public static bool Running
-        {
-            get
-            {
-                return _running;
-            }
-        }
+        
         public MainWindow()
         {
             InitializeComponent();
-            this.DataContext = new MainWindowViewModel(this);
-            
         }
     }
 }

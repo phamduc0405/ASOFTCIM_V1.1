@@ -29,7 +29,7 @@ namespace ASOFTCIM
                 int dsper, totsmp = 0;
                 string eqpID = sysPacket.GetItemString(1);
                 trid = sysPacket.GetItemString(2);
-                dsper = int.Parse(sysPacket.GetItemString(3));
+                trid = trid.Replace(" ", "");
                 totsmp = int.Parse(sysPacket.GetItemString(4));
                 repgsz = sysPacket.GetItemString(5);
                 int countSvid = int.Parse(sysPacket.GetItemString(6));
@@ -39,35 +39,74 @@ namespace ASOFTCIM
                     lstSvid.Add(sysPacket.GetItemString());
                 }
                 tracesv.SVs = lstSvid;
-                tracesv.Init(lstSvid, trid, dsper, totsmp, repgsz);
-                if(tracesv.DSPER<=900)
+                if (sysPacket.GetItemString(3) != "")
                 {
-                    TIAACK = "3";
-                }    
-                if (_cim.EQPID != eqpID) TIAACK = "4";
-                if (EqpData.SVID.Count < countSvid) TIAACK = "1";
-                if (EqpData.EQINFORMATION.CRST == "0") TIAACK = "5";
-                foreach (var item in lstSvid)
-                {
-                    if (!EqpData.SVID.Any(x=>x.SVID == item))
-                    {
-                        TIAACK = "2";
-                        break;
-                    }
+                    dsper = int.Parse(sysPacket.GetItemString(3));
+
+                    tracesv.Init(lstSvid, trid, dsper, totsmp, repgsz);
                 }
-                SendS2F24( TIAACK);
-                if (TIAACK != "") return;
-                if(tracesv.TRID == "0")
+                else
+                {
+                    dsper = 0;
+                    tracesv.Init(lstSvid, trid, dsper, countSvid, repgsz);
+                }
+                if (tracesv.TRID == "0" || tracesv.DSPER == 0 || lstSvid.Count == 0)
                 {
                     for (int i = Tracesvs.Count - 1; i >= 0; i--)
                     {
                         Tracesvs[i].Stop();
                         Tracesvs.RemoveAt(i);
                     }
-                }    
-                if (Tracesvs.Any(x =>x.TRID == tracesv.TRID))
+                    TIAACK = "0";
+
+                    SendS2F24(TIAACK);
+                    return;
+                    return;
+                }
+                if ((tracesv.DSPER == 0 || lstSvid.Count == 0) && tracesv.TRID != null)
                 {
-                    if(lstSvid.Count==0)
+                    int tri = int.Parse(trid);
+                    if (Tracesvs.Any(x => x.TRID == trid))
+                    {
+                        var t = Tracesvs.Find(x => x.TRID == trid);
+                        t.Stop();
+                        Tracesvs.Remove(t);
+                    }
+                    TIAACK = "0";
+                    //for (int i = Tracesvs.Count - 1; i >= 0; i--)
+                    //{
+                    //    Tracesvs[i].Stop();
+                    //    Tracesvs.RemoveAt(i);
+                    //}
+
+                    SendS2F24(TIAACK);
+                    return;
+                }
+                if (tracesv.DSPER <= 900 && tracesv.TRID != "0" && lstSvid.Count != 0)
+                {
+                    TIAACK = "3";
+                }
+                if (_cim.EQPID != eqpID.Replace(" ", "")) TIAACK = "4";
+                if (EqpData.SVID.Count < countSvid) TIAACK = "1";
+                if (EqpData.EQINFORMATION.CRST == "0") TIAACK = "5";
+                foreach (var item in lstSvid)
+                {
+                    if (!EqpData.SVID.Any(x => x.SVID == item))
+                    {
+                        TIAACK = "2";
+                        break;
+                    }
+                }
+                SendS2F24(TIAACK);
+                if (TIAACK != "") return;
+                
+                if (tracesv.TOTSMP == 0 && !Tracesvs.Any(x => x.TRID == tracesv.TRID))
+                {
+                    //return;
+                }
+                if (Tracesvs.Any(x => x.TRID == tracesv.TRID))
+                {
+                    if (lstSvid.Count == 0)
                     {
                         var Tracesvd = Tracesvs.First(x => x.TRID == tracesv.TRID);
                         Tracesvd.Stop();
@@ -84,7 +123,7 @@ namespace ASOFTCIM
                     tracesv.TraceSvEvent += (lstSv, isEnd) =>
                     {
                         List<SV> svs = new List<SV>();
-                        foreach(var svid in lstSv)
+                        foreach (var svid in lstSv)
                         {
                             SV sv = new SV();
                             sv = EqpData.SVID.Find(x => x.SVID == svid);
@@ -93,13 +132,20 @@ namespace ASOFTCIM
                         SendS6F1(svs, tracesv);
                         if (tracesv.SMPLN == tracesv.TOTSMP)
                         {
-                            Tracesvs.Remove(Tracesvs.First(x => x.TRID == tracesv.TRID));
-                            tracesv.Stop();
-                        }    
+                            if (tracesv.TOTSMP != 0)
+                            {
+                                Tracesvs.Remove(Tracesvs.First(x => x.TRID == tracesv.TRID));
+                                tracesv.Stop();
+                            }
+                        }
                     };
-                    Tracesvs.Add(tracesv);
-                    tracesv.Start();
-                }    
+                    if (tracesv.TRID != "0" || tracesv.DSPER == null || lstSvid.Count == 0)
+                    {
+                        Tracesvs.Add(tracesv);
+                        tracesv.Start();
+                    }
+
+                }
             }
             catch (Exception ex)
             {

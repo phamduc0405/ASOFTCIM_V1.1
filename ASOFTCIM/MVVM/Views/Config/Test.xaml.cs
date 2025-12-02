@@ -33,15 +33,15 @@ namespace ASOFTCIM.MVVM.Views.Config
         private Controller _controller;
         private Thread _alarmReaderThread;
         private bool _isReadingAlarm = false;
-        public Test()
+        public Test(Controller controller)
         {
             InitializeComponent();
-            Initial();
+            Initial(controller);
             CreaterEvent();
         }
-        private void Initial()
+        private void Initial(Controller controller)
         {
-            _controller = MainWindowViewModel.Controller;
+            _controller = controller;
         }
         private void CreaterEvent()
         {
@@ -76,7 +76,7 @@ namespace ASOFTCIM.MVVM.Views.Config
                     }
                 }
             };
-            btnS2F17.Click += (s, e) => 
+            btnS2F17.Click += (s, e) =>
             {
                 _controller.CIM.SendS2F17(_controller.CIM.Cim.SysPacket);
             };
@@ -91,7 +91,7 @@ namespace ASOFTCIM.MVVM.Views.Config
                 svs = _controller.CIM.EqpData.SVID;
                 TRACESV tRACESV = new TRACESV();
                 List<string> lstSvid = new List<string>();
-                foreach( var Item in svs)
+                foreach (var Item in svs)
                 {
                     lstSvid.Add(Item.SVID);
                 }
@@ -130,16 +130,12 @@ namespace ASOFTCIM.MVVM.Views.Config
                         tRACESV.Stop();
                     }
                 };
-                
+
             };
             btnS5F1Set.Click += (s, e) =>
             {
 
                 Data.Alarm alarm = new Data.Alarm();
-                //if (!int.TryParse(txtAlarmID.Text, out int al))
-                //{
-                //    return;
-                //}
                 alarm = _controller.CIM.EqpData.ALS[int.Parse(txtAlarmID.Text)];
                 alarm.ALST = "1";
                 _controller.CIM.SendS5F1(alarm);
@@ -159,95 +155,14 @@ namespace ASOFTCIM.MVVM.Views.Config
             };
             btnS5F1Start.Click += (s, e) =>
             {
-                _controller.CIM.PLCH.TestAlarm = true;
-               // StartAlarmReader();
+                _controller.CIM.StartSiMulatorAlarm();
+
             };
             btnS5F1Stop.Click += (s, e) =>
             {
-                _controller.CIM.PLCH.TestAlarm = false;
-                if (_alarmReaderThread != null && _alarmReaderThread.IsAlive)
-                {
-                    _isReadingAlarm = false;
-                    _alarmReaderThread.Join();
-                    _alarmReaderThread = null;
-                }
+                _controller.CIM.StopSiMulatorAlarm();
             };
-        }
-        private void StartAlarmReader()
-        {
-            if (_alarmReaderThread != null && _alarmReaderThread.IsAlive)
-                return;
-
-            _isReadingAlarm = true;
-            _alarmReaderThread = new Thread(() => AlarmReader());
-            _alarmReaderThread.IsBackground = true;
-            _alarmReaderThread.Start();
-        }
-        private void AlarmReader()
-        {
-
-            while (_isReadingAlarm)
-            {
-                try
-                {
-                    Data.Alarm alarm = new Data.Alarm();
-                    alarm = _controller.CIM.EqpData.ALS[1];
-                    alarm.ALST = "2";
-                    _controller.CIM.SendS5F1(alarm);
-                    alarm = _controller.CIM.EqpData.ALS[2];
-                    alarm.ALST = "2";
-                    _controller.CIM.SendS5F1(alarm);
-                    alarm = _controller.CIM.EqpData.ALS[3];
-                    alarm.ALST = "2";
-                    _controller.CIM.SendS5F1(alarm);
-                    alarm = _controller.CIM.EqpData.ALS[4];
-                    alarm.ALST = "2";
-                    _controller.CIM.SendS5F1(alarm);
-                    alarm = _controller.CIM.EqpData.ALS[5];
-                    alarm.ALST = "2";
-                    _controller.CIM.SendS5F1(alarm);
-                    alarm = _controller.CIM.EqpData.ALS[6];
-                    alarm.ALST = "2";
-                    _controller.CIM.SendS5F1(alarm);
-                    alarm = _controller.CIM.EqpData.ALS[7];
-                    alarm.ALST = "2";
-                    _controller.CIM.SendS5F1(alarm);
-                    alarm = _controller.CIM.EqpData.ALS[8];
-                    alarm.ALST = "2";
-                    _controller.CIM.SendS5F1(alarm);
-                    alarm = _controller.CIM.EqpData.ALS[9];
-                    alarm.ALST = "2";
-                    _controller.CIM.SendS5F1(alarm);
-                    alarm = _controller.CIM.EqpData.ALS[10];
-                    alarm.ALST = "2";
-                    _controller.CIM.SendS5F1(alarm);
-                    alarm = _controller.CIM.EqpData.ALS[11];
-                    alarm.ALST = "2";
-                    _controller.CIM.SendS5F1(alarm);
-                    alarm = _controller.CIM.EqpData.ALS[12];
-                    alarm.ALST = "2";
-                    _controller.CIM.SendS5F1(alarm);
-                    alarm = _controller.CIM.EqpData.ALS[13];
-                    alarm.ALST = "2";
-                    _controller.CIM.SendS5F1(alarm);
-                    alarm = _controller.CIM.EqpData.ALS[14];
-                    alarm.ALST = "2";
-                    _controller.CIM.SendS5F1(alarm);
-                    alarm = _controller.CIM.EqpData.ALS[15];
-                    alarm.ALST = "2";
-                    _controller.CIM.SendS5F1(alarm);
-                    alarm = _controller.CIM.EqpData.ALS[16];
-                    alarm.ALST = "2";
-                    _controller.CIM.SendS5F1(alarm);
-
-                }
-                catch (Exception ex)
-                {
-                    LogTxt.Add(LogTxt.Type.Exception, $"Class:{this.GetType().Name} Method:{MethodBase.GetCurrentMethod().Name} exception: {ex.Message}");
-                }
-
-                Thread.Sleep(100);
-            }
+            
         }
         public Type[] GetTypesInNamespace(Assembly assembly, string nameSpace)
         {

@@ -55,11 +55,11 @@ namespace ASOFTCIM.MainControl
         }
         public void Trace()
         {
-            while (isRunning && SMPLN < TOTSMP)
+            while ((isRunning && SMPLN < TOTSMP) || (isRunning && TOTSMP == 0))
             {
                 SMPLN++;
                 TranceEventHandle(SVs, SMPLN == TOTSMP);
-                if(SMPLN == TOTSMP)
+                if(SMPLN == TOTSMP && TOTSMP != 0)
                 {
                     return;
                 }    

@@ -19,7 +19,7 @@ namespace ASOFTCIM.Message.PLC2Cim.Recv
             try
             {
                 BitModel bit = (BitModel)body;
-                
+
 
                 List<IWordModel> word = bit.LstWord;
                 CARRIERPROCESSCHANGE carr = new CARRIERPROCESSCHANGE();
@@ -31,24 +31,69 @@ namespace ASOFTCIM.Message.PLC2Cim.Recv
                 carr.CARRIER_C_COUNT = word.FirstOrDefault(x => x.Item == "CARRIER_C_COUNT").GetValue(eq.PLC);
                 carr.PORTNO = word.FirstOrDefault(x => x.Item == "PORTNO").GetValue(eq.PLC);
                 carr.CEID = word.FirstOrDefault(x => x.Item == "CEID").GetValue(eq.PLC);
-                for (int i = 1; i <= 51; i++)
+                if (carr.CEID == "256")
                 {
-                    SUBCARRIER sub = new SUBCARRIER();
-                    sub.SUBCARRIERID = word.FirstOrDefault(x => x.Item == "SUBCARRIERID" + i.ToString()).GetValue(eq.PLC);
-                    sub.CELLQTY = word.FirstOrDefault(x => x.Item == "CELLQTY").GetValue(eq.PLC);
-                    for (int j = 1; j <= 10; j++)
+                    for (int i = 1; i < 2; i++)
                     {
-                        CELLINFO cell = new CELLINFO();
-                        cell.CELLID = word.FirstOrDefault(x => x.Item == "CELLID" + j.ToString()).GetValue(eq.PLC);
-                        cell.LOCATIONNO = word.FirstOrDefault(x => x.Item == "LOCATIONNO" + j.ToString()).GetValue(eq.PLC);
-                        cell.JUDGE = word.FirstOrDefault(x => x.Item == "JUDGE" + j.ToString()).GetValue(eq.PLC);
-                        cell.REASONCODE = word.FirstOrDefault(x => x.Item == "REASONCODE" + j.ToString()).GetValue(eq.PLC);
-                        sub.CELLSINFOR.Add(cell);
+                        SUBCARRIER sub = new SUBCARRIER();
+                        sub.SUBCARRIERID = word.FirstOrDefault(x => x.Item == "SUBCARRIERID" + i.ToString()).GetValue(eq.PLC);
+                        sub.CELLQTY = word.FirstOrDefault(x => x.Item == "CELLQTY").GetValue(eq.PLC);
+
+                        carr.SUBCARRIERS.Add(sub);
                     }
-                    carr.SUBCARRIERS.Add(sub);
+                }
+                if ((carr.CEID == "260" && carr.CARRIERTYPE == "3") || (carr.CEID == "260" && carr.CARRIERTYPE == "1"))
+                {
+                    int ccount = int.Parse(carr.CARRIER_C_COUNT);
+                    for (int i = 1; i <= 1; i++)
+                    {
+                        SUBCARRIER sub = new SUBCARRIER();
+                        sub.SUBCARRIERID = word.FirstOrDefault(x => x.Item == "SUBCARRIERID" + i.ToString()).GetValue(eq.PLC);
+                        sub.CELLQTY = word.FirstOrDefault(x => x.Item == "CELLQTY").GetValue(eq.PLC);
+                        int Q = int.Parse(sub.CELLQTY);
+                        for (int j = 1; j <= Q; j++)
+                        {
+                            CELLINFO cell = new CELLINFO();
+                            cell.CELLID = word.FirstOrDefault(x => x.Item == "CELLID" + j.ToString()).GetValue(eq.PLC);
+                            cell.LOCATIONNO = word.FirstOrDefault(x => x.Item == "LOCATIONNO" + j.ToString()).GetValue(eq.PLC);
+                            cell.JUDGE = word.FirstOrDefault(x => x.Item == "JUDGE" + j.ToString()).GetValue(eq.PLC);
+                            cell.REASONCODE = word.FirstOrDefault(x => x.Item == "REASONCODE" + j.ToString()).GetValue(eq.PLC);
+                            sub.CELLSINFOR.Add(cell);
+                        }
+                        carr.SUBCARRIERS.Add(sub);
+                    }
+                }
+                if ((carr.CEID == "260" && carr.CARRIERTYPE == "13") || (carr.CEID == "260" && carr.CARRIERTYPE == "11"))
+                {
+                    int ccount = int.Parse(carr.CARRIER_S_COUNT);
+                    for (int i = 1; i <= ccount; i++)
+                    {
+                        SUBCARRIER sub = new SUBCARRIER();
+                        sub.SUBCARRIERID = word.FirstOrDefault(x => x.Item == "SUBCARRIERID" + i.ToString()).GetValue(eq.PLC);
+                        sub.CELLQTY = word.FirstOrDefault(x => x.Item == "CELLQTY").GetValue(eq.PLC);
+                        int CellQty = int.Parse(sub.CELLQTY);
+                        carr.SUBCARRIERS.Add(sub);
+                    }
                 }
 
-                eq.SendS6F11_256_262( carr, carr.CEID);
+                //for (int i = 1; i <= 51; i++)
+                //{
+                //    SUBCARRIER sub = new SUBCARRIER();
+                //    sub.SUBCARRIERID = word.FirstOrDefault(x => x.Item == "SUBCARRIERID" + i.ToString()).GetValue(eq.PLC);
+                //    sub.CELLQTY = word.FirstOrDefault(x => x.Item == "CELLQTY").GetValue(eq.PLC);
+                //    for (int j = 1; j <= 10; j++)
+                //    {
+                //        CELLINFO cell = new CELLINFO();
+                //        cell.CELLID = word.FirstOrDefault(x => x.Item == "CELLID" + j.ToString()).GetValue(eq.PLC);
+                //        cell.LOCATIONNO = word.FirstOrDefault(x => x.Item == "LOCATIONNO" + j.ToString()).GetValue(eq.PLC);
+                //        cell.JUDGE = word.FirstOrDefault(x => x.Item == "JUDGE" + j.ToString()).GetValue(eq.PLC);
+                //        cell.REASONCODE = word.FirstOrDefault(x => x.Item == "REASONCODE" + j.ToString()).GetValue(eq.PLC);
+                //        sub.CELLSINFOR.Add(cell);
+                //    }
+                //    carr.SUBCARRIERS.Add(sub);
+                //}
+
+                eq.SendS6F11_256_262(carr, carr.CEID);
                 bit.SetPCValue = true;
             }
             catch (Exception ex)
@@ -56,7 +101,7 @@ namespace ASOFTCIM.Message.PLC2Cim.Recv
                 var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message);
                 LogTxt.Add(LogTxt.Type.Exception, debug);
             }
-           
+
         }
     }
 }

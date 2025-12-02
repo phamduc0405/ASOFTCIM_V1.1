@@ -20,23 +20,29 @@ namespace ASOFTCIM.Message.PLC2Cim.Send
             try
             {
                 List<WordModel> word = plcdata.Words.Where(x => x.Area == this.GetType().Name).ToList();
-                word.FirstOrDefault(x => x.Item == "CARRIERID").SetValue = val.CARRIERID;
-                word.FirstOrDefault(x => x.Item == "CELLID").SetValue = val.UNIQUEID;
-                word.FirstOrDefault(x => x.Item == "UNIQUETYPE").SetValue = val.UNIQUETYPE;
-                word.FirstOrDefault(x => x.Item == "PRODUCTID").SetValue = val.PRODUCTID;
-                word.FirstOrDefault(x => x.Item == "STEPID").SetValue = val.STEPID;
-                word.FirstOrDefault(x => x.Item == "REPLYSTATUS").SetValue = val.REPLY.REPLYSTATUS;
-                word.FirstOrDefault(x => x.Item == "REPLYTEXT").SetValue = val.REPLY.REPLYTEXT;
+                List<WordModel> wordr = plcdata.Words.Where(x => x.Area == "SpecificValidationRequest1").ToList();
+                var C = wordr.FirstOrDefault(x => x.Item == "CELLID").GetValue();
+                if (val.UNIQUEID == wordr.FirstOrDefault(x => x.Item == "CELLID").GetValue())
+                {
+                    word.FirstOrDefault(x => x.Item == "CARRIERID").SetValue = val.CARRIERID;
+                    word.FirstOrDefault(x => x.Item == "CELLID").SetValue = val.UNIQUEID;
+                    word.FirstOrDefault(x => x.Item == "UNIQUETYPE").SetValue = val.UNIQUETYPE;
+                    word.FirstOrDefault(x => x.Item == "PRODUCTID").SetValue = val.PRODUCTID;
+                    word.FirstOrDefault(x => x.Item == "STEPID").SetValue = val.STEPID;
+                    //word.FirstOrDefault(x => x.Item == "COMMENT").SetValue = val.COMMENT;
+                    word.FirstOrDefault(x => x.Item == "REPLYSTATUS").SetValue = val.REPLY.REPLYSTATUS;
+                    word.FirstOrDefault(x => x.Item == "REPLYTEXT").SetValue = val.REPLY.REPLYTEXT;
 
-                BitModel bit = plcdata.Bits.First(x => x.Comment == this.GetType().Name);
-                bit.SetPCValue = true;
+                    BitModel bit = plcdata.Bits.First(x => x.Comment == this.GetType().Name);
+                    bit.SetPCValue = true;
+                }
             }
             catch (Exception ex)
             {
                 var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message);
                 LogTxt.Add(LogTxt.Type.Exception, debug);
             }
-            
+
         }
     }
     public class SPECIFICVALIDATIONDATASEND2
@@ -47,23 +53,29 @@ namespace ASOFTCIM.Message.PLC2Cim.Send
             try
             {
                 List<WordModel> word = plcdata.Words.Where(x => x.Area == this.GetType().Name).ToList();
-                word.FirstOrDefault(x => x.Item == "CARRIERID").SetValue = val.CARRIERID;
-                word.FirstOrDefault(x => x.Item == "CELLID").SetValue = val.UNIQUEID;
-                word.FirstOrDefault(x => x.Item == "UNIQUETYPE").SetValue = val.UNIQUETYPE;
-                word.FirstOrDefault(x => x.Item == "PRODUCTID").SetValue = val.PRODUCTID;
-                word.FirstOrDefault(x => x.Item == "STEPID").SetValue = val.STEPID;
-                word.FirstOrDefault(x => x.Item == "REPLYSTATUS").SetValue = val.REPLY.REPLYSTATUS;
-                word.FirstOrDefault(x => x.Item == "REPLYTEXT").SetValue = val.REPLY.REPLYTEXT;
+                List<WordModel> wordr = plcdata.Words.Where(x => x.Area == "SpecificValidationRequest2").ToList();
+                var C = wordr.FirstOrDefault(x => x.Item == "CELLID").GetValue();
+                if (val.UNIQUEID == wordr.FirstOrDefault(x => x.Item == "CELLID").GetValue())
+                {
+                    word.FirstOrDefault(x => x.Item == "CARRIERID").SetValue = val.CARRIERID;
+                    word.FirstOrDefault(x => x.Item == "CELLID").SetValue = val.UNIQUEID;
+                    word.FirstOrDefault(x => x.Item == "UNIQUETYPE").SetValue = val.UNIQUETYPE;
+                    word.FirstOrDefault(x => x.Item == "PRODUCTID").SetValue = val.PRODUCTID;
+                    word.FirstOrDefault(x => x.Item == "STEPID").SetValue = val.STEPID;
+                    //word.FirstOrDefault(x => x.Item == "COMMENT").SetValue = val.COMMENT;
+                    word.FirstOrDefault(x => x.Item == "REPLYSTATUS").SetValue = val.REPLY.REPLYSTATUS;
+                    word.FirstOrDefault(x => x.Item == "REPLYTEXT").SetValue = val.REPLY.REPLYTEXT;
 
-                BitModel bit = plcdata.Bits.First(x => x.Comment == this.GetType().Name);
-                bit.SetPCValue = true;
+                    BitModel bit = plcdata.Bits.First(x => x.Comment == this.GetType().Name);
+                    bit.SetPCValue = true;
+                }
             }
             catch (Exception ex)
             {
                 var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message);
                 LogTxt.Add(LogTxt.Type.Exception, debug);
-            }   
-            
+            }
+
         }
     }
     public class SPECIFICVALIDATIONDATASEND3
@@ -90,7 +102,7 @@ namespace ASOFTCIM.Message.PLC2Cim.Send
                 var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message);
                 LogTxt.Add(LogTxt.Type.Exception, debug);
             }
-            
+
         }
     }
     public class SPECIFICVALIDATIONDATASEND4

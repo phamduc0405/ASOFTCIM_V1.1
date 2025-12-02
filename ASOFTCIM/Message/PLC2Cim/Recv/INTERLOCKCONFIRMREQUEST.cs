@@ -28,6 +28,7 @@ List<IWordModel> word = bit.LstWord;
                 mess.INTERLOCKID = word.FirstOrDefault(x => x.Item == "INTERLOCKID").GetValue(eq.PLC);
                 mess.MESSAGE = word.FirstOrDefault(x => x.Item == "MESSAGE").GetValue(eq.PLC);
                 interlock.Add(mess);
+                eq.EqpData.INTERLOCKS.Clear();
                 eq.SendS6F11_502( interlock, "502");
                 bit.SetPCValue = true;
             }

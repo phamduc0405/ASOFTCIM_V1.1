@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 using AComm.TCPIP;
 using A_SOFT.Ctl.SecGem;
 using ASOFTCIM.MainControl;
+using A_SOFT.PLC;
+using System.Xml.Linq;
 
 namespace ASOFTCIM
 {
@@ -29,7 +31,8 @@ namespace ASOFTCIM
                 packet.addItem(DataType.List, 2);
                 packet.addItem(DataType.Ascii, "abc");
                 packet.addItem(DataType.Ascii, "def");
-                packet.Send2Sys();Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
+                packet.Send2Sys();
+                GetNameofMessage(packet.Stream, packet.Function, packet.Items);
             }
             catch (Exception ex)
             {
@@ -38,12 +41,12 @@ namespace ASOFTCIM
             }
 
         }
-    
-    /// <summary>
-    /// T:101 Equipment Status Change
-    /// </summary>
-  
-        public void SendS6F11_101( EQPSTATE oldState)
+
+        /// <summary>
+        /// T:101 Equipment Status Change
+        /// </summary>
+
+        public void SendS6F11_101(EQPSTATE oldState)
         {
             try
             {
@@ -51,7 +54,7 @@ namespace ASOFTCIM
                 packet.Stream = 6;
                 packet.Function = 11;
                 packet.Command = Command.UserData;
-                packet.DeviceId = EqpData.DeviceId; 
+                packet.DeviceId = EqpData.DeviceId;
                 packet.SystemByte = EqpData.TransactionSys++;
                 packet.addItem(DataType.List, 3);
                 packet.addItem(DataType.Ascii, "0");          //DATA ID ?
@@ -102,21 +105,42 @@ namespace ASOFTCIM
                     packet.addItem(DataType.List, 2);
                     {
                         packet.addItem(DataType.Ascii, "104");      //* RPTID
-                        packet.addItem(DataType.List, EqpData.CurrAlarm.Count);   //* Alarm List
-                        foreach (var item in EqpData.CurrAlarm)
+                        if (EqpData.CurrAlarm.FindAll(x => x.ALCD == "2").Count != 0)
+                        {
+                            packet.addItem(DataType.List, EqpData.CurrAlarm.FindAll(x => x.ALCD == "2").Count);   //* Alarm List
+                            foreach (var item in EqpData.CurrAlarm)
+                            {
+                                if (item.ALCD == "2")
+                                {
+                                    packet.addItem(DataType.List, 4);
+                                    {
+                                        packet.addItem(DataType.Ascii, item.ALST);
+                                        packet.addItem(DataType.Ascii, item.ALCD);
+                                        packet.addItem(DataType.Ascii, item.ALID);
+                                        packet.addItem(DataType.Ascii, item.ALTEXT);
+                                    }
+                                }
+                            }
+                            packet.Send2Sys();
+                            return;
+                        }
+                        if (EqpData.INTERLOCKS.Count != 0)
                         {
                             packet.addItem(DataType.List, 4);
                             {
-                                packet.addItem(DataType.Ascii, item.ALST);
-                                packet.addItem(DataType.Ascii, item.ALCD);
-                                packet.addItem(DataType.Ascii, item.ALID);
-                                packet.addItem(DataType.Ascii, item.ALTEXT);
+                                List<WordModel> word = PLCH.Words.Where(x => x.Area == "INTERLOCK").ToList();
+                                packet.addItem(DataType.Ascii, "");
+                                packet.addItem(DataType.Ascii, "");
+                                packet.addItem(DataType.Ascii, EqpData.INTERLOCKS[0].INTERLOCKID);
+                                packet.addItem(DataType.Ascii, EqpData.INTERLOCKS[0].MESSAGE);
                             }
+                            packet.Send2Sys();
+                            return;
                         }
-
+                        packet.addItem(DataType.List, EqpData.CurrAlarm.Count);
                     }
                 }
-                packet.Send2Sys();Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
+                packet.Send2Sys();
             }
             catch (Exception ex)
             {
@@ -125,11 +149,11 @@ namespace ASOFTCIM
             }
 
         }
-    
-    /// <summary>
-    /// T:102 Unit Status Change
-    /// </summary>
-    
+
+        /// <summary>
+        /// T:102 Unit Status Change
+        /// </summary>
+
         public void SendS6F11_102( EQPSTATE oldState, EQPSTATE newUnitState)
         {
             try
@@ -275,7 +299,8 @@ namespace ASOFTCIM
                         }
                     }
                 }
-                packet.Send2Sys();Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
+                packet.Send2Sys();
+                GetNameofMessage(packet.Stream, packet.Function, packet.Items);
             }
             catch (Exception ex)
             {

@@ -24,9 +24,9 @@ namespace ASOFTCIM.MVVM.ViewModels
             get => _alarmView;
             set { _alarmView = value; OnPropertyChanged(nameof(AlarmView)); }
         }
-        public AlarmViewModel()
+        public AlarmViewModel(Controller controller)
         {
-            _controller = MainWindowViewModel.Controller;
+            _controller = controller;
             _alarmView = new AlarmModel();
             UpdateAlarm();
             _controller.CIM.ResetEvent -= UpdateAlarm;

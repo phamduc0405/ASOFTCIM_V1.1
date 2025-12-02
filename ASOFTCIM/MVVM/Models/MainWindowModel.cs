@@ -18,7 +18,7 @@ namespace ASOFTCIM.MVVM.Models
         private string _user = "User";
         private string _pass = "2";
         public static int LeveLogin = 0;
-
+        private string _logInOut = "LogIn";
 
         private CancellationTokenSource _cancellationTokenSource;
         private CancellationToken _cancellationToken;
@@ -27,6 +27,7 @@ namespace ASOFTCIM.MVVM.Models
 
         private string _datetime;
         private string Version = "Version 1.0.0";
+        private string _nameEqp = "Cim";
         #endregion
         #region Property
         public object Currentview
@@ -90,6 +91,25 @@ namespace ASOFTCIM.MVVM.Models
                 OnPropertyChanged(nameof(User));
             }
         }
+        public string LogInOut
+        {
+            get { return _logInOut; }
+            set
+            {
+                _logInOut = value;
+                OnPropertyChanged(nameof(LogInOut));
+            }
+        }
+        public string NameEQP
+        {
+            get { return _nameEqp; }
+            set
+            {
+                _nameEqp = value;
+                OnPropertyChanged(nameof(_nameEqp));
+            }
+        }
+
         #endregion
 
         public event PropertyChangedEventHandler PropertyChanged;

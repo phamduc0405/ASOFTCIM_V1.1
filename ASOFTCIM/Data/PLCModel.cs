@@ -329,4 +329,50 @@ namespace ASOFTCIM.Data
 
         }
     }
+    public class AtributeModel
+    {
+        public string Item { get; set; }
+        public string Area { get; set; }
+        public string START { get; set; }
+        public string BitEvent { get; set; }
+        public int PLCAddress
+        {
+            get
+            {
+                return Convert.ToInt32(START, 16);
+            }
+        }
+        public int CIMAddress
+        {
+            get
+            {
+                return Convert.ToInt32(START, 16);
+            }
+        }
+        public int Length { get; set; }
+        public string Type { get; set; }
+
+        public void SetValue(PlcComm plc, string value)
+        {
+
+            if (CIMAddress < plc.WriteStartWordAddress) return;
+            if (Type.ToUpper() == "ASCII")
+            {
+                plc.SetWordFromString(CIMAddress - plc.WriteStartWordAddress, value, Length);
+            }
+            if (Type.ToUpper() == "DEC")
+            {
+                if (Length == 1)
+                {
+                    short val = short.Parse(value);
+                    plc.SetWord(CIMAddress - plc.WriteStartWordAddress, val);
+                }
+                if (Length == 2)
+                {
+                    plc.SetInt32(CIMAddress - plc.WriteStartWordAddress, value);
+                }
+            }
+
+        }
+    }
 }

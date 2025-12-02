@@ -24,7 +24,7 @@ namespace ASOFTCIM
             {
                 string HACK = "0";
                 string RCMD = sysPacket.GetItemString(1);
-                if (RCMD == "4"|| RCMD == "5"||RCMD == "6"||RCMD == "7"|| RCMD == "8")
+                if (RCMD == "4" || RCMD == "5" || RCMD == "6" || RCMD == "7" || RCMD == "8")
                 {
                     JobProcess jobProcess = new JobProcess();
                     jobProcess.RCMD = RCMD;
@@ -57,7 +57,7 @@ namespace ASOFTCIM
                         WordModel word = _plcH.Words.FirstOrDefault(x => x.Area == "EquipControlInformation");
                         HACK = word.GetValue(PLC);
                     }
-                   
+
                 }
                 switch (RCMD)
                 {
@@ -75,9 +75,9 @@ namespace ASOFTCIM
                         interlock.RCMD = sysPacket.GetItemString(1);
                         interlock.INTERLOCK = sysPacket.GetItemString(4);
                         interlock.EQPID = sysPacket.GetItemString();
-                        interlock.INTERLOCKID = sysPacket.GetItemString();
-                        interlock.MESSAGE = sysPacket.GetItemString();
-                        
+                        interlock.INTERLOCKID = sysPacket.GetItemString(7);
+                        interlock.MESSAGE = sysPacket.GetItemString(8);
+                        EqpData.INTERLOCKS.Add(interlock);
                         SendMessage2PLC("INTERLOCK", interlock);
                         break;
                     case "3":   //Equipment Job Command (Job(=PPID) Select))
@@ -101,16 +101,16 @@ namespace ASOFTCIM
                         break;
                     case "8":   //(Job Process Cancel)
                         break;
-                     case "9":   //Equipment Job Command (Job(=PPID) Change Reserve))
+                    case "9":   //Equipment Job Command (Job(=PPID) Change Reserve))
                         break;
                     case "10":  //(Function Change)
-                        
+
                         FUNCTION func = new FUNCTION();
                         func.UNITID = sysPacket.GetItemString(5);
                         func.EFID = sysPacket.GetItemString();
-                        func.EFST = sysPacket.GetItemString(); 
+                        func.EFST = sysPacket.GetItemString();
                         func.MESSAGE = sysPacket.GetItemString();
-                        if(EqpData.EQINFORMATION.EQPID != sysPacket.GetItemString(2).Trim())
+                        if (EqpData.EQINFORMATION.EQPID != sysPacket.GetItemString(2).Trim())
                         {
                             HACK = "1";
                             SendS2F42(RCMD, HACK);
@@ -136,7 +136,7 @@ namespace ASOFTCIM
                         interlock12.EQPID = sysPacket.GetItemString();
                         interlock12.INTERLOCKID = sysPacket.GetItemString();
                         interlock12.MESSAGE = sysPacket.GetItemString();
-                        if(interlock12.INTERLOCKID == EqpData.EQINFORMATION.EQPID || interlock12.INTERLOCKID == "")
+                        if (interlock12.INTERLOCKID == EqpData.EQINFORMATION.EQPID || interlock12.INTERLOCKID != null)
                         {
                             SendMessage2PLC("INTERLOCK", interlock12);
                             break;
@@ -149,7 +149,7 @@ namespace ASOFTCIM
                     case "14":  //(OWN Stop)
                         break;
                     case "15":  //Equipment Command (Control Information)
-                        ControlInfoMation controlInfoMation =new ControlInfoMation();
+                        ControlInfoMation controlInfoMation = new ControlInfoMation();
                         controlInfoMation.ACTIONTYPE = sysPacket.GetItemString(6);
                         controlInfoMation.ACTIONDETAIL = sysPacket.GetItemString(9);
                         controlInfoMation.ACTION = sysPacket.GetItemString(12);
@@ -177,13 +177,13 @@ namespace ASOFTCIM
                             file.FILETYPE = sysPacket.GetItemString();
                             file.FILENAME = sysPacket.GetItemString();
                             file.FILEPATH = sysPacket.GetItemString();
-                            file.LOCALCHECKSUM= sysPacket.GetItemString();
-                            file.CURRENTCHECKSUM= sysPacket.GetItemString();
+                            file.LOCALCHECKSUM = sysPacket.GetItemString();
+                            file.CURRENTCHECKSUM = sysPacket.GetItemString();
                             config.FILES.Add(file);
                         }
-                        
-                        
-                       
+
+
+
                         break;
                     case "41":  //(Force Transfer Stop)
                         break;
@@ -199,7 +199,7 @@ namespace ASOFTCIM
                     default:
                         break;
                 }
-                 SendS2F42(RCMD, HACK);
+                SendS2F42(RCMD, HACK);
             }
             catch (Exception ex)
             {

@@ -35,10 +35,12 @@ namespace ASOFTCIM.MVVM.Models
         #region EQP
         private string _equipMent;
         private string _logFolder;
+        private string _sizeFile = "10"; // MB
         private string _autoDeleteLog;
         private string _aliveTime;
         private bool _useLogFDC;
         private string _logFodlerFDC;
+        private bool _useLogPLC;
         #endregion
         #region CIM
         private string _ip;
@@ -224,6 +226,15 @@ namespace ASOFTCIM.MVVM.Models
                 OnPropertyChanged(nameof(LogFolder));
             }
         }
+        public string SizeFile
+        {
+            get { return _sizeFile; }
+            set
+            {
+                _sizeFile = value;
+                OnPropertyChanged(nameof(SizeFile));
+            }
+        }
         public string AutoDeleteLog
         {
             get { return _autoDeleteLog; }
@@ -251,6 +262,16 @@ namespace ASOFTCIM.MVVM.Models
                 OnPropertyChanged(nameof(UseLogFDC));
             }
         }
+        public bool UseLogPLC
+        {
+            get { return _useLogPLC; }
+            set
+            {
+                _useLogPLC = value;
+                OnPropertyChanged(nameof(UseLogPLC));
+            }
+        }
+        
         public string LogFodlerFDC
         {
             get { return _logFodlerFDC; }

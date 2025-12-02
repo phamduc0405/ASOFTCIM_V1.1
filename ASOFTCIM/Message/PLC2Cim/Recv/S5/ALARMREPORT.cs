@@ -36,7 +36,7 @@ namespace ASOFTCIM.Message.PLC2Cim.Recv
                     {
                         alarm.ALST = word.IsOn ? "1" : "2";
                         alarm.EQPID = eq.EQPID.ToString();
-                        alarm.TIME = DateTime.Now.ToString("hh:mm:ss.fff");
+                        alarm.TIME = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss.fff");
                     }
                     else
                     {

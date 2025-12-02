@@ -27,10 +27,10 @@ namespace ASOFTCIM.MVVM.Views.Popup
         private List<IWordModel> _wordModels;
         private Controller _controller;
 
-        public PopupIOWord(List<IWordModel> wordModels)
+        public PopupIOWord(List<IWordModel> wordModels,Controller controller)
         {
             InitializeComponent();
-            _controller = MainWindowViewModel.Controller;
+            _controller = controller;
             _wordModels = wordModels;
             Initial();
         }

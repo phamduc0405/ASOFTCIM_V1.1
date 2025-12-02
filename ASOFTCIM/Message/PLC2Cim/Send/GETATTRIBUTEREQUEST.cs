@@ -11,19 +11,24 @@ using System.Threading.Tasks;
 
 namespace ASOFTCIM.Message.PLC2Cim.Send
 {
+
     public class GETATTRIBUTEREQUEST1
     {
-        public GETATTRIBUTEREQUEST1(PLCHelper plcdata, ATTRREQUEST attrequest)
+        public GETATTRIBUTEREQUEST1(PLCHelper plcdata, PlcComm plcComm, ATTRREQUEST attrequest)
         {
 
             try
             {
+
                 List<WordModel> word = plcdata.Words.Where(x => x.Area == this.GetType().Name).ToList();
+
+                //List<WordModel> wordtray = plcdata.Words.Where(x => x.Item == "ATTRDATA").ToList();
                 word.FirstOrDefault(x => x.Item == "ATTRDATA").SetValue = attrequest.ATTRs[0].ATTRDATA;
                 word.FirstOrDefault(x => x.Item == "REPLYCODE").SetValue = attrequest.REPLYCODE;
                 word.FirstOrDefault(x => x.Item == "REPLYTEXT").SetValue = attrequest.REPLYTEXT;
-
-
+                plcdata.Attribute.Find(x => x.Item == "TRAYQTY").SetValue(plcComm, attrequest.ATTRs[0].ATTRDATA);
+                plcdata.Attribute.Find(x => x.Item == "CELLQTY").SetValue(plcComm, attrequest.ATTRs[1].ATTRDATA);
+                plcdata.Attribute.Find(x => x.Item == "NEXTSTEPID").SetValue(plcComm, attrequest.ATTRs[2].ATTRDATA);
                 BitModel bit = plcdata.Bits.First(x => x.Comment == this.GetType().Name);
                 bit.SetPCValue = true;
             }

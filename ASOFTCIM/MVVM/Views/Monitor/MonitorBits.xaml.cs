@@ -35,10 +35,10 @@ namespace ASOFTCIM.MVVM.Views.Monitor
         private bool _disposed = false; // Theo dõi trạng thái dispose
         private List<BitModel.BitChangedEventDelegate> _bitChangedHandlers = new List<BitModel.BitChangedEventDelegate>();
         private List<BitModel.BitOutChangedEventDelegate> _bitOutChangedHandlers = new List<BitModel.BitOutChangedEventDelegate>();
-        public MonitorBits()
+        public MonitorBits(Controller controller )
         {
             
-            _controller = MainWindowViewModel.Controller;
+            _controller = controller;
             _plc = _controller.CIM.PLC;
             _plcH = _controller.CIM.PLCH;
             
@@ -81,7 +81,7 @@ namespace ASOFTCIM.MVVM.Views.Monitor
                 io.MouseEnter += (s, e) =>
                 {
                     _popupWindow?.Close();
-                    _popupWindow = new PopupIOWord(b.LstWord);
+                    _popupWindow = new PopupIOWord(b.LstWord, _controller);
                     _popupWindow.Left = Mouse.GetPosition(Application.Current.MainWindow).X + Application.Current.MainWindow.Left + 10;
                     _popupWindow.Top = Mouse.GetPosition(Application.Current.MainWindow).Y + Application.Current.MainWindow.Top + 10;
                     _popupWindow.Show();

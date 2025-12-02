@@ -72,7 +72,7 @@ namespace ASOFTCIM
                 }
 
                 packet.Send2Sys();
-                Host2CimEventHandle($"CIM -> HOST :SEND S{packet.Stream}F{packet.Function}");
+                GetNameofMessage(packet.Stream, packet.Function, packet.Items);
             }
             catch (Exception ex)
             {

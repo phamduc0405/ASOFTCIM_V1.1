@@ -5,6 +5,7 @@ using ASOFTCIM.Config;
 using ASOFTCIM.Data;
 using ASOFTCIM.Helper;
 using LiveCharts.Maps;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,6 +15,8 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Options;
+using System.Configuration;
 
 namespace ASOFTCIM.MainControl
 {
@@ -24,6 +27,9 @@ namespace ASOFTCIM.MainControl
         private bool _plcConnect = false;
         private int _countconnectPLC = 0;
         private bool _cimConnect = false;
+        private int _LoadProgram = 0;
+        private bool _isReadConfig = false;
+        private static readonly object _lock = new object();
         public EquipmentConfig EquipmentConfig
         {
             get { return _equipmentConfig; }
@@ -39,21 +45,32 @@ namespace ASOFTCIM.MainControl
             get { return _cimConnect; }
             set { _cimConnect = value; }
         }
-
-        public Controller()
+        public int LoadProgram
         {
+            get { return _LoadProgram; }
+            set { _LoadProgram = value; }
+        }
+        public bool IsReadConfig
+        {
+            get { return _isReadConfig; }
+            set { _isReadConfig = value; }
+        }
+        public Controller(EquipmentConfig equipmentConfig, ACIM aCIM)
+        {
+            _equipmentConfig = equipmentConfig;
             DefaultData.AppPath = @"C:\CimConfig";
-            ReadControllerConfig();
+            //_isReadConfig =  ReadControllerConfig();
             DefaultData.LogPath = $"{_equipmentConfig.LogFolder}";
-            _cim = new ACIM(_equipmentConfig);
+            _cim = aCIM;
             _cim.PlcConnectChangeEvent += PlcConnectEvent;
             _cim.Cim.Conn.OnConnectEvent += OnConnectEvent;
+            LogTxt.FileSize = int.Parse(_equipmentConfig.SizeFile);
         }
         public void Stop()
         {
             _cim.Stop();
         }
-        private void ReadControllerConfig()
+        public bool ReadControllerConfig()
         {
             try
             {
@@ -67,19 +84,19 @@ namespace ASOFTCIM.MainControl
                         b.LstWord.AddRange(wm);
                         List<MaterialModel> material = _equipmentConfig.PLCHelper.Materrials.Where(x => x.BitEvent.Contains($"{b.PLCDevice}{b.PLCHexAdd}")).ToList();
                         b.LstWord.AddRange(material);
-
                     }
                 }
                 else
                 {
-                    //_equipmentConfig.PathLog = DefaultData.LogPath;
-                    //_equipmentConfig.DelLog = 30;
+                    return false;
                 }
+                return true;
             }
             catch (Exception ex)
             {
                 var debug = string.Format("Class:{0} Method:{1} exception occurred. Message is <{2}>.", MethodBase.GetCurrentMethod().DeclaringType.Name.ToString(), MethodBase.GetCurrentMethod().Name, ex.Message);
                 LogTxt.Add(LogTxt.Type.Exception, debug);
+                return false;
             }
         }
         public void SaveControllerConfig()
