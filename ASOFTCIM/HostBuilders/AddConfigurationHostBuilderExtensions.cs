@@ -12,6 +12,10 @@ using ASOFTCIM.Config;
 using Microsoft.Extensions.Configuration;
 using A_SOFT.PLC;
 using ASOFTCIM.Helper;
+using System.Collections.Generic;
+using System.Linq;
+using ASOFTCIM.MVVM.Models;
+using ASOFTCIM.Data;
 
 namespace ASOFTCIM.HostBuilders
 {
@@ -49,7 +53,18 @@ namespace ASOFTCIM.HostBuilders
                     return new CimHelper(equipmentConfig.EQPID);
                 });
                 services.AddSingleton<PlcComm>();
-                services.AddSingleton<PLCHelper>();
+                services.AddSingleton<PLCHelper>(sp =>
+                {
+                    foreach (var b in config.PLCHelper.Bits)
+                    {
+                        List<WordModel> wm = config.PLCHelper.Words.Where(x => x.BitEvent == ($"{b.PLCDevice}{b.PLCHexAdd}") || x.BitEvent == ($"{b.PLCDevice}{b.PCHexAdd}")).ToList();
+                        b.LstWord.AddRange(wm);
+                        List<Data.MaterialModel> material = config.PLCHelper.Materrials.Where(x => x.BitEvent.Contains($"{b.PLCDevice}{b.PLCHexAdd}")).ToList();
+                        b.LstWord.AddRange(material);
+                    }
+                    var equipmentConfig = sp.GetRequiredService<EquipmentConfig>();
+                    return equipmentConfig.PLCHelper;
+                });
                 services.AddSingleton<ACIM>();
                 services.AddSingleton<Controller>();
 

@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -34,6 +35,7 @@ namespace ASOFTCIM.Helper
         private List<MaterialModel> _materials;
         private List<APCModel> _apc;
         private List<CarialModel> _carrial;
+        private List<AtributeModel> _attribute;
         private Thread _update;
         private Thread _wordReaderThread;
         private Thread _alarmReaderThread;
@@ -98,6 +100,11 @@ namespace ASOFTCIM.Helper
         {
             get { return _carrial; }
             set { _carrial = value; }
+        }
+        public List<AtributeModel> Attribute
+        {
+            get { return _attribute; }
+            set { _attribute = value; }
         }
         public bool IsLogPLC
         {
@@ -192,6 +199,10 @@ namespace ASOFTCIM.Helper
                 if (sheets.Any(x => x == "Carial"))
                 {
                     _carrial = await ExcelHelper.ReadExcel<CarialModel>(ExcelPath, "Cassette Batch");
+                }
+                if (sheets.Any(x => x == "ATTRIBUTE"))
+                {
+                    _attribute = await ExcelHelper.ReadExcel<AtributeModel>(ExcelPath, "ATTRIBUTE");
                 }
             }).GetAwaiter().GetResult();
 

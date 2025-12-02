@@ -27,6 +27,7 @@ namespace ASOFTCIM.MVVM.Models
 
         private string _datetime;
         private string Version = "Version 1.0.0";
+        private string _nameEqp = "Cim";
         #endregion
         #region Property
         public object Currentview
@@ -99,7 +100,15 @@ namespace ASOFTCIM.MVVM.Models
                 OnPropertyChanged(nameof(LogInOut));
             }
         }
-
+        public string NameEQP
+        {
+            get { return _nameEqp; }
+            set
+            {
+                _nameEqp = value;
+                OnPropertyChanged(nameof(_nameEqp));
+            }
+        }
 
         #endregion
 

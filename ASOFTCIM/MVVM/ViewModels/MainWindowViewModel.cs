@@ -98,6 +98,8 @@ namespace ASOFTCIM.MVVM.ViewModels
             
             _navigationService.NavigateTo<HomeViewModel>();
             _mainWindowModel.VersionInfo = $"Version : {System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString()}       {LibMethod.GetBuildTime()}";
+            
+            _mainWindowModel.NameEQP = serviceProvider.GetRequiredService<Controller>().EquipmentConfig.EqpName;
             _updateTime = new Thread(UpdateTime)
             {
                 IsBackground = true,
