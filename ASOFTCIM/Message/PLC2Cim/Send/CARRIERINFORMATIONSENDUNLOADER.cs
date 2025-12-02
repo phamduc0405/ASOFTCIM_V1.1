@@ -21,9 +21,9 @@ namespace ASOFTCIM.Message.PLC2Cim.Send
             {
                 List<WordModel> word = plcdata.Words.Where(x => x.Area == this.GetType().Name).ToList();
                 word.FirstOrDefault(x => x.Item == "CARRIERID").SetValue = carrier.CARRIERID;
-                int sub = carrier.SUBCARRIERS.Count;
-                if (sub < 1) return;
-                word.FirstOrDefault(x => x.Item == "SUBCARRIERID").SetValue = carrier.SUBCARRIERS[0].SUBCARRIERID;
+                //int sub = carrier.SUBCARRIERS.Count;
+                //if (sub < 1) return;
+               // word.FirstOrDefault(x => x.Item == "SUBCARRIERID").SetValue = carrier.SUBCARRIERS[0].SUBCARRIERID;
                 word.FirstOrDefault(x => x.Item == "REPLYCODE").SetValue = carrier.REPLY.REPLYCODE;
                 word.FirstOrDefault(x => x.Item == "REPLYTEXT").SetValue = carrier.REPLY.REPLYTEXT;
 

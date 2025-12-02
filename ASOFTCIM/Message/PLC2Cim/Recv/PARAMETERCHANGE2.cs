@@ -20,57 +20,80 @@ namespace ASOFTCIM.Message.PLC2Cim.Recv
             {
                 eq.ReadRMS();
                 BitModel bit = (BitModel)body;
-                List<IWordModel> word = bit.LstWord;
                 PPIDINFOR ppidinfor = new PPIDINFOR();
                 COMMANDCODE commandcode = new COMMANDCODE();
                 PPPARAMS ppparam = new PPPARAMS();
                 ppidinfor.MODE = eq.PLCH.PPIDParams[0].GetValue(eq.PLC);
-                string parameterchange = word.FirstOrDefault(x => x.Item == "ParameterChange2RecipeNumber").GetValue(eq.PLC);
-                int p = int.Parse(parameterchange[0].ToString());
-                ppidinfor.PPID = eq.EqpData.PPIDList.PPID[p-1].ToString();
-                string ccode = parameterchange[1].ToString();
-                ppidinfor.PPID_NUMBER = p.ToString();
-                if(ppidinfor.MODE =="2")
+                ppidinfor.PPID = eq.PLCH.PPIDParams[1].GetValue(eq.PLC);
+                foreach (var ppidparam in eq.PLCH.PPIDParams.Skip(2))
                 {
-
-                    eq.EqpData.PPIDList.PPID.RemoveAt(p-1);
-
-                    eq.SendS7F217(ppidinfor, ppidinfor.MODE);
-                    bit.SetPCValue = true;
-                    return;
-                }
-                
-                if(ppidinfor.MODE == "1" || ppidinfor.MODE == "3")
-                {
-                    ppidinfor.PPID = eq.PLCH.PPIDParams[1].GetValue(eq.PLC);
-                    foreach (var ppidparam in eq.PLCH.PPIDParams.Skip(2))
+                    if (ppidparam.Item != "RESERVED")
                     {
-                        if (ppidparam.Item != "RESERVED")
-                        {
-                            PARAM param = new PARAM();
-                            param.PARAMVALUE = ppidparam.GetValue(eq.PLC);
-                            param.PARAMNAME = ppidparam.Item;
-                            ppparam.PARAMS.Add(param);
-                            commandcode.PARAMs.Add(param);
-                            commandcode.CCODE = ppidinfor.MODE;
-                        }
+                        PARAM param = new PARAM();
+                        param.PARAMVALUE = ppidparam.GetValue(eq.PLC);
+                        param.PARAMNAME = ppidparam.Item;
+                        ppparam.PARAMS.Add(param);
+                        commandcode.PARAMs.Add(param);
+                        commandcode.CCODE = ppidinfor.MODE;
                     }
-                    ppidinfor.COMMANDCODEs.Add(commandcode);
-                    //sau khi thay đổi cần đọc lại RMS
-
-                    for (int i = 0; i < eq.EqpData.PPIDList.PPID.Count; i++)
-                    {
-                        if (eq.EqpData.PPIDList.PPID[i] == eq.EqpData.CurrPPID.PPID)
-                        {
-                            eq.EqpData.CurrPPID.PPID_NUMBER = i.ToString();
-                            break;
-                        }
-                    }
-                    //ppidinfor.PPID_NUMBER = eq.EqpData.CurrPPID.PPID_NUMBER;
-                    eq.SendS7F217(ppidinfor, ppidinfor.MODE);
-                    bit.SetPCValue = true;
-                    return;
                 }
+                ppidinfor.COMMANDCODEs.Add(commandcode);
+                //sau khi thay đổi cần đọc lại RMS
+                eq.ReadRMS();
+                eq.SendS7F217(ppidinfor, ppidinfor.MODE);
+                bit.SetPCValue = true;
+                //BitModel bit = (BitModel)body;
+                //List<IWordModel> word = bit.LstWord;
+                //PPIDINFOR ppidinfor = new PPIDINFOR();
+                //COMMANDCODE commandcode = new COMMANDCODE();
+                //PPPARAMS ppparam = new PPPARAMS();
+                //ppidinfor.MODE = eq.PLCH.PPIDParams[0].GetValue(eq.PLC);
+                //string parameterchange = word.FirstOrDefault(x => x.Item == "ParameterChange2RecipeNumber").GetValue(eq.PLC);
+                //int p = int.Parse(parameterchange[0].ToString());
+                //ppidinfor.PPID = eq.EqpData.PPIDList.PPID[p-1].ToString();
+                //string ccode = parameterchange[1].ToString();
+                //ppidinfor.PPID_NUMBER = p.ToString();
+                //if(ppidinfor.MODE =="2")
+                //{
+
+                //    eq.EqpData.PPIDList.PPID.RemoveAt(p-1);
+
+                //    eq.SendS7F217(ppidinfor, ppidinfor.MODE);
+                //    bit.SetPCValue = true;
+                //    return;
+                //}
+
+                //if(ppidinfor.MODE == "1" || ppidinfor.MODE == "3")
+                //{
+                //    ppidinfor.PPID = eq.PLCH.PPIDParams[1].GetValue(eq.PLC);
+                //    foreach (var ppidparam in eq.PLCH.PPIDParams.Skip(2))
+                //    {
+                //        if (ppidparam.Item != "RESERVED")
+                //        {
+                //            PARAM param = new PARAM();
+                //            param.PARAMVALUE = ppidparam.GetValue(eq.PLC);
+                //            param.PARAMNAME = ppidparam.Item;
+                //            ppparam.PARAMS.Add(param);
+                //            commandcode.PARAMs.Add(param);
+                //            commandcode.CCODE = ppidinfor.MODE;
+                //        }
+                //    }
+                //    ppidinfor.COMMANDCODEs.Add(commandcode);
+                //    //sau khi thay đổi cần đọc lại RMS
+
+                //    for (int i = 0; i < eq.EqpData.PPIDList.PPID.Count; i++)
+                //    {
+                //        if (eq.EqpData.PPIDList.PPID[i] == eq.EqpData.CurrPPID.PPID)
+                //        {
+                //            eq.EqpData.CurrPPID.PPID_NUMBER = i.ToString();
+                //            break;
+                //        }
+                //    }
+                //    //ppidinfor.PPID_NUMBER = eq.EqpData.CurrPPID.PPID_NUMBER;
+                //    eq.SendS7F217(ppidinfor, ppidinfor.MODE);
+                //    bit.SetPCValue = true;
+                return;
+                //}
 
             }
             catch (Exception ex)
