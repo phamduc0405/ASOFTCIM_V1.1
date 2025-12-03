@@ -37,7 +37,7 @@ namespace ASOFTCIM
                 attrequest.REPLYCODE = sysPacket.GetItemString();
                 for (int i = 1; i <= count; i++) 
                 {
-                    SendMessage2PLC($"GETATTRIBUTEREQUEST{i}", attrequest);
+                    SendMessage2PLC($"GETATTRIBUTEREQUEST{i}", attrequest,PLC);
                 }
             }
             catch (Exception ex)

@@ -42,15 +42,9 @@ namespace ASOFTCIM
                 if (sysPacket.GetItemString(3) != "")
                 {
                     dsper = int.Parse(sysPacket.GetItemString(3));
-
                     tracesv.Init(lstSvid, trid, dsper, totsmp, repgsz);
                 }
-                else
-                {
-                    dsper = 0;
-                    tracesv.Init(lstSvid, trid, dsper, countSvid, repgsz);
-                }
-                if (tracesv.TRID == "0" || tracesv.DSPER == 0 || lstSvid.Count == 0)
+                if (tracesv.TRID == "0")
                 {
                     for (int i = Tracesvs.Count - 1; i >= 0; i--)
                     {
@@ -58,9 +52,7 @@ namespace ASOFTCIM
                         Tracesvs.RemoveAt(i);
                     }
                     TIAACK = "0";
-
                     SendS2F24(TIAACK);
-                    return;
                     return;
                 }
                 if ((tracesv.DSPER == 0 || lstSvid.Count == 0) && tracesv.TRID != null)
@@ -82,6 +74,7 @@ namespace ASOFTCIM
                     SendS2F24(TIAACK);
                     return;
                 }
+
                 if (tracesv.DSPER <= 900 && tracesv.TRID != "0" && lstSvid.Count != 0)
                 {
                     TIAACK = "3";
@@ -99,7 +92,7 @@ namespace ASOFTCIM
                 }
                 SendS2F24(TIAACK);
                 if (TIAACK != "") return;
-                
+
                 if (tracesv.TOTSMP == 0 && !Tracesvs.Any(x => x.TRID == tracesv.TRID))
                 {
                     //return;

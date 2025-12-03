@@ -44,8 +44,8 @@ namespace ASOFTCIM
                     interlock.RCMD = sysPacket.GetItemString(1);
                     interlock.INTERLOCK = sysPacket.GetItemString(4);
                     interlock.UNITID = sysPacket.GetItemString(6);
-                    interlock.INTERLOCKID = sysPacket.GetItemString(7);
-                    interlock.MESSAGE = sysPacket.GetItemString(8);
+                    interlock.INTERLOCKID = sysPacket.GetItemString(6);
+                    interlock.MESSAGE = sysPacket.GetItemString(7);
                     if (interlock.UNITID == EqpData.EQINFORMATION.EQPID || interlock.INTERLOCKID == "")
                     {
                         SendMessage2PLC("INTERLOCK", interlock);
@@ -75,8 +75,8 @@ namespace ASOFTCIM
                         interlock.RCMD = sysPacket.GetItemString(1);
                         interlock.INTERLOCK = sysPacket.GetItemString(4);
                         interlock.EQPID = sysPacket.GetItemString();
-                        interlock.INTERLOCKID = sysPacket.GetItemString(7);
-                        interlock.MESSAGE = sysPacket.GetItemString(8);
+                        interlock.INTERLOCKID = sysPacket.GetItemString(6);
+                        interlock.MESSAGE = sysPacket.GetItemString(7);
                         EqpData.INTERLOCKS.Add(interlock);
                         SendMessage2PLC("INTERLOCK", interlock);
                         break;
@@ -119,6 +119,22 @@ namespace ASOFTCIM
                         if (sysPacket.GetItemString(7) == "")
                         {
                             HACK = "3";
+                            SendS2F42(RCMD, HACK);
+                            return;
+                        }
+                        if (sysPacket.GetItemString(6) == "")
+                        {
+                            HACK = "2";
+                            SendS2F42(RCMD, HACK);
+                            return;
+                        }
+                        //251126 NamPham them ACK Funstion mới có 7,11,12,13 
+                        if ((func.EFID == "7" && func.EFST != "MANU" && func.EFST != "AUTO") ||
+                            (func.EFID == "11" && func.EFST != "ON" && func.EFST != "OFF") ||
+                            (func.EFID == "12" && func.EFST != "ON" && func.EFST != "OFF") ||
+                            (func.EFID == "13" && func.EFST != "ON" && func.EFST != "OFF"))
+                        {
+                            HACK = "2";
                             SendS2F42(RCMD, HACK);
                             return;
                         }
