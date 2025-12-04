@@ -98,9 +98,13 @@ namespace ASOFTCIM.MVVM.Views.Popup
 
             foreach (PropertyInfo property in properties)
             {
+                if(property.Name != "IsLogPLC" && property.Name != "EqpId" && property.Name != "TestAlarm")
+                {
+                    AddRow(property.Name);
+
+                }
                 //Console.WriteLine($"Property Name: {property.Name}");
                 //Console.WriteLine($"Property Type: {property.PropertyType}");
-                AddRow(property.Name);
             }
         }
         private void AddRow(string item = null)

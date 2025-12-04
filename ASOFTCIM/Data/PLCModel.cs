@@ -14,6 +14,7 @@ namespace ASOFTCIM.Data
     }
     public class FDCModel
     {
+        public int Remarks { get; set; }
         public string SVID { get; set; }
         public string NAME { get; set; }
         public string Area { get; set; }

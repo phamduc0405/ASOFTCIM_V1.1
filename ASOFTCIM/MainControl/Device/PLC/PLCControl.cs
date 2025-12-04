@@ -180,13 +180,19 @@ namespace ASOFTCIM
                     SV sv = EqpData.SVID.First(x => x.SVID == item.SVID);
                     sv.SVID = item.SVID;
                     sv.SVNAME = item.NAME;
+                    sv.Remarks = item.Remarks;
                     sv.SVVALUE = item.GetValue(_plc);
+                    if (item.Type.ToUpper() == "DEC" && float.TryParse(sv.SVVALUE, out float result) && item.Remarks != 1)
+                    {
+                        sv.SVVALUE = (result / item.Remarks).ToString("F4");
+                    }
                 }
                 else
                 {
                     SV sv = new SV();
                     sv.SVID = item.SVID;
                     sv.SVNAME = item.NAME;
+                    sv.Remarks = item.Remarks;
                     sv.SVVALUE = item.GetValue(_plc);
                     EqpData.SVID.Add(sv);
                 }

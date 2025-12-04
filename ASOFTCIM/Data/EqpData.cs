@@ -57,6 +57,7 @@ namespace ASOFTCIM.Data
     //TODO: SVID
     public class SV: INotifyPropertyChanged
     {
+        public int Remarks { get; set; }
         public string SVID { get; set; }
         public string SVNAME { get; set; }
         private string _svValue;
