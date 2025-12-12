@@ -35,9 +35,10 @@ namespace ASOFTCIM
                 }
                 packet.addItem(DataType.List, 2);
                 packet.addItem(DataType.Ascii, EqpData.EQINFORMATION.EQPID);
-                packet.addItem(DataType.List, lstEc.Count);
+                
                 if(lstEc.Count>0)
                 {
+                    packet.addItem(DataType.List, lstEc.Count);
                     if (lstEc[0] == "EQPID")
                     {
                         packet.addItem(DataType.List, 0);
@@ -65,6 +66,7 @@ namespace ASOFTCIM
                 }  
                 else
                 {
+                    packet.addItem(DataType.List, EqpData.ECS.Count);
                     foreach (var item in EqpData.ECS)
                     {
                         packet.addItem(DataType.List, 7);

@@ -27,6 +27,17 @@ namespace ASOFTCIM
 {
     public partial class ACIM
     {
+        #region Enum
+        public enum S3F103
+        {
+            Default = 0,
+            PRETRAY = 1,
+            CELL = 2,
+            INSPECTION = 3
+        }
+
+
+        #endregion
         #region Event
         public delegate void PLC2CIMEventDelegate(string bit);
         public event PLC2CIMEventDelegate Plc2CimChangeEvent;
@@ -50,6 +61,7 @@ namespace ASOFTCIM
         public EQPDATA EqpData { get; set; }
         public string EQPID { get; set; } = "";
         public EquipmentConfig _eqpConfig;
+        public S3F103 typeMessageS3F103 = S3F103.Default;
 
         private Thread _simulatorAlarm;
         private bool _issimulatorAlarm;

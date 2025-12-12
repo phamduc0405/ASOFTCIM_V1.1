@@ -103,7 +103,7 @@ namespace ASOFTCIM.MVVM.ViewModels
             for (int i = leftStart; i < leftEnd; i++)
             {
                 var item = svidList[i];
-                item.SVVALUE = FormatSVValue(item);
+                //item.SVVALUE = FormatSVValue(item);
                 _fDCModel.CurrentSVIDsL.Add(item);
             }
 
@@ -111,7 +111,7 @@ namespace ASOFTCIM.MVVM.ViewModels
             for (int i = rightStart; i < rightEnd; i++)
             {
                 var item = svidList[i];
-                item.SVVALUE = FormatSVValue(item);
+                //item.SVVALUE = FormatSVValue(item);
                 _fDCModel.CurrentSVIDsR.Add(item);
             }
         }
@@ -155,16 +155,17 @@ namespace ASOFTCIM.MVVM.ViewModels
 
         private void UpdateSvidData()
         {
-            //ShowSvid(_index);
-            ShowSvid1();
-            foreach (var sv in _fDCModel.CurrentSVIDsL)
-            {
-                if (float.TryParse(sv.SVVALUE, out float currentValue))
-                {
-                    sv.SVVALUE = (currentValue + 1).ToString();
-                }
-            }
-            OnPropertyChanged(nameof(_fDCModel.CurrentSVIDsL));
+            ShowSvid(_index);
+            //TEST FDC 
+            //ShowSvid1();
+            //foreach (var sv in _fDCModel.CurrentSVIDsL)
+            //{
+            //    if (float.TryParse(sv.SVVALUE, out float currentValue))
+            //    {
+            //        sv.SVVALUE = (currentValue + 1).ToString();
+            //    }
+            //}
+            //OnPropertyChanged(nameof(_fDCModel.CurrentSVIDsL));
 
             //foreach (var sv in CurrentSVIDsR)
             //{

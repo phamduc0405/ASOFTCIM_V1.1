@@ -200,7 +200,7 @@ namespace ASOFTCIM.Helper
                 {
                     _carrial = await ExcelHelper.ReadExcel<CarialModel>(ExcelPath, "Cassette Batch");
                 }
-                if (sheets.Any(x => x == "ATTRIBUTE"))
+                if (sheets.Any(x => x == "Attribute"))
                 {
                     _attribute = await ExcelHelper.ReadExcel<AtributeModel>(ExcelPath, "ATTRIBUTE");
                 }

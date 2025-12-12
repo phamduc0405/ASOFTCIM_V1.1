@@ -49,15 +49,31 @@ namespace ASOFTCIM
                 validation.REPLY.REPLYSTATUS = sysPacket.GetItemString();
                 validation.REPLY.REPLYTEXT = sysPacket.GetItemString();
                 //ETC
-                if (validation.CARRIERID == "PRETRAY")
-                {
-                    SendMessage2PLC("SPECIFICVALIDATIONDATASEND3", validation);
-                }
-                if (validation.CARRIERID == "CELL")
+
+                // chon theo type message de gui ve PLC
+                if (typeMessageS3F103 == S3F103.CELL)
                 {
                     SendMessage2PLC("SPECIFICVALIDATIONDATASEND1", validation);
                     SendMessage2PLC("SPECIFICVALIDATIONDATASEND2", validation);
+                    typeMessageS3F103 = S3F103.Default;
                 }
+                if (typeMessageS3F103 == S3F103.PRETRAY)
+                {
+                    SendMessage2PLC("SPECIFICVALIDATIONDATASEND3", validation);
+                    typeMessageS3F103 = S3F103.Default;
+
+                }
+
+
+                //if (validation.CARRIERID == "PRETRAY")
+                //{
+                //    SendMessage2PLC("SPECIFICVALIDATIONDATASEND3", validation);
+                //}
+                //if (validation.CARRIERID == "CELL")
+                //{
+                //    SendMessage2PLC("SPECIFICVALIDATIONDATASEND1", validation);
+                //    SendMessage2PLC("SPECIFICVALIDATIONDATASEND2", validation);
+                //}
                 //ETC
                 //unloader
                 //SendMessage2PLC("SPECIFICVALIDATIONDATASEND5", validation);

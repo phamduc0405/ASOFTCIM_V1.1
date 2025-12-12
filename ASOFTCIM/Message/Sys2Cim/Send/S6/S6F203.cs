@@ -33,6 +33,20 @@ namespace ASOFTCIM
                     packet.addItem(DataType.Ascii, validation.OPTIONINFO);
                 }
                 packet.Send2Sys();
+                if(validation.OPTIONCODE == "PRETRAY")
+                {
+                    typeMessageS3F103 = S3F103.PRETRAY;
+                }
+                if (validation.OPTIONCODE == "CELL")
+                {
+                    typeMessageS3F103 = S3F103.CELL;
+
+                }
+                if (validation.OPTIONCODE == "INSPECTION")
+                {
+                    typeMessageS3F103 = S3F103.INSPECTION;
+
+                }
                 GetNameofMessage(packet.Stream, packet.Function, packet.Items);
             }
             catch (Exception ex)

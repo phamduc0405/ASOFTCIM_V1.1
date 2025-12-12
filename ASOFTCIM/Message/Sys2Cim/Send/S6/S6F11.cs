@@ -137,7 +137,7 @@ namespace ASOFTCIM
                             packet.Send2Sys();
                             return;
                         }
-                        packet.addItem(DataType.List, EqpData.CurrAlarm.Count);
+                        packet.addItem(DataType.List, 0);// khi chi co light alarm thi ko gui len list light a alarm
                     }
                 }
                 packet.Send2Sys();

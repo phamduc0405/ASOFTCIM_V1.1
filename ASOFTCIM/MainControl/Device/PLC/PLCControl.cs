@@ -182,9 +182,20 @@ namespace ASOFTCIM
                     sv.SVNAME = item.NAME;
                     sv.Remarks = item.Remarks;
                     sv.SVVALUE = item.GetValue(_plc);
+                    //if (item.Type.ToUpper() == "DEC" && float.TryParse(sv.SVVALUE, out float result) && item.Remarks != 1)
+                    //{
+                    //    sv.SVVALUE = (result / item.Remarks).ToString("F4");
+                    //}
                     if (item.Type.ToUpper() == "DEC" && float.TryParse(sv.SVVALUE, out float result) && item.Remarks != 1)
                     {
-                        sv.SVVALUE = (result / item.Remarks).ToString("F4");
+                        int decimals = 0;
+
+                        if (item.Remarks > 1)
+                        {
+                            decimals = (int)Math.Log10(item.Remarks);
+                        }
+
+                        sv.SVVALUE = (result / item.Remarks).ToString($"F{decimals}");
                     }
                 }
                 else
