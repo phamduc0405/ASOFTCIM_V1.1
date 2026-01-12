@@ -409,7 +409,7 @@ namespace ASOFTCIM.Helper
             foreach (var item in bit.LstWord)
             {
                 strlog.Append("\n\t");
-                str = string.Format("Address:{0}{1} Value:{2}", _plc.WordDevice, item.Start, item.GetValue(_plc));
+                str = string.Format("Address:{0}{1} Value:{2}", item.Type, item.Start, item.GetValue(_plc));
                 strlog.Append(str);
             }
             LogTxt.Add(LogTxt.Type.PLCMess, strlog.ToString(), EqpId);

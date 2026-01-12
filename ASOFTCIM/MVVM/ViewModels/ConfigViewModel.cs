@@ -18,6 +18,7 @@ using A_SOFT.PLC;
 using ASOFTCIM.MVVM.Views.Popup;
 using System.Windows;
 using System.IO;
+using RelayCommand = ASOFTCIM.Init.RelayCommand;
 
 namespace ASOFTCIM.MVVM.ViewModels
 {

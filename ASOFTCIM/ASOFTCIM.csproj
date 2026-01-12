@@ -47,27 +47,23 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AsoftLicense">
-      <HintPath>C:\Users\PC CIM\Desktop\bin\Debug\AsoftLicense.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\AsoftLib\A_SOFT\Bin\Debug\Confused\AsoftLicense.dll</HintPath>
     </Reference>
     <Reference Include="A_SOFT.CMM, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\AsoftLib\A_SOFT\Bin\Debug\Confused\A_SOFT.CMM.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\AsoftLib\A_SOFT\Bin\Debug\Confused\A_SOFT.CMM.dll</HintPath>
     </Reference>
     <Reference Include="A_SOFT.CMM.UI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>E:\MrDuc\ASOFTLIB\AsoftCommon\Bin\Debug\ASOFTLIB\A_SOFT.CMM.UI.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\AsoftLib\A_SOFT\Bin\Debug\A_SOFT.CMM.UI.dll</HintPath>
     </Reference>
     <Reference Include="A_SOFT.Ctl.Mitsu, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\AsoftLib\A_SOFT\Bin\Debug\Confused\A_SOFT.Ctl.Mitsu.dll</HintPath>
-    </Reference>
-    <Reference Include="A_SOFT.Ctl.SecGem, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\AsoftLib\A_SOFT\Bin\Debug\Confused\A_SOFT.Ctl.SecGem.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\AsoftLib\A_SOFT\Bin\Debug\Confused\A_SOFT.Ctl.Mitsu.dll</HintPath>
     </Reference>
     <Reference Include="A_SOFT.Ctl.Tcp, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>E:\MrDuc\ASOFTLIB\AsoftCommon\Bin\Debug\ASOFTLIB\A_SOFT.Ctl.Tcp.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\AsoftLib\A_SOFT\Bin\Debug\Confused\A_SOFT.Ctl.Tcp.dll</HintPath>
     </Reference>
     <Reference Include="EPPlus, Version=7.0.0.3, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
       <HintPath>..\packages\EPPlus.7.0.0\lib\net462\EPPlus.dll</HintPath>
@@ -85,8 +81,8 @@
       <HintPath>..\packages\HPSocket.Net.5.9.3.1\lib\net40\HPSocket.Net.dll</HintPath>
     </Reference>
     <Reference Include="Interop.ActUtlTypeLib">
-      <HintPath>C:\Users\PC CIM\Desktop\bin\Debug\Interop.ActUtlTypeLib.dll</HintPath>
-      <EmbedInteropTypes>False</EmbedInteropTypes>
+      <HintPath>..\..\..\..\..\..\AsoftLib\A_SOFT\Bin\Debug\Interop.ActUtlTypeLib.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="LiveCharts, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
       <HintPath>..\packages\LiveCharts.0.9.7\lib\net45\LiveCharts.dll</HintPath>
@@ -194,7 +190,7 @@
       <HintPath>..\packages\Microsoft.Xaml.Behaviors.Wpf.1.1.135\lib\net462\Microsoft.Xaml.Behaviors.dll</HintPath>
     </Reference>
     <Reference Include="Mitsu3E">
-      <HintPath>C:\Users\PC CIM\Desktop\bin\Debug\Mitsu3E.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\AsoftLib\A_SOFT\Bin\Debug\Confused\Mitsu3E.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -757,12 +753,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="HPSocket\hpsocket_en.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="HPSocket\hpsocket_cn.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="Message\PLC2Cim\Recv\S10\" />
     <Folder Include="Message\PLC2Cim\Recv\S14\" />
     <Folder Include="Message\PLC2Cim\Recv\S16\" />
@@ -784,7 +774,22 @@
   <ItemGroup>
     <Resource Include="Amonitor.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="HPSocket\hpsocket_en.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="HPSocket\hpsocket_cn.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\..\AsoftLib\A_SOFT\A_SOFT.Ctl.SECGEM\A_SOFT.Ctl.SecGem.csproj">
+      <Project>{d391a8b2-1945-4243-b238-2c878922c6bd}</Project>
+      <Name>A_SOFT.Ctl.SecGem</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>powershell -ExecutionPolicy Bypass -File "$(ProjectDir)\Update-Version.ps1"</PreBuildEvent>
+  </PropertyGroup>
   <Import Project="..\packages\HPSocket.Net.5.9.3.1\build\HPSocket.Net.targets" Condition="Exists('..\packages\HPSocket.Net.5.9.3.1\build\HPSocket.Net.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -792,7 +797,4 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\HPSocket.Net.5.9.3.1\build\HPSocket.Net.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\HPSocket.Net.5.9.3.1\build\HPSocket.Net.targets'))" />
   </Target>
-  <PropertyGroup>
-    <PreBuildEvent>powershell -ExecutionPolicy Bypass -File "$(ProjectDir)\Update-Version.ps1"</PreBuildEvent>
-  </PropertyGroup>
 </Project>

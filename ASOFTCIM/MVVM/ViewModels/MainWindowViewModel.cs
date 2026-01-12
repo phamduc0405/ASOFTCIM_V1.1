@@ -29,6 +29,7 @@ using System.Windows.Threading;
 using ECMView = ASOFTCIM.MVVM.Views.ECM.ECMView;
 using ASOFTCIM.MVVM.NavigationService;
 using Microsoft.Extensions.DependencyInjection;
+using RelayCommand = ASOFTCIM.Init.RelayCommand;
 
 namespace ASOFTCIM.MVVM.ViewModels
 {

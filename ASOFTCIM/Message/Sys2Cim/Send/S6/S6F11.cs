@@ -1751,10 +1751,7 @@ namespace ASOFTCIM
                 packet.addItem(DataType.List, 2);
                 {
 
-                    packet.addItem(DataType.List, 3);
-                    {
-
-                    }
+                  
                     packet.addItem(DataType.Ascii, "301");
                     packet.addItem(DataType.List, 3);
                     {

@@ -22,6 +22,7 @@ using System.Windows.Interop;
 using System.Windows.Input;
 using ASOFTCIM.MVVM.Views.Home;
 using ASOFTCIM.MVVM.ViewModels;
+using RelayCommand = ASOFTCIM.Init.RelayCommand;
 
 namespace ASOFTCIM.MVVM.ViewModels
 {
