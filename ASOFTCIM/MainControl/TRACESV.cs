@@ -58,6 +58,10 @@ namespace ASOFTCIM.MainControl
             while ((isRunning && SMPLN < TOTSMP) || (isRunning && TOTSMP == 0))
             {
                 SMPLN++;
+                if (SMPLN > 99999)
+                {
+                    SMPLN = 1;
+                }
                 TranceEventHandle(SVs, SMPLN == TOTSMP);
                 if(SMPLN == TOTSMP && TOTSMP != 0)
                 {
