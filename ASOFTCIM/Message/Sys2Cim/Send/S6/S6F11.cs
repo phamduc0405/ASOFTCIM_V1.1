@@ -126,6 +126,7 @@ namespace ASOFTCIM
                         }
                         if (EqpData.INTERLOCKS.Count != 0)
                         {
+                            packet.addItem(DataType.List, 1);
                             packet.addItem(DataType.List, 4);
                             {
                                 List<WordModel> word = PLCH.Words.Where(x => x.Area == "INTERLOCK").ToList();
